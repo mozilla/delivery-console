@@ -26,16 +26,13 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,json,css,md,less}": ["prettier --write", "git add"]
+    "lint:flow": "flow --quiet",
+    "lint:prettier": "prettier **/**/*.js --write",
+    "lint": "yarn run lint:flow && yarn run lint:prettier"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.5",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.0.0",
+    "flow-bin": "^0.66.0",
     "prettier": "^1.10.2",
     "react-app-rewire-less": "^2.1.0",
     "react-app-rewired": "^1.4.1"

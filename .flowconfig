@@ -1,0 +1,2 @@
+[options]
+module.name_mapper='^normandy\/\(.*\)$' -> '<PROJECT_ROOT>/src/normandy/\1'
