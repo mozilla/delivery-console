@@ -1,7 +1,10 @@
 /* @flow */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Form, Input, Icon } from 'antd';
+import './login.less';
+
+const FormItem = Form.Item;
 
 type Props = {
   onAuth: Function,
@@ -44,13 +47,25 @@ class LoginPage extends Component<Props, State> {
 
   render() {
     return (
-      <div className="LoginPage" onSubmit={this.onSubmit}>
-        <form>
-          <input type="text" name="user" placeholder="User" />
-          <input type="password" name="password" placeholder="Password" />
+      <div id="login-page">
+        <Form className="login-form" onSubmit={this.onSubmit}>
+        <FormItem>
+          <h1>Log In</h1>
+        </FormItem>
+          <FormItem>
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" name="user" />
+          </FormItem>
 
-          <Button htmlType="submit">Login</Button>
-        </form>
+          <FormItem>
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" name="password" />
+          </FormItem>
+
+          <FormItem>
+            <Button type="primary" htmlType="submit" className="login-form-button">
+              Log in
+            </Button>
+          </FormItem>
+        </Form>
       </div>
     );
   }

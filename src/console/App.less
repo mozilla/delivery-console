@@ -1,0 +1,35 @@
+@import '~photon-ant';
+
+.app {
+  &.ant-layout {
+    min-height: 100vh;
+  }
+}
+
+.app-content {
+  padding: 2em;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 0 1em 0 0;
+  }
+
+  a {
+    padding: 0 2em;
+
+    &,
+    &:focus,
+    &:active {
+      border-radius: 0;
+    }
+
+    &.active {
+      background: @blue-60;
+      color: @white;
+    }
+  }
+}

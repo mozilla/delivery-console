@@ -1,36 +1,41 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import './App.less';
+
 import LoginPage from './LoginPage';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link, withRouter } from 'react-router-dom';
 import { Route, Redirect } from 'react-router';
 
-type AppProps = {};
-type AppState = {
-  authToken: ?string,
-  username: ?string,
-};
+import { Alert, Button, Layout, Menu } from 'antd';
+const { Header, Footer, Content } = Layout;
 
 const Homepage = props => (
   <div>
-    <p>Welcome home!</p>
+    <h3>Welcome { props.authToken ? 'back' : 'home'}!</h3>
     {props.authToken ? (
       <p>
         Go to the <Link to="/normandy">Normandy page</Link>.
       </p>
     ) : (
-      <p>
-        Go to the <Link to="/login">login page</Link>.
+        <p>
+          You are not logged in! Go to the <Link to="/login">login page</Link>.
       </p>
-    )}
+      )}
   </div>
 );
 
 const MockNormandy = props => (
   <div>Normandy with auth token {props.authToken}</div>
 );
+
+
+type AppProps = {};
+type AppState = {
+  authToken: ?string,
+  username: ?string,
+};
 
 class App extends Component<AppProps, AppState> {
   state = {
@@ -48,15 +53,24 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to Delivery Console</h1>
-          </header>
+
+        <Layout className="app">
+          <Header className="app-header">
+            <h1>Delivery Console</h1>
+
+            <NavLink exact to="/">Home</NavLink>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink exact to="/normandy">Normandy</NavLink>
+
           {this.state.username && (
-            <div>You are logged in as {this.state.username}.</div>
+            <Alert
+              style={{ marginLeft: '3em' }}
+              type="info"
+              showIcon message={`You are logged in as ${this.state.username}.`}
+            />
           )}
-          <div>
+          </Header>
+          <Content class="app-content">
             {/* Homepage */}
             <Route
               exact
@@ -72,8 +86,8 @@ class App extends Component<AppProps, AppState> {
                 this.state.username ? (
                   <Redirect to="/" />
                 ) : (
-                  <LoginPage onAuth={this.onUserLogin} />
-                )
+                    <LoginPage onAuth={this.onUserLogin} />
+                  )
               }
             />
 
@@ -85,12 +99,12 @@ class App extends Component<AppProps, AppState> {
                 this.state.username ? (
                   <MockNormandy authToken={this.state.authToken} />
                 ) : (
-                  <Redirect to="/login/?next=/normandy/" />
-                )
+                    <Redirect to="/login/?next=/normandy/" />
+                  )
               }
             />
-          </div>
-        </div>
+          </Content>
+        </Layout>
       </BrowserRouter>
     );
   }
