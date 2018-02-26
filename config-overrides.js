@@ -13,8 +13,6 @@ module.exports = function(config, env) {
 
   // LESS support
   config = rewireLess(config, env);
-  // Legacy decorator support
-  config = injectBabelPlugin("transform-decorators-legacy", config);
   // Use Ant LESS imports
   config = injectBabelPlugin(
     ["import", { libraryName: "antd", style: true }],

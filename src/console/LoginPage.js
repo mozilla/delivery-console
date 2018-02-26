@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Button } from 'antd';
 
 type Props = {
   onAuth: Function,
@@ -48,7 +49,7 @@ class LoginPage extends Component<Props, State> {
           <input type="text" name="user" placeholder="User" />
           <input type="password" name="password" placeholder="Password" />
 
-          <button type="submit">Login</button>
+          <Button htmlType="submit">Login</Button>
         </form>
       </div>
     );
