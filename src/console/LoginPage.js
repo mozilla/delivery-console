@@ -1,14 +1,15 @@
 /* @flow */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+
 import { Button, Form, Input, Icon } from 'antd';
-import './login.less';
+import 'console/login.less';
 
 const FormItem = Form.Item;
 
 type Props = {
   onAuth: Function,
-  history: ReactRouterHistory,
+  history: any,
   location: any,
 };
 type State = {};
@@ -49,19 +50,32 @@ class LoginPage extends Component<Props, State> {
     return (
       <div id="login-page">
         <Form className="login-form" onSubmit={this.onSubmit}>
-        <FormItem>
-          <h1>Log In</h1>
-        </FormItem>
           <FormItem>
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" name="user" />
+            <h1>Log In</h1>
+          </FormItem>
+          <FormItem>
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+              name="user"
+            />
           </FormItem>
 
           <FormItem>
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" name="password" />
+            <Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="Password"
+              name="password"
+            />
           </FormItem>
 
           <FormItem>
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
               Log in
             </Button>
           </FormItem>

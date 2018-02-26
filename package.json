@@ -28,7 +28,7 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "lint:flow": "flow --quiet",
-    "lint:prettier": "prettier **/**/*.js --write",
+    "lint:prettier": "prettier src/**/*.js --write",
     "lint": "yarn run lint:flow && yarn run lint:prettier"
   },
   "devDependencies": {

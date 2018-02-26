@@ -1,2 +1,3 @@
 [options]
-module.name_mapper='^normandy\/\(.*\)$' -> '<PROJECT_ROOT>/src/normandy/\1'
+module.name_mapper='^console\/\(.*\)$' -> '<PROJECT_ROOT>/src/console/\1'
+module.name_mapper.extension='less' -> 'empty/object'
