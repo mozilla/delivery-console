@@ -30,7 +30,7 @@
     "lint:flow": "flow",
     "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
     "lint:prettier": "prettier src/**/*.js --write",
-    "lint": "yarn run lint:flow && yarn run lint:prettier"
+    "lint": "yarn run lint:flow && yarn run lint:prettier && yarn run lint:less"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.5",
