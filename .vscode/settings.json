@@ -1,3 +1,4 @@
 {
-  "editor.hover": false
+  "editor.hover": false,
+  "files.insertFinalNewline": true
 }
