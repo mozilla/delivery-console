@@ -1,0 +1,14 @@
+[include]
+<PROJECT_ROOT>/**/*.js
+
+[ignore]
+.*/node_modules/
+.*/.git/
+.*/.less$
+
+[libs]
+
+[options]
+module.name_mapper='^console\/\(.*\)$' -> '<PROJECT_ROOT>/console/\1'
+module.name_mapper='.*\(.less\)$' -> 'empty/object'
+emoji=true

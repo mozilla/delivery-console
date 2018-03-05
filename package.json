@@ -1,0 +1,45 @@
+{
+  "name": "dev-console",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.2.1",
+    "autobind-decorator": "^2.1.0",
+    "immutable": "^3.8.2",
+    "js-cookie": "^2.2.0",
+    "localforage": "^1.5.6",
+    "photon-ant": "^0.1.4",
+    "react": "^16.2.0",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-little-router": "^15.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint:flow": "flow",
+    "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
+    "lint:prettier": "prettier src/**/*.js --write",
+    "lint": "yarn run lint:flow && yarn run lint:prettier && yarn run lint:less"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.6.5",
+    "flow-bin": "^0.66.0",
+    "prettier": "^1.10.2",
+    "react-app-rewire-less": "^2.1.0",
+    "react-app-rewired": "^1.4.1",
+    "stylelint": "^9.1.1",
+    "stylelint-config-standard": "^18.1.0",
+    "stylelint-order": "^0.8.1"
+  }
+}

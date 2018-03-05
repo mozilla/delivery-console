@@ -1,0 +1,6 @@
+{
+  "parser": "flow",
+  "loglevel": "warn",
+  "singleQuote": true,
+  "trailingComma": "all",
+}

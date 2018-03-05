@@ -1,0 +1,31 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-order",
+  ],
+  "rules": {
+    "color-hex-case": "upper",
+    "max-empty-lines": 2,
+    "order/order": [
+      {
+        "type": "at-rule",
+        "name": "import",
+      }, {
+        "type": "at-rule",
+        "name": "include",
+      }, {
+        "type": "at-rule",
+        "name": "extend",
+      },
+      "custom-properties",
+      "dollar-variables",
+      "declarations",
+      "rules",
+      "at-rules",
+    ],
+    "order/properties-alphabetical-order": true,
+    "unit-no-unknown": [true, {
+      "ignoreUnits": ["/fr/"],
+    }],
+  }
+}
