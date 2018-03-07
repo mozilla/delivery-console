@@ -9,6 +9,7 @@
 [libs]
 
 [options]
+module.name_mapper.extension='less' -> '<PROJECT_ROOT>/NullModule.js'
 module.name_mapper='^console\/\(.*\)$' -> '<PROJECT_ROOT>/console/\1'
-module.name_mapper='.*\(.less\)$' -> 'empty/object'
 emoji=true
+
