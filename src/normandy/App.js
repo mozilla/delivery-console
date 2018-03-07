@@ -1,21 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { initializeCurrentLocation } from 'redux-little-router';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
-class App extends Component {
+import './less/main.less';
+
+import Router, {
+  enhancer as routerEnhancer,
+  middleware as routerMiddleware,
+} from 'normandy/routes';
+import reducers from 'normandy/state';
+
+
+const middleware = [
+  routerMiddleware,
+  thunk,
+];
+
+middleware.push(
+  createLogger({
+    collapsed: true,
+    diff: false,
+    duration: true,
+    timestamp: true,
+  }),
+);
+
+const store = createStore(reducers, reducers(undefined, { type: 'initial' }), compose(
+  applyMiddleware(...middleware),
+  routerEnhancer,
+));
+
+const initialLocation = store.getState().router;
+if (initialLocation) {
+  store.dispatch(initializeCurrentLocation(initialLocation));
+}
+
+export default class Root extends React.PureComponent {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Normandy</h1>
-        </header>
-        {this.props.authToken && (
-          <div>authToken is "{this.props.authToken}"</div>
-        )}
-      </div>
+      <Provider store={store}>
+        <Router />
+      </Provider>
     );
   }
 }
-
-export default App;

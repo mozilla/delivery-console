@@ -1,9 +1,4 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import FakeApp from './App';
+import Root from './App';
 
-ReactDOM.render(
-  <FakeApp authToken={'fake-dev-token'} />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<Root />, document.querySelector('#main'));
