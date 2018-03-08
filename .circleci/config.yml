@@ -75,3 +75,11 @@ jobs:
             . venv/bin/activate
             cd docs
             make html
+
+
+workflows:
+  version: 2
+  build_and_docs:
+    jobs:
+      - build
+      - docs
