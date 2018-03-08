@@ -5,11 +5,11 @@ import React, { Component } from 'react';
 import 'console/App.less';
 
 import LoginPage from './LoginPage';
-import { BrowserRouter, NavLink, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import { Route, Redirect } from 'react-router';
 
-import { Alert, Button, Layout, Menu } from 'antd';
-const { Header, Footer, Content } = Layout;
+import { Alert, Layout } from 'antd';
+const { Header, Content } = Layout;
 
 const Homepage = props => (
   <div>
@@ -73,7 +73,7 @@ class App extends Component<AppProps, AppState> {
               />
             )}
           </Header>
-          <Content class="app-content">
+          <Content className="app-content">
             {/* Homepage */}
             <Route
               exact
