@@ -70,7 +70,7 @@ class App extends Component<AppProps, AppState> {
               />
             )}
           </Header>
-          <Content class="app-content">
+          <Content className="app-content">
             {/* Homepage */}
             <Route
               exact
