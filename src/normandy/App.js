@@ -41,9 +41,11 @@ if (initialLocation) {
 export default class Root extends React.PureComponent {
   render() {
     return (
-      <Provider store={store}>
-        <Router />
-      </Provider>
+      <div id="normandy-app">
+        <Provider store={store}>
+          <Router />
+        </Provider>
+      </div>
     );
   }
 }
