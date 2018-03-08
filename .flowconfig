@@ -9,7 +9,7 @@
 [libs]
 
 [options]
-module.name_mapper.extension='less' -> '<PROJECT_ROOT>/NullModule.js'
+module.name_mapper.extension='less' -> '<PROJECT_ROOT>/FlowStubModule.js'
 module.name_mapper='^console\/\(.*\)$' -> '<PROJECT_ROOT>/console/\1'
 emoji=true
 
