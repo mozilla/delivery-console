@@ -1,18 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import DevConsoleApp from './App';
+/* @flow */
 
-<<<<<<< 63a272e179d2d30bbdc39d5513ca8d4360458a9e
 import React, { Component } from 'react';
 
 import 'console/App.less';
 
 import LoginPage from './LoginPage';
-import { BrowserRouter, NavLink, Link } from 'react-router-dom';
+import Normandy from 'normandy/App';
+import { BrowserRouter, NavLink, Link, withRouter } from 'react-router-dom';
 import { Route, Redirect } from 'react-router';
 
-import { Alert, Layout } from 'antd';
-const { Header, Content } = Layout;
+import { Alert, Button, Layout, Menu } from 'antd';
+const { Header, Footer, Content } = Layout;
 
 const Homepage = props => (
   <div>
@@ -27,10 +25,6 @@ const Homepage = props => (
       </p>
     )}
   </div>
-);
-
-const MockNormandy = props => (
-  <div>Normandy with auth token {props.authToken}</div>
 );
 
 type AppProps = {};
@@ -76,7 +70,7 @@ class App extends Component<AppProps, AppState> {
               />
             )}
           </Header>
-          <Content className="app-content">
+          <Content class="app-content">
             {/* Homepage */}
             <Route
               exact
@@ -103,7 +97,7 @@ class App extends Component<AppProps, AppState> {
               path="/normandy/"
               component={() =>
                 this.state.username ? (
-                  <MockNormandy authToken={this.state.authToken} />
+                  <Normandy authToken={this.state.authToken} />
                 ) : (
                   <Redirect to="/login/?next=/normandy/" />
                 )
@@ -117,6 +111,3 @@ class App extends Component<AppProps, AppState> {
 }
 
 export default App;
-=======
-ReactDOM.render(<DevConsoleApp />, document.getElementById('root'));
->>>>>>> #18: Multiple app entry points
