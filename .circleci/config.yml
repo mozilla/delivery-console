@@ -43,10 +43,10 @@ jobs:
       - run: yarn run build
 
       - deploy:
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            ./bin/deploy.sh latest
-          fi
-          if [ -n "${CIRCLE_TAG}" ]; then
-            ./bin/deploy.sh "$CIRCLE_TAG"
-          fi
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./bin/deploy.sh latest
+            fi
+            if [ -n "${CIRCLE_TAG}" ]; then
+              ./bin/deploy.sh "$CIRCLE_TAG"
+            fi
