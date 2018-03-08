@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import type { RouterHistory, Location } from 'react-router-dom';
 
 import { Button, Form, Input, Icon } from 'antd';
 import 'console/login.less';
@@ -9,8 +10,8 @@ const FormItem = Form.Item;
 
 type Props = {
   onAuth: Function,
-  history: any,
-  location: any,
+  history: RouterHistory,
+  location: Location,
 };
 type State = {};
 
