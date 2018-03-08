@@ -4,3 +4,5 @@
 [![Documentation Status](https://readthedocs.org/projects/delivery-console/badge/?version=latest)](http://delivery-console.readthedocs.io/en/latest/?badge=latest)
 
 One admin to rule them all
+
+[Documentation on ReadTheDocs](https://delivery-console.readthedocs.io/)
