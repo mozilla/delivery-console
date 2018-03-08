@@ -42,5 +42,10 @@
     "stylelint": "^9.1.1",
     "stylelint-config-standard": "^18.1.0",
     "stylelint-order": "^0.8.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      ".*\\.less$": "<rootDir>/StubModule.js"
+    }
   }
 }
