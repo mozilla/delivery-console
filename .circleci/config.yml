@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # Based on https://nodejs.org/en/
-      - image: circleci/node:7.10
+      - image: circleci/node:8
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
