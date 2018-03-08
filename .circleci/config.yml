@@ -50,3 +50,28 @@ jobs:
             if [ -n "${CIRCLE_TAG}" ]; then
               ./bin/deploy.sh "$CIRCLE_TAG"
             fi
+
+  docs:
+    docker:
+      - image: circleci/python:3.6
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r docs/requirements.txt
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          command: |
+            . venv/bin/activate
+            cd docs
+            make html
