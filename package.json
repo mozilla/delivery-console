@@ -29,7 +29,7 @@
     "eject": "react-scripts eject",
     "lint:flow": "flow",
     "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
-    "lint:prettier": "prettier src/**/*.js",
+    "lint:prettier": "prettier --list-different src/**/*.js | ./lint_problems.sh",
     "lint:prettierfix": "prettier src/**/*.js --write",
     "lint": "yarn run lint:flow && yarn run lint:prettier && yarn run lint:less"
   },
