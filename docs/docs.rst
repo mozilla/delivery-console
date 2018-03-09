@@ -4,9 +4,8 @@ Updating The Documentation
 
 You need to have Python to build the documentation locally.
 
-The documentation is built in our continuous integration every time
-if you feel bold you can just edit these ``.rst`` files and see if the
-pull request succeeds to build.
+The documentation is built automatically in our continuous integration
+every time a commit is pushed.
 
 To build the documentation, create and activate a Python virtualenv.
 For exampe:
