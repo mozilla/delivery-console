@@ -6,11 +6,11 @@ import 'console/App.less';
 
 import LoginPage from './LoginPage';
 import Normandy from 'normandy/App';
-import { BrowserRouter, NavLink, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import { Route, Redirect } from 'react-router';
 
-import { Alert, Button, Layout, Menu } from 'antd';
-const { Header, Footer, Content } = Layout;
+import { Alert, Layout } from 'antd';
+const { Header, Content } = Layout;
 
 const Homepage = props => (
   <div>
