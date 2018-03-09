@@ -12,6 +12,8 @@ module.exports = function(config, env) {
     }
   };
 
+  // If an --app=something parameter is present when running this script,
+  // change the entry point to start the given app.
   let selectedApp = process.argv.find(arg => arg.startsWith('--app'));
   if (selectedApp) {
     selectedApp = selectedApp.split('=')[1];
@@ -27,14 +29,6 @@ module.exports = function(config, env) {
   );
   // Decorator support (Normandy)
   config = injectBabelPlugin('transform-decorators-legacy', config);
-
-  // If an --app=something parameter is present when running this script,
-  // change the entry point to start the given app.
-  let selectedApp = process.argv.find(val => val.startsWith('--app'));
-  if(selectedApp) {
-    selectedApp = selectedApp.split('=')[1];
-    config.entry = path.resolve(__dirname, `./src/${selectedApp}/index.js`);
-  }
 
   return config;
 };

@@ -19,14 +19,14 @@ const middleware = [
   thunk,
 ];
 
-middleware.push(
-  createLogger({
-    collapsed: true,
-    diff: false,
-    duration: true,
-    timestamp: true,
-  }),
-);
+// middleware.push(
+//   createLogger({
+//     collapsed: true,
+//     diff: false,
+//     duration: true,
+//     timestamp: true,
+//   }),
+// );
 
 const store = createStore(reducers, reducers(undefined, { type: 'initial' }), compose(
   applyMiddleware(...middleware),
