@@ -8,6 +8,13 @@ dl.details {
     grid-template-columns: calc(~"75px + 5vw") calc(~"100% - calc(75px + 5vw)");
   }
 
+  dt {
+    color: #999;
+    font-weight: bold;
+    padding-right: 16px;
+    text-transform: uppercase;
+  }
+
   dt,
   dd {
     border-bottom: 1px solid #EEE;
@@ -21,13 +28,6 @@ dl.details {
       border-bottom: none;
       padding-bottom: 0;
     }
-  }
-
-  dt {
-    color: #999;
-    font-weight: bold;
-    padding-right: 16px;
-    text-transform: uppercase;
   }
 
   .arguments-value {
@@ -101,6 +101,20 @@ dl.details {
   }
 }
 
+.recipe-details {
+  .ant-card {
+    margin: 16px 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .page-recipe-details {
   height: 100%;
 
@@ -139,20 +153,6 @@ dl.details {
   button {
     float: right;
     margin-left: 8px;
-  }
-}
-
-.recipe-details {
-  .ant-card {
-    margin: 16px 0;
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 }
 
