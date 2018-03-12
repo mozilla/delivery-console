@@ -45,7 +45,9 @@
   },
   "jest": {
     "moduleNameMapper": {
-      ".*\\.less$": "<rootDir>/StubModule.js"
+      ".*\\.less$": "<rootDir>/StubModule.js",
+      "^console/(.*)$": "<rootDir>/src/console/$1",
+      "^normandy/(.*)$": "<rootDir>/src/normandy/$1"
     }
   }
 }
