@@ -1,5 +1,4 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import DevConsoleApp from './App';
+import Root from './App';
 
-ReactDOM.render(<DevConsoleApp />, document.getElementById('root'));
+ReactDOM.render(<Root />, document.querySelector('#main'));
