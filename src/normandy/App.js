@@ -4,6 +4,10 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { initializeCurrentLocation } from 'redux-little-router';
 import thunk from 'redux-thunk';
 
+import { BrowserRouter, NavLink, Link, Switch } from 'react-router-dom';
+import { Route, Redirect } from 'react-router';
+
+
 import './less/main.less';
 
 import Router, {
@@ -27,12 +31,24 @@ if (initialLocation) {
 
 export default class Root extends React.PureComponent {
   render() {
+    const urlPrefix = this.props.urlPrefix || '';
+
     return (
-      <div id="normandy-app">
-        <Provider store={store}>
-          <Router />
-        </Provider>
-      </div>
+      <Provider store={store}>
+        {/* <BrowserRouter> */}
+          <div id="normandy-app">
+            <Switch>
+              <Route exact path={`${urlPrefix}/`} component={() => <div>ok</div>} />
+              <Route exact path={`${urlPrefix}/nested/`} component={() => <div>nested</div>} />
+              <Route component={({ location }) => (
+                <div>
+                  <h3>No del-console match for <code>{location.pathname}</code></h3>
+                </div>
+              )} />
+            </Switch>
+          </div>
+        {/* </BrowserRouter> */}
+      </Provider>
     );
   }
 }
