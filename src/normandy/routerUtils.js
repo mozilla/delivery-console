@@ -23,7 +23,6 @@ export const searchRouteTree = (tree, name, currentUrl = '') => {
   return null;
 };
 
-
 // Given a route (e.g. `/hello/:id/there`), finds params that need to be
 // populated (e.g. `:id`) and returns a string with populated values.
 export const replaceUrlVariables = (url, params) => {

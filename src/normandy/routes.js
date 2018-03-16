@@ -18,7 +18,6 @@ import RecipeDetailPage from 'normandy/components/recipes/RecipeDetailPage';
 
 import { searchRouteTree, replaceUrlVariables } from './routerUtils';
 
-
 /**
  * @type {Route}
  * @property {Component} component    React component used to render route
@@ -148,11 +147,7 @@ export const getNamedRoute = (name, params = {}) => {
   return null;
 };
 
-export const {
-  reducer,
-  middleware,
-  enhancer,
-} = routerForBrowser({
+export const { reducer, middleware, enhancer } = routerForBrowser({
   routes,
   basename: '',
 });
@@ -167,7 +162,11 @@ export default class Router extends React.PureComponent {
 
   render() {
     const { router } = this.props;
-    const content = router.route ? <router.result.component /> : <MissingPage />;
+    const content = router.route ? (
+      <router.result.component />
+    ) : (
+      <MissingPage />
+    );
     return <App>{content}</App>;
   }
 }
