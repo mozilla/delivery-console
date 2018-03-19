@@ -12,15 +12,13 @@ import Router, {
 } from 'normandy/routes';
 import reducers from 'normandy/state';
 
-const middleware = [
-  routerMiddleware,
-  thunk,
-];
+const middleware = [routerMiddleware, thunk];
 
-const store = createStore(reducers, reducers(undefined, { type: 'initial' }), compose(
-  applyMiddleware(...middleware),
-  routerEnhancer,
-));
+const store = createStore(
+  reducers,
+  reducers(undefined, { type: 'initial' }),
+  compose(applyMiddleware(...middleware), routerEnhancer),
+);
 
 const initialLocation = store.getState().router;
 if (initialLocation) {
