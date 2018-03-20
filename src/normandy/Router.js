@@ -59,13 +59,6 @@ export default class NormandyRouter extends React.Component {
     }
   };
 
-  componentWillMount(){
-    // `NormandyLinks` are wrapped Links which append a prefix for nested apps.
-    // At this point we know the prefix, so we can update all instances of the
-    // Link here via the static PREFIX property.
-    NormandyLink.PREFIX = this.props.urlPrefix || '';
-  }
-
   render() {
     const urlPrefix = this.props.urlPrefix || '';
 
