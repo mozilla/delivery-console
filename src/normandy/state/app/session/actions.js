@@ -3,7 +3,6 @@
 import { List, Map } from 'immutable';
 import * as localForage from 'localforage';
 
-import { getNamedRoute } from 'normandy/routes';
 import {
   SESSION_INFO_RECEIVE,
   SESSION_INFO_HISTORY_VIEW,
@@ -71,7 +70,7 @@ export function addSessionView(category, caption, identicon) {
     const slugRedirect = router.result && router.result.sessionSlug;
 
     if (slugRedirect) {
-      url = getNamedRoute(slugRedirect, router.params);
+      url = 'fix-this'; // getNamedRoute(slugRedirect, router.params);
     }
 
     dispatch({

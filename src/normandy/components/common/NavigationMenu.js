@@ -26,8 +26,8 @@ export default class NavigationMenu extends React.PureComponent {
   };
 
   render() {
-    const { router, recipeSessionHistory, extensionSessionHistory } = this.props;
-    const { pathname, search } = router;
+    const { recipeSessionHistory, extensionSessionHistory } = this.props;
+    const { pathname, search } = window.location; // router;
 
     return (
       <div className="nav-menu">

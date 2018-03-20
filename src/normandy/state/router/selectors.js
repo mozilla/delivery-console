@@ -9,7 +9,16 @@ export function getUrlParamAsInt(state, name, defaultsTo) {
 }
 
 export function getQueryParam(state, key, defaultsTo) {
-  return state.router.query[key] || defaultsTo;
+  let params = (window.location.search || '').replace('?', '');
+  params = params.split('&');
+  params = params.map(x => x.split('='));
+
+  const query = {};
+  params.forEach(set => {
+    query[set[0]] = set[1];
+  });
+
+  return  query[key] || defaultsTo;
 }
 
 export function getQueryParamAsInt(state, key, defaultsTo) {
@@ -31,7 +40,7 @@ export function getRouterPath(state) {
 }
 
 export function getBreadcrumbs(state) {
-  const { result, pathname, params } = state.router;
+  const { result, pathname, params } = window.location; // state.router;
   const crumbs = [];
   let currentRoute = result;
 

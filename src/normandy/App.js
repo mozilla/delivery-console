@@ -30,7 +30,7 @@ const store = createStore(reducers, reducers(undefined, { type: 'initial' }), co
 >>>>>>> Abstract NormandyRouter into component
 
 
-export default class Root extends React.PureComponent {
+export default class Root extends React.Component {
   render() {
     const urlPrefix = this.props.urlPrefix;
 

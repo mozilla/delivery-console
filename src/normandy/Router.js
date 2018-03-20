@@ -16,7 +16,7 @@ import RecipeDetailPage from 'normandy/components/recipes/RecipeDetailPage';
 
 import { NavLink } from 'react-router-dom';
 
-export default class NormandyRouter extends React.PureComponent {
+export default class NormandyRouter extends React.Component {
   static ROUTES = {
     '/': {
       component: Gateway,
