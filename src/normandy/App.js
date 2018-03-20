@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
+import App from 'normandy/components/App';
 import NormandyRouter from './Router';
 
 
@@ -35,9 +36,9 @@ export default class Root extends React.PureComponent {
 
     return (
       <Provider store={store}>
-        <div id="normandy-app">
+        <App>
           <NormandyRouter urlPrefix={urlPrefix} />
-        </div>
+        </App>
       </Provider>
     );
   }

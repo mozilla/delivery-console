@@ -27,7 +27,7 @@ export default class App extends React.PureComponent {
 
     return (
       <LocaleProvider locale={enUS}>
-        <Layout>
+        <Layout id="normandy-app">
           <EnvAlert />
 
           {/*
