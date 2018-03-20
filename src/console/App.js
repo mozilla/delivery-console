@@ -7,7 +7,7 @@ import 'console/App.less';
 import LoginPage from './LoginPage';
 import Normandy from 'normandy/App';
 import { BrowserRouter, NavLink, Link } from 'react-router-dom';
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect, Switch } from 'react-router';
 
 import { Alert, Layout } from 'antd';
 const { Header, Content } = Layout;
@@ -17,13 +17,13 @@ const Homepage = props => (
     <h3>Welcome {props.authToken ? 'back' : 'home'}!</h3>
     {props.authToken ? (
       <p>
-        Go to the <Link to="/normandy">Normandy page</Link>.
+        Go to the <Link to="/shield">SHIELD control panel</Link>.
       </p>
     ) : (
-      <p>
-        You are not logged in! Go to the <Link to="/login">login page</Link>.
+        <p>
+          You are not logged in! Go to the <Link to="/login">login page</Link>.
       </p>
-    )}
+      )}
   </div>
 );
 
@@ -57,8 +57,8 @@ class App extends Component<AppProps, AppState> {
               Home
             </NavLink>
             <NavLink to="/login">Login</NavLink>
-            <NavLink exact to="/normandy">
-              Normandy
+            <NavLink to="/shield">
+              SHIELD
             </NavLink>
 
             {this.state.username && (
@@ -71,6 +71,7 @@ class App extends Component<AppProps, AppState> {
             )}
           </Header>
           <Content className="app-content">
+          <Switch>
             {/* Homepage */}
             <Route
               exact
@@ -86,23 +87,34 @@ class App extends Component<AppProps, AppState> {
                 this.state.username ? (
                   <Redirect to="/" />
                 ) : (
-                  <LoginPage onAuth={this.onUserLogin} />
-                )
+                    <LoginPage onAuth={this.onUserLogin} />
+                  )
               }
             />
 
             {/* Normandy App */}
             <Route
-              exact
-              path="/normandy/"
-              component={() =>
-                this.state.username ? (
-                  <Normandy authToken={this.state.authToken} />
+              path="/shield"
+              component={(props) =>
+                true || this.state.username ? (
+                  <Normandy
+                    authToken={this.state.authToken}
+                    urlPrefix="/shield"
+                    {...props}
+                  />
                 ) : (
-                  <Redirect to="/login/?next=/normandy/" />
-                )
+                    <Redirect to="/login/?next=/shield" />
+                  )
               }
             />
+
+            <Route component={({ location }) => (
+              <div>
+                <h2>404 - Page Not Found</h2>
+                <p>No del-console match for <code>{location.pathname}</code></p>
+              </div>
+            )} />
+          </Switch>
           </Content>
         </Layout>
       </BrowserRouter>
