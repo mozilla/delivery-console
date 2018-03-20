@@ -75,3 +75,15 @@ export default class NormandyRouter extends React.PureComponent {
     );
   }
 }
+
+export class NormandyLink extends React.Component {
+  static PREFIX = '';
+  render() {
+    const {
+      to,
+      ...rest,
+    } = this.props;
+
+    return (<NavLink to={`${NormandyLink.PREFIX}${to}`} {...rest} />);
+  }
+}

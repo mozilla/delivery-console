@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import QuerySessionInfo from 'normandy/components/data/QuerySessionInfo';
 import { getSessionHistory } from 'normandy/state/app/session/selectors';
@@ -11,11 +11,13 @@ import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 
 const { Divider, Item, SubMenu } = Menu;
 
-@connect(state => ({
-  recipeSessionHistory: getSessionHistory(state, 'recipe'),
-  extensionSessionHistory: getSessionHistory(state, 'extension'),
-  router: state.router,
-}))
+@connect(
+  state => ({
+    recipeSessionHistory: getSessionHistory(state, 'recipe'),
+    extensionSessionHistory: getSessionHistory(state, 'extension'),
+    router: state.router,
+  }),
+)
 export default class NavigationMenu extends React.PureComponent {
   static propTypes = {
     recipeSessionHistory: PropTypes.instanceOf(List).isRequired,
@@ -24,11 +26,7 @@ export default class NavigationMenu extends React.PureComponent {
   };
 
   render() {
-    const {
-      router,
-      recipeSessionHistory,
-      extensionSessionHistory,
-    } = this.props;
+    const { router, recipeSessionHistory, extensionSessionHistory } = this.props;
     const { pathname, search } = router;
 
     return (
@@ -39,39 +37,41 @@ export default class NavigationMenu extends React.PureComponent {
           selectedKeys={[pathname + search]}
           mode="inline"
         >
-          <Item key="/">
-            <Link href="/">Home</Link>
-          </Item>
+          <Item key="/"><Link to="/">Home</Link></Item>
 
           <SubMenu title="Recipes" key="Recipes">
             <Item key="/recipe/">
-              <Link href="/recipe/">View All</Link>
+              <Link to="/recipe/">View All</Link>
             </Item>
 
             {recipeSessionHistory.size > 0 && <Divider />}
 
-            {recipeSessionHistory.map(item => (
-              <Item key={item.get('url')}>
-                <Link href={item.get('url')}>
-                  <ShieldIdenticon seed={item.get('identicon')} size={20} />
-                  {item.get('caption')}
-                </Link>
-              </Item>
-            ))}
+            {
+              recipeSessionHistory.map(item =>
+                (<Item key={item.get('url')}>
+                  <Link to={item.get('url')}>
+                    <ShieldIdenticon seed={item.get('identicon')} size={20} />
+                    { item.get('caption') }
+                  </Link>
+                </Item>),
+              )
+            }
           </SubMenu>
 
           <SubMenu title="Extensions" key="Extensions">
             <Item key="/extension/">
-              <Link href="/extension/">View All</Link>
+              <Link to="/extension/">View All</Link>
             </Item>
 
             {extensionSessionHistory.size > 0 && <Divider />}
 
-            {extensionSessionHistory.map(item => (
-              <Item key={item.get('url')}>
-                <Link href={item.get('url')}>{item.get('caption')}</Link>
-              </Item>
-            ))}
+            {
+              extensionSessionHistory.map(item =>
+                (<Item key={item.get('url')}>
+                  <Link to={item.get('url')}>{ item.get('caption') }</Link>
+                </Item>),
+              )
+            }
           </SubMenu>
         </Menu>
       </div>

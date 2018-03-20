@@ -80,7 +80,7 @@ export default class ExtensionListing extends React.PureComponent {
   };
 
   static renderLinkedText(text, record) {
-    return <Link href={`/extension/${record.id}/`}>{text}</Link>;
+    return <Link to={`/extension/${record.id}/`}>{text}</Link>;
   }
 
   getFilters() {

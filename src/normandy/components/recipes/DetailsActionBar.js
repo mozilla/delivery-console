@@ -4,13 +4,15 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import {
   disableRecipe as disableRecipeAction,
   enableRecipe as enableRecipeAction,
 } from 'normandy/state/app/recipes/actions';
-import { requestRevisionApproval as requestRevisionApprovalAction } from 'normandy/state/app/revisions/actions';
+import {
+  requestRevisionApproval as requestRevisionApprovalAction,
+} from 'normandy/state/app/revisions/actions';
 import {
   getLatestRevisionIdForRecipe,
   getRecipe,
@@ -26,6 +28,7 @@ import {
   getUrlParam,
   getUrlParamAsInt,
 } from 'normandy/state/router/selectors';
+
 
 @connect(
   state => {
@@ -105,41 +108,38 @@ export default class DetailsActionBar extends React.PureComponent {
 
     return (
       <div className="details-action-bar clearfix">
-        <Link href={`${routerPath}clone/`} id="dab-clone-link">
-          <Button icon="swap" type="primary" id="dab-clone-button">
-            Clone
-          </Button>
+        <Link to={`${routerPath}clone/`} id="dab-clone-link">
+          <Button icon="swap" type="primary" id="dab-clone-button">Clone</Button>
         </Link>
 
-        {isLatest && (
-          <Link href={`/recipe/${recipeId}/edit/`} id="dab-edit-link">
-            <Button icon="edit" type="primary" id="dab-edit-button">
-              Edit
+        {
+          isLatest &&
+            <Link to={`/recipe/${recipeId}/edit/`} id="dab-edit-link">
+              <Button icon="edit" type="primary" id="dab-edit-button">Edit</Button>
+            </Link>
+        }
+
+        {
+          isApprovable &&
+            <Button
+              icon="question-circle"
+              type="primary"
+              onClick={this.handleRequestClick}
+              id="dab-request-approval"
+            >
+              Request Approval
             </Button>
-          </Link>
-        )}
+        }
 
-        {isApprovable && (
-          <Button
-            icon="question-circle"
-            type="primary"
-            onClick={this.handleRequestClick}
-            id="dab-request-approval"
-          >
-            Request Approval
-          </Button>
-        )}
+        {
+          isPendingApproval &&
+            <Link to={`/recipe/${recipeId}/approval_history/`}>
+              <Button icon="message" type="primary" id="dab-approval-status">Approval Request</Button>
+            </Link>
+        }
 
-        {isPendingApproval && (
-          <Link href={`/recipe/${recipeId}/approval_history/`}>
-            <Button icon="message" type="primary" id="dab-approval-status">
-              Approval Request
-            </Button>
-          </Link>
-        )}
-
-        {isLatestApproved &&
-          recipe.get('enabled') && (
+        {
+          isLatestApproved && recipe.get('enabled') &&
             <Button
               icon="close-circle"
               type="danger"
@@ -148,10 +148,10 @@ export default class DetailsActionBar extends React.PureComponent {
             >
               Disable
             </Button>
-          )}
+        }
 
-        {isLatestApproved &&
-          !recipe.get('enabled') && (
+        {
+          isLatestApproved && !recipe.get('enabled') &&
             <Button
               icon="check-circle"
               type="primary"
@@ -160,7 +160,7 @@ export default class DetailsActionBar extends React.PureComponent {
             >
               Publish
             </Button>
-          )}
+        }
       </div>
     );
   }

@@ -2,7 +2,7 @@ import { Layout, LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import CurrentUserDetails from 'normandy/components/common/CurrentUserDetails';
 import NavigationCrumbs from 'normandy/components/common/NavigationCrumbs';
@@ -40,7 +40,7 @@ export default class App extends React.PureComponent {
           <Header>
             <CurrentUserDetails />
             <div className="logo">
-              <Link href="/">SHIELD Control Panel</Link>
+              <Link to="/">SHIELD Control Panel</Link>
             </div>
           </Header>
 
