@@ -21,6 +21,7 @@ export default class NormandyRouter extends React.Component {
     '/': {
       component: Gateway,
     },
+    // Recipes ---
     '/recipe': {
       component: RecipeListing,
     },
@@ -39,18 +40,29 @@ export default class NormandyRouter extends React.Component {
     '/recipe/:recipeId/clone': {
       component: CloneRecipePage,
     },
+    // Recipe Revisions ---
     '/recipe/:recipeId/rev/:revisionId': {
       component: RecipeDetailPage,
     },
     '/recipe/:recipeId/rev/:revisionId/clone': {
       component: CloneRecipePage,
     },
+    // Extensions ---
+    '/extension': {
+      component: ExtensionListing,
+    },
+    '/extension/new': {
+      component: CreateExtensionPage,
+    },
+    '/extension/:extensionId': {
+      component: EditExtensionPage,
+    }
   };
 
   componentWillMount(){
-    // `NormandyLinks` are wrapped react-router links which append a prefix for nested apps.
-    // At the time the router mounts, we know the prefix, so we can update all instances
-    // of the link here via the static PREFIX property.
+    // `NormandyLinks` are wrapped Links which append a prefix for nested apps.
+    // At this point we know the prefix, so we can update all instances of the
+    // Link here via the static PREFIX property.
     NormandyLink.PREFIX = this.props.urlPrefix || '';
   }
 
