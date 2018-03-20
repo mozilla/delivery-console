@@ -4,7 +4,8 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction, Link } from 'redux-little-router';
+import { push as pushAction} from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
 import {
