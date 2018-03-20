@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NormandyLink as Link } from 'normandy/Router';
 
-import CurrentUserDetails from 'normandy/components/common/CurrentUserDetails';
 import NavigationCrumbs from 'normandy/components/common/NavigationCrumbs';
 import NavigationMenu from 'normandy/components/common/NavigationMenu';
 import EnvAlert from 'normandy/components/common/EnvAlert';
@@ -38,7 +37,6 @@ export default class App extends React.PureComponent {
           <QueryServiceInfo />
 
           <Header>
-            <CurrentUserDetails />
             <div className="logo">
               <Link to="/">SHIELD Control Panel</Link>
             </div>
