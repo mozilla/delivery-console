@@ -21,10 +21,10 @@ import {
 import { getLatestRevisionIdForRecipe } from 'normandy/state/app/recipes/selectors';
 
 @connect(
-  state => {
-    const recipeId = getUrlParamAsInt(state, 'recipeId');
+  (state, props) => {
+    const recipeId = getUrlParamAsInt(props, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const revisionId = getUrlParam(state, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParam(props, 'revisionId', latestRevisionId);
     const recipe = getRecipeForRevision(state, revisionId, new Map());
     const isLatestRevision = isLatestRevisionSelector(state, revisionId);
 

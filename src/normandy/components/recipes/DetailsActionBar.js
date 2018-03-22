@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NormandyLink as Link } from 'normandy/Router';
+import { withRouter } from 'react-router'
 
 import {
   disableRecipe as disableRecipeAction,
@@ -29,20 +30,20 @@ import {
   getUrlParamAsInt,
 } from 'normandy/state/router/selectors';
 
-
+@withRouter
 @connect(
-  state => {
-    const recipeId = getUrlParamAsInt(state, 'recipeId');
+  (state, props) => {
+    const recipeId = getUrlParamAsInt(props, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
     const recipe = getRecipe(state, recipeId, new Map());
-    const revisionId = getUrlParam(state, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParam(props, 'revisionId', latestRevisionId);
 
     return {
       isLatest: isLatestRevision(state, revisionId),
       isLatestApproved: isLatestApprovedRevision(state, revisionId),
       isPendingApproval: isRevisionPendingApproval(state, revisionId),
       isApprovable: isApprovableRevision(state, revisionId),
-      routerPath: getRouterPath(state),
+      routerPath: getRouterPath(props),
       recipe,
       recipeId,
       revisionId,

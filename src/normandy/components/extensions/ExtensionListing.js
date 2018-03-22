@@ -24,13 +24,13 @@ import {
 } from 'normandy/state/router/selectors';
 
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getExtensionListingColumns(state),
     count: getExtensionListingCount(state),
     extensions: getExtensionListing(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(state, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(state, 'page', 1),
+    ordering: getQueryParam(props, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(props, 'page', 1),
   }),
   {
     push: pushAction,

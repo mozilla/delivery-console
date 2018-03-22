@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { push as pushAction} from 'redux-little-router';
+import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
@@ -19,12 +20,12 @@ import {
   getQueryParam,
 } from 'normandy/state/router/selectors';
 
-
+@withRouter
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getRecipeListingColumns(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    searchText: getQueryParam(state, 'searchText'),
+    searchText: getQueryParam(props, 'searchText'),
   }),
   {
     push: pushAction,

@@ -11,15 +11,6 @@ import './less/main.less';
 
 import reducers from 'normandy/state';
 
-<<<<<<< HEAD
-const middleware = [routerMiddleware, thunk];
-
-const store = createStore(
-  reducers,
-  reducers(undefined, { type: 'initial' }),
-  compose(applyMiddleware(...middleware), routerEnhancer),
-);
-=======
 const middleware = [
   thunk,
 ];
@@ -27,7 +18,6 @@ const middleware = [
 const store = createStore(reducers, reducers(undefined, { type: 'initial' }), compose(
   applyMiddleware(...middleware),
 ));
->>>>>>> Abstract NormandyRouter into component
 
 
 export default class Root extends React.Component {

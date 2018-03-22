@@ -32,17 +32,16 @@ import {
   getQueryParamAsInt,
 } from 'normandy/state/router/selectors';
 
-
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getRecipeListingColumns(state),
     count: getRecipeListingCount(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(state, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(state, 'page', 1),
+    ordering: getQueryParam(props, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(props, 'page', 1),
     recipes: getRecipeListingFlattenedAction(state),
-    searchText: getQueryParam(state, 'searchText'),
-    status: getQueryParam(state, 'status'),
+    searchText: getQueryParam(props, 'searchText'),
+    status: getQueryParam(props, 'status'),
   }),
   {
     fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
