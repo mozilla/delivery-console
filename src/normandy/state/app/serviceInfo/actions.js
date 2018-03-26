@@ -18,6 +18,11 @@ export function fetchServiceInfo() {
       serviceInfo,
     });
 
+
+    if (!serviceInfo.user) {
+      throw new Error('No user provided in service_info');
+    }
+
     dispatch({
       type: USER_RECEIVE,
       user: serviceInfo.user,

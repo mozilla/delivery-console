@@ -62,6 +62,9 @@ export function saveSession() {
 
 export function addSessionView(category, caption, identicon) {
   return async (dispatch, getState) => {
+    // #todo;
+    return null;
+
     const { router } = getState();
     let url = router.pathname;
 
@@ -70,7 +73,7 @@ export function addSessionView(category, caption, identicon) {
     const slugRedirect = router.result && router.result.sessionSlug;
 
     if (slugRedirect) {
-      url = 'fix-this'; // getNamedRoute(slugRedirect, router.params);
+      url = getNamedRoute(slugRedirect, router.params);
     }
 
     dispatch({
