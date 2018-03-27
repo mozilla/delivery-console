@@ -3,23 +3,28 @@ import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction } from 'redux-little-router';
+import { withRouter } from 'react-router';
 
 import handleError from 'normandy/utils/handleError';
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 import RecipeForm from 'normandy/components/recipes/RecipeForm';
 
 import { createRecipe as createAction } from 'normandy/state/app/recipes/actions';
+import { NormandyLink } from '../../Router';
 
-@connect(null, {
-  createRecipe: createAction,
-  push: pushAction,
-})
+
+@withRouter
+@connect(
+  null,
+  {
+    createRecipe: createAction,
+  },
+)
 @autobind
 export default class CreateRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   onFormFailure(err) {
@@ -28,7 +33,7 @@ export default class CreateRecipePage extends React.PureComponent {
 
   onFormSuccess(newId) {
     message.success('Recipe created');
-    this.props.push(`/recipe/${newId}/`);
+    this.props.history.push(`${NormandyLink.PREFIX}/recipe/${newId}/`);
   }
 
   async formAction(formValues) {

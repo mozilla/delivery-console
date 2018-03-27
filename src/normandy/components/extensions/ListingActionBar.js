@@ -4,7 +4,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction} from 'redux-little-router';
+import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
@@ -24,7 +24,6 @@ import {
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
   }),
   {
-    push: pushAction,
     saveExtensionListingColumns: saveExtensionListingColumnsAction,
   },
 )
@@ -38,8 +37,8 @@ export default class ListingActionBar extends React.PureComponent {
   };
 
   handleChangeSearch(value) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ searchText: value || undefined }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ searchText: value || undefined }));
   }
 
   render() {

@@ -4,7 +4,8 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, push as pushAction } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
+import { withRouter } from 'react-router';
 
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 import handleError from 'normandy/utils/handleError';
@@ -19,7 +20,9 @@ import {
   isLatestRevision as isLatestRevisionSelector,
 } from 'normandy/state/app/revisions/selectors';
 import { getLatestRevisionIdForRecipe } from 'normandy/state/app/recipes/selectors';
+import { NormandyLink } from '../../Router';
 
+@withRouter
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(props, 'recipeId');
@@ -36,14 +39,13 @@ import { getLatestRevisionIdForRecipe } from 'normandy/state/app/recipes/selecto
     };
   },
   {
-    push: pushAction,
     createRecipe: createAction,
   },
 )
 @autobind
 export default class CloneRecipePage extends React.PureComponent {
   static propTypes = {
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     createRecipe: PropTypes.func.isRequired,
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
@@ -53,7 +55,7 @@ export default class CloneRecipePage extends React.PureComponent {
 
   onFormSuccess(newId) {
     message.success('Recipe saved');
-    this.props.push(`/recipe/${newId}/`);
+    this.props.history.push(`${NormandyLink.PREFIX}/recipe/${newId}/`);
   }
 
   onFormFailure(err) {

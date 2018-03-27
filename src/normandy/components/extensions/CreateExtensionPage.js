@@ -3,28 +3,34 @@ import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction } from 'redux-little-router';
+import { withRouter } from 'react-router';
 
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 import handleError from 'normandy/utils/handleError';
 import ExtensionForm from 'normandy/components/extensions/ExtensionForm';
-import { createExtension as createExtensionAction } from 'normandy/state/app/extensions/actions';
+import {
+  createExtension as createExtensionAction,
+} from 'normandy/state/app/extensions/actions';
+import { NormandyLink } from '../../Router';
 
-@connect(null, {
-  createExtension: createExtensionAction,
-  push: pushAction,
-})
+
+@withRouter
+@connect(
+  null,
+  {
+    createExtension: createExtensionAction,
+  },
+)
 @autobind
 export default class CreateExtensionPage extends React.PureComponent {
   static propTypes = {
     createExtension: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
-  };
+    history: PropTypes.object.isRequired,
+  }
 
   onFormSuccess(extensionId) {
-    const { push } = this.props;
     message.success('Extension saved');
-    push(`/extension/${extensionId}/`);
+    this.props.history.push(`${NormandyLink.PREFIX}/extension/${extensionId}/`);
   }
 
   onFormFailure(err) {

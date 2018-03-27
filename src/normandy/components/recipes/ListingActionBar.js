@@ -4,7 +4,6 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction} from 'redux-little-router';
 import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
@@ -28,7 +27,6 @@ import {
     searchText: getQueryParam(props, 'searchText'),
   }),
   {
-    push: pushAction,
     saveRecipeListingColumns: saveRecipeListingColumnsAction,
   },
 )
@@ -37,7 +35,7 @@ export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentURL: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
   };
@@ -47,8 +45,8 @@ export default class ListingActionBar extends React.PureComponent {
   }
 
   handleChangeSearch(value) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ searchText: value || undefined }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ searchText: value || undefined }));
   }
 
   render() {

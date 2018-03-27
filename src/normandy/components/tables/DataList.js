@@ -4,18 +4,20 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction } from 'redux-little-router';
+import { withRouter } from 'react-router';
 import { isEmpty, mapObject } from 'underscore';
 
-import { getCurrentURL as getCurrentURLSelector } from 'normandy/state/router/selectors';
+import {
+  getCurrentURL as getCurrentURLSelector,
+} from 'normandy/state/router/selectors';
 
+
+@withRouter
 @connect(
   state => ({
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
   }),
-  {
-    push: pushAction,
-  },
+  {},
 )
 @autobind
 export default class DataList extends React.PureComponent {
@@ -26,27 +28,24 @@ export default class DataList extends React.PureComponent {
     getCurrentURL: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     onRowClick: PropTypes.func,
-    push: PropTypes.func.isRequired,
-  };
+    history: PropTypes.object.isRequired,
+  }
 
   static defaultProps = {
     ordering: null,
     onRowClick: null,
-  };
+  }
 
   static getSortOrder = (field, ordering) => {
     if (ordering && ordering.endsWith(field)) {
       return ordering.startsWith('-') ? 'descend' : 'ascend';
     }
     return false;
-  };
+  }
 
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentURL, push } = this.props;
-    const filterParams = mapObject(
-      filters,
-      values => values && values.join(','),
-    );
+    const { getCurrentURL, history } = this.props;
+    const filterParams = mapObject(filters, values => (values && values.join(',')));
 
     let ordering;
     if (!isEmpty(sorter)) {
@@ -54,13 +53,11 @@ export default class DataList extends React.PureComponent {
       ordering = `${prefix}${sorter.field}`;
     }
 
-    push(
-      getCurrentURL({
-        page: undefined, // Return to the first page
-        ordering,
-        ...filterParams,
-      }),
-    );
+    history.push(getCurrentURL({
+      page: undefined, // Return to the first page
+      ordering,
+      ...filterParams,
+    }));
   }
 
   render() {

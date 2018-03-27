@@ -5,7 +5,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction} from 'redux-little-router';
+import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
 
@@ -31,6 +31,7 @@ import {
   getQueryParam,
   getQueryParamAsInt,
 } from 'normandy/state/router/selectors';
+import { NormandyLink } from '../../Router';
 
 @connect(
   (state, props) => ({
@@ -46,7 +47,6 @@ import {
   {
     fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
     openNewWindow: window.open,
-    push: pushAction,
   },
 )
 @autobind
@@ -59,7 +59,7 @@ export default class RecipeListing extends React.PureComponent {
     openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     recipes: PropTypes.instanceOf(List).isRequired,
     searchText: PropTypes.string,
     status: PropTypes.string,
@@ -183,8 +183,8 @@ export default class RecipeListing extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ page }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ page }));
   }
 
   handleRowClick(record, index, event) {
@@ -197,14 +197,14 @@ export default class RecipeListing extends React.PureComponent {
     // as if it was a native link click. This includes opening a new tab if using
     // a modifier key (like ctrl).
 
-    let navTo = this.props.push;
+    let navTo = this.props.history.push.bind(this.props.history);
 
     // No link but the user requested a new window.
     if (event.ctrlKey || event.metaKey || event.button === 1) {
       navTo = this.props.openNewWindow;
     }
 
-    navTo(`/recipe/${record.id}/`);
+    navTo(`${NormandyLink.PREFIX}/recipe/${record.id}/`);
   }
 
   render() {
