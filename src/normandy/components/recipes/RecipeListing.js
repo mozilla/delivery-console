@@ -33,6 +33,7 @@ import {
 } from 'normandy/state/router/selectors';
 import { NormandyLink } from '../../Router';
 
+@withRouter
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),

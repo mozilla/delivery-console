@@ -11,7 +11,6 @@ import EditRecipePage from 'normandy/components/recipes/EditRecipePage';
 import ExtensionListing from 'normandy/components/extensions/ExtensionListing';
 import Gateway from 'normandy/components/pages/Gateway';
 import RecipeListing from 'normandy/components/recipes/RecipeListing';
-import MissingPage from 'normandy/components/pages/MissingPage';
 import RecipeDetailPage from 'normandy/components/recipes/RecipeDetailPage';
 
 import { NavLink } from 'react-router-dom';
@@ -56,7 +55,7 @@ export default class NormandyRouter extends React.Component {
     },
     '/extension/:extensionId': {
       component: EditExtensionPage,
-    }
+    },
   };
 
   render() {
@@ -64,18 +63,27 @@ export default class NormandyRouter extends React.Component {
 
     return (
       <Switch>
-        {
-          Object.keys(NormandyRouter.ROUTES).map(route => {
-            return <Route key={route} exact path={`${urlPrefix}${route}`} {...NormandyRouter.ROUTES[route]} />;
-          })
-        }
+        {Object.keys(NormandyRouter.ROUTES).map(route => {
+          return (
+            <Route
+              key={route}
+              exact
+              path={`${urlPrefix}${route}`}
+              {...NormandyRouter.ROUTES[route]}
+            />
+          );
+        })}
 
-        <Route component={({ location }) => (
-          <div>
-            <h2>404 - Page Not Found</h2>
-            <p>No normandy match for <code>{location.pathname}</code></p>
-          </div>
-        )} />
+        <Route
+          component={({ location }) => (
+            <div>
+              <h2>404 - Page Not Found</h2>
+              <p>
+                No normandy match for <code>{location.pathname}</code>
+              </p>
+            </div>
+          )}
+        />
       </Switch>
     );
   }
@@ -84,11 +92,8 @@ export default class NormandyRouter extends React.Component {
 export class NormandyLink extends React.Component {
   static PREFIX = '';
   render() {
-    const {
-      to,
-      ...rest,
-    } = this.props;
+    const { to, ...rest } = this.props;
 
-    return (<NavLink to={`${NormandyLink.PREFIX}${to}`} {...rest} />);
+    return <NavLink to={`${NormandyLink.PREFIX}${to}`} {...rest} />;
   }
 }

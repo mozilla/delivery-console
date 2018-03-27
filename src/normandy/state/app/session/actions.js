@@ -5,7 +5,7 @@ import * as localForage from 'localforage';
 
 import {
   SESSION_INFO_RECEIVE,
-  SESSION_INFO_HISTORY_VIEW,
+  // SESSION_INFO_HISTORY_VIEW,
   REQUEST_SEND,
   REQUEST_SUCCESS,
 } from 'normandy/state/action-types';
@@ -64,24 +64,25 @@ export function addSessionView(category, caption, identicon) {
   return async (dispatch, getState) => {
     // #todo;
     return null;
+    /*
+      const { router } = getState();
+      let url = router.pathname;
 
-    const { router } = getState();
-    let url = router.pathname;
+      // If the route we are currently on has defined another slug to use for
+      // 'session' purposes, use that instead.
+      const slugRedirect = router.result && router.result.sessionSlug;
 
-    // If the route we are currently on has defined another slug to use for
-    // 'session' purposes, use that instead.
-    const slugRedirect = router.result && router.result.sessionSlug;
+      if (slugRedirect) {
+        url = 'todo'; //getNamedRoute(slugRedirect, router.params);
+      }
 
-    if (slugRedirect) {
-      url = getNamedRoute(slugRedirect, router.params);
-    }
+      dispatch({
+        type: SESSION_INFO_HISTORY_VIEW,
+        item: new Map({ url, caption, category, identicon }),
+      });
 
-    dispatch({
-      type: SESSION_INFO_HISTORY_VIEW,
-      item: new Map({ url, caption, category, identicon }),
-    });
-
-    // Automatically save the session when views are added.
-    return dispatch(saveSession());
+      // Automatically save the session when views are added.
+      return dispatch(saveSession());
+    */
   };
 }

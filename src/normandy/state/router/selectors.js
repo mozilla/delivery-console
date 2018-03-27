@@ -17,7 +17,7 @@ export function getAllQueryParams(props, defaultsTo) {
     throw new Error('getAllQueryParams: no location in props', props);
   }
 
-  let strParams = (location && location.search || '').replace('?', '');
+  let strParams = (location ? location.search : '').replace('?', '');
   strParams = strParams.split('&');
   strParams = strParams.map(x => x.split('='));
 

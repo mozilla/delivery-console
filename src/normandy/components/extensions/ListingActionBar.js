@@ -18,6 +18,7 @@ import {
   getCurrentURL as getCurrentURLSelector,
 } from 'normandy/state/router/selectors';
 
+@withRouter
 @connect(
   state => ({
     columns: getExtensionListingColumns(state),
@@ -32,7 +33,7 @@ export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentURL: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     saveExtensionListingColumns: PropTypes.func.isRequired,
   };
 

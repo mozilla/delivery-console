@@ -111,7 +111,8 @@ class App extends Component<AppProps, AppState> {
                   <div>
                     <h2>404 - Page Not Found</h2>
                     <p>
-                      No del-console match for <code>{location.pathname}</code>
+                      No delivery-console match for{' '}
+                      <code>{location.pathname}</code>
                     </p>
                   </div>
                 )}

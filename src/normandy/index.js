@@ -6,4 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <BrowserRouter>
     <Root />
-  </BrowserRouter>, document.querySelector('#root'));
+  </BrowserRouter>,
+  document.querySelector('#root'),
+);
