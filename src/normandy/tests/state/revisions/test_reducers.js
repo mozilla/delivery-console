@@ -1,17 +1,10 @@
 import { fromJS } from 'immutable';
 import * as matchers from 'jasmine-immutable-matchers';
 
-import {
-  RECIPE_DELETE,
-  REVISION_RECEIVE,
-} from 'normandy/state/action-types';
+import { RECIPE_DELETE, REVISION_RECEIVE } from 'normandy/state/action-types';
 import revisionsReducer from 'normandy/state/app/revisions/reducers';
 
-import {
-  INITIAL_STATE,
-  RevisionFactory,
-} from '.';
-
+import { INITIAL_STATE, RevisionFactory } from '.';
 
 describe('Revisions reducer', () => {
   const revision = RevisionFactory.build();
@@ -21,7 +14,9 @@ describe('Revisions reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
+    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(
+      INITIAL_STATE,
+    );
   });
 
   it('should handle REVISION_RECEIVE', () => {

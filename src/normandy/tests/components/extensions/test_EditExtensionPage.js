@@ -14,8 +14,7 @@ describe('<EditExtensionPage>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<EditExtensionPage {...props} />);
+    const wrapper = () => shallow(<EditExtensionPage {...props} />);
 
     expect(wrapper).not.toThrow();
   });

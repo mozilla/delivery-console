@@ -10,7 +10,6 @@ import serviceInfo from 'normandy/state/app/serviceInfo/reducers';
 import session from 'normandy/state/app/session/reducers';
 import users from 'normandy/state/app/users/reducers';
 
-
 const reducer = combineReducers({
   actions,
   approvalRequests,

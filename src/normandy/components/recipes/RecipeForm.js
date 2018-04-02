@@ -18,21 +18,18 @@ import { createForm } from 'normandy/utils/forms';
 import QueryServiceInfo from 'normandy/components/data/QueryServiceInfo';
 import IdenticonField from 'normandy/components/forms/IdenticonField';
 
-
 /**
  * Form for editing recipes.
  */
 @createForm({})
-@connect(
-  (state, props) => {
-    const actionId = props.form.getFieldValue('action_id');
-    const selectedAction = getAction(state, actionId, new Map());
-    return {
-      selectedActionName: selectedAction.get('name'),
-      isLoading: areAnyRequestsInProgress(state),
-    };
-  },
-)
+@connect((state, props) => {
+  const actionId = props.form.getFieldValue('action_id');
+  const selectedAction = getAction(state, actionId, new Map());
+  return {
+    selectedActionName: selectedAction.get('name'),
+    isLoading: areAnyRequestsInProgress(state),
+  };
+})
 @autobind
 export default class RecipeForm extends React.PureComponent {
   static propTypes = {
@@ -130,8 +127,10 @@ export default class RecipeForm extends React.PureComponent {
             />
           </fieldset>
         )}
-        {selectedActionName && !ArgumentsFields &&
-          <ArgumentEditorMissingError name={selectedActionName} />}
+        {selectedActionName &&
+          !ArgumentsFields && (
+            <ArgumentEditorMissingError name={selectedActionName} />
+          )}
         <FormActions>
           <FormActions.Primary>
             <Button
@@ -149,11 +148,9 @@ export default class RecipeForm extends React.PureComponent {
   }
 }
 
-@connect(
-  state => ({
-    actions: getAllActions(state, new Map()),
-  }),
-)
+@connect(state => ({
+  actions: getAllActions(state, new Map()),
+}))
 export class ActionSelect extends React.PureComponent {
   static propTypes = {
     actions: PropTypes.instanceOf(Map).isRequired,
@@ -172,7 +169,11 @@ export class ActionSelect extends React.PureComponent {
 
     return (
       <div id="rf-action-select">
-        <Select placeholder="Select an action..." value={stringValue} {...props}>
+        <Select
+          placeholder="Select an action..."
+          value={stringValue}
+          {...props}
+        >
           {actions.toList().map(action => {
             const actionId = action.get('id');
             const actionName = action.get('name');
@@ -194,20 +195,18 @@ export class ActionSelect extends React.PureComponent {
   }
 }
 
-@connect(
-  state => ({
-    githubUrl: getGithubUrl(state),
-  }),
-)
+@connect(state => ({
+  githubUrl: getGithubUrl(state),
+}))
 class ArgumentEditorMissingError extends React.PureComponent {
   static propTypes = {
     githubUrl: PropTypes.string,
     name: PropTypes.string.isRequired,
-  }
+  };
 
   static defaultProps = {
     githubUrl: null,
-  }
+  };
 
   render() {
     const { githubUrl, name } = this.props;
@@ -215,7 +214,10 @@ class ArgumentEditorMissingError extends React.PureComponent {
     if (githubUrl) {
       const url = new URL(githubUrl);
       url.pathname += '/issues/new';
-      url.searchParams.set('title', `Argument fields missing for action "${name}"`);
+      url.searchParams.set(
+        'title',
+        `Argument fields missing for action "${name}"`,
+      );
       fileIssueUrl = url.toString();
     }
 
@@ -226,7 +228,8 @@ class ArgumentEditorMissingError extends React.PureComponent {
           message="Error - Argument editor not available"
           description={
             <span>
-              This is a bug. Please <a href={fileIssueUrl}>file an issue on GitHub for it.</a>
+              This is a bug. Please{' '}
+              <a href={fileIssueUrl}>file an issue on GitHub for it.</a>
             </span>
           }
           type="error"

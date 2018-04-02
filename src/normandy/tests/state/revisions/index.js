@@ -6,11 +6,9 @@ import { DateField, Factory, Field, SubFactory } from 'normandy/tests/factory';
 import { UserFactory } from 'normandy/tests/state/users';
 import { SimpleRecipeFactory } from 'normandy/tests/state/recipes';
 
-
 export const INITIAL_STATE = {
   items: new Map(),
 };
-
 
 export class RevisionFactory extends Factory {
   getFields() {

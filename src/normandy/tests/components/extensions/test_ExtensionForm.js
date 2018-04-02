@@ -13,8 +13,7 @@ describe('<ExtensionForm>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<ExtensionForm {...props} />);
+    const wrapper = () => shallow(<ExtensionForm {...props} />);
 
     expect(wrapper).not.toThrow();
   });

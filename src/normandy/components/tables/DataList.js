@@ -7,10 +7,7 @@ import { connect } from 'react-redux';
 import { push as pushAction } from 'redux-little-router';
 import { isEmpty, mapObject } from 'underscore';
 
-import {
-  getCurrentURL as getCurrentURLSelector,
-} from 'normandy/state/router/selectors';
-
+import { getCurrentURL as getCurrentURLSelector } from 'normandy/state/router/selectors';
 
 @connect(
   state => ({
@@ -30,23 +27,26 @@ export default class DataList extends React.PureComponent {
     ordering: PropTypes.string,
     onRowClick: PropTypes.func,
     push: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     ordering: null,
     onRowClick: null,
-  }
+  };
 
   static getSortOrder = (field, ordering) => {
     if (ordering && ordering.endsWith(field)) {
       return ordering.startsWith('-') ? 'descend' : 'ascend';
     }
     return false;
-  }
+  };
 
   handleChangeSortFilters(pagination, filters, sorter) {
     const { getCurrentURL, push } = this.props;
-    const filterParams = mapObject(filters, values => (values && values.join(',')));
+    const filterParams = mapObject(
+      filters,
+      values => values && values.join(','),
+    );
 
     let ordering;
     if (!isEmpty(sorter)) {
@@ -54,11 +54,13 @@ export default class DataList extends React.PureComponent {
       ordering = `${prefix}${sorter.field}`;
     }
 
-    push(getCurrentURL({
-      page: undefined, // Return to the first page
-      ordering,
-      ...filterParams,
-    }));
+    push(
+      getCurrentURL({
+        page: undefined, // Return to the first page
+        ordering,
+        ...filterParams,
+      }),
+    );
   }
 
   render() {

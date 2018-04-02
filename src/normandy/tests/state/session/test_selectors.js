@@ -1,10 +1,7 @@
 import { List, fromJS, is } from 'immutable';
 
 import { getSessionHistory } from 'normandy/state/app/session/selectors';
-import {
-  INITIAL_STATE,
-  SessionFactory,
-} from 'normandy/tests/state/session';
+import { INITIAL_STATE, SessionFactory } from 'normandy/tests/state/session';
 
 const createSessions = (count, category) => {
   const items = [];

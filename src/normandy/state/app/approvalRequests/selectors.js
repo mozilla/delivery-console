@@ -1,7 +1,6 @@
 /* eslint import/prefer-default-export: "off" */
 import { getUser } from 'normandy/state/app/users/selectors';
 
-
 export function getApprovalRequest(state, id, defaultsTo = null) {
   const approvalRequest = state.app.approvalRequests.items.get(id);
 

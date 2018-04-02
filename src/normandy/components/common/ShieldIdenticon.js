@@ -109,8 +109,11 @@ export default class ShieldIdenticon extends React.PureComponent {
     };
 
     return (
-      <span style={containerStyle} className={cx(className, 'shield-container')}>
-        { isLoading && <Spin size="small" /> }
+      <span
+        style={containerStyle}
+        className={cx(className, 'shield-container')}
+      >
+        {isLoading && <Spin size="small" />}
         <img
           alt="Shield Identicon"
           height={size}

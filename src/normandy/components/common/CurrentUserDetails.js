@@ -9,13 +9,10 @@ import {
   getLogoutUrl,
 } from 'normandy/state/app/serviceInfo/selectors';
 
-
-@connect(
-  state => ({
-    user: getCurrentUser(state, new Map()),
-    logoutUrl: getLogoutUrl(state, ''),
-  }),
-)
+@connect(state => ({
+  user: getCurrentUser(state, new Map()),
+  logoutUrl: getLogoutUrl(state, ''),
+}))
 export default class CurrentUserDetails extends React.PureComponent {
   static propTypes = {
     logoutUrl: PropTypes.string.isRequired,

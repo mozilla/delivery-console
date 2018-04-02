@@ -1,9 +1,6 @@
 import { fromJS, Map } from 'immutable';
 
-import {
-  SERVICE_INFO_RECEIVE,
-} from 'normandy/state/action-types';
-
+import { SERVICE_INFO_RECEIVE } from 'normandy/state/action-types';
 
 export default function ser(state = new Map(), action) {
   let serviceInfo;

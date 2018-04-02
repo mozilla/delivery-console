@@ -61,9 +61,7 @@ export default class CloneRecipePage extends React.PureComponent {
   }
 
   getFormProps() {
-    const {
-      recipe,
-    } = this.props;
+    const { recipe } = this.props;
 
     // Remove the 'name' and 'identicon' field values.
     const displayedRecipe = recipe.remove('name').remove('identicon_seed');
@@ -79,29 +77,28 @@ export default class CloneRecipePage extends React.PureComponent {
   }
 
   renderHeader() {
-    const {
-      isLatestRevision,
-      recipe,
-      recipeId,
-      revisionId,
-    } = this.props;
+    const { isLatestRevision, recipe, recipeId, revisionId } = this.props;
 
-    const recipeDetailsURL = `/recipe/${recipeId}${isLatestRevision ? '' : `/rev/${revisionId}`}/`;
+    const recipeDetailsURL = `/recipe/${recipeId}${
+      isLatestRevision ? '' : `/rev/${revisionId}`
+    }/`;
 
     const recipeName = recipe.get('name');
 
     // Only display revision hash if we're _not_ on the latest version.
-    const revisionAddendum = isLatestRevision ? '' : `(Revision: ${revisionId.slice(0, 7)})`;
+    const revisionAddendum = isLatestRevision
+      ? ''
+      : `(Revision: ${revisionId.slice(0, 7)})`;
     const cloningMessage = `Cloning recipe values from "${recipeName}" ${revisionAddendum}`;
 
     return (
       <span>
         <h2>Clone Recipe</h2>
-        { recipeName &&
+        {recipeName && (
           <Link href={recipeDetailsURL}>
             <Alert message={cloningMessage} type="info" showIcon />
           </Link>
-        }
+        )}
       </span>
     );
   }
@@ -113,9 +110,14 @@ export default class CloneRecipePage extends React.PureComponent {
       <div className="clone-page">
         <QueryRecipe pk={recipeId} />
         <QueryRevision pk={revisionId} />
-        { this.renderHeader() }
+        {this.renderHeader()}
 
-        <LoadingOverlay requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}>
+        <LoadingOverlay
+          requestIds={[
+            `fetch-recipe-${recipeId}`,
+            `fetch-revision-${revisionId}`,
+          ]}
+        >
           <GenericFormContainer
             form={RecipeForm}
             formAction={this.formAction}

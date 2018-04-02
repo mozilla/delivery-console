@@ -11,14 +11,12 @@ import {
 import { ActionFactory } from 'normandy/tests/state/actions';
 import { RevisionFactory } from 'normandy/tests/state/revisions';
 
-
 export const INITIAL_STATE = {
   filters: new Map(),
   history: new Map(),
   items: new Map(),
   listing: new Map(),
 };
-
 
 export const FILTERS = {
   status: [
@@ -32,7 +30,6 @@ export const FILTERS = {
     },
   ],
 };
-
 
 export class SimpleRecipeFactory extends Factory {
   getFields() {
@@ -60,7 +57,6 @@ export class SimpleRecipeFactory extends Factory {
   }
 }
 
-
 export class RecipeFactory extends SimpleRecipeFactory {
   getFields() {
     return {
@@ -83,7 +79,9 @@ export class RecipeFactory extends SimpleRecipeFactory {
       }
 
       if (this.data.latest_revision === null) {
-        this.data.latest_revision = RevisionFactory.build(this.data.approved_revision);
+        this.data.latest_revision = RevisionFactory.build(
+          this.data.approved_revision,
+        );
       }
     }
 

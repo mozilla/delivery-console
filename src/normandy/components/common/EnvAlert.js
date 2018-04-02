@@ -25,7 +25,8 @@ export default class EnvAlert extends React.PureComponent {
       rel="noopener noreferrer"
     >
       Learn more about Normandy environments.
-    </a>);
+    </a>
+  );
 
   /**
    * Given a URL and an array of strings, determines if that URL contains at least

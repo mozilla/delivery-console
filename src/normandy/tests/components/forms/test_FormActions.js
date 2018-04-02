@@ -9,8 +9,7 @@ describe('<FormActions>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<FormActions {...props} />);
+    const wrapper = () => shallow(<FormActions {...props} />);
 
     expect(wrapper).not.toThrow();
   });
@@ -22,8 +21,7 @@ describe('<FormActions.Primary>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<FormActions.Primary {...props} />);
+    const wrapper = () => shallow(<FormActions.Primary {...props} />);
 
     expect(wrapper).not.toThrow();
   });
@@ -35,8 +33,7 @@ describe('<FormActions.Secondary>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<FormActions.Secondary {...props} />);
+    const wrapper = () => shallow(<FormActions.Secondary {...props} />);
 
     expect(wrapper).not.toThrow();
   });

@@ -12,15 +12,21 @@ describe('<QueryExtension>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryExtension {...props} />);
+    const wrapper = () => shallow(<QueryExtension {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchExtension on mount', () => {
     let called = false;
-    mount(<QueryExtension {...props} fetchExtension={() => { called = true; }} />);
+    mount(
+      <QueryExtension
+        {...props}
+        fetchExtension={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +34,12 @@ describe('<QueryExtension>', () => {
   it('should call fetchExtension if the `pk` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
-      <QueryExtension {...props} fetchExtension={() => { callCount += 1; }} />,
+      <QueryExtension
+        {...props}
+        fetchExtension={() => {
+          callCount += 1;
+        }}
+      />,
     );
     expect(callCount).toBe(1);
 
@@ -49,7 +60,12 @@ describe('<QueryExtension>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryExtension {...props} fetchExtension={() => { callCount += 1; }} />
+        <QueryExtension
+          {...props}
+          fetchExtension={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
     expect(callCount).toBe(1);

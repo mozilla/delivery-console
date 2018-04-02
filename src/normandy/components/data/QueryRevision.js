@@ -2,22 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  fetchRevision as fetchRevisionAction,
-} from 'normandy/state/app/revisions/actions';
+import { fetchRevision as fetchRevisionAction } from 'normandy/state/app/revisions/actions';
 
-
-@connect(
-  null,
-  {
-    fetchRevision: fetchRevisionAction,
-  },
-)
+@connect(null, {
+  fetchRevision: fetchRevisionAction,
+})
 export default class QueryRevision extends React.PureComponent {
   static propTypes = {
     fetchRevision: PropTypes.func.isRequired,
     pk: PropTypes.string.isRequired,
-  }
+  };
 
   componentWillMount() {
     const { fetchRevision, pk } = this.props;

@@ -31,7 +31,6 @@ export function fetchSessionInfo() {
     savedHistory = savedHistory.map(obj => new Map(obj));
     savedHistory = new List(savedHistory);
 
-
     dispatch({
       type: REQUEST_SUCCESS,
       requestId,

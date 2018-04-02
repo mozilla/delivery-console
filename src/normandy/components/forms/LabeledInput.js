@@ -16,41 +16,40 @@ export default class LabeledInput extends React.Component {
   static defaultProps = {
     children: null,
     onChange: () => {},
+  };
+
+  getElement() {
+    throw new Error('LabeledInput#getElement must be overridden.');
   }
 
-  getElement() { throw new Error('LabeledInput#getElement must be overridden.'); }
+  getLabelProps() {
+    return { role: 'input' };
+  }
 
-  getLabelProps() { return { role: 'input' }; }
-
-  getElementProps() { return {}; }
+  getElementProps() {
+    return {};
+  }
 
   handleLabelClick() {}
 
   render() {
-    const {
-      children,
-      onChange,
-    } = this.props;
+    const { children, onChange } = this.props;
 
     const Element = this.getElement();
 
     return (
       <label className="labeled-input">
-        <Element
-          onChange={onChange}
-          {...this.getElementProps()}
-        />
+        <Element onChange={onChange} {...this.getElementProps()} />
 
-        {
-          children &&
-            <span
-              className="label"
-              onClick={this.handleLabelClick}
-              {...this.getLabelProps()}
-            >
-              { children }
-            </span>
-        }
+        {children && (
+          <span
+            className="label"
+            onClick={this.handleLabelClick}
+            {...this.getLabelProps()}
+          >
+            {children}
+          </span>
+        )}
       </label>
     );
   }

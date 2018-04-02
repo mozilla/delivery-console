@@ -13,7 +13,6 @@ import QueryServiceInfo from 'normandy/components/data/QueryServiceInfo';
 
 const { Content, Header, Sider } = Layout;
 
-
 export default class App extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node,
@@ -46,20 +45,14 @@ export default class App extends React.PureComponent {
           </Header>
 
           <Layout>
-            <Sider
-              className="sidebar"
-              breakpoint="sm"
-              collapsedWidth="0"
-            >
+            <Sider className="sidebar" breakpoint="sm" collapsedWidth="0">
               <NavigationMenu />
             </Sider>
 
             <Layout className="content-wrapper">
               <NavigationCrumbs />
 
-              <Content className="content">
-                {children}
-              </Content>
+              <Content className="content">{children}</Content>
             </Layout>
           </Layout>
         </Layout>

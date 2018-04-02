@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 /**
  * Container for buttons displayed at the bottom of a form.
  *
@@ -33,7 +32,7 @@ export default class FormActions extends React.PureComponent {
       const { children } = this.props;
       return <div className="primary">{children}</div>;
     }
-  }
+  };
 
   /**
    * Container for the secondary actions (floated to the left).
@@ -51,7 +50,7 @@ export default class FormActions extends React.PureComponent {
       const { children } = this.props;
       return <div className="secondary">{children}</div>;
     }
-  }
+  };
 
   static propTypes = {
     children: PropTypes.node,
@@ -64,10 +63,6 @@ export default class FormActions extends React.PureComponent {
   render() {
     const { children } = this.props;
 
-    return (
-      <div className="form-actions">
-        {children}
-      </div>
-    );
+    return <div className="form-actions">{children}</div>;
   }
 }

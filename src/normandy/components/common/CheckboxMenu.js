@@ -2,7 +2,6 @@ import { Button, Checkbox, Dropdown } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 export default class CheckboxMenu extends React.PureComponent {
   static propTypes = {
     checkboxes: PropTypes.array,

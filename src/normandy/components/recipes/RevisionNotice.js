@@ -3,23 +3,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  REVISION_DRAFT,
-  REVISION_OUTDATED,
-} from 'normandy/state/constants';
+import { REVISION_DRAFT, REVISION_OUTDATED } from 'normandy/state/constants';
 import {
   isRevisionPendingApproval,
   getRevisionDraftStatus,
 } from 'normandy/state/app/revisions/selectors';
 
-
-@connect(
-  (state, { revision }) => ({
-    enabled: revision.getIn(['recipe', 'enabled'], false),
-    isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
-    status: getRevisionDraftStatus(state, revision.get('id')),
-  }),
-)
+@connect((state, { revision }) => ({
+  enabled: revision.getIn(['recipe', 'enabled'], false),
+  isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
+  status: getRevisionDraftStatus(state, revision.get('id')),
+}))
 export default class RevisionNotice extends React.PureComponent {
   static propTypes = {
     enabled: PropTypes.bool.isRequired,
@@ -29,7 +23,7 @@ export default class RevisionNotice extends React.PureComponent {
 
   static defaultProps = {
     status: null,
-  }
+  };
 
   render() {
     const { enabled, isPendingApproval, status } = this.props;

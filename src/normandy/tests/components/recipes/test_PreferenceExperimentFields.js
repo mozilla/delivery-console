@@ -2,7 +2,9 @@ import { Map } from 'immutable';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PreferenceExperimentFields, { StringPreferenceField } from 'normandy/components/recipes/PreferenceExperimentFields';
+import PreferenceExperimentFields, {
+  StringPreferenceField,
+} from 'normandy/components/recipes/PreferenceExperimentFields';
 
 function createFakeEvent(string) {
   return { target: { value: string } };
@@ -24,7 +26,9 @@ describe('<PreferenceExperimentFields>', () => {
     it('should correctly trim whitespace', () => {
       const trimmedValues = [];
       const stringPrefFieldInstance = new StringPreferenceField({
-        onChange: value => { trimmedValues.push(value); },
+        onChange: value => {
+          trimmedValues.push(value);
+        },
       });
 
       const whitespaceBefore = createFakeEvent('   foobar');
@@ -42,7 +46,9 @@ describe('<PreferenceExperimentFields>', () => {
     it('should not trim whitespace from the middle of a string', () => {
       let trimmedValue;
       const stringPrefFieldInstance = new StringPreferenceField({
-        onChange: value => { trimmedValue = value; },
+        onChange: value => {
+          trimmedValue = value;
+        },
       });
 
       const whitespaceMiddleString = 'foo    bar';

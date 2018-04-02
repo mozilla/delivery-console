@@ -11,15 +11,20 @@ describe('<QuerySessionInfo>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QuerySessionInfo {...props} />);
+    const wrapper = () => shallow(<QuerySessionInfo {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchSessionInfo on mount', () => {
     let called = false;
-    shallow(<QuerySessionInfo fetchSessionInfo={() => { called = true; }} />);
+    shallow(
+      <QuerySessionInfo
+        fetchSessionInfo={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +33,11 @@ describe('<QuerySessionInfo>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QuerySessionInfo fetchSessionInfo={() => { callCount += 1; }} />
+        <QuerySessionInfo
+          fetchSessionInfo={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
 

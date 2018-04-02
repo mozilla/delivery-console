@@ -19,7 +19,6 @@ import {
   isRevisionPendingApproval,
 } from 'normandy/state/app/revisions/selectors';
 
-
 @connect(
   (state, { revision }) => ({
     approvalRequest: revision.get('approval_request', new Map()),
@@ -73,7 +72,10 @@ export default class ApprovalRequest extends React.PureComponent {
       await action(approvalRequest.get('id'), values);
       message.success(successMessage);
     } catch (error) {
-      handleError(`Unable to ${context.approved ? 'approve' : 'reject'} request.`, error);
+      handleError(
+        `Unable to ${context.approved ? 'approve' : 'reject'} request.`,
+        error,
+      );
 
       if (error.data) {
         this.setState({ formErrors: error.data });
@@ -100,14 +102,16 @@ export default class ApprovalRequest extends React.PureComponent {
       extra = <Tag color="red">Rejected</Tag>;
     }
 
-    const detailSection = isPendingApproval ?
-      (<ApprovalForm
+    const detailSection = isPendingApproval ? (
+      <ApprovalForm
         approvalRequest={approvalRequest}
         isSubmitting={isSubmitting}
         onSubmit={this.handleSubmit}
         errors={errors}
-      />)
-      : <ApprovalDetails request={approvalRequest} />;
+      />
+    ) : (
+      <ApprovalDetails request={approvalRequest} />
+    );
 
     return (
       <div className="approval-history-details">
@@ -123,15 +127,17 @@ export default class ApprovalRequest extends React.PureComponent {
                   <dd>{approvalRequest.getIn(['creator', 'email'])}</dd>
 
                   <dt>Requested</dt>
-                  <dd title={moment(approvalRequest.get('created')).format('MMMM Do YYYY, h:mm a')}>
+                  <dd
+                    title={moment(approvalRequest.get('created')).format(
+                      'MMMM Do YYYY, h:mm a',
+                    )}
+                  >
                     {moment(approvalRequest.get('created')).fromNow()}
                   </dd>
                 </dl>
               </div>
 
-              <div className="approval-details">
-                { detailSection }
-              </div>
+              <div className="approval-details">{detailSection}</div>
             </Card>
           </Col>
         </Row>

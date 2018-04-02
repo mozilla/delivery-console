@@ -6,7 +6,6 @@ import React from 'react';
 
 import { connectFormProps } from 'normandy/utils/forms';
 
-
 /**
  * Convenience wrapper for Form.Item and form.getFieldDecorator. This component
  * relies on the context from the createForm decorator and can only be used with
@@ -84,7 +83,9 @@ export default class FormItem extends React.PureComponent {
 
     if (trimWhitespace) {
       if (config.getValueFromEvent) {
-        throw Error('config.getValueFromEvent is already defined, do not also use trimWhitespace.');
+        throw Error(
+          'config.getValueFromEvent is already defined, do not also use trimWhitespace.',
+        );
       }
     }
 

@@ -1,5 +1,15 @@
 /* eslint-disable react/jsx-boolean-value */
-import { Row, Col, Alert, Button, Icon, Input, InputNumber, Radio, Select } from 'antd';
+import {
+  Row,
+  Col,
+  Alert,
+  Button,
+  Icon,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+} from 'antd';
 import autobind from 'autobind-decorator';
 import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -9,7 +19,6 @@ import DocumentUrlInput from 'normandy/components/forms/DocumentUrlInput';
 import FormItem from 'normandy/components/forms/FormItem';
 import SwitchBox from 'normandy/components/forms/SwitchBox';
 import { connectFormProps } from 'normandy/utils/forms';
-
 
 @connectFormProps
 export default class PreferenceExperimentFields extends React.Component {
@@ -25,17 +34,16 @@ export default class PreferenceExperimentFields extends React.Component {
   };
 
   render() {
-    const {
-      disabled,
-      form,
-      recipeArguments,
-    } = this.props;
+    const { disabled, form, recipeArguments } = this.props;
 
-    const isUserBranchSelected = form.getFieldValue('arguments.preferenceBranchType') === 'user';
+    const isUserBranchSelected =
+      form.getFieldValue('arguments.preferenceBranchType') === 'user';
 
     return (
       <Row>
-        <p className="action-info">Run a feature experiment activated by a preference.</p>
+        <p className="action-info">
+          Run a feature experiment activated by a preference.
+        </p>
         <Col sm={24} md={11}>
           <FormItem
             label="Experiment Name"
@@ -59,10 +67,9 @@ export default class PreferenceExperimentFields extends React.Component {
             initialValue={recipeArguments.get('isHighVolume', false)}
           >
             <SwitchBox disabled={disabled}>
-              Affects the experiment type reported to telemetry, and
-              can be used to filter recipe data in analysis. This
-              should be set to true on recipes that affect a
-              significant percentage of release.
+              Affects the experiment type reported to telemetry, and can be used
+              to filter recipe data in analysis. This should be set to true on
+              recipes that affect a significant percentage of release.
             </SwitchBox>
           </FormItem>
         </Col>
@@ -95,18 +102,22 @@ export default class PreferenceExperimentFields extends React.Component {
               <FormItem
                 label="Preference Branch Type"
                 name="arguments.preferenceBranchType"
-                initialValue={recipeArguments.get('preferenceBranchType', 'default')}
+                initialValue={recipeArguments.get(
+                  'preferenceBranchType',
+                  'default',
+                )}
               >
                 <PreferenceBranchSelect disabled={disabled} />
               </FormItem>
             </Col>
-            {isUserBranchSelected &&
+            {isUserBranchSelected && (
               <Col xs={24}>
                 <Alert
                   message="User Preference Branch"
                   description={
                     <span>
-                      Setting user preferences instead of default ones is not recommended.<br />
+                      Setting user preferences instead of default ones is not
+                      recommended.<br />
                       Do not choose this unless you know what you are doing.
                     </span>
                   }
@@ -114,7 +125,7 @@ export default class PreferenceExperimentFields extends React.Component {
                   showIcon
                 />
               </Col>
-            }
+            )}
           </Col>
         </Col>
 
@@ -131,8 +142,8 @@ export default class PreferenceExperimentFields extends React.Component {
             initialValue={recipeArguments.get('isEnrollmentPaused', false)}
           >
             <SwitchBox disabled={disabled}>
-              Prevents new users from joining this experiment&nbsp;cohort. <br /> Existing
-              users will remain in&nbsp;the&nbsp;experiment.
+              Prevents new users from joining this experiment&nbsp;cohort.{' '}
+              <br /> Existing users will remain in&nbsp;the&nbsp;experiment.
             </SwitchBox>
           </FormItem>
         </Col>
@@ -171,14 +182,18 @@ export class PreferenceBranchSelect extends React.PureComponent {
   render() {
     const { disabled, onChange, value } = this.props;
     return (
-      <Select disabled={disabled} onChange={onChange} value={value} {...this.props}>
+      <Select
+        disabled={disabled}
+        onChange={onChange}
+        value={value}
+        {...this.props}
+      >
         <Select.Option value="default">Default</Select.Option>
         <Select.Option value="user">User</Select.Option>
       </Select>
     );
   }
 }
-
 
 /**
  * List of individual branches in the experiment.
@@ -268,23 +283,18 @@ export class StringPreferenceField extends React.PureComponent {
   }
   render() {
     const { onChange, ...other } = this.props;
-    return (
-      <Input
-        onChange={this.handleChange}
-        {...other}
-      />
-    );
+    return <Input onChange={this.handleChange} {...other} />;
   }
 }
 
 export class BooleanPreferenceField extends React.PureComponent {
   static propTypes = {
     value: PropTypes.bool,
-  }
+  };
 
   static defaultProps = {
     value: null,
-  }
+  };
 
   render() {
     return (
@@ -302,9 +312,7 @@ export class BooleanPreferenceField extends React.PureComponent {
 
 export class IntegerPreferenceField extends React.PureComponent {
   render() {
-    return (
-      <InputNumber {...this.props} />
-    );
+    return <InputNumber {...this.props} />;
   }
 }
 
@@ -386,14 +394,22 @@ export class ExperimentBranchFields extends React.PureComponent {
           name={`${fieldName}.value`}
           connectToForm={false}
         >
-          <ValueField disabled={disabled} value={branch.get('value')} onChange={this.handleChangeValue} />
+          <ValueField
+            disabled={disabled}
+            value={branch.get('value')}
+            onChange={this.handleChangeValue}
+          />
         </FormItem>
         <FormItem
           label="Ratio"
           name={`${fieldName}.ratio`}
           connectToForm={false}
         >
-          <InputNumber disabled={disabled} value={branch.get('ratio', '')} onChange={this.handleChangeRatio} />
+          <InputNumber
+            disabled={disabled}
+            value={branch.get('ratio', '')}
+            onChange={this.handleChangeRatio}
+          />
         </FormItem>
         <Button
           className="delete-btn"

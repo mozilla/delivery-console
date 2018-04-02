@@ -5,7 +5,6 @@ import React from 'react';
 
 import FormItem from 'normandy/components/forms/FormItem';
 
-
 export default class ConsoleLogFields extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
@@ -17,12 +16,8 @@ export default class ConsoleLogFields extends React.Component {
     recipeArguments: new Map(),
   };
 
-
   render() {
-    const {
-      disabled,
-      recipeArguments,
-    } = this.props;
+    const { disabled, recipeArguments } = this.props;
 
     return (
       <div>

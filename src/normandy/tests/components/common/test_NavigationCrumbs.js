@@ -11,8 +11,7 @@ describe('<NavigationCrumbs>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<NavigationCrumbs {...props} />);
+    const wrapper = () => shallow(<NavigationCrumbs {...props} />);
 
     expect(wrapper).not.toThrow();
   });

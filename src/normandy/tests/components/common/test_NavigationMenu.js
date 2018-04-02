@@ -14,8 +14,7 @@ describe('<NavigationMenu>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<NavigationMenu {...props} />);
+    const wrapper = () => shallow(<NavigationMenu {...props} />);
 
     expect(wrapper).not.toThrow();
   });

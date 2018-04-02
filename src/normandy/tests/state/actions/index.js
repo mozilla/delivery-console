@@ -3,11 +3,9 @@ import { Map } from 'immutable';
 
 import { AutoIncrementField, Factory, Field } from 'normandy/tests/factory';
 
-
 export const INITIAL_STATE = {
   items: new Map(),
 };
-
 
 export class ActionFactory extends Factory {
   getFields() {

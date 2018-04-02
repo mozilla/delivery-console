@@ -29,7 +29,11 @@ describe('<GenericFormContainer>', () => {
   });
 
   it('should fire the formAction on submission', () => {
-    const CustomEl = ({ onSubmit }) => <div id="test" onClick={onSubmit}>Test</div>;
+    const CustomEl = ({ onSubmit }) => (
+      <div id="test" onClick={onSubmit}>
+        Test
+      </div>
+    );
     let fired = false;
     const wrapper = mount(
       <GenericFormContainer
@@ -46,7 +50,11 @@ describe('<GenericFormContainer>', () => {
   });
 
   it('should handle the formAction failing', () => {
-    const CustomEl = ({ onSubmit }) => <div id="test" onClick={onSubmit}>Test</div>;
+    const CustomEl = ({ onSubmit }) => (
+      <div id="test" onClick={onSubmit}>
+        Test
+      </div>
+    );
     let failed = false;
     const wrapper = mount(
       <GenericFormContainer
@@ -66,10 +74,16 @@ describe('<GenericFormContainer>', () => {
   });
 
   it('should handle the formAction succeeding', async () => {
-    const CustomEl = ({ onSubmit }) => <div id="test" onClick={onSubmit}>Test</div>;
+    const CustomEl = ({ onSubmit }) => (
+      <div id="test" onClick={onSubmit}>
+        Test
+      </div>
+    );
 
     let resolve;
-    const success = new Promise(r => { resolve = r; });
+    const success = new Promise(r => {
+      resolve = r;
+    });
 
     const wrapper = mount(
       <GenericFormContainer
@@ -86,14 +100,14 @@ describe('<GenericFormContainer>', () => {
   });
 
   it('should pass the formProps object to the form element', () => {
-    const CustomEl = custProps => <div id="test" {...custProps}>Custom</div>;
+    const CustomEl = custProps => (
+      <div id="test" {...custProps}>
+        Custom
+      </div>
+    );
     const testProps = { test: 1, woo: 'hoo' };
     const wrapper = mount(
-      <GenericFormContainer
-        {...props}
-        form={CustomEl}
-        formProps={testProps}
-      />,
+      <GenericFormContainer {...props} form={CustomEl} formProps={testProps} />,
     );
 
     expect(wrapper.find('#test').props().test).toBe(1);

@@ -16,14 +16,8 @@ import {
   getRecipeFilters,
   getRecipeHistory,
 } from 'normandy/state/app/recipes/selectors';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  FILTERS,
-  RecipeFactory,
-} from 'normandy/tests/state/recipes';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { FILTERS, RecipeFactory } from 'normandy/tests/state/recipes';
 
 describe('getRecipe', () => {
   const recipe = RecipeFactory.build();
@@ -68,7 +62,6 @@ describe('getRecipe', () => {
   });
 });
 
-
 describe('getRecipeFilters', () => {
   const STATE = {
     ...INITIAL_STATE,
@@ -89,7 +82,6 @@ describe('getRecipeFilters', () => {
     expect(getRecipeFilters(STATE)).toEqualImmutable(fromJS(FILTERS));
   });
 });
-
 
 describe('getRecipeHistory', () => {
   const recipe = RecipeFactory.build();
@@ -125,6 +117,8 @@ describe('getRecipeHistory', () => {
   });
 
   it('should return the list of revisions', () => {
-    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(fromJS([recipe.latest_revision]));
+    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(
+      fromJS([recipe.latest_revision]),
+    );
   });
 });

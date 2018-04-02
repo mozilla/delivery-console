@@ -1,13 +1,8 @@
 import { fromJS } from 'immutable';
 
 import { getExtension } from 'normandy/state/app/extensions/selectors';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  ExtensionFactory,
-} from 'normandy/tests/state/extensions';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { ExtensionFactory } from 'normandy/tests/state/extensions';
 
 describe('getExtension', () => {
   const extension = ExtensionFactory.build();
@@ -18,7 +13,10 @@ describe('getExtension', () => {
       ...INITIAL_STATE.app,
       extensions: {
         ...INITIAL_STATE.app.extensions,
-        items: INITIAL_STATE.app.extensions.items.set(extension.id, fromJS(extension)),
+        items: INITIAL_STATE.app.extensions.items.set(
+          extension.id,
+          fromJS(extension),
+        ),
       },
     },
   };

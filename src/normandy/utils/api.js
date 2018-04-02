@@ -1,6 +1,5 @@
 import * as Cookie from 'js-cookie';
 
-
 export default class APIClient {
   static APIError = class APIError extends Error {
     constructor(message, data) {
@@ -8,7 +7,7 @@ export default class APIClient {
       this.name = 'APIError';
       this.data = data;
     }
-  }
+  };
 
   constructor(root = '/api/') {
     this.root = root;
@@ -34,13 +33,15 @@ export default class APIClient {
     // Convert `data` to `body` or querystring if necessary.
     if ('data' in settings) {
       if ('body' in settings) {
-        throw new Error('Only pass one of `settings.data` and `settings.body`.');
+        throw new Error(
+          'Only pass one of `settings.data` and `settings.body`.',
+        );
       }
 
       if (['GET', 'HEAD'].includes(settings.method.toUpperCase())) {
-        const queryStringData = Object.keys(settings.data).map(key => (
-          `${key}=${encodeURIComponent(settings.data[key])}`
-        ));
+        const queryStringData = Object.keys(settings.data).map(
+          key => `${key}=${encodeURIComponent(settings.data[key])}`,
+        );
         queryString = `?${queryStringData.join('&')}`;
       } else {
         settings.body = JSON.stringify(settings.data);

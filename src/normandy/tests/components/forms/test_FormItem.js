@@ -42,6 +42,8 @@ describe('<FormItem>', () => {
     const whitespaceMiddleString = 'foo    bar';
     const whiteSpaceMiddleEvent = createFakeEvent(whitespaceMiddleString);
 
-    expect(FormItem.trimValue(whiteSpaceMiddleEvent)).toBe(whitespaceMiddleString);
+    expect(FormItem.trimValue(whiteSpaceMiddleEvent)).toBe(
+      whitespaceMiddleString,
+    );
   });
 });

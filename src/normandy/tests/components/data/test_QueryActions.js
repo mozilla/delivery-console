@@ -11,15 +11,20 @@ describe('<QueryActions>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryActions {...props} />);
+    const wrapper = () => shallow(<QueryActions {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchAllActions on mount', () => {
     let called = false;
-    shallow(<QueryActions fetchAllActions={() => { called = true; }} />);
+    shallow(
+      <QueryActions
+        fetchAllActions={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +33,11 @@ describe('<QueryActions>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryActions fetchAllActions={() => { callCount += 1; }} />
+        <QueryActions
+          fetchAllActions={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
 

@@ -2,7 +2,9 @@ import { Spin } from 'antd';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import LoadingOverlay, { SimpleLoadingOverlay } from 'normandy/components/common/LoadingOverlay';
+import LoadingOverlay, {
+  SimpleLoadingOverlay,
+} from 'normandy/components/common/LoadingOverlay';
 
 describe('<SimpleLoadingOverlay>', () => {
   const props = {
@@ -11,8 +13,7 @@ describe('<SimpleLoadingOverlay>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<SimpleLoadingOverlay {...props} />);
+    const wrapper = () => shallow(<SimpleLoadingOverlay {...props} />);
 
     expect(wrapper).not.toThrow();
   });
@@ -25,7 +26,9 @@ describe('<SimpleLoadingOverlay>', () => {
   });
 
   it('should display its children when NOT visible', () => {
-    const wrapper = mount(<SimpleLoadingOverlay {...props} isVisible={false} />);
+    const wrapper = mount(
+      <SimpleLoadingOverlay {...props} isVisible={false} />,
+    );
 
     expect(wrapper.find(Spin).length).toBe(0);
     expect(wrapper.find('#content').length).toBe(1);
@@ -41,8 +44,7 @@ describe('<LoadingOverlay>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<TestOverlay {...props} />);
+    const wrapper = () => shallow(<TestOverlay {...props} />);
 
     expect(wrapper).not.toThrow();
   });

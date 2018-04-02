@@ -9,17 +9,12 @@ import handleError from 'normandy/utils/handleError';
 import { SimpleLoadingOverlay } from 'normandy/components/common/LoadingOverlay';
 import FormActions from 'normandy/components/forms/FormActions';
 import FormItem from 'normandy/components/forms/FormItem';
-import {
-  closeApprovalRequest as closeApprovalRequestAction,
-} from 'normandy/state/app/approvalRequests/actions';
+import { closeApprovalRequest as closeApprovalRequestAction } from 'normandy/state/app/approvalRequests/actions';
 import { createForm, ValidationError } from 'normandy/utils/forms';
 
-@connect(
-  null,
-  {
-    closeApprovalRequest: closeApprovalRequestAction,
-  },
-)
+@connect(null, {
+  closeApprovalRequest: closeApprovalRequestAction,
+})
 @createForm({})
 @autobind
 export default class ApprovalForm extends React.PureComponent {
@@ -80,10 +75,20 @@ export default class ApprovalForm extends React.PureComponent {
         <SimpleLoadingOverlay isVisible={isSubmitting}>
           <FormActions>
             <FormActions.Primary>
-              <Button icon="dislike" onClick={this.handleRejectClick} type="danger" id="af-reject">
-                  Reject
-                </Button>
-              <Button icon="like" onClick={this.handleApproveClick} type="primary" id="af-approve">
+              <Button
+                icon="dislike"
+                onClick={this.handleRejectClick}
+                type="danger"
+                id="af-reject"
+              >
+                Reject
+              </Button>
+              <Button
+                icon="like"
+                onClick={this.handleApproveClick}
+                type="primary"
+                id="af-approve"
+              >
                 Approve
               </Button>
             </FormActions.Primary>

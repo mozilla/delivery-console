@@ -2,7 +2,6 @@ import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 export default class BooleanIcon extends React.PureComponent {
   static propTypes = {
     value: PropTypes.bool.isRequired,

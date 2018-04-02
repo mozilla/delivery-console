@@ -15,8 +15,7 @@ describe('<CurrentUserDetails>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<CurrentUserDetails {...props} />);
+    const wrapper = () => shallow(<CurrentUserDetails {...props} />);
 
     expect(wrapper).not.toThrow();
   });

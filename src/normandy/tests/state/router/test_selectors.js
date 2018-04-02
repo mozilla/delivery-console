@@ -2,7 +2,10 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { push, initializeCurrentLocation } from 'redux-little-router';
 
 import reducers from 'normandy/state';
-import { enhancer as routerEnhancer, middleware as routerMiddleware } from 'normandy/routes';
+import {
+  enhancer as routerEnhancer,
+  middleware as routerMiddleware,
+} from 'normandy/routes';
 import {
   getUrlParam,
   getUrlParamAsInt,
@@ -13,18 +16,16 @@ import {
   getBreadcrumbs,
 } from 'normandy/state/router/selectors';
 
-
 describe('route selectors', () => {
   let store;
-  const middleware = [
-    routerMiddleware,
-  ];
+  const middleware = [routerMiddleware];
 
   beforeEach(() => {
-    store = createStore(reducers, undefined, compose(
-      applyMiddleware(...middleware),
-      routerEnhancer,
-    ));
+    store = createStore(
+      reducers,
+      undefined,
+      compose(applyMiddleware(...middleware), routerEnhancer),
+    );
 
     const initialLocation = store.getState().router;
     if (initialLocation) {
@@ -120,9 +121,7 @@ describe('route selectors', () => {
     it('works for the root', () => {
       store.dispatch(push('/'));
       const val = getBreadcrumbs(store.getState());
-      expect(val).toEqual([
-        { name: 'Home', link: '/' },
-      ]);
+      expect(val).toEqual([{ name: 'Home', link: '/' }]);
     });
 
     it('works for interior pages', () => {

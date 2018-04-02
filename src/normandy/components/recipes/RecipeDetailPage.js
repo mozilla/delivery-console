@@ -19,29 +19,26 @@ import {
 import { getRevision } from 'normandy/state/app/revisions/selectors';
 import { getUrlParam, getUrlParamAsInt } from 'normandy/state/router/selectors';
 
+@connect(state => {
+  const recipeId = getUrlParamAsInt(state, 'recipeId');
+  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
+  const revisionId = getUrlParam(state, 'revisionId', latestRevisionId);
+  const revision = getRevision(state, revisionId, new Map());
 
-@connect(
-  state => {
-    const recipeId = getUrlParamAsInt(state, 'recipeId');
-    const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const revisionId = getUrlParam(state, 'revisionId', latestRevisionId);
-    const revision = getRevision(state, revisionId, new Map());
-
-    return {
-      history: getRecipeHistory(state, recipeId, new List()),
-      recipeId,
-      revision,
-      revisionId,
-    };
-  },
-)
+  return {
+    history: getRecipeHistory(state, recipeId, new List()),
+    recipeId,
+    revision,
+    revisionId,
+  };
+})
 export default class RecipeDetailPage extends React.PureComponent {
   static propTypes = {
     history: PropTypes.instanceOf(List).isRequired,
     recipeId: PropTypes.number.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
     revisionId: PropTypes.string.isRequired,
-  }
+  };
 
   render() {
     const { history, recipeId, revision, revisionId } = this.props;
@@ -53,13 +50,21 @@ export default class RecipeDetailPage extends React.PureComponent {
             <RevisionNotice revision={revision} />
             <Row type="flex" align="middle">
               <Col span={4}>
-                <ShieldIdenticon className="detail-icon" seed={revision.get('identicon_seed')} />
+                <ShieldIdenticon
+                  className="detail-icon"
+                  seed={revision.get('identicon_seed')}
+                />
               </Col>
               <Col span={20}>
                 <DetailsActionBar />
               </Col>
             </Row>
-            <LoadingOverlay requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}>
+            <LoadingOverlay
+              requestIds={[
+                `fetch-recipe-${recipeId}`,
+                `fetch-revision-${revisionId}`,
+              ]}
+            >
               <RecipeDetails recipe={revision.get('recipe', new Map())} />
             </LoadingOverlay>
           </Col>

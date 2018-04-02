@@ -7,15 +7,9 @@ import { connect } from 'react-redux';
 import { push as pushAction, Link } from 'redux-little-router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
-import {
-  saveExtensionListingColumns as saveExtensionListingColumnsAction,
-} from 'normandy/state/app/extensions/actions';
-import {
-  getExtensionListingColumns,
-} from 'normandy/state/app/extensions/selectors';
-import {
-  getCurrentURL as getCurrentURLSelector,
-} from 'normandy/state/router/selectors';
+import { saveExtensionListingColumns as saveExtensionListingColumnsAction } from 'normandy/state/app/extensions/actions';
+import { getExtensionListingColumns } from 'normandy/state/app/extensions/selectors';
+import { getCurrentURL as getCurrentURLSelector } from 'normandy/state/router/selectors';
 
 @connect(
   state => ({
@@ -58,7 +52,9 @@ export default class ListingActionBar extends React.PureComponent {
         </Col>
         <Col span={8} className="righted">
           <Link href="/extension/new/">
-            <Button type="primary" icon="plus">New Extension</Button>
+            <Button type="primary" icon="plus">
+              New Extension
+            </Button>
           </Link>
         </Col>
       </Row>

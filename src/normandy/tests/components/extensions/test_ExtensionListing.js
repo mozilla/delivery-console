@@ -18,8 +18,7 @@ describe('<ExtensionListing>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<ExtensionListing {...props} />);
+    const wrapper = () => shallow(<ExtensionListing {...props} />);
 
     expect(wrapper).not.toThrow();
   });

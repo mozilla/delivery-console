@@ -10,13 +10,8 @@ import actionsReducer from 'normandy/state/app/actions/reducers';
 import revisionsReducer from 'normandy/state/app/revisions/reducers';
 import usersReducer from 'normandy/state/app/users/reducers';
 import { getRevision } from 'normandy/state/app/revisions/selectors';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  RevisionFactory,
-} from 'normandy/tests/state/revisions';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { RevisionFactory } from 'normandy/tests/state/revisions';
 
 describe('getRevision', () => {
   const revision = RevisionFactory.build();
