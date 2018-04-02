@@ -1,4 +1,6 @@
 import * as Cookie from 'js-cookie';
+import fetch from 'isomorphic-fetch';
+require('es6-promise').polyfill();
 
 export default class APIClient {
   static APIError = class APIError extends Error {
