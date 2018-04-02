@@ -20,7 +20,9 @@ export default class IdenticonField extends React.PureComponent {
   };
 
   static generateSeed() {
-    return `v1:${Math.random().toString(36).substr(2)}`;
+    return `v1:${Math.random()
+      .toString(36)
+      .substr(2)}`;
   }
 
   constructor(props) {
@@ -43,12 +45,8 @@ export default class IdenticonField extends React.PureComponent {
 
   handleChange(direction) {
     let next;
-    const {
-      index,
-      history,
-    } = this.state;
+    const { index, history } = this.state;
     const newIndex = index + direction;
-
 
     if (newIndex < 0) {
       return;
@@ -82,9 +80,7 @@ export default class IdenticonField extends React.PureComponent {
   }
 
   render() {
-    const {
-      value,
-    } = this.props;
+    const { value } = this.props;
 
     return (
       <div className="identicon-field">

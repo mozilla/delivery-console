@@ -14,8 +14,7 @@ describe('<QueryFilteredRecipes>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryFilteredRecipes {...props} />);
+    const wrapper = () => shallow(<QueryFilteredRecipes {...props} />);
 
     expect(wrapper).not.toThrow();
   });
@@ -23,7 +22,12 @@ describe('<QueryFilteredRecipes>', () => {
   it('should call fetchFilteredRecipesPage on mount', () => {
     let called = false;
     mount(
-      <QueryFilteredRecipes {...props} fetchFilteredRecipesPage={() => { called = true; }} />,
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
+          called = true;
+        }}
+      />,
     );
 
     expect(called).toBe(true);
@@ -32,7 +36,12 @@ describe('<QueryFilteredRecipes>', () => {
   it('should call fetchFilteredRecipesPage if the `pageNumber` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
-      <QueryFilteredRecipes {...props} fetchFilteredRecipesPage={() => { callCount += 1; }} />,
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
+          callCount += 1;
+        }}
+      />,
     );
     expect(callCount).toBe(1);
 
@@ -52,7 +61,12 @@ describe('<QueryFilteredRecipes>', () => {
   it('should call fetchFilteredRecipesPage if the `filters` change', () => {
     let callCount = 0;
     const wrapper = shallow(
-      <QueryFilteredRecipes {...props} fetchFilteredRecipesPage={() => { callCount += 1; }} />,
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
+          callCount += 1;
+        }}
+      />,
     );
     expect(callCount).toBe(1);
 
@@ -70,7 +84,12 @@ describe('<QueryFilteredRecipes>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryFilteredRecipes {...props} fetchFilteredRecipesPage={() => { callCount += 1; }} />
+        <QueryFilteredRecipes
+          {...props}
+          fetchFilteredRecipesPage={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
     expect(callCount).toBe(1);

@@ -4,18 +4,14 @@ import { connect } from 'react-redux';
 
 import { fetchExtension } from 'normandy/state/app/extensions/actions';
 
-
-@connect(
-  null,
-  {
-    fetchExtension,
-  },
-)
+@connect(null, {
+  fetchExtension,
+})
 export default class QueryExtension extends React.PureComponent {
   static propTypes = {
     fetchExtension: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
-  }
+  };
 
   componentWillMount() {
     const { pk } = this.props;

@@ -3,17 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { isEqual } from 'underscore';
 
-import {
-  fetchExtensionsPage as fetchExtensionsPageAction,
-} from 'normandy/state/app/extensions/actions';
+import { fetchExtensionsPage as fetchExtensionsPageAction } from 'normandy/state/app/extensions/actions';
 
-
-@connect(
-  null,
-  {
-    fetchExtensionsPage: fetchExtensionsPageAction,
-  },
-)
+@connect(null, {
+  fetchExtensionsPage: fetchExtensionsPageAction,
+})
 export default class QueryMultipleExtensions extends React.PureComponent {
   static propTypes = {
     fetchExtensionsPage: PropTypes.func.isRequired,
@@ -33,7 +27,10 @@ export default class QueryMultipleExtensions extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { fetchExtensionsPage, filters, pageNumber } = this.props;
-    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
+    if (
+      pageNumber !== nextProps.pageNumber ||
+      !isEqual(filters, nextProps.filters)
+    ) {
       fetchExtensionsPage(nextProps.pageNumber, nextProps.filters);
     }
   }

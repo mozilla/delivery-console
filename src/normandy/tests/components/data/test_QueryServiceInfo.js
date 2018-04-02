@@ -11,15 +11,20 @@ describe('<QueryServiceInfo>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryServiceInfo {...props} />);
+    const wrapper = () => shallow(<QueryServiceInfo {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchServiceInfo on mount', () => {
     let called = false;
-    shallow(<QueryServiceInfo fetchServiceInfo={() => { called = true; }} />);
+    shallow(
+      <QueryServiceInfo
+        fetchServiceInfo={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +33,11 @@ describe('<QueryServiceInfo>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryServiceInfo fetchServiceInfo={() => { callCount += 1; }} />
+        <QueryServiceInfo
+          fetchServiceInfo={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
 

@@ -18,17 +18,17 @@ import {
   getLatestRevisionIdForRecipe,
   isRecipeEnabled,
 } from 'normandy/state/app/recipes/selectors';
-import {
-  getUser,
-} from 'normandy/state/app/users/selectors';
-
+import { getUser } from 'normandy/state/app/users/selectors';
 
 export function getRevision(state, id, defaultsTo = null) {
   const revision = state.app.revisions.items.get(id);
 
   if (revision) {
     const action = getAction(state, revision.getIn(['recipe', 'action_id']));
-    const approvalRequest = getApprovalRequest(state, revision.get('approval_request_id'));
+    const approvalRequest = getApprovalRequest(
+      state,
+      revision.get('approval_request_id'),
+    );
     const user = getUser(state, revision.get('user_id'));
 
     return revision

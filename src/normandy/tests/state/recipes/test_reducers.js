@@ -14,7 +14,6 @@ import {
   RecipeFactory,
 } from 'normandy/tests/state/recipes';
 
-
 describe('Recipes reducer', () => {
   const recipe = RecipeFactory.build();
 
@@ -23,7 +22,9 @@ describe('Recipes reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
+    expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(
+      INITIAL_STATE,
+    );
   });
 
   it('should handle RECIPE_RECEIVE', () => {
@@ -31,7 +32,9 @@ describe('Recipes reducer', () => {
       ...recipe,
       action_id: recipe.action.id,
       latest_revision_id: recipe.latest_revision.id,
-      approved_revision_id: recipe.approved_revision ? recipe.approved_revision.id : null,
+      approved_revision_id: recipe.approved_revision
+        ? recipe.approved_revision.id
+        : null,
     };
 
     delete reducedRecipe.action;
@@ -63,23 +66,30 @@ describe('Recipes reducer', () => {
   });
 
   it('should handle RECIPE_FILTERS_RECEIVE', () => {
-    expect(recipesReducer(undefined, {
-      type: RECIPE_FILTERS_RECEIVE,
-      filters: FILTERS,
-    })).toEqual({
+    expect(
+      recipesReducer(undefined, {
+        type: RECIPE_FILTERS_RECEIVE,
+        filters: FILTERS,
+      }),
+    ).toEqual({
       ...INITIAL_STATE,
       filters: INITIAL_STATE.filters.merge(fromJS(FILTERS)),
     });
   });
 
   it('should handle RECIPE_HISTORY_RECEIVE', () => {
-    expect(recipesReducer(undefined, {
-      type: RECIPE_HISTORY_RECEIVE,
-      recipeId: recipe.id,
-      revisions: [recipe.latest_revision],
-    })).toEqual({
+    expect(
+      recipesReducer(undefined, {
+        type: RECIPE_HISTORY_RECEIVE,
+        recipeId: recipe.id,
+        revisions: [recipe.latest_revision],
+      }),
+    ).toEqual({
       ...INITIAL_STATE,
-      history: INITIAL_STATE.history.set(recipe.id, new List([recipe.latest_revision.id])),
+      history: INITIAL_STATE.history.set(
+        recipe.id,
+        new List([recipe.latest_revision.id]),
+      ),
     });
   });
 });

@@ -4,17 +4,13 @@ import { connect } from 'react-redux';
 
 import { fetchServiceInfo } from 'normandy/state/app/serviceInfo/actions';
 
-
-@connect(
-  null,
-  {
-    fetchServiceInfo,
-  },
-)
+@connect(null, {
+  fetchServiceInfo,
+})
 export default class QueryServiceInfo extends React.PureComponent {
   static propTypes = {
     fetchServiceInfo: PropTypes.func.isRequired,
-  }
+  };
 
   componentWillMount() {
     this.props.fetchServiceInfo();

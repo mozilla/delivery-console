@@ -1,13 +1,8 @@
 import { fromJS } from 'immutable';
 
 import { getAction } from 'normandy/state/app/actions/selectors';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  ActionFactory,
-} from 'normandy/tests/state/actions';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { ActionFactory } from 'normandy/tests/state/actions';
 
 describe('getAction', () => {
   const action = ActionFactory.build();

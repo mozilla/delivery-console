@@ -9,7 +9,6 @@ import CheckBox from 'normandy/components/forms/CheckBox';
 import FormItem from 'normandy/components/forms/FormItem';
 import { connectFormProps } from 'normandy/utils/forms';
 
-
 @connectFormProps
 export default class ShowHeartbeatFields extends React.Component {
   static propTypes = {
@@ -24,18 +23,17 @@ export default class ShowHeartbeatFields extends React.Component {
   };
 
   render() {
-    const {
-      form,
-      recipeArguments,
-      disabled,
-    } = this.props;
+    const { form, recipeArguments, disabled } = this.props;
 
-    const repeatCount = form.getFieldValue('arguments.repeatEvery')
-      || recipeArguments.get('repeatEvery', 'X');
+    const repeatCount =
+      form.getFieldValue('arguments.repeatEvery') ||
+      recipeArguments.get('repeatEvery', 'X');
 
     return (
       <Row>
-        <p className="action-info">Shows a single message or survey prompt to the user.</p>
+        <p className="action-info">
+          Shows a single message or survey prompt to the user.
+        </p>
         <Col sm={24} md={11}>
           <FormItem
             label="Survey ID"
@@ -107,29 +105,31 @@ export default class ShowHeartbeatFields extends React.Component {
           >
             <RepeatSelect repeatCount={repeatCount} />
           </FormItem>
-          {form.getFieldValue('arguments.repeatOption') === 'xdays' &&
+          {form.getFieldValue('arguments.repeatOption') === 'xdays' && (
             <FormItem
-              rules={[{
-                required: true,
-                message: 'This field must be a number greater than zero.',
-                validator: (rule, value, callback) => {
-                  if (typeof value === 'undefined' || value === null) {
-                    callback('This field is required.');
-                  } else if (parseFloat(value, 10) <= 0) {
-                    callback('Number must be greater than zero.');
-                  } else {
-                    // No message indicates a successful validation.
-                    callback();
-                  }
+              rules={[
+                {
+                  required: true,
+                  message: 'This field must be a number greater than zero.',
+                  validator: (rule, value, callback) => {
+                    if (typeof value === 'undefined' || value === null) {
+                      callback('This field is required.');
+                    } else if (parseFloat(value, 10) <= 0) {
+                      callback('Number must be greater than zero.');
+                    } else {
+                      // No message indicates a successful validation.
+                      callback();
+                    }
+                  },
                 },
-              }]}
+              ]}
               label="Days before user is re-prompted"
               name="arguments.repeatEvery"
               initialValue={recipeArguments.get('repeatEvery', 'X')}
             >
               <InputNumber disabled={disabled} />
             </FormItem>
-          }
+          )}
         </Col>
       </Row>
     );
@@ -150,35 +150,41 @@ class RepeatSelect extends React.PureComponent {
     const { repeatCount } = this.props;
     const dayUnit = repeatCount === 'X' || repeatCount !== 1 ? 'days' : 'day';
 
-    return [{
-      name: 'once',
-      label: 'Show this prompt once.',
-      tooltip: 'Prompt the user only once, regardless if they interact with it or not.',
-    }, {
-      name: 'nag',
-      label: 'Show until the user interacts with the hearbeat prompt, then never again.',
-      tooltip: `Prompts the user every day until they click Learn More, the engagement button, or
+    return [
+      {
+        name: 'once',
+        label: 'Show this prompt once.',
+        tooltip:
+          'Prompt the user only once, regardless if they interact with it or not.',
+      },
+      {
+        name: 'nag',
+        label:
+          'Show until the user interacts with the hearbeat prompt, then never again.',
+        tooltip: `Prompts the user every day until they click Learn More, the engagement button, or
         submit a star rating, then never appears again.`,
-    }, {
-      name: 'xdays',
-      label: `Show users every ${repeatCount === 1 ? 'day' : `${repeatCount} ${dayUnit}`}.`,
-      tooltip: `Prompts the user as soon as possible, then waits ${repeatCount} ${dayUnit} to appear
+      },
+      {
+        name: 'xdays',
+        label: `Show users every ${
+          repeatCount === 1 ? 'day' : `${repeatCount} ${dayUnit}`
+        }.`,
+        tooltip: `Prompts the user as soon as possible, then waits ${repeatCount} ${dayUnit} to appear
         again.`,
-    }];
+      },
+    ];
   }
 
   render() {
     return (
       <Select className="repeat-select" {...this.props}>
-        {
-          this.getOptions().map(({ name, label, tooltip }, index) =>
-            (<Select.Option value={name} key={index + label} title=" ">
-              <Tooltip title={tooltip} placement="top">
-                {label}
-              </Tooltip>
-            </Select.Option>),
-          )
-        }
+        {this.getOptions().map(({ name, label, tooltip }, index) => (
+          <Select.Option value={name} key={index + label} title=" ">
+            <Tooltip title={tooltip} placement="top">
+              {label}
+            </Tooltip>
+          </Select.Option>
+        ))}
       </Select>
     );
   }

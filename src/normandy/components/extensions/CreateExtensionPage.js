@@ -8,24 +8,18 @@ import { push as pushAction } from 'redux-little-router';
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 import handleError from 'normandy/utils/handleError';
 import ExtensionForm from 'normandy/components/extensions/ExtensionForm';
-import {
-  createExtension as createExtensionAction,
-} from 'normandy/state/app/extensions/actions';
+import { createExtension as createExtensionAction } from 'normandy/state/app/extensions/actions';
 
-
-@connect(
-  null,
-  {
-    createExtension: createExtensionAction,
-    push: pushAction,
-  },
-)
+@connect(null, {
+  createExtension: createExtensionAction,
+  push: pushAction,
+})
 @autobind
 export default class CreateExtensionPage extends React.PureComponent {
   static propTypes = {
     createExtension: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
-  }
+  };
 
   onFormSuccess(extensionId) {
     const { push } = this.props;

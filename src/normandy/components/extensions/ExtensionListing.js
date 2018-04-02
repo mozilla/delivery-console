@@ -22,7 +22,6 @@ import {
   getQueryParamAsInt,
 } from 'normandy/state/router/selectors';
 
-
 @connect(
   state => ({
     columns: getExtensionListingColumns(state),
@@ -54,7 +53,7 @@ export default class ExtensionListing extends React.PureComponent {
     pageNumber: null,
     searchText: null,
     status: null,
-  }
+  };
 
   static columnRenderers = {
     name() {
@@ -78,7 +77,7 @@ export default class ExtensionListing extends React.PureComponent {
         />
       );
     },
-  }
+  };
 
   static renderLinkedText(text, record) {
     return <Link href={`/extension/${record.id}/`}>{text}</Link>;

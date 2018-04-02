@@ -21,7 +21,11 @@ export default class DocumentUrlInput extends React.PureComponent {
 
   render() {
     const { disabled, value, ...props } = this.props;
-    let addonAfter = <span><Icon type="link" /> View</span>;
+    let addonAfter = (
+      <span>
+        <Icon type="link" /> View
+      </span>
+    );
     if (value) {
       addonAfter = (
         <a href={this.props.value} target="_blank" rel="noopener noreferrer">

@@ -11,14 +11,12 @@ import { isRequestInProgress } from 'normandy/state/app/requests/selectors';
 
 const { OptGroup, Option } = Select;
 
-@connect(
-  state => ({
-    extensions: getExtensionListing(state),
-    // For search results, we can assume that we'll always be loading just the
-    // first page, so this request ID is a constant.
-    isLoadingSearch: isRequestInProgress(state, 'fetch-extensions-page-1'),
-  }),
-)
+@connect(state => ({
+  extensions: getExtensionListing(state),
+  // For search results, we can assume that we'll always be loading just the
+  // first page, so this request ID is a constant.
+  isLoadingSearch: isRequestInProgress(state, 'fetch-extensions-page-1'),
+}))
 @autobind
 export default class ExtensionSelect extends React.Component {
   static propTypes = {
@@ -38,9 +36,14 @@ export default class ExtensionSelect extends React.Component {
   };
 
   // Define the commonly-used elements on the class, so they're compiled only once.
-  static placeholderElement = (<span><Icon type="search" />{' Search Extensions'}</span>);
-  static noOptionsDisplay = (<span>No extensions found!</span>);
-  static loadingDisplay = (<Spin size="small" />);
+  static placeholderElement = (
+    <span>
+      <Icon type="search" />
+      {' Search Extensions'}
+    </span>
+  );
+  static noOptionsDisplay = <span>No extensions found!</span>;
+  static loadingDisplay = <Spin size="small" />;
 
   state = {
     search: null,
@@ -68,14 +71,10 @@ export default class ExtensionSelect extends React.Component {
       noOptionsDisplay,
     } = ExtensionSelect;
 
-    const {
-      isLoadingSearch,
-      disabled,
-      onChange,
-      size,
-      value,
-    } = this.props;
-    const optGroupLabel = search ? 'Search results' : 'Recently uploaded extensions';
+    const { isLoadingSearch, disabled, onChange, size, value } = this.props;
+    const optGroupLabel = search
+      ? 'Search results'
+      : 'Recently uploaded extensions';
 
     if (isLoadingSearch) {
       displayedList = new List();
@@ -100,7 +99,11 @@ export default class ExtensionSelect extends React.Component {
               const xpi = item.get('xpi');
               const name = item.get('name');
 
-              return (<Option key={xpi} value={xpi} title={name}>{name}</Option>);
+              return (
+                <Option key={xpi} value={xpi} title={name}>
+                  {name}
+                </Option>
+              );
             })}
           </OptGroup>
         </Select>

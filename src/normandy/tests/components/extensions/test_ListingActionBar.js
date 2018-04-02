@@ -15,8 +15,7 @@ describe('<ListingActionBar>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<ListingActionBar {...props} />);
+    const wrapper = () => shallow(<ListingActionBar {...props} />);
 
     expect(wrapper).not.toThrow();
   });

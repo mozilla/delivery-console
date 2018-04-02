@@ -2,10 +2,7 @@ import * as matchers from 'jasmine-immutable-matchers';
 
 import { DEFAULT_REQUEST } from 'normandy/state/constants';
 import { getRequest } from 'normandy/state/app/requests/selectors';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
 
 describe('getRequest', () => {
   const REQUEST = DEFAULT_REQUEST.set('inProgress', true);

@@ -12,8 +12,7 @@ describe('<CheckboxMenu>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<CheckboxMenu {...props} />);
+    const wrapper = () => shallow(<CheckboxMenu {...props} />);
 
     expect(wrapper).not.toThrow();
   });

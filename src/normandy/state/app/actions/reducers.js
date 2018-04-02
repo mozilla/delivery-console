@@ -1,10 +1,7 @@
 import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
 
-import {
-  ACTION_RECEIVE,
-} from 'normandy/state/action-types';
-
+import { ACTION_RECEIVE } from 'normandy/state/action-types';
 
 function items(state = new Map(), action) {
   switch (action.type) {
@@ -15,7 +12,6 @@ function items(state = new Map(), action) {
       return state;
   }
 }
-
 
 export default combineReducers({
   items,

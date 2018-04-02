@@ -23,12 +23,14 @@ describe('<IdenticonField>', () => {
   describe('selection buttons', () => {
     it('should generate a new item if at the end of the history', () => {
       let { value } = props;
-      const wrapper = mount(<IdenticonField
-        {...props}
-        onChange={val => {
-          value = val;
-        }}
-      />);
+      const wrapper = mount(
+        <IdenticonField
+          {...props}
+          onChange={val => {
+            value = val;
+          }}
+        />,
+      );
       const next = wrapper.find('.btn-next');
 
       next.simulate('click');
@@ -38,12 +40,14 @@ describe('<IdenticonField>', () => {
 
     it('should track a history of viewed icons', () => {
       let { value } = props;
-      const wrapper = mount(<IdenticonField
-        {...props}
-        onChange={val => {
-          value = val;
-        }}
-      />);
+      const wrapper = mount(
+        <IdenticonField
+          {...props}
+          onChange={val => {
+            value = val;
+          }}
+        />,
+      );
       const next = wrapper.find('.btn-next');
 
       expect(wrapper.state().history.size).toBe(1);
@@ -55,15 +59,16 @@ describe('<IdenticonField>', () => {
       expect(value).not.toBe(props.value);
     });
 
-
     it('should go back in history if possible', () => {
       let { value } = props;
-      const wrapper = mount(<IdenticonField
-        {...props}
-        onChange={val => {
-          value = val;
-        }}
-      />);
+      const wrapper = mount(
+        <IdenticonField
+          {...props}
+          onChange={val => {
+            value = val;
+          }}
+        />,
+      );
       const prev = wrapper.find('.btn-prev');
       const next = wrapper.find('.btn-next');
 
@@ -80,12 +85,14 @@ describe('<IdenticonField>', () => {
 
     it('should recall icons from history if moving forward', () => {
       let { value } = props;
-      const wrapper = mount(<IdenticonField
-        {...props}
-        onChange={val => {
-          value = val;
-        }}
-      />);
+      const wrapper = mount(
+        <IdenticonField
+          {...props}
+          onChange={val => {
+            value = val;
+          }}
+        />,
+      );
       const prev = wrapper.find('.btn-prev');
       const next = wrapper.find('.btn-next');
 

@@ -14,9 +14,5 @@ export function createMockStore() {
 }
 
 export function wrapMockStore(element) {
-  return (
-    <Provider store={createMockStore()}>
-      { element }
-    </Provider>
-  );
+  return <Provider store={createMockStore()}>{element}</Provider>;
 }

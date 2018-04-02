@@ -4,10 +4,7 @@ import {
   USER_RECEIVE,
 } from 'normandy/state/action-types';
 
-import {
-  makeApiRequest,
-} from 'normandy/state/app/requests/actions';
-
+import { makeApiRequest } from 'normandy/state/app/requests/actions';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {
@@ -30,29 +27,30 @@ export function approvalRequestReceived(approvalRequest) {
   };
 }
 
-
 export function fetchApprovalRequest(pk) {
   return async dispatch => {
     const requestId = `fetch-approval-request-${pk}`;
-    const response = dispatch(makeApiRequest(requestId, `v2/approval_request/${pk}/`));
+    const response = dispatch(
+      makeApiRequest(requestId, `v2/approval_request/${pk}/`),
+    );
     const approvalRequest = await response;
 
     dispatch(approvalRequestReceived(approvalRequest));
   };
 }
 
-
 export function fetchAllApprovalRequests() {
   return async dispatch => {
     const requestId = 'fetch-all-approval-requests';
-    const approvalRequests = await dispatch(makeApiRequest(requestId, 'v2/approval_request/'));
+    const approvalRequests = await dispatch(
+      makeApiRequest(requestId, 'v2/approval_request/'),
+    );
 
     approvalRequests.forEach(approvalRequest => {
       dispatch(approvalRequestReceived(approvalRequest));
     });
   };
 }
-
 
 export function approveApprovalRequest(pk, data) {
   return async dispatch => {
@@ -61,12 +59,12 @@ export function approveApprovalRequest(pk, data) {
       makeApiRequest(requestId, `v2/approval_request/${pk}/approve/`, {
         method: 'POST',
         data,
-      }));
+      }),
+    );
 
     dispatch(approvalRequestReceived(approvalRequest));
   };
 }
-
 
 export function rejectApprovalRequest(pk, data) {
   return async dispatch => {
@@ -75,20 +73,22 @@ export function rejectApprovalRequest(pk, data) {
       makeApiRequest(requestId, `v2/approval_request/${pk}/reject/`, {
         method: 'POST',
         data,
-      }));
+      }),
+    );
 
     dispatch(approvalRequestReceived(approvalRequest));
   };
 }
 
-
 export function closeApprovalRequest(pk) {
   return async dispatch => {
     const requestId = `close-approval-request-${pk}`;
 
-    await dispatch(makeApiRequest(requestId, `v2/approval_request/${pk}/close/`, {
-      method: 'POST',
-    }));
+    await dispatch(
+      makeApiRequest(requestId, `v2/approval_request/${pk}/close/`, {
+        method: 'POST',
+      }),
+    );
 
     dispatch({
       type: APPROVAL_REQUEST_DELETE,

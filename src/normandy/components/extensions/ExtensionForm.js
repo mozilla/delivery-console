@@ -8,7 +8,6 @@ import FormActions from 'normandy/components/forms/FormActions';
 import FormItem from 'normandy/components/forms/FormItem';
 import { createForm } from 'normandy/utils/forms';
 
-
 /**
  * Form for editing XPIs uploaded to the service.
  *
@@ -120,11 +119,7 @@ export default class ExtensionForm extends React.PureComponent {
     const { extension, onSubmit } = this.props;
     return (
       <Form onSubmit={onSubmit}>
-        <FormItem
-          name="name"
-          label="Name"
-          initialValue={extension.get('name')}
-        >
+        <FormItem name="name" label="Name" initialValue={extension.get('name')}>
           <Input />
         </FormItem>
         <FormItem label="Extension (XPI)">
@@ -140,7 +135,9 @@ export default class ExtensionForm extends React.PureComponent {
         </FormItem>
         <FormActions>
           <FormActions.Primary>
-            <Button type="primary" htmlType="submit" id="ef-save">Save</Button>
+            <Button type="primary" htmlType="submit" id="ef-save">
+              Save
+            </Button>
           </FormActions.Primary>
         </FormActions>
       </Form>

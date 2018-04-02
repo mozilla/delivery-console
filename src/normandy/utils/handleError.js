@@ -3,7 +3,6 @@ import { message as AntMessage } from 'antd';
 import APIClient from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 
-
 export const ERR_MESSAGES = {
   FORM_VALIDATION: 'Please correct the form items highlighted below.',
   NO_INTERNET: 'Check your internet connection and try again.',
@@ -14,9 +13,11 @@ export const ERR_MESSAGES = {
 
 // Search strings used to determine various types responses.
 const checkFetchFailure = ({ message = '' }) =>
-  message.indexOf('Failed to fetch') !== -1 || message.indexOf('NetworkError') !== -1;
+  message.indexOf('Failed to fetch') !== -1 ||
+  message.indexOf('NetworkError') !== -1;
 
-const checkLoginFailure = ({ message = '' }) => message.indexOf('credentials were not provided') > -1;
+const checkLoginFailure = ({ message = '' }) =>
+  message.indexOf('credentials were not provided') > -1;
 const checkAPIFailure = error => error instanceof APIClient.APIError;
 const checkValidationFailure = error => error instanceof ValidationError;
 
@@ -40,7 +41,9 @@ const handleAPIError = error => {
       break;
 
     case 403: // Forbidden
-      message = checkLoginFailure(error) ? ERR_MESSAGES.NOT_LOGGED_IN : ERR_MESSAGES.NO_PERMISSION;
+      message = checkLoginFailure(error)
+        ? ERR_MESSAGES.NOT_LOGGED_IN
+        : ERR_MESSAGES.NO_PERMISSION;
       break;
 
     case 500: // Internal Server Error
@@ -57,7 +60,11 @@ const handleAPIError = error => {
   return message;
 };
 
-export default function handleError(context = 'Error!', error, methodOverrides = {}) {
+export default function handleError(
+  context = 'Error!',
+  error,
+  methodOverrides = {},
+) {
   const methods = { ...defaultMethods, ...methodOverrides };
   let errMsg = '';
 

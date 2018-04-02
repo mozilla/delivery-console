@@ -7,9 +7,15 @@ import LabeledInput from 'normandy/components/forms/LabeledInput';
 
 @autobind
 class TestInput extends LabeledInput {
-  getElement() { return Switch; }
-  getElementProps() { return { checked: this.props.value, testProp: 123 }; }
-  handleLabelClick() { this.props.onChange(); }
+  getElement() {
+    return Switch;
+  }
+  getElementProps() {
+    return { checked: this.props.value, testProp: 123 };
+  }
+  handleLabelClick() {
+    this.props.onChange();
+  }
 }
 
 describe('<LabeledInput>', () => {
@@ -19,7 +25,8 @@ describe('<LabeledInput>', () => {
     value: null,
   };
 
-  const factory = (customProps = {}) => mount(<TestInput {...props} {...customProps} />);
+  const factory = (customProps = {}) =>
+    mount(<TestInput {...props} {...customProps} />);
 
   it('should work', () => {
     expect(factory).not.toThrow();
@@ -32,7 +39,8 @@ describe('<LabeledInput>', () => {
     });
 
     it('should render the passed in children', () => {
-      const label = 'Root beer\'s flavor comes from sassafras and/or sarsaparilla!';
+      const label =
+        "Root beer's flavor comes from sassafras and/or sarsaparilla!";
       const wrapper = factory({ children: label });
 
       // The label should render..
@@ -43,8 +51,13 @@ describe('<LabeledInput>', () => {
 
     it('should trigger an onChange when clicked', () => {
       let called = false;
-      const handleChange = () => { called = true; };
-      const wrapper = factory({ onChange: handleChange, children: 'Click me!' });
+      const handleChange = () => {
+        called = true;
+      };
+      const wrapper = factory({
+        onChange: handleChange,
+        children: 'Click me!',
+      });
 
       wrapper.find('.label').simulate('click');
       expect(called).toBe(true);

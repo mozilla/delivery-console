@@ -10,7 +10,6 @@ import {
 
 import APIClient from 'normandy/utils/api';
 
-
 export function makeApiRequest(requestId, endpoint, options = {}) {
   return async (dispatch, getState) => {
     let root;
@@ -21,7 +20,9 @@ export function makeApiRequest(requestId, endpoint, options = {}) {
     const api = new APIClient(root);
     const request = getRequest(getState(), requestId);
 
-    if (request.inProgress) { return true; }
+    if (request.inProgress) {
+      return true;
+    }
 
     dispatch({
       type: REQUEST_SEND,

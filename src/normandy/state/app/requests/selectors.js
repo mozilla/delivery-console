@@ -1,16 +1,13 @@
 import { DEFAULT_REQUEST } from 'normandy/state/constants';
 
-
 export function getRequest(state, id, defaultsTo = DEFAULT_REQUEST) {
   return state.app.requests.get(id, defaultsTo);
 }
-
 
 export function isRequestInProgress(state, id) {
   const request = getRequest(state, id);
   return request.get('inProgress', false);
 }
-
 
 export function areAnyRequestsInProgress(state) {
   const { requests } = state.app;
@@ -22,8 +19,11 @@ export function areAnyRequestsInProgress(state) {
   }
 
   return requests
-    .reduce((reduced, value) => (
-      reduced.set('inProgress', reduced.get('inProgress') || value.get('inProgress'))
-    ))
+    .reduce((reduced, value) =>
+      reduced.set(
+        'inProgress',
+        reduced.get('inProgress') || value.get('inProgress'),
+      ),
+    )
     .get('inProgress', false);
 }

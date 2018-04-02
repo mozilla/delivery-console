@@ -7,17 +7,12 @@ import { connect } from 'react-redux';
 import { push as pushAction, Link } from 'redux-little-router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
-import {
-  saveRecipeListingColumns as saveRecipeListingColumnsAction,
-} from 'normandy/state/app/recipes/actions';
-import {
-  getRecipeListingColumns,
-} from 'normandy/state/app/recipes/selectors';
+import { saveRecipeListingColumns as saveRecipeListingColumnsAction } from 'normandy/state/app/recipes/actions';
+import { getRecipeListingColumns } from 'normandy/state/app/recipes/selectors';
 import {
   getCurrentURL as getCurrentURLSelector,
   getQueryParam,
 } from 'normandy/state/router/selectors';
-
 
 @connect(
   state => ({
@@ -42,7 +37,7 @@ export default class ListingActionBar extends React.PureComponent {
 
   static defaultProps = {
     searchText: null,
-  }
+  };
 
   handleChangeSearch(value) {
     const { getCurrentURL, push } = this.props;
@@ -77,7 +72,9 @@ export default class ListingActionBar extends React.PureComponent {
         </Col>
         <Col span={8} className="righted">
           <Link href="/recipe/new/" id="lab-recipe-link">
-            <Button type="primary" icon="plus" id="lab-recipe-button">New Recipe</Button>
+            <Button type="primary" icon="plus" id="lab-recipe-button">
+              New Recipe
+            </Button>
           </Link>
         </Col>
       </Row>

@@ -12,15 +12,21 @@ describe('<QueryRecipeHistory>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryRecipeHistory {...props} />);
+    const wrapper = () => shallow(<QueryRecipeHistory {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchRecipeHistory on mount', () => {
     let called = false;
-    mount(<QueryRecipeHistory {...props} fetchRecipeHistory={() => { called = true; }} />);
+    mount(
+      <QueryRecipeHistory
+        {...props}
+        fetchRecipeHistory={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +34,12 @@ describe('<QueryRecipeHistory>', () => {
   it('should call fetchRecipeHistory if the `pk` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
-      <QueryRecipeHistory {...props} fetchRecipeHistory={() => { callCount += 1; }} />,
+      <QueryRecipeHistory
+        {...props}
+        fetchRecipeHistory={() => {
+          callCount += 1;
+        }}
+      />,
     );
     expect(callCount).toBe(1);
 
@@ -49,7 +60,12 @@ describe('<QueryRecipeHistory>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryRecipeHistory {...props} fetchRecipeHistory={() => { callCount += 1; }} />
+        <QueryRecipeHistory
+          {...props}
+          fetchRecipeHistory={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
     expect(callCount).toBe(1);

@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 
 import { loadExtensionListingColumns } from 'normandy/state/app/extensions/actions';
 
-
-@connect(
-  null,
-  {
-    loadExtensionListingColumns,
-  },
-)
+@connect(null, {
+  loadExtensionListingColumns,
+})
 export default class QueryExtensionListingColumns extends React.PureComponent {
   static propTypes = {
     loadExtensionListingColumns: PropTypes.func.isRequired,

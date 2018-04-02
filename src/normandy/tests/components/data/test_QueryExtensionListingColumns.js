@@ -11,8 +11,7 @@ describe('<QueryExtensionListingColumns>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryExtensionListingColumns {...props} />);
+    const wrapper = () => shallow(<QueryExtensionListingColumns {...props} />);
 
     expect(wrapper).not.toThrow();
   });
@@ -20,7 +19,11 @@ describe('<QueryExtensionListingColumns>', () => {
   it('should call loadExtensionListingColumns on mount', () => {
     let called = false;
     shallow(
-      <QueryExtensionListingColumns loadExtensionListingColumns={() => { called = true; }} />,
+      <QueryExtensionListingColumns
+        loadExtensionListingColumns={() => {
+          called = true;
+        }}
+      />,
     );
 
     expect(called).toBe(true);
@@ -30,7 +33,11 @@ describe('<QueryExtensionListingColumns>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryExtensionListingColumns loadExtensionListingColumns={() => { callCount += 1; }} />
+        <QueryExtensionListingColumns
+          loadExtensionListingColumns={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
 

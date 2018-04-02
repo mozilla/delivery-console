@@ -1,14 +1,17 @@
 import faker from 'faker';
 import { Map } from 'immutable';
 
-import { AutoIncrementField, DateField, Factory, SubFactory } from 'normandy/tests/factory';
+import {
+  AutoIncrementField,
+  DateField,
+  Factory,
+  SubFactory,
+} from 'normandy/tests/factory';
 import { UserFactory } from 'normandy/tests/state/users';
-
 
 export const INITIAL_STATE = {
   items: new Map(),
 };
-
 
 export class ApprovalRequestFactory extends Factory {
   getFields() {

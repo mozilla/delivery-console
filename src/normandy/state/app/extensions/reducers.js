@@ -6,10 +6,7 @@ import {
   EXTENSION_PAGE_RECEIVE,
   EXTENSION_RECEIVE,
 } from 'normandy/state/action-types';
-import {
-  EXTENSION_LISTING_COLUMNS,
-} from 'normandy/state/constants';
-
+import { EXTENSION_LISTING_COLUMNS } from 'normandy/state/constants';
 
 function items(state = new Map(), action) {
   switch (action.type) {
@@ -21,25 +18,29 @@ function items(state = new Map(), action) {
   }
 }
 
-
 function listing(state = new Map(), action) {
   switch (action.type) {
     case EXTENSION_PAGE_RECEIVE:
       return state
         .set('count', action.extensions.count)
         .set('pageNumber', action.pageNumber)
-        .set('results', fromJS(action.extensions.results.map(extension => extension.id)));
+        .set(
+          'results',
+          fromJS(action.extensions.results.map(extension => extension.id)),
+        );
 
     case EXTENSION_LISTING_COLUMNS_CHANGE:
-      return state.set('columns', EXTENSION_LISTING_COLUMNS.filter(column => (
-        action.columns.includes(column)
-      )));
+      return state.set(
+        'columns',
+        EXTENSION_LISTING_COLUMNS.filter(column =>
+          action.columns.includes(column),
+        ),
+      );
 
     default:
       return state;
   }
 }
-
 
 export default combineReducers({
   items,

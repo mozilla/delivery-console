@@ -12,22 +12,35 @@ describe('<QueryRevision>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryRevision {...props} />);
+    const wrapper = () => shallow(<QueryRevision {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call fetchRevision on mount', () => {
     let called = false;
-    mount(<QueryRevision {...props} fetchRevision={() => { called = true; }} />);
+    mount(
+      <QueryRevision
+        {...props}
+        fetchRevision={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
 
   it('should call fetchRevision if the `pk` changes', () => {
     let callCount = 0;
-    const wrapper = shallow(<QueryRevision {...props} fetchRevision={() => { callCount += 1; }} />);
+    const wrapper = shallow(
+      <QueryRevision
+        {...props}
+        fetchRevision={() => {
+          callCount += 1;
+        }}
+      />,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ pk: 2 });
@@ -47,7 +60,12 @@ describe('<QueryRevision>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryRevision {...props} fetchRevision={() => { callCount += 1; }} />
+        <QueryRevision
+          {...props}
+          fetchRevision={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
     expect(callCount).toBe(1);

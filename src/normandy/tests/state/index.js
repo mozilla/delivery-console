@@ -9,7 +9,6 @@ import { INITIAL_STATE as router } from 'normandy/tests/state/router';
 import { INITIAL_STATE as serviceInfo } from 'normandy/tests/state/serviceInfo';
 import { INITIAL_STATE as users } from 'normandy/tests/state/users';
 
-
 export const INITIAL_STATE = {
   app: {
     actions,

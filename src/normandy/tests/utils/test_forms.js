@@ -3,7 +3,11 @@ import { mount } from 'enzyme';
 
 import { createForm, connectFormProps } from 'normandy/utils/forms';
 
-class FakeComponent extends React.PureComponent { render() { return null; } }
+class FakeComponent extends React.PureComponent {
+  render() {
+    return null;
+  }
+}
 
 describe('Forms utils', () => {
   describe('createForm', () => {

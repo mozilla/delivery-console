@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 
 import { loadRecipeListingColumns } from 'normandy/state/app/recipes/actions';
 
-
-@connect(
-  null,
-  {
-    loadRecipeListingColumns,
-  },
-)
+@connect(null, {
+  loadRecipeListingColumns,
+})
 export default class QueryRecipeListingColumns extends React.PureComponent {
   static propTypes = {
     loadRecipeListingColumns: PropTypes.func.isRequired,

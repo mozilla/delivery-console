@@ -20,18 +20,25 @@ describe('<EnvAlert>', () => {
     const testStrings = ['normandy-admin', 'stage', '/normandy/'];
 
     it('should find a piece of a string amongst an array of strings', () => {
-      let result = EnvAlert.findFragmentsInURL('https://www.normandy-admin.stage.com/normandy/',
-        testStrings);
+      let result = EnvAlert.findFragmentsInURL(
+        'https://www.normandy-admin.stage.com/normandy/',
+        testStrings,
+      );
       expect(result).toBe(true);
 
-      result = EnvAlert.findFragmentsInURL('http://firefox.com/normandy-admin/', testStrings);
+      result = EnvAlert.findFragmentsInURL(
+        'http://firefox.com/normandy-admin/',
+        testStrings,
+      );
       expect(result).toBe(true);
 
-      result = EnvAlert.findFragmentsInURL('http://mozilla.org/control', testStrings);
+      result = EnvAlert.findFragmentsInURL(
+        'http://mozilla.org/control',
+        testStrings,
+      );
       expect(result).toBe(false);
     });
   });
-
 
   describe('production env', () => {
     const url = 'https://www.normandy-admin.prod.com/normandy/';

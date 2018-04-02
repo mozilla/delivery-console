@@ -43,7 +43,6 @@ function items(state = new Map(), action) {
   }
 }
 
-
 export default combineReducers({
   items,
 });

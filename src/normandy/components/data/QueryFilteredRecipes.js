@@ -5,25 +5,21 @@ import { isEqual } from 'underscore';
 
 import { fetchFilteredRecipesPage } from 'normandy/state/app/recipes/actions';
 
-
-@connect(
-  null,
-  {
-    fetchFilteredRecipesPage,
-  },
-)
+@connect(null, {
+  fetchFilteredRecipesPage,
+})
 export default class QueryFilteredRecipes extends React.PureComponent {
   static propTypes = {
     fetchFilteredRecipesPage: PropTypes.func,
     filters: PropTypes.object,
     pageNumber: PropTypes.number,
-  }
+  };
 
   static defaultProps = {
     fetchFilteredRecipesPage: null,
     filters: {},
     pageNumber: 1,
-  }
+  };
 
   componentWillMount() {
     const { filters, pageNumber } = this.props;
@@ -32,8 +28,14 @@ export default class QueryFilteredRecipes extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { filters, pageNumber } = this.props;
-    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
-      this.props.fetchFilteredRecipesPage(nextProps.pageNumber, nextProps.filters);
+    if (
+      pageNumber !== nextProps.pageNumber ||
+      !isEqual(filters, nextProps.filters)
+    ) {
+      this.props.fetchFilteredRecipesPage(
+        nextProps.pageNumber,
+        nextProps.filters,
+      );
     }
   }
 

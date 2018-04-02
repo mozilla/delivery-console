@@ -2,7 +2,6 @@ import { List } from 'immutable';
 
 import { DEFAULT_EXTENSION_LISTING_COLUMNS } from 'normandy/state/constants';
 
-
 export function getExtension(state, id, defaultsTo = null) {
   return state.app.extensions.items.get(id, defaultsTo);
 }

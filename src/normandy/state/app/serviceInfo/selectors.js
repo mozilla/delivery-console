@@ -1,6 +1,5 @@
 import { getUser } from 'normandy/state/app/users/selectors';
 
-
 export function getCurrentUser(state, defaultsTo = null) {
   return getUser(state, state.app.serviceInfo.get('user_id'), defaultsTo);
 }

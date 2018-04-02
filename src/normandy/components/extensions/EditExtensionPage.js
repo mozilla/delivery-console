@@ -10,9 +10,7 @@ import handleError from 'normandy/utils/handleError';
 import LoadingOverlay from 'normandy/components/common/LoadingOverlay';
 import QueryExtension from 'normandy/components/data/QueryExtension';
 import ExtensionForm from 'normandy/components/extensions/ExtensionForm';
-import {
-  updateExtension as updateExtensionAction,
-} from 'normandy/state/app/extensions/actions';
+import { updateExtension as updateExtensionAction } from 'normandy/state/app/extensions/actions';
 import { getExtension } from 'normandy/state/app/extensions/selectors';
 import { getUrlParamAsInt } from 'normandy/state/router/selectors';
 import { addSessionView as addSessionViewAction } from 'normandy/state/app/session/actions';
@@ -38,12 +36,16 @@ export default class EditExtensionPage extends React.PureComponent {
     extensionId: PropTypes.number.isRequired,
     updateExtension: PropTypes.func.isRequired,
     addSessionView: PropTypes.func.isRequired,
-  }
+  };
 
   componentDidMount() {
     const extensionName = this.props.extension.get('name');
     if (extensionName) {
-      this.props.addSessionView('extension', extensionName, this.props.extension.get('identicon_seed'));
+      this.props.addSessionView(
+        'extension',
+        extensionName,
+        this.props.extension.get('identicon_seed'),
+      );
     }
   }
 
@@ -51,9 +53,16 @@ export default class EditExtensionPage extends React.PureComponent {
     const oldExtensions = this.props.extension;
 
     // New extension means we add a session view.
-    if (!is(oldExtensions, extension) && oldExtensions.get('name') !== extension.get('name')) {
+    if (
+      !is(oldExtensions, extension) &&
+      oldExtensions.get('name') !== extension.get('name')
+    ) {
       const extensionName = extension.get('name');
-      this.props.addSessionView('extension', extensionName, extension.get('identicon_seed'));
+      this.props.addSessionView(
+        'extension',
+        extensionName,
+        extension.get('identicon_seed'),
+      );
     }
   }
 

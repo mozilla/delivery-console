@@ -11,13 +11,8 @@ import {
 } from 'normandy/state/app/serviceInfo/selectors';
 import serviceInfoReducer from 'normandy/state/app/serviceInfo/reducers';
 import usersReducer from 'normandy/state/app/users/reducers';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  ServiceInfoFactory,
-} from 'normandy/tests/state/serviceInfo';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { ServiceInfoFactory } from 'normandy/tests/state/serviceInfo';
 
 const serviceInfo = ServiceInfoFactory.build();
 
@@ -36,20 +31,19 @@ const STATE = {
   },
 };
 
-
 describe('getCurrentUser', () => {
   it('should return the current user', () => {
     expect(getCurrentUser(STATE)).toEqual(fromJS(serviceInfo.user));
   });
 });
 
-
 describe('isPeerApprovalEnforced', () => {
   it('should return the correct value', () => {
-    expect(isPeerApprovalEnforced(STATE)).toEqual(serviceInfo.peer_approval_enforced);
+    expect(isPeerApprovalEnforced(STATE)).toEqual(
+      serviceInfo.peer_approval_enforced,
+    );
   });
 });
-
 
 describe('getLogoutUrl', () => {
   it('should return the correct value', () => {

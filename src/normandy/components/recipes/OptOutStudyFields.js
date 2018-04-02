@@ -22,13 +22,12 @@ export default class OptOutStudyFields extends React.Component {
   };
 
   render() {
-    const {
-      recipeArguments,
-      disabled,
-    } = this.props;
+    const { recipeArguments, disabled } = this.props;
     return (
       <Row>
-        <p className="action-info">Enroll the user in a study which they can remove themselves from.</p>
+        <p className="action-info">
+          Enroll the user in a study which they can remove themselves from.
+        </p>
         <Row gutter={24}>
           <Col xs={24} md={12}>
             <FormItem
@@ -62,8 +61,8 @@ export default class OptOutStudyFields extends React.Component {
               initialValue={recipeArguments.get('isEnrollmentPaused', false)}
             >
               <SwitchBox disabled={disabled}>
-                Prevents new users from joining this study&nbsp;cohort. <br /> Existing
-                users will remain in&nbsp;the&nbsp;study.
+                Prevents new users from joining this study&nbsp;cohort. <br />{' '}
+                Existing users will remain in&nbsp;the&nbsp;study.
               </SwitchBox>
             </FormItem>
           </Col>

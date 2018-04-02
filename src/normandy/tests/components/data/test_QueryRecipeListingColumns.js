@@ -11,15 +11,20 @@ describe('<QueryRecipeListingColumns>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () =>
-      shallow(<QueryRecipeListingColumns {...props} />);
+    const wrapper = () => shallow(<QueryRecipeListingColumns {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   it('should call loadRecipeListingColumns on mount', () => {
     let called = false;
-    shallow(<QueryRecipeListingColumns loadRecipeListingColumns={() => { called = true; }} />);
+    shallow(
+      <QueryRecipeListingColumns
+        loadRecipeListingColumns={() => {
+          called = true;
+        }}
+      />,
+    );
 
     expect(called).toBe(true);
   });
@@ -28,7 +33,11 @@ describe('<QueryRecipeListingColumns>', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
-        <QueryRecipeListingColumns loadRecipeListingColumns={() => { callCount += 1; }} />
+        <QueryRecipeListingColumns
+          loadRecipeListingColumns={() => {
+            callCount += 1;
+          }}
+        />
       </div>,
     );
 

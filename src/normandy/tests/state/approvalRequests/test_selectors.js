@@ -8,13 +8,8 @@ import {
 import approvalRequestsReducer from 'normandy/state/app/approvalRequests/reducers';
 import { getApprovalRequest } from 'normandy/state/app/approvalRequests/selectors';
 import usersReducer from 'normandy/state/app/users/reducers';
-import {
-  INITIAL_STATE,
-} from 'normandy/tests/state';
-import {
-  ApprovalRequestFactory,
-} from 'normandy/tests/state/approvalRequests';
-
+import { INITIAL_STATE } from 'normandy/tests/state';
+import { ApprovalRequestFactory } from 'normandy/tests/state/approvalRequests';
 
 describe('getApprovalRequest', () => {
   const approvalRequest = ApprovalRequestFactory.build();

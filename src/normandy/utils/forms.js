@@ -13,7 +13,6 @@ export class ValidationError extends Error {
   }
 }
 
-
 /**
  * Decorator used to wrap forms for collecting and validating user input.
  * Extends antd's Form.create with a few customizations.
@@ -101,10 +100,7 @@ export function createForm({ validateFields, ...formConfig }) {
        * results to the onSubmit prop.
        */
       async triggerSubmit(context) {
-        const {
-          onBeforeSubmit = () => {},
-          onSubmit,
-        } = this.props;
+        const { onBeforeSubmit = () => {}, onSubmit } = this.props;
 
         const customValidateFields = validateFields || (values => values);
 
@@ -113,7 +109,10 @@ export function createForm({ validateFields, ...formConfig }) {
         let values;
         try {
           const defaultValues = await this.defaultValidateFields();
-          values = await customValidateFields.call(this.formComponent, defaultValues);
+          values = await customValidateFields.call(
+            this.formComponent,
+            defaultValues,
+          );
         } catch (error) {
           handleError('Could not validate form.', new ValidationError(error));
 
@@ -140,7 +139,9 @@ export function createForm({ validateFields, ...formConfig }) {
           <FormComponent
             {...this.props}
             onSubmit={this.handleSubmit}
-            ref={formComponent => { this.formComponent = formComponent; }}
+            ref={formComponent => {
+              this.formComponent = formComponent;
+            }}
           />
         );
       }

@@ -8,7 +8,6 @@ import {
   isRequestInProgress,
 } from 'normandy/state/app/requests/selectors';
 
-
 export class SimpleLoadingOverlay extends React.PureComponent {
   static propTypes = {
     children: PropTypes.any,
@@ -23,45 +22,34 @@ export class SimpleLoadingOverlay extends React.PureComponent {
   };
 
   render() {
-    const {
-      children,
-      className,
-      isVisible,
-    } = this.props;
+    const { children, className, isVisible } = this.props;
 
     const Wrapper = isVisible ? Spin : 'div';
 
-    return (
-      <Wrapper className={className}>
-        {children}
-      </Wrapper>
-    );
+    return <Wrapper className={className}>{children}</Wrapper>;
   }
 }
 
+@connect((state, { requestIds }) => {
+  let isLoading;
 
-@connect(
-  (state, { requestIds }) => {
-    let isLoading;
-
-    // If we're given one or more request IDs, check if at least one is in progress.
-    // If nothing is given, simply check if _any_ request is in progress.
-    if (requestIds) {
-      let requestArray = requestIds;
-      if (!(requestArray instanceof Array)) {
-        requestArray = [requestIds];
-      }
-
-      isLoading = !!requestArray.find(reqId => isRequestInProgress(state, reqId));
-    } else {
-      isLoading = areAnyRequestsInProgress(state);
+  // If we're given one or more request IDs, check if at least one is in progress.
+  // If nothing is given, simply check if _any_ request is in progress.
+  if (requestIds) {
+    let requestArray = requestIds;
+    if (!(requestArray instanceof Array)) {
+      requestArray = [requestIds];
     }
 
-    return {
-      isLoading,
-    };
-  },
-)
+    isLoading = !!requestArray.find(reqId => isRequestInProgress(state, reqId));
+  } else {
+    isLoading = areAnyRequestsInProgress(state);
+  }
+
+  return {
+    isLoading,
+  };
+})
 export default class LoadingOverlay extends React.PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,

@@ -1,8 +1,6 @@
 import { Map } from 'immutable';
 
-import {
-  SESSION_INFO_HISTORY_VIEW,
-} from 'normandy/state/action-types';
+import { SESSION_INFO_HISTORY_VIEW } from 'normandy/state/action-types';
 
 import { addSessionView } from 'normandy/state/app/session/actions';
 
@@ -11,8 +9,11 @@ describe('Session actions', () => {
     // Params = the 'default' test params passed into addSessionView
     const defaultParams = ['recipe', 'caption', 'identicon'];
     // Values = the 'default' dispatched values given our default params.
-    const defaultValues = { caption: 'caption', category: 'recipe', identicon: 'identicon' };
-
+    const defaultValues = {
+      caption: 'caption',
+      category: 'recipe',
+      identicon: 'identicon',
+    };
 
     it('should dispatch a SESSION_INFO_HISTORY_VIEW event', async () => {
       const dispatch = jasmine.createSpy('dispatch');
@@ -31,7 +32,10 @@ describe('Session actions', () => {
       const dispatch = jasmine.createSpy('dispatch');
 
       let getState = () => ({
-        router: { pathname: '/recipe/:recipeId/edit/', result: { sessionSlug: 'recipe-view' } },
+        router: {
+          pathname: '/recipe/:recipeId/edit/',
+          result: { sessionSlug: 'recipe-view' },
+        },
       });
       await addSessionView(...defaultParams)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
@@ -40,7 +44,10 @@ describe('Session actions', () => {
       });
 
       getState = () => ({
-        router: { pathname: '/recipe/:recipeId/clone/', result: { sessionSlug: 'recipe-new' } },
+        router: {
+          pathname: '/recipe/:recipeId/clone/',
+          result: { sessionSlug: 'recipe-new' },
+        },
       });
       await addSessionView(...defaultParams)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
@@ -49,7 +56,10 @@ describe('Session actions', () => {
       });
 
       getState = () => ({
-        router: { pathname: '/recipe/:recipeId/approval_history/', result: { sessionSlug: 'recipe-edit' } },
+        router: {
+          pathname: '/recipe/:recipeId/approval_history/',
+          result: { sessionSlug: 'recipe-edit' },
+        },
       });
       await addSessionView(...defaultParams)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
@@ -59,4 +69,3 @@ describe('Session actions', () => {
     });
   });
 });
-

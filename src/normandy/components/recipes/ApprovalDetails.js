@@ -13,15 +13,13 @@ export default class ApprovalDetails extends React.PureComponent {
 
     return (
       <dl className="details narrow">
-        <dt>
-          {request.get('approved') ? 'Approved' : 'Rejected'} by
-        </dt>
-        <dd>
-          {request.getIn(['approver', 'email'])}
-        </dd>
+        <dt>{request.get('approved') ? 'Approved' : 'Rejected'} by</dt>
+        <dd>{request.getIn(['approver', 'email'])}</dd>
 
         <dt>Responsed</dt>
-        <dd title={moment(request.get('created')).format('MMMM Do YYYY, h:mm a')}>
+        <dd
+          title={moment(request.get('created')).format('MMMM Do YYYY, h:mm a')}
+        >
           {moment(request.get('created')).fromNow()}
         </dd>
 
