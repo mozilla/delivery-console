@@ -1,7 +1,6 @@
 /* eslint import/prefer-default-export: "off" */
 
 import { List, Map } from 'immutable';
-import * as localForage from 'localforage';
 
 import {
   SESSION_INFO_RECEIVE,
@@ -22,7 +21,7 @@ export function fetchSessionInfo() {
 
     // Read the stringified object and convert it (and its nested objects) into
     // proper immutable objects.
-    let savedHistory = await localForage.getItem(STORAGE_KEY);
+    let savedHistory = window.localStorage.getItem(STORAGE_KEY);
 
     if (!savedHistory) {
       savedHistory = [];
@@ -51,7 +50,7 @@ export function saveSession() {
     });
 
     const storedData = getState().app.session.history.toJS();
-    await localForage.setItem(STORAGE_KEY, storedData);
+    window.localStorage.setItem(STORAGE_KEY, storedData);
 
     dispatch({
       type: REQUEST_SUCCESS,

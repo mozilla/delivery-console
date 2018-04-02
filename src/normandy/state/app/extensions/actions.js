@@ -1,5 +1,3 @@
-import * as localForage from 'localforage';
-
 import {
   EXTENSION_LISTING_COLUMNS_CHANGE,
   EXTENSION_PAGE_RECEIVE,
@@ -94,7 +92,7 @@ export function updateExtension(pk, extensionData) {
 
 export function loadExtensionListingColumns() {
   return async dispatch => {
-    const columns = await localForage.getItem('extension_listing_columns');
+    const columns = window.localStorage.getItem('extension_listing_columns');
 
     if (columns) {
       dispatch({
@@ -107,7 +105,7 @@ export function loadExtensionListingColumns() {
 
 export function saveExtensionListingColumns(columns) {
   return dispatch => {
-    localForage.setItem('extension_listing_columns', columns);
+    window.localStorage.setItem('extension_listing_columns', columns);
 
     dispatch({
       type: EXTENSION_LISTING_COLUMNS_CHANGE,
