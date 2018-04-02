@@ -8,25 +8,19 @@ import { withRouter } from 'react-router';
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 import handleError from 'normandy/utils/handleError';
 import ExtensionForm from 'normandy/components/extensions/ExtensionForm';
-import {
-  createExtension as createExtensionAction,
-} from 'normandy/state/app/extensions/actions';
+import { createExtension as createExtensionAction } from 'normandy/state/app/extensions/actions';
 import { NormandyLink } from '../../Router';
 
-
 @withRouter
-@connect(
-  null,
-  {
-    createExtension: createExtensionAction,
-  },
-)
+@connect(null, {
+  createExtension: createExtensionAction,
+})
 @autobind
 export default class CreateExtensionPage extends React.PureComponent {
   static propTypes = {
     createExtension: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-  }
+  };
 
   onFormSuccess(extensionId) {
     message.success('Extension saved');

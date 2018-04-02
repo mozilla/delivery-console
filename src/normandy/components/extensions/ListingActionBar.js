@@ -8,15 +8,9 @@ import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
-import {
-  saveExtensionListingColumns as saveExtensionListingColumnsAction,
-} from 'normandy/state/app/extensions/actions';
-import {
-  getExtensionListingColumns,
-} from 'normandy/state/app/extensions/selectors';
-import {
-  getCurrentURL as getCurrentURLSelector,
-} from 'normandy/state/router/selectors';
+import { saveExtensionListingColumns as saveExtensionListingColumnsAction } from 'normandy/state/app/extensions/actions';
+import { getExtensionListingColumns } from 'normandy/state/app/extensions/selectors';
+import { getCurrentURL as getCurrentURLSelector } from 'normandy/state/router/selectors';
 
 @withRouter
 @connect(
@@ -59,7 +53,9 @@ export default class ListingActionBar extends React.PureComponent {
         </Col>
         <Col span={8} className="righted">
           <Link to="/extension/new/">
-            <Button type="primary" icon="plus">New Extension</Button>
+            <Button type="primary" icon="plus">
+              New Extension
+            </Button>
           </Link>
         </Col>
       </Row>

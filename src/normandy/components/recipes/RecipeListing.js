@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { NormandyLink as Link } from 'normandy/Router';
 
-
 import BooleanIcon from 'normandy/components/common/BooleanIcon';
 import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
 import LoadingOverlay from 'normandy/components/common/LoadingOverlay';
@@ -18,9 +17,7 @@ import ListingActionBar from 'normandy/components/recipes/ListingActionBar';
 import DataList from 'normandy/components/tables/DataList';
 import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 
-import {
-  fetchFilteredRecipesPage as fetchFilteredRecipesPageAction,
-} from 'normandy/state/app/recipes/actions';
+import { fetchFilteredRecipesPage as fetchFilteredRecipesPageAction } from 'normandy/state/app/recipes/actions';
 import {
   getRecipeListingColumns,
   getRecipeListingCount,
@@ -81,18 +78,16 @@ export default class RecipeListing extends React.PureComponent {
           title="Name"
           dataIndex="name"
           key="name"
-          render={(text, record) =>
-            (
-              <div className="recipe-listing-name">
-                <ShieldIdenticon
-                  className="shieldicon"
-                  seed={record.identicon_seed}
-                  size={24}
-                />
-                {RecipeListing.renderLinkedText(text, record)}
-              </div>
-            )
-          }
+          render={(text, record) => (
+            <div className="recipe-listing-name">
+              <ShieldIdenticon
+                className="shieldicon"
+                seed={record.identicon_seed}
+                size={24}
+              />
+              {RecipeListing.renderLinkedText(text, record)}
+            </div>
+          )}
           sortOrder={DataList.getSortOrder('name', ordering)}
           sorter
         />
@@ -145,7 +140,10 @@ export default class RecipeListing extends React.PureComponent {
           render={(text, record) => {
             const lastUpdated = moment(record.last_updated);
             return (
-              <Link to={`/recipe/${record.id}/`} title={lastUpdated.format('LLLL')}>
+              <Link
+                to={`/recipe/${record.id}/`}
+                title={lastUpdated.format('LLLL')}
+              >
                 {lastUpdated.fromNow()}
               </Link>
             );
@@ -162,11 +160,7 @@ export default class RecipeListing extends React.PureComponent {
   }
 
   getFilters() {
-    const {
-      ordering,
-      searchText,
-      status,
-    } = this.props;
+    const { ordering, searchText, status } = this.props;
 
     const filters = {
       text: searchText,
@@ -209,19 +203,25 @@ export default class RecipeListing extends React.PureComponent {
   }
 
   render() {
-    const { columns, count, ordering, pageNumber, recipes, status } = this.props;
+    const {
+      columns,
+      count,
+      ordering,
+      pageNumber,
+      recipes,
+      status,
+    } = this.props;
 
     const filters = this.getFilters();
 
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
-    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
+    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join(
+      '-',
+    )}`;
     return (
       <div>
         <QueryRecipeListingColumns />
-        <QueryFilteredRecipes
-          pageNumber={pageNumber}
-          filters={filters}
-        />
+        <QueryFilteredRecipes pageNumber={pageNumber} filters={filters} />
 
         <ListingActionBar />
 

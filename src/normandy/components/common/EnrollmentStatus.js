@@ -46,12 +46,13 @@ export default class EnrollmentSatus extends React.Component {
   }
 
   render() {
-    const {
-      recipe,
-    } = this.props;
+    const { recipe } = this.props;
 
     return (
-      <Link to={`/recipe/${recipe.id}/`} className={cx('status-link', !recipe.enabled && 'is-lowkey')}>
+      <Link
+        to={`/recipe/${recipe.id}/`}
+        className={cx('status-link', !recipe.enabled && 'is-lowkey')}
+      >
         <Icon
           className={cx('status-icon', this.getColor())}
           type={this.getIcon()}

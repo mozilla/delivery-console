@@ -1,8 +1,7 @@
 import { replaceUrlVariables } from 'normandy/routerUtils';
 
-
 export function getUrlParam(props, name, defaultsTo) {
-  if(!props.match){
+  if (!props.match) {
     throw new Error('getUrlParam: no match in props', props, name);
   }
   return props.match.params[name] || defaultsTo;
@@ -13,7 +12,7 @@ export function getUrlParamAsInt(props, name, defaultsTo) {
 
 export function getAllQueryParams(props, defaultsTo) {
   const location = props.location;
-  if(!props.location){
+  if (!props.location) {
     throw new Error('getAllQueryParams: no location in props', props);
   }
 
@@ -32,7 +31,7 @@ export function getAllQueryParams(props, defaultsTo) {
 export function getQueryParam(props, key, defaultsTo) {
   const params = getAllQueryParams(props, {});
 
-  return  params[key] || defaultsTo;
+  return params[key] || defaultsTo;
 }
 
 export function getQueryParamAsInt(props, key, defaultsTo) {

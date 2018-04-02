@@ -20,12 +20,10 @@ import {
   isLatestRevision as isLatestRevisionSelector,
 } from 'normandy/state/app/revisions/selectors';
 
-@connect(
-  (state, { revision }) => ({
-    status: getRevisionStatus(state, revision.get('id')),
-    isLatestRevision: id => isLatestRevisionSelector(state, id),
-  }),
-)
+@connect((state, { revision }) => ({
+  status: getRevisionStatus(state, revision.get('id')),
+  isLatestRevision: id => isLatestRevisionSelector(state, id),
+}))
 @autobind
 export default class HistoryItem extends React.PureComponent {
   static propTypes = {
@@ -82,11 +80,7 @@ export default class HistoryItem extends React.PureComponent {
     }
 
     const icon = !iconType ? null : (
-      <Icon
-        type={iconType}
-        color={color}
-        style={{ fontSize: '16px' }}
-      />
+      <Icon type={iconType} color={color} style={{ fontSize: '16px' }} />
     );
 
     return {
@@ -114,30 +108,21 @@ export default class HistoryItem extends React.PureComponent {
     const { icon, color, label } = this.getRevisionStyles();
 
     return (
-      <Timeline.Item
-        color={color}
-        dot={icon}
-        key={revision.get('id')}
-      >
+      <Timeline.Item color={color} dot={icon} key={revision.get('id')}>
         <Popover
           overlayClassName="timeline-popover"
           content={<HistoryItemPopover revision={revision} />}
           placement="left"
         >
           <Link to={url}>
-            <Tag color={icon && color}>
-              {`Revision ${revisionNo}`}
-            </Tag>
+            <Tag color={icon && color}>{`Revision ${revisionNo}`}</Tag>
           </Link>
 
-          {
-            label &&
-              <Link to={`/recipe/${recipeId}/approval_history/`}>
-                <Tag color={color}>
-                  {label}
-                </Tag>
-              </Link>
-          }
+          {label && (
+            <Link to={`/recipe/${recipeId}/approval_history/`}>
+              <Tag color={color}>{label}</Tag>
+            </Link>
+          )}
         </Popover>
       </Timeline.Item>
     );
@@ -179,8 +164,8 @@ export class RevisionInfo extends React.PureComponent {
     return (
       <div>
         Revision added:
-          <b title={fullTime}>{ ` ${simpleTime} ` }</b>
-          ({ timeAgo })
+        <b title={fullTime}>{` ${simpleTime} `}</b>
+        ({timeAgo})
       </div>
     );
   }
@@ -200,8 +185,14 @@ export class RequestInfo extends React.PureComponent {
       return null;
     }
 
-    const requestCreator = revision.getIn(['approval_request', 'creator', 'email']);
-    const requestCreationTime = moment(revision.getIn(['approval_request', 'created']));
+    const requestCreator = revision.getIn([
+      'approval_request',
+      'creator',
+      'email',
+    ]);
+    const requestCreationTime = moment(
+      revision.getIn(['approval_request', 'created']),
+    );
 
     const fullTime = requestCreationTime.format('MMMM Do YYYY, h:mm a');
     const simpleTime = requestCreationTime.format('L');
@@ -210,10 +201,11 @@ export class RequestInfo extends React.PureComponent {
     return (
       <span>
         <hr />
-        Approval requested by: <b>{requestCreator}</b><br />
+        Approval requested by: <b>{requestCreator}</b>
+        <br />
         Date requested:
-        <b title={fullTime}>{ ` ${simpleTime} ` }</b>
-        ({ timeAgo })
+        <b title={fullTime}>{` ${simpleTime} `}</b>
+        ({timeAgo})
       </span>
     );
   }
@@ -245,7 +237,9 @@ export class ApprovalComment extends React.PureComponent {
           showIcon
           message={
             <span>
-              <strong>“{revision.getIn(['approval_request', 'comment'])}”</strong>
+              <strong>
+                “{revision.getIn(['approval_request', 'comment'])}”
+              </strong>
               <label>— {approver}</label>
             </span>
           }

@@ -7,11 +7,9 @@ import { NormandyLink as Link } from 'normandy/Router';
 
 import { getBreadcrumbs } from 'normandy/state/router/selectors';
 
-@connect(
-  state => ({
-    breadcrumbs: getBreadcrumbs(state),
-  }),
-)
+@connect(state => ({
+  breadcrumbs: getBreadcrumbs(state),
+}))
 @autobind
 export default class NavigationCrumbs extends React.PureComponent {
   static propTypes = {
@@ -27,11 +25,13 @@ export default class NavigationCrumbs extends React.PureComponent {
 
     return (
       <Breadcrumb>
-        {breadcrumbs.map((crumb, idx) =>
-          (<Breadcrumb.Item key={idx}>
-            <Link to={crumb.link} id={this.getCrumbSlug(crumb)}>{ crumb.name }</Link>
-          </Breadcrumb.Item>),
-        )}
+        {breadcrumbs.map((crumb, idx) => (
+          <Breadcrumb.Item key={idx}>
+            <Link to={crumb.link} id={this.getCrumbSlug(crumb)}>
+              {crumb.name}
+            </Link>
+          </Breadcrumb.Item>
+        ))}
       </Breadcrumb>
     );
   }

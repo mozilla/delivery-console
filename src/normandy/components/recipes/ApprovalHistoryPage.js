@@ -10,16 +10,14 @@ import ApprovalRequest from 'normandy/components/recipes/ApprovalRequest';
 import { getRecipeApprovalHistory } from 'normandy/state/app/recipes/selectors';
 import { getUrlParamAsInt } from 'normandy/state/router/selectors';
 
-@connect(
-  (state, props) => {
-    const recipeId = getUrlParamAsInt(props, 'recipeId');
+@connect((state, props) => {
+  const recipeId = getUrlParamAsInt(props, 'recipeId');
 
-    return {
-      history: getRecipeApprovalHistory(state, recipeId),
-      recipeId,
-    };
-  },
-)
+  return {
+    history: getRecipeApprovalHistory(state, recipeId),
+    recipeId,
+  };
+})
 export default class ApprovalHistoryPage extends React.PureComponent {
   static propTypes = {
     history: PropTypes.instanceOf(List).isRequired,

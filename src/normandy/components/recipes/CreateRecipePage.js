@@ -12,14 +12,10 @@ import RecipeForm from 'normandy/components/recipes/RecipeForm';
 import { createRecipe as createAction } from 'normandy/state/app/recipes/actions';
 import { NormandyLink } from '../../Router';
 
-
 @withRouter
-@connect(
-  null,
-  {
-    createRecipe: createAction,
-  },
-)
+@connect(null, {
+  createRecipe: createAction,
+})
 @autobind
 export default class CreateRecipePage extends React.PureComponent {
   static propTypes = {

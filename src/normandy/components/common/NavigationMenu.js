@@ -13,12 +13,10 @@ import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 const { Divider, Item, SubMenu } = Menu;
 
 @withRouter
-@connect(
-  state => ({
-    recipeSessionHistory: getSessionHistory(state, 'recipe'),
-    extensionSessionHistory: getSessionHistory(state, 'extension'),
-  }),
-)
+@connect(state => ({
+  recipeSessionHistory: getSessionHistory(state, 'recipe'),
+  extensionSessionHistory: getSessionHistory(state, 'extension'),
+}))
 export default class NavigationMenu extends React.PureComponent {
   static propTypes = {
     recipeSessionHistory: PropTypes.instanceOf(List).isRequired,
@@ -27,7 +25,11 @@ export default class NavigationMenu extends React.PureComponent {
   };
 
   render() {
-    const { recipeSessionHistory, extensionSessionHistory, history } = this.props;
+    const {
+      recipeSessionHistory,
+      extensionSessionHistory,
+      history,
+    } = this.props;
     const { pathname, search } = history;
 
     return (
@@ -38,7 +40,9 @@ export default class NavigationMenu extends React.PureComponent {
           selectedKeys={[`${pathname}${search}`]}
           mode="inline"
         >
-          <Item key="/"><Link to="/">Home</Link></Item>
+          <Item key="/">
+            <Link to="/">Home</Link>
+          </Item>
 
           <SubMenu title="Recipes" key="Recipes">
             <Item key="/recipe/">
@@ -47,16 +51,14 @@ export default class NavigationMenu extends React.PureComponent {
 
             {recipeSessionHistory.size > 0 && <Divider />}
 
-            {
-              recipeSessionHistory.map(item =>
-                (<Item key={item.get('url')}>
-                  <Link to={item.get('url')}>
-                    <ShieldIdenticon seed={item.get('identicon')} size={20} />
-                    { item.get('caption') }
-                  </Link>
-                </Item>),
-              )
-            }
+            {recipeSessionHistory.map(item => (
+              <Item key={item.get('url')}>
+                <Link to={item.get('url')}>
+                  <ShieldIdenticon seed={item.get('identicon')} size={20} />
+                  {item.get('caption')}
+                </Link>
+              </Item>
+            ))}
           </SubMenu>
 
           <SubMenu title="Extensions" key="Extensions">
@@ -66,13 +68,11 @@ export default class NavigationMenu extends React.PureComponent {
 
             {extensionSessionHistory.size > 0 && <Divider />}
 
-            {
-              extensionSessionHistory.map(item =>
-                (<Item key={item.get('url')}>
-                  <Link to={item.get('url')}>{ item.get('caption') }</Link>
-                </Item>),
-              )
-            }
+            {extensionSessionHistory.map(item => (
+              <Item key={item.get('url')}>
+                <Link to={item.get('url')}>{item.get('caption')}</Link>
+              </Item>
+            ))}
           </SubMenu>
         </Menu>
       </div>

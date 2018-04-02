@@ -18,7 +18,6 @@ export function fetchServiceInfo() {
       serviceInfo,
     });
 
-
     if (!serviceInfo.user) {
       throw new Error('No user provided in service_info');
     }

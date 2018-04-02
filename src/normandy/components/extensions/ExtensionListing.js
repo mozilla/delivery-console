@@ -24,7 +24,6 @@ import {
 } from 'normandy/state/router/selectors';
 import { NormandyLink } from '../../Router';
 
-
 @withRouter
 @connect(
   (state, props) => ({
@@ -55,7 +54,7 @@ export default class ExtensionListing extends React.PureComponent {
     pageNumber: null,
     searchText: null,
     status: null,
-  }
+  };
 
   static columnRenderers = {
     name() {
@@ -79,7 +78,7 @@ export default class ExtensionListing extends React.PureComponent {
         />
       );
     },
-  }
+  };
 
   static renderLinkedText(text, record) {
     return <Link to={`/extension/${record.id}/`}>{text}</Link>;
