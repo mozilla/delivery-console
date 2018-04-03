@@ -1,36 +1,49 @@
 import React from 'react';
 import { NormandyLink as Link } from 'normandy/Router';
-
-import { Row, Col, Icon, Card } from 'antd';
+import { Row, Col, Card } from 'antd';
 
 export default class Gateway extends React.PureComponent {
   render() {
     return (
-      <Row
-        className="page-gateway"
-        type="flex"
-        justify="space-around"
-        align="top"
-      >
-        <Col className="gw-col" xs={24} sm={10} md={8}>
-          <Card title="Recipes" id="gw-recipes-card">
-            <Icon type="book" />
-            <p>Basic SHIELD recipes</p>
-            <Link to="/recipe/" id="gw-recipes-link">
-              Go to Recipes
-            </Link>
-          </Card>
-        </Col>
-        <Col className="gw-col" xs={24} sm={10} md={8}>
-          <Card title="Extensions" id="gw-extensions-card">
-            <Icon type="code" />
-            <p>SHIELD WebExtensions</p>
-            <Link to="/extension/" id="gw-extensions-card">
-              Go to Extensions
-            </Link>
-          </Card>
-        </Col>
-      </Row>
+      <div>
+        <Row gutter={16} type="flex" justify="space-around" align="top">
+          <Col span={24}>
+            <h2>I want to...</h2>
+            <hr />
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <Card>
+              <ul>
+                <li>...log something to remote consoles.</li>
+                <li>...temporarily flip a remote Firefox preference.</li>
+                <li>
+                  ...permanently roll out a remote Firefox preference change.
+                </li>
+              </ul>
+
+              <Link to="/recipe/">
+                Go to the Recipe Listing to start a new study.
+              </Link>
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <Card>
+              <ul>
+                <li>
+                  ...manage system addons used in conjunction with opt-out
+                  studies.
+                </li>
+              </ul>
+
+              <Link to="/extension/">
+                Go to Extension Listing to upload or edit existing study addons.
+              </Link>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

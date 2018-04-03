@@ -10,15 +10,22 @@
   padding: 2em;
 }
 
-.app-header {
+.ant-layout-header.app-header {
   align-items: center;
+  background: @blue-60;
+  color: @white;
   display: flex;
+  position: relative;
+  z-index: 5;
 
   h1 {
+    color: @white;
     margin: 0 1em 0 0;
   }
 
   a {
+    background: @blue-60;
+    color: @white;
     padding: 0 2em;
 
     &,
@@ -28,8 +35,8 @@
     }
 
     &.active {
-      background: @blue-60;
-      color: @white;
+      background: @white;
+      color: @blue-60;
     }
   }
 }

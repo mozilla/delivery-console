@@ -10,7 +10,7 @@ import QuerySessionInfo from 'normandy/components/data/QuerySessionInfo';
 import { getSessionHistory } from 'normandy/state/app/session/selectors';
 import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 
-const { Divider, Item, SubMenu } = Menu;
+const { Divider, Item, SubMenu, ItemGroup } = Menu;
 
 @withRouter
 @connect(state => ({
@@ -35,30 +35,23 @@ export default class NavigationMenu extends React.PureComponent {
     return (
       <div className="nav-menu">
         <QuerySessionInfo />
-        <Menu
-          defaultOpenKeys={['Recipes', 'Extensions']}
-          selectedKeys={[`${pathname}${search}`]}
-          mode="inline"
-        >
-          <Item key="/">
-            <Link to="/">Home</Link>
-          </Item>
-
+        <Menu selectedKeys={[`${pathname}${search}`]} mode="horizontal">
           <SubMenu title="Recipes" key="Recipes">
             <Item key="/recipe/">
               <Link to="/recipe/">View All</Link>
             </Item>
 
-            {recipeSessionHistory.size > 0 && <Divider />}
-
-            {recipeSessionHistory.map(item => (
-              <Item key={item.get('url')}>
-                <Link to={item.get('url')}>
-                  <ShieldIdenticon seed={item.get('identicon')} size={20} />
-                  {item.get('caption')}
-                </Link>
-              </Item>
-            ))}
+            <Divider />
+            <ItemGroup title="Recently Viewed">
+              {recipeSessionHistory.map(item => (
+                <Item key={item.get('url')}>
+                  <Link to={item.get('url')}>
+                    <ShieldIdenticon seed={item.get('identicon')} size={20} />
+                    {item.get('caption')}
+                  </Link>
+                </Item>
+              ))}
+            </ItemGroup>
           </SubMenu>
 
           <SubMenu title="Extensions" key="Extensions">
@@ -66,13 +59,15 @@ export default class NavigationMenu extends React.PureComponent {
               <Link to="/extension/">View All</Link>
             </Item>
 
-            {extensionSessionHistory.size > 0 && <Divider />}
+            <Divider />
 
-            {extensionSessionHistory.map(item => (
-              <Item key={item.get('url')}>
-                <Link to={item.get('url')}>{item.get('caption')}</Link>
-              </Item>
-            ))}
+            <ItemGroup title="Recently Viewed">
+              {extensionSessionHistory.map(item => (
+                <Item key={item.get('url')}>
+                  <Link to={item.get('url')}>{item.get('caption')}</Link>
+                </Item>
+              ))}
+            </ItemGroup>
           </SubMenu>
         </Menu>
       </div>

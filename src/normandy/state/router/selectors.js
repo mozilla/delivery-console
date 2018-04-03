@@ -1,5 +1,3 @@
-import { replaceUrlVariables } from 'normandy/routerUtils';
-
 export function getUrlParam(props, name, defaultsTo) {
   if (!props.match) {
     throw new Error('getUrlParam: no match in props', props, name);
@@ -50,26 +48,4 @@ export function getCurrentURL(props, queryParams) {
 
 export function getRouterPath(props) {
   return props.location.pathname;
-}
-
-export function getBreadcrumbs(state) {
-  const { result, pathname, params } = window.location; // state.router;
-  const crumbs = [];
-  let currentRoute = result;
-
-  while (currentRoute) {
-    if (currentRoute.crumb) {
-      let link = replaceUrlVariables(currentRoute.route || pathname, params);
-      if (!link.endsWith('/')) {
-        link += '/';
-      }
-      crumbs.push({
-        name: currentRoute.crumb,
-        link,
-      });
-    }
-    currentRoute = currentRoute.parent;
-  }
-
-  return crumbs.reverse();
 }
