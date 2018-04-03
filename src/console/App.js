@@ -6,10 +6,17 @@ import 'console/App.less';
 
 import Normandy from 'normandy/App';
 import { BrowserRouter, NavLink, Link } from 'react-router-dom';
-import { Route, Redirect, Switch } from 'react-router';
-import { checkLogin, fetchUserInfo, isAuthenticated, login } from './auth0';
 
-import { Alert, Button, Layout } from 'antd';
+import { Route, Redirect, Switch } from 'react-router';
+import {
+  checkLogin,
+  fetchUserInfo,
+  isAuthenticated,
+  login,
+  logout,
+} from './auth0';
+
+import { Button, Layout } from 'antd';
 const { Header, Content } = Layout;
 
 const Homepage = props => (
@@ -57,6 +64,11 @@ class App extends Component<AppProps, AppState> {
     this.setState({ userInfo, accessToken });
   };
 
+  onUserLogout = () => {
+    logout();
+    this.setState({ userInfo: null, accessToken: null });
+  };
+
   render() {
     return (
       <BrowserRouter>
@@ -70,14 +82,9 @@ class App extends Component<AppProps, AppState> {
             <NavLink to="/shield">SHIELD</NavLink>
 
             {(this.state.userInfo && (
-              <Alert
-                style={{ marginLeft: '3em' }}
-                type="info"
-                showIcon
-                message={`You are logged in as ${
-                  this.state.userInfo.nickname
-                }.`}
-              />
+              <Button onClick={this.onUserLogout}>{`Logged in as ${
+                this.state.userInfo.nickname
+              }`}</Button>
             )) || <Button onClick={this.onUserLogin}>Login</Button>}
           </Header>
           <Content className="app-content">
