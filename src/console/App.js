@@ -14,7 +14,7 @@ import {
   isAuthenticated,
   login,
   logout,
-} from './auth0';
+} from './auth0Utils';
 
 import { Button, Layout } from 'antd';
 const { Header, Content } = Layout;

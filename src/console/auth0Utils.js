@@ -1,6 +1,6 @@
 // @flow
 
-declare var auth0: any;
+import auth0 from 'auth0-js';
 
 export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
 export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
