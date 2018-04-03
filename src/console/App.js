@@ -52,7 +52,7 @@ class App extends Component<AppProps, AppState> {
   };
 
   onUserInfo = (userInfo: any) => {
-    this.setState(userInfo);
+    this.setState({ userInfo });
   };
 
   render() {
@@ -72,7 +72,9 @@ class App extends Component<AppProps, AppState> {
                 style={{ marginLeft: '3em' }}
                 type="info"
                 showIcon
-                message={`You are logged.`}
+                message={`You are logged in as ${
+                  this.state.userInfo.nickname
+                }.`}
               />
             )) || <Button onClick={this.onUserLogin}>Login</Button>}
           </Header>
