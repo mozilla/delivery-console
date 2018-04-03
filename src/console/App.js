@@ -4,46 +4,55 @@ import React, { Component } from 'react';
 
 import 'console/App.less';
 
-import LoginPage from './LoginPage';
 import Normandy from 'normandy/App';
 import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import { Route, Redirect, Switch } from 'react-router';
+import { checkLogin, fetchUserInfo, isAuthenticated, login } from './auth0';
 
-import { Alert, Layout } from 'antd';
+import { Alert, Button, Layout } from 'antd';
 const { Header, Content } = Layout;
 
 const Homepage = props => (
   <div>
-    <h3>Welcome {props.authToken ? 'back' : 'home'}!</h3>
-    {props.authToken ? (
+    <h3>Welcome {props.userInfo ? 'back' : 'home'}!</h3>
+    {props.userInfo ? (
       <p>
         Go to the <Link to="/shield">SHIELD control panel</Link>.
       </p>
     ) : (
-      <p>
-        You are not logged in! Go to the <Link to="/login">login page</Link>.
-      </p>
+      <p>You are not logged in! Please use the login button in the header.</p>
     )}
   </div>
 );
 
 type AppProps = {};
 type AppState = {
-  authToken: ?string,
-  username: ?string,
+  userInfo: any,
 };
 
 class App extends Component<AppProps, AppState> {
   state = {
-    authToken: null,
-    username: null,
+    userInfo: null,
   };
 
-  onUserLogin = (username: string, authToken: string) => {
-    this.setState({
-      username,
-      authToken,
-    });
+  componentDidMount = () => {
+    checkLogin(this.onLoggedIn);
+    if (isAuthenticated()) {
+      this.onLoggedIn();
+    }
+  };
+
+  onUserLogin = () => {
+    // Call auth0.login which will start the login redirection dance.
+    login();
+  };
+
+  onLoggedIn = () => {
+    fetchUserInfo(this.onUserInfo);
+  };
+
+  onUserInfo = (userInfo: any) => {
+    this.setState(userInfo);
   };
 
   render() {
@@ -56,17 +65,16 @@ class App extends Component<AppProps, AppState> {
             <NavLink exact to="/">
               Home
             </NavLink>
-            <NavLink to="/login">Login</NavLink>
             <NavLink to="/shield">SHIELD</NavLink>
 
-            {this.state.username && (
+            {(this.state.userInfo && (
               <Alert
                 style={{ marginLeft: '3em' }}
                 type="info"
                 showIcon
-                message={`You are logged in as ${this.state.username}.`}
+                message={`You are logged.`}
               />
-            )}
+            )) || <Button onClick={this.onUserLogin}>Login</Button>}
           </Header>
           <Content className="app-content">
             <Switch>
@@ -74,20 +82,7 @@ class App extends Component<AppProps, AppState> {
               <Route
                 exact
                 path="/"
-                component={() => <Homepage authToken={this.state.authToken} />}
-              />
-
-              {/* Login */}
-              <Route
-                exact
-                path="/login/"
-                component={() =>
-                  this.state.username ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <LoginPage onAuth={this.onUserLogin} />
-                  )
-                }
+                component={() => <Homepage authToken={this.state.userInfo} />}
               />
 
               {/* Normandy App */}
@@ -96,7 +91,7 @@ class App extends Component<AppProps, AppState> {
                 component={props =>
                   this.state.username ? (
                     <Normandy
-                      authToken={this.state.authToken}
+                      authToken={this.state.userInfo}
                       urlPrefix="/shield"
                       {...props}
                     />
