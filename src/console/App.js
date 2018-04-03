@@ -100,7 +100,7 @@ class App extends Component<AppProps, AppState> {
               <Route
                 path="/shield"
                 component={props =>
-                  this.state.username ? (
+                  this.state.userInfo ? (
                     <Normandy
                       authToken={this.state.accessToken}
                       urlPrefix="/shield"
