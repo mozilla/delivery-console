@@ -32,7 +32,7 @@ export default class App extends React.PureComponent {
           <QueryServiceInfo />
 
           <Layout>
-            <Header className="sidebar" breakpoint="sm" collapsedWidth="0">
+            <Header className="sidebar">
               <NavigationMenu />
             </Header>
 
