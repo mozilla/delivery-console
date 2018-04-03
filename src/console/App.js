@@ -33,8 +33,18 @@ const Homepage = props => (
 );
 
 type AppProps = {};
+type UserInfo = {
+  family_name: string,
+  given_name: string,
+  locale: string,
+  name: string,
+  nickname: string,
+  picture: string,
+  sub: string,
+  updated_at: string,
+};
 type AppState = {
-  userInfo: any,
+  userInfo: ?UserInfo,
   accessToken: ?string,
 };
 
@@ -60,7 +70,7 @@ class App extends Component<AppProps, AppState> {
     fetchUserInfo(this.onUserInfo);
   };
 
-  onUserInfo = (accessToken: string, userInfo: any) => {
+  onUserInfo = (accessToken: string, userInfo: UserInfo) => {
     this.setState({ userInfo, accessToken });
   };
 

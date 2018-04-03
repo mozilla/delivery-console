@@ -115,7 +115,7 @@ export function handleUserInfo(
 }
 
 export function fetchUserInfo(
-  callback: UserInfo => void,
+  callback: (string, UserInfo) => void,
   initFunc: () => WebAuth = initWebAuth,
 ) {
   const session = localStorage.getItem('session');
