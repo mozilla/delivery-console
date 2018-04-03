@@ -4,7 +4,8 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
+import { withRouter } from 'react-router';
 
 import {
   disableRecipe as disableRecipeAction,
@@ -27,19 +28,20 @@ import {
   getUrlParamAsInt,
 } from 'normandy/state/router/selectors';
 
+@withRouter
 @connect(
-  state => {
-    const recipeId = getUrlParamAsInt(state, 'recipeId');
+  (state, props) => {
+    const recipeId = getUrlParamAsInt(props, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
     const recipe = getRecipe(state, recipeId, new Map());
-    const revisionId = getUrlParam(state, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParam(props, 'revisionId', latestRevisionId);
 
     return {
       isLatest: isLatestRevision(state, revisionId),
       isLatestApproved: isLatestApprovedRevision(state, revisionId),
       isPendingApproval: isRevisionPendingApproval(state, revisionId),
       isApprovable: isApprovableRevision(state, revisionId),
-      routerPath: getRouterPath(state),
+      routerPath: getRouterPath(props),
       recipe,
       recipeId,
       revisionId,
@@ -105,14 +107,14 @@ export default class DetailsActionBar extends React.PureComponent {
 
     return (
       <div className="details-action-bar clearfix">
-        <Link href={`${routerPath}clone/`} id="dab-clone-link">
+        <Link to={`${routerPath}clone/`} id="dab-clone-link">
           <Button icon="swap" type="primary" id="dab-clone-button">
             Clone
           </Button>
         </Link>
 
         {isLatest && (
-          <Link href={`/recipe/${recipeId}/edit/`} id="dab-edit-link">
+          <Link to={`/recipe/${recipeId}/edit/`} id="dab-edit-link">
             <Button icon="edit" type="primary" id="dab-edit-button">
               Edit
             </Button>
@@ -131,7 +133,7 @@ export default class DetailsActionBar extends React.PureComponent {
         )}
 
         {isPendingApproval && (
-          <Link href={`/recipe/${recipeId}/approval_history/`}>
+          <Link to={`/recipe/${recipeId}/approval_history/`}>
             <Button icon="message" type="primary" id="dab-approval-status">
               Approval Request
             </Button>

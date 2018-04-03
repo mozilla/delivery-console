@@ -10,8 +10,8 @@ import ApprovalRequest from 'normandy/components/recipes/ApprovalRequest';
 import { getRecipeApprovalHistory } from 'normandy/state/app/recipes/selectors';
 import { getUrlParamAsInt } from 'normandy/state/router/selectors';
 
-@connect(state => {
-  const recipeId = getUrlParamAsInt(state, 'recipeId');
+@connect((state, props) => {
+  const recipeId = getUrlParamAsInt(props, 'recipeId');
 
   return {
     history: getRecipeApprovalHistory(state, recipeId),

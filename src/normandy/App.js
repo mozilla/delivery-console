@@ -1,38 +1,40 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { initializeCurrentLocation } from 'redux-little-router';
 import thunk from 'redux-thunk';
+
+import App from 'normandy/components/App';
+import NormandyRouter, { NormandyLink } from './Router';
 
 import './less/main.less';
 
-import Router, {
-  enhancer as routerEnhancer,
-  middleware as routerMiddleware,
-} from 'normandy/routes';
 import reducers from 'normandy/state';
 
-const middleware = [routerMiddleware, thunk];
+const middleware = [thunk];
 
 const store = createStore(
   reducers,
   reducers(undefined, { type: 'initial' }),
-  compose(applyMiddleware(...middleware), routerEnhancer),
+  compose(applyMiddleware(...middleware)),
 );
 
-const initialLocation = store.getState().router;
-if (initialLocation) {
-  store.dispatch(initializeCurrentLocation(initialLocation));
-}
+export default class Root extends React.Component {
+  componentWillMount() {
+    // `NormandyLinks` are wrapped Links which append a prefix for nested apps.
+    // At this point we know the prefix, so we can update all instances of the
+    // Link here via the static PREFIX property.
+    NormandyLink.PREFIX = this.props.urlPrefix || '';
+  }
 
-export default class Root extends React.PureComponent {
   render() {
+    const urlPrefix = this.props.urlPrefix;
+
     return (
-      <div id="normandy-app">
-        <Provider store={store}>
-          <Router />
-        </Provider>
-      </div>
+      <Provider store={store}>
+        <App>
+          <NormandyRouter urlPrefix={urlPrefix} />
+        </App>
+      </Provider>
     );
   }
 }

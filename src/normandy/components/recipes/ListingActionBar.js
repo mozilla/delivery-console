@@ -4,7 +4,8 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction, Link } from 'redux-little-router';
+import { withRouter } from 'react-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
 import { saveRecipeListingColumns as saveRecipeListingColumnsAction } from 'normandy/state/app/recipes/actions';
@@ -14,14 +15,14 @@ import {
   getQueryParam,
 } from 'normandy/state/router/selectors';
 
+@withRouter
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getRecipeListingColumns(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    searchText: getQueryParam(state, 'searchText'),
+    searchText: getQueryParam(props, 'searchText'),
   }),
   {
-    push: pushAction,
     saveRecipeListingColumns: saveRecipeListingColumnsAction,
   },
 )
@@ -30,7 +31,7 @@ export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentURL: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
   };
@@ -40,8 +41,8 @@ export default class ListingActionBar extends React.PureComponent {
   };
 
   handleChangeSearch(value) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ searchText: value || undefined }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ searchText: value || undefined }));
   }
 
   render() {
@@ -71,7 +72,7 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <Link href="/recipe/new/" id="lab-recipe-link">
+          <Link to="/recipe/new/" id="lab-recipe-link">
             <Button type="primary" icon="plus" id="lab-recipe-button">
               New Recipe
             </Button>

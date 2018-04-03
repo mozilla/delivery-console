@@ -5,7 +5,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction, Link } from 'redux-little-router';
+import { withRouter } from 'react-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import BooleanIcon from 'normandy/components/common/BooleanIcon';
 import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
@@ -27,22 +28,23 @@ import {
   getQueryParam,
   getQueryParamAsInt,
 } from 'normandy/state/router/selectors';
+import { NormandyLink } from '../../Router';
 
+@withRouter
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getRecipeListingColumns(state),
     count: getRecipeListingCount(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(state, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(state, 'page', 1),
+    ordering: getQueryParam(props, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(props, 'page', 1),
     recipes: getRecipeListingFlattenedAction(state),
-    searchText: getQueryParam(state, 'searchText'),
-    status: getQueryParam(state, 'status'),
+    searchText: getQueryParam(props, 'searchText'),
+    status: getQueryParam(props, 'status'),
   }),
   {
     fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
     openNewWindow: window.open,
-    push: pushAction,
   },
 )
 @autobind
@@ -55,7 +57,7 @@ export default class RecipeListing extends React.PureComponent {
     openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
     recipes: PropTypes.instanceOf(List).isRequired,
     searchText: PropTypes.string,
     status: PropTypes.string,
@@ -139,7 +141,7 @@ export default class RecipeListing extends React.PureComponent {
             const lastUpdated = moment(record.last_updated);
             return (
               <Link
-                href={`/recipe/${record.id}/`}
+                to={`/recipe/${record.id}/`}
                 title={lastUpdated.format('LLLL')}
               >
                 {lastUpdated.fromNow()}
@@ -154,7 +156,7 @@ export default class RecipeListing extends React.PureComponent {
   };
 
   static renderLinkedText(text, record) {
-    return <Link href={`/recipe/${record.id}/`}>{text}</Link>;
+    return <Link to={`/recipe/${record.id}/`}>{text}</Link>;
   }
 
   getFilters() {
@@ -176,8 +178,8 @@ export default class RecipeListing extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ page }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ page }));
   }
 
   handleRowClick(record, index, event) {
@@ -190,14 +192,14 @@ export default class RecipeListing extends React.PureComponent {
     // as if it was a native link click. This includes opening a new tab if using
     // a modifier key (like ctrl).
 
-    let navTo = this.props.push;
+    let navTo = this.props.history.push.bind(this.props.history);
 
     // No link but the user requested a new window.
     if (event.ctrlKey || event.metaKey || event.button === 1) {
       navTo = this.props.openNewWindow;
     }
 
-    navTo(`/recipe/${record.id}/`);
+    navTo(`${NormandyLink.PREFIX}/recipe/${record.id}/`);
   }
 
   render() {

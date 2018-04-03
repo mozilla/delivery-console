@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import { Row, Col, Icon, Card } from 'antd';
 
@@ -16,7 +16,7 @@ export default class Gateway extends React.PureComponent {
           <Card title="Recipes" id="gw-recipes-card">
             <Icon type="book" />
             <p>Basic SHIELD recipes</p>
-            <Link href="/recipe/" id="gw-recipes-link">
+            <Link to="/recipe/" id="gw-recipes-link">
               Go to Recipes
             </Link>
           </Card>
@@ -25,7 +25,7 @@ export default class Gateway extends React.PureComponent {
           <Card title="Extensions" id="gw-extensions-card">
             <Icon type="code" />
             <p>SHIELD WebExtensions</p>
-            <Link href="/extension/" id="gw-extensions-card">
+            <Link to="/extension/" id="gw-extensions-card">
               Go to Extensions
             </Link>
           </Card>

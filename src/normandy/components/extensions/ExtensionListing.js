@@ -4,7 +4,8 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction, Link } from 'redux-little-router';
+import { withRouter } from 'react-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import LoadingOverlay from 'normandy/components/common/LoadingOverlay';
 import QueryExtensionListingColumns from 'normandy/components/data/QueryExtensionListingColumns';
@@ -21,19 +22,19 @@ import {
   getQueryParam,
   getQueryParamAsInt,
 } from 'normandy/state/router/selectors';
+import { NormandyLink } from '../../Router';
 
+@withRouter
 @connect(
-  state => ({
+  (state, props) => ({
     columns: getExtensionListingColumns(state),
     count: getExtensionListingCount(state),
     extensions: getExtensionListing(state),
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(state, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(state, 'page', 1),
+    ordering: getQueryParam(props, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(props, 'page', 1),
   }),
-  {
-    push: pushAction,
-  },
+  {},
 )
 @autobind
 export default class ExtensionListing extends React.PureComponent {
@@ -44,7 +45,7 @@ export default class ExtensionListing extends React.PureComponent {
     getCurrentURL: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -80,7 +81,7 @@ export default class ExtensionListing extends React.PureComponent {
   };
 
   static renderLinkedText(text, record) {
-    return <Link href={`/extension/${record.id}/`}>{text}</Link>;
+    return <Link to={`/extension/${record.id}/`}>{text}</Link>;
   }
 
   getFilters() {
@@ -100,13 +101,12 @@ export default class ExtensionListing extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, push } = this.props;
-    push(getCurrentURL({ page }));
+    const { getCurrentURL, history } = this.props;
+    history.push(getCurrentURL({ page }));
   }
 
   handleRowClick(record) {
-    const { push } = this.props;
-    push(`/extension/${record.id}/`);
+    this.props.history.push(`${NormandyLink.PREFIX}/extension/${record.id}/`);
   }
 
   render() {

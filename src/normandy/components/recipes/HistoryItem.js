@@ -5,7 +5,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import {
   REVISION_APPROVED,
@@ -114,12 +114,12 @@ export default class HistoryItem extends React.PureComponent {
           content={<HistoryItemPopover revision={revision} />}
           placement="left"
         >
-          <Link href={url}>
+          <Link to={url}>
             <Tag color={icon && color}>{`Revision ${revisionNo}`}</Tag>
           </Link>
 
           {label && (
-            <Link href={`/recipe/${recipeId}/approval_history/`}>
+            <Link to={`/recipe/${recipeId}/approval_history/`}>
               <Tag color={color}>{label}</Tag>
             </Link>
           )}

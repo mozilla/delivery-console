@@ -2,7 +2,7 @@ import { Icon } from 'antd';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 // Ideally the prop.recipe would be an Immutable Map, but Ant's Table works with
 // plain JS objects, which means this component can not be Pure.
@@ -50,7 +50,7 @@ export default class EnrollmentSatus extends React.Component {
 
     return (
       <Link
-        href={`/recipe/${recipe.id}/`}
+        to={`/recipe/${recipe.id}/`}
         className={cx('status-link', !recipe.enabled && 'is-lowkey')}
       >
         <Icon

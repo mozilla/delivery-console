@@ -4,18 +4,17 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push as pushAction } from 'redux-little-router';
+import { withRouter } from 'react-router';
 import { isEmpty, mapObject } from 'underscore';
 
 import { getCurrentURL as getCurrentURLSelector } from 'normandy/state/router/selectors';
 
+@withRouter
 @connect(
   state => ({
     getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
   }),
-  {
-    push: pushAction,
-  },
+  {},
 )
 @autobind
 export default class DataList extends React.PureComponent {
@@ -26,7 +25,7 @@ export default class DataList extends React.PureComponent {
     getCurrentURL: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     onRowClick: PropTypes.func,
-    push: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -42,7 +41,7 @@ export default class DataList extends React.PureComponent {
   };
 
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentURL, push } = this.props;
+    const { getCurrentURL, history } = this.props;
     const filterParams = mapObject(
       filters,
       values => values && values.join(','),
@@ -54,7 +53,7 @@ export default class DataList extends React.PureComponent {
       ordering = `${prefix}${sorter.field}`;
     }
 
-    push(
+    history.push(
       getCurrentURL({
         page: undefined, // Return to the first page
         ordering,

@@ -3,7 +3,7 @@ import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
 import { getBreadcrumbs } from 'normandy/state/router/selectors';
 
@@ -27,7 +27,7 @@ export default class NavigationCrumbs extends React.PureComponent {
       <Breadcrumb>
         {breadcrumbs.map((crumb, idx) => (
           <Breadcrumb.Item key={idx}>
-            <Link href={crumb.link} id={this.getCrumbSlug(crumb)}>
+            <Link to={crumb.link} id={this.getCrumbSlug(crumb)}>
               {crumb.name}
             </Link>
           </Breadcrumb.Item>

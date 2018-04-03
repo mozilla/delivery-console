@@ -2,9 +2,8 @@ import { Layout, LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'redux-little-router';
+import { NormandyLink as Link } from 'normandy/Router';
 
-import CurrentUserDetails from 'normandy/components/common/CurrentUserDetails';
 import NavigationCrumbs from 'normandy/components/common/NavigationCrumbs';
 import NavigationMenu from 'normandy/components/common/NavigationMenu';
 import EnvAlert from 'normandy/components/common/EnvAlert';
@@ -27,7 +26,7 @@ export default class App extends React.PureComponent {
 
     return (
       <LocaleProvider locale={enUS}>
-        <Layout>
+        <Layout id="normandy-app">
           <EnvAlert />
 
           {/*
@@ -38,9 +37,8 @@ export default class App extends React.PureComponent {
           <QueryServiceInfo />
 
           <Header>
-            <CurrentUserDetails />
             <div className="logo">
-              <Link href="/">SHIELD Control Panel</Link>
+              <Link to="/">SHIELD Control Panel</Link>
             </div>
           </Header>
 

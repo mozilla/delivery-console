@@ -1,5 +1,3 @@
-import * as localForage from 'localforage';
-
 import {
   ACTION_RECEIVE,
   RECIPE_DELETE,
@@ -166,7 +164,7 @@ export function fetchRecipeFilters() {
 
 export function loadRecipeListingColumns() {
   return async dispatch => {
-    const columns = await localForage.getItem('recipe_listing_columns');
+    const columns = window.localStorage.getItem('recipe_listing_columns');
 
     if (columns) {
       dispatch({
@@ -179,7 +177,7 @@ export function loadRecipeListingColumns() {
 
 export function saveRecipeListingColumns(columns) {
   return dispatch => {
-    localForage.setItem('recipe_listing_columns', columns);
+    window.localStorage.setItem('recipe_listing_columns', columns);
 
     dispatch({
       type: RECIPE_LISTING_COLUMNS_CHANGE,

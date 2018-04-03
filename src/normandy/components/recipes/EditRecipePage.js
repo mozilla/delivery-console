@@ -19,8 +19,8 @@ import { getRecipeForRevision } from 'normandy/state/app/revisions/selectors';
 import { getUrlParamAsInt } from 'normandy/state/router/selectors';
 
 @connect(
-  state => {
-    const recipeId = getUrlParamAsInt(state, 'recipeId');
+  (state, props) => {
+    const recipeId = getUrlParamAsInt(props, 'recipeId');
     const recipe = getRecipe(state, recipeId, new Map());
 
     return {

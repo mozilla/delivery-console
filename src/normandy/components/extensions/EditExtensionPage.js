@@ -16,8 +16,8 @@ import { getUrlParamAsInt } from 'normandy/state/router/selectors';
 import { addSessionView as addSessionViewAction } from 'normandy/state/app/session/actions';
 
 @connect(
-  state => {
-    const extensionId = getUrlParamAsInt(state, 'extensionId');
+  (state, props) => {
+    const extensionId = getUrlParamAsInt(props, 'extensionId');
     const extension = getExtension(state, extensionId, new Map());
     return {
       extension,
