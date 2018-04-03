@@ -28,11 +28,13 @@ const Homepage = props => (
 type AppProps = {};
 type AppState = {
   userInfo: any,
+  accessToken: ?string,
 };
 
 class App extends Component<AppProps, AppState> {
   state = {
     userInfo: null,
+    accessToken: null,
   };
 
   componentDidMount = () => {
@@ -51,8 +53,8 @@ class App extends Component<AppProps, AppState> {
     fetchUserInfo(this.onUserInfo);
   };
 
-  onUserInfo = (userInfo: any) => {
-    this.setState({ userInfo });
+  onUserInfo = (accessToken: string, userInfo: any) => {
+    this.setState({ userInfo, accessToken });
   };
 
   render() {
@@ -84,7 +86,7 @@ class App extends Component<AppProps, AppState> {
               <Route
                 exact
                 path="/"
-                component={() => <Homepage authToken={this.state.userInfo} />}
+                component={() => <Homepage userInfo={this.state.userInfo} />}
               />
 
               {/* Normandy App */}
@@ -93,12 +95,12 @@ class App extends Component<AppProps, AppState> {
                 component={props =>
                   this.state.username ? (
                     <Normandy
-                      authToken={this.state.userInfo}
+                      authToken={this.state.accessToken}
                       urlPrefix="/shield"
                       {...props}
                     />
                   ) : (
-                    <Redirect to="/login/?next=/shield" />
+                    <Redirect to="/" />
                   )
                 }
               />

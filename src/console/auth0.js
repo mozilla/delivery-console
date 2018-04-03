@@ -129,6 +129,6 @@ export function fetchUserInfo(
   const webAuth = initFunc();
   webAuth.client.userInfo(
     auth.accessToken,
-    handleUserInfo.bind(null, callback),
+    handleUserInfo.bind(null, callback.bind(null, auth.accessToken)),
   );
 }
