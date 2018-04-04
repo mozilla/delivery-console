@@ -50,7 +50,9 @@ describe('handleError util', () => {
       it('should handle a "not logged in" 403 error', () => {
         const err = new APIClient.APIError(
           'Authentication credentials were not provided',
-          { status: 403 },
+          {
+            status: 403,
+          },
         );
 
         const { context, message, reason } = handleError('Test.', err);
