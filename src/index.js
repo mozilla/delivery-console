@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import DevConsoleApp from './console/App';
 
 import Raven from 'raven-js';
-Raven.config('https://<key>@sentry.prod.mozaws.net/delivery-console').install();
 
-Raven.context(function() {
-  ReactDOM.render(<DevConsoleApp />, document.getElementById('root'));
-});
+if (process.env.REACT_APP_SENTRY_PUBLIC_DSN) {
+  Raven.config(process.env.REACT_APP_SENTRY_PUBLIC_DSN).install();
+}
+
+ReactDOM.render(<DevConsoleApp />, document.getElementById('root'));
