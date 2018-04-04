@@ -18,28 +18,24 @@ describe('<QueryRecipeListingColumns>', () => {
 
   it('should call loadRecipeListingColumns on mount', () => {
     let called = false;
-    shallow(
-      <QueryRecipeListingColumns
-        loadRecipeListingColumns={() => {
+    shallow(<QueryRecipeListingColumns
+      loadRecipeListingColumns={() => {
           called = true;
         }}
-      />,
-    );
+    />);
 
     expect(called).toBe(true);
   });
 
   it('should call loadRecipeListingColumns once if container props change', () => {
     let callCount = 0;
-    const wrapper = mount(
-      <div fakeProp={1}>
-        <QueryRecipeListingColumns
-          loadRecipeListingColumns={() => {
+    const wrapper = mount(<div fakeProp={1}>
+      <QueryRecipeListingColumns
+        loadRecipeListingColumns={() => {
             callCount += 1;
           }}
-        />
-      </div>,
-    );
+      />
+    </div>);
 
     wrapper.setProps({ fakeProp: 2 });
     wrapper.setProps({ fakeProp: 3 });

@@ -21,7 +21,7 @@ export function getAllQueryParams(props, defaultsTo) {
   strParams = strParams.map(x => x.split('='));
 
   const compiled = {};
-  strParams.forEach(set => {
+  strParams.forEach((set) => {
     compiled[set[0]] = set[1];
   });
 

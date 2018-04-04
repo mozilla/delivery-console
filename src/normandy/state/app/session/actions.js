@@ -12,7 +12,7 @@ import {
 const STORAGE_KEY = 'normandy-sesh-info';
 
 export function fetchSessionInfo() {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = 'fetch-session-info';
     dispatch({
       type: REQUEST_SEND,
@@ -60,10 +60,10 @@ export function saveSession() {
 }
 
 export function addSessionView(category, caption, identicon) {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState) =>
     // #todo;
-    return null;
-    /*
+    null;
+  /*
       const { router } = getState();
       let url = router.pathname;
 
@@ -83,5 +83,4 @@ export function addSessionView(category, caption, identicon) {
       // Automatically save the session when views are added.
       return dispatch(saveSession());
     */
-  };
 }

@@ -25,8 +25,7 @@ describe('<LabeledInput>', () => {
     value: null,
   };
 
-  const factory = (customProps = {}) =>
-    mount(<TestInput {...props} {...customProps} />);
+  const factory = (customProps = {}) => mount(<TestInput {...props} {...customProps} />);
 
   it('should work', () => {
     expect(factory).not.toThrow();
@@ -39,8 +38,7 @@ describe('<LabeledInput>', () => {
     });
 
     it('should render the passed in children', () => {
-      const label =
-        "Root beer's flavor comes from sassafras and/or sarsaparilla!";
+      const label = "Root beer's flavor comes from sassafras and/or sarsaparilla!";
       const wrapper = factory({ children: label });
 
       // The label should render..

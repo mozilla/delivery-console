@@ -53,10 +53,7 @@ export default class EnrollmentSatus extends React.Component {
         to={`/recipe/${recipe.id}/`}
         className={cx('status-link', !recipe.enabled && 'is-lowkey')}
       >
-        <Icon
-          className={cx('status-icon', this.getColor())}
-          type={this.getIcon()}
-        />
+        <Icon className={cx('status-icon', this.getColor())} type={this.getIcon()} />
         <span className="enrollment-label">{this.getLabel()}</span>
       </Link>
     );

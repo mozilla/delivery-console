@@ -35,15 +35,13 @@ describe('<GenericFormContainer>', () => {
       </div>
     );
     let fired = false;
-    const wrapper = mount(
-      <GenericFormContainer
-        {...props}
-        form={CustomEl}
-        formAction={() => {
+    const wrapper = mount(<GenericFormContainer
+      {...props}
+      form={CustomEl}
+      formAction={() => {
           fired = true;
         }}
-      />,
-    );
+    />);
 
     wrapper.find('#test').simulate('click');
     expect(fired).toBe(true);
@@ -56,18 +54,16 @@ describe('<GenericFormContainer>', () => {
       </div>
     );
     let failed = false;
-    const wrapper = mount(
-      <GenericFormContainer
-        {...props}
-        form={CustomEl}
-        onFailure={() => {
+    const wrapper = mount(<GenericFormContainer
+      {...props}
+      form={CustomEl}
+      onFailure={() => {
           failed = true;
         }}
-        formAction={() => {
+      formAction={() => {
           throw new Error('Form action failed');
         }}
-      />,
-    );
+    />);
 
     wrapper.find('#test').simulate('click');
     expect(failed).toBe(true);
@@ -81,19 +77,17 @@ describe('<GenericFormContainer>', () => {
     );
 
     let resolve;
-    const success = new Promise(r => {
+    const success = new Promise((r) => {
       resolve = r;
     });
 
-    const wrapper = mount(
-      <GenericFormContainer
-        {...props}
-        form={CustomEl}
-        onSuccess={() => {
+    const wrapper = mount(<GenericFormContainer
+      {...props}
+      form={CustomEl}
+      onSuccess={() => {
           resolve(true);
         }}
-      />,
-    );
+    />);
 
     wrapper.find('#test').simulate('click');
     expect(await success).toBe(true);
@@ -106,9 +100,7 @@ describe('<GenericFormContainer>', () => {
       </div>
     );
     const testProps = { test: 1, woo: 'hoo' };
-    const wrapper = mount(
-      <GenericFormContainer {...props} form={CustomEl} formProps={testProps} />,
-    );
+    const wrapper = mount(<GenericFormContainer {...props} form={CustomEl} formProps={testProps} />);
 
     expect(wrapper.find('#test').props().test).toBe(1);
     expect(wrapper.find('#test').props().woo).toBe('hoo');

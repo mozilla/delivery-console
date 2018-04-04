@@ -117,8 +117,6 @@ describe('getRecipeHistory', () => {
   });
 
   it('should return the list of revisions', () => {
-    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(
-      fromJS([recipe.latest_revision]),
-    );
+    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(fromJS([recipe.latest_revision]));
   });
 });

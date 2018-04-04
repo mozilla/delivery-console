@@ -26,7 +26,7 @@ describe('<PreferenceExperimentFields>', () => {
     it('should correctly trim whitespace', () => {
       const trimmedValues = [];
       const stringPrefFieldInstance = new StringPreferenceField({
-        onChange: value => {
+        onChange: (value) => {
           trimmedValues.push(value);
         },
       });
@@ -46,7 +46,7 @@ describe('<PreferenceExperimentFields>', () => {
     it('should not trim whitespace from the middle of a string', () => {
       let trimmedValue;
       const stringPrefFieldInstance = new StringPreferenceField({
-        onChange: value => {
+        onChange: (value) => {
           trimmedValue = value;
         },
       });

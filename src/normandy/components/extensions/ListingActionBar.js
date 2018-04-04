@@ -45,10 +45,7 @@ export default class ListingActionBar extends React.PureComponent {
             checkboxes={columns.toJS()}
             label="Columns"
             onChange={saveExtensionListingColumns}
-            options={[
-              { label: 'Name', value: 'name' },
-              { label: 'XPI URL', value: 'xpi' },
-            ]}
+            options={[{ label: 'Name', value: 'name' }, { label: 'XPI URL', value: 'xpi' }]}
           />
         </Col>
         <Col span={8} className="righted">

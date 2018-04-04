@@ -47,13 +47,6 @@ export default class RevisionNotice extends React.PureComponent {
       return null;
     }
 
-    return (
-      <Alert
-        className="revision-notice"
-        type={type}
-        message={message}
-        showIcon
-      />
-    );
+    return <Alert className="revision-notice" type={type} message={message} showIcon />;
   }
 }

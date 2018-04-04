@@ -7,10 +7,7 @@ import {
   RECIPE_HISTORY_RECEIVE,
 } from 'normandy/state/action-types';
 import approvalRequestsReducer from 'normandy/state/app/approvalRequests/reducers';
-import {
-  INITIAL_STATE,
-  ApprovalRequestFactory,
-} from 'normandy/tests/state/approvalRequests';
+import { INITIAL_STATE, ApprovalRequestFactory } from 'normandy/tests/state/approvalRequests';
 
 describe('Approval requests reducer', () => {
   const approvalRequest = ApprovalRequestFactory.build();
@@ -20,17 +17,13 @@ describe('Approval requests reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(approvalRequestsReducer(undefined, { type: 'INITIAL' })).toEqual(
-      INITIAL_STATE,
-    );
+    expect(approvalRequestsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
   });
 
   it('should handle APPROVAL_REQUEST_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
-      approver_id: approvalRequest.approver
-        ? approvalRequest.approver.id
-        : null,
+      approver_id: approvalRequest.approver ? approvalRequest.approver.id : null,
       creator_id: approvalRequest.creator.id,
     };
 
@@ -42,12 +35,7 @@ describe('Approval requests reducer', () => {
       approvalRequest,
     });
 
-    expect(updatedState.items).toEqualImmutable(
-      INITIAL_STATE.items.set(
-        approvalRequest.id,
-        fromJS(reducedApprovalRequest),
-      ),
-    );
+    expect(updatedState.items).toEqualImmutable(INITIAL_STATE.items.set(approvalRequest.id, fromJS(reducedApprovalRequest)));
   });
 
   it('should handle APPROVAL_REQUEST_DELETE', () => {

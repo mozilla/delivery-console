@@ -12,27 +12,20 @@ import {
 const formatRevision = revision =>
   revision.withMutations(mutRevision =>
     mutRevision
-      .setIn(
-        ['recipe', 'action_id'],
-        mutRevision.getIn(['recipe', 'action', 'id'], null),
-      )
+      .setIn(['recipe', 'action_id'], mutRevision.getIn(['recipe', 'action', 'id'], null))
       .removeIn(['recipe', 'action'])
-      .set(
-        'approval_request_id',
-        mutRevision.getIn(['approval_request', 'id'], null),
-      )
+      .set('approval_request_id', mutRevision.getIn(['approval_request', 'id'], null))
       .remove('approval_request')
       .set('user_id', mutRevision.getIn(['user', 'id'], null))
-      .remove('user'),
-  );
+      .remove('user'));
 
 function items(state = new Map(), action) {
   switch (action.type) {
     case RECIPE_HISTORY_RECEIVE: {
       const revisions = fromJS(action.revisions);
 
-      return state.withMutations(mutState => {
-        revisions.forEach(revision => {
+      return state.withMutations((mutState) => {
+        revisions.forEach((revision) => {
           mutState.set(revision.get('id'), formatRevision(revision));
         });
       });
@@ -46,17 +39,14 @@ function items(state = new Map(), action) {
     }
 
     case RECIPE_DELETE:
-      return state.filterNot(
-        item => item.getIn(['recipe', 'id']) === action.recipeId,
-      );
+      return state.filterNot(item => item.getIn(['recipe', 'id']) === action.recipeId);
 
     case APPROVAL_REQUEST_CREATE:
       return state.update(action.revisionId, item =>
-        item.set('approval_request_id', action.approvalRequest.id),
-      );
+        item.set('approval_request_id', action.approvalRequest.id));
 
     case APPROVAL_REQUEST_DELETE:
-      return state.map(item => {
+      return state.map((item) => {
         if (item.get('approval_request_id') === action.approvalRequestId) {
           return item.set('approval_request_id', null);
         }

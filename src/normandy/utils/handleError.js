@@ -13,8 +13,7 @@ export const ERR_MESSAGES = {
 
 // Search strings used to determine various types responses.
 const checkFetchFailure = ({ message = '' }) =>
-  message.indexOf('Failed to fetch') !== -1 ||
-  message.indexOf('NetworkError') !== -1;
+  message.indexOf('Failed to fetch') !== -1 || message.indexOf('NetworkError') !== -1;
 
 const checkLoginFailure = ({ message = '' }) =>
   message.indexOf('credentials were not provided') > -1;
@@ -28,7 +27,7 @@ const defaultMethods = {
   notifyUser: errMsg => AntMessage.error(errMsg, msgDisplayTime),
 };
 
-const handleAPIError = error => {
+const handleAPIError = (error) => {
   let message = '';
 
   switch (error.data.status) {
@@ -41,9 +40,7 @@ const handleAPIError = error => {
       break;
 
     case 403: // Forbidden
-      message = checkLoginFailure(error)
-        ? ERR_MESSAGES.NOT_LOGGED_IN
-        : ERR_MESSAGES.NO_PERMISSION;
+      message = checkLoginFailure(error) ? ERR_MESSAGES.NOT_LOGGED_IN : ERR_MESSAGES.NO_PERMISSION;
       break;
 
     case 500: // Internal Server Error
@@ -60,11 +57,7 @@ const handleAPIError = error => {
   return message;
 };
 
-export default function handleError(
-  context = 'Error!',
-  error,
-  methodOverrides = {},
-) {
+export default function handleError(context = 'Error!', error, methodOverrides = {}) {
   const methods = { ...defaultMethods, ...methodOverrides };
   let errMsg = '';
 

@@ -28,14 +28,8 @@ export default class QueryFilteredRecipes extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { filters, pageNumber } = this.props;
-    if (
-      pageNumber !== nextProps.pageNumber ||
-      !isEqual(filters, nextProps.filters)
-    ) {
-      this.props.fetchFilteredRecipesPage(
-        nextProps.pageNumber,
-        nextProps.filters,
-      );
+    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
+      this.props.fetchFilteredRecipesPage(nextProps.pageNumber, nextProps.filters);
     }
   }
 

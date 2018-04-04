@@ -6,11 +6,9 @@ import {
 import { makeApiRequest } from 'normandy/state/app/requests/actions';
 
 export function fetchExtension(pk) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = `fetch-extension-${pk}`;
-    const extension = await dispatch(
-      makeApiRequest(requestId, `v2/extension/${pk}/`),
-    );
+    const extension = await dispatch(makeApiRequest(requestId, `v2/extension/${pk}/`));
 
     dispatch({
       type: EXTENSION_RECEIVE,
@@ -20,18 +18,16 @@ export function fetchExtension(pk) {
 }
 
 export function fetchExtensionsPage(pageNumber = 1, filters = {}) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = `fetch-extensions-page-${pageNumber}`;
-    const extensions = await dispatch(
-      makeApiRequest(requestId, 'v2/extension/', {
-        data: {
-          page: pageNumber,
-          ...filters,
-        },
-      }),
-    );
+    const extensions = await dispatch(makeApiRequest(requestId, 'v2/extension/', {
+      data: {
+        page: pageNumber,
+        ...filters,
+      },
+    }));
 
-    extensions.results.forEach(extension => {
+    extensions.results.forEach((extension) => {
       dispatch({
         type: EXTENSION_RECEIVE,
         extension,
@@ -50,7 +46,7 @@ export function fetchExtensionsPage(pageNumber = 1, filters = {}) {
 function prepareExtensionFormData(extensionData) {
   const data = new FormData();
 
-  Object.keys(extensionData).forEach(key => {
+  Object.keys(extensionData).forEach((key) => {
     data.append(key, extensionData[key]);
   });
 
@@ -58,14 +54,12 @@ function prepareExtensionFormData(extensionData) {
 }
 
 export function createExtension(extensionData) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = 'create-extension';
-    const extension = await dispatch(
-      makeApiRequest(requestId, 'v2/extension/', {
-        method: 'POST',
-        body: prepareExtensionFormData(extensionData),
-      }),
-    );
+    const extension = await dispatch(makeApiRequest(requestId, 'v2/extension/', {
+      method: 'POST',
+      body: prepareExtensionFormData(extensionData),
+    }));
     dispatch({
       type: EXTENSION_RECEIVE,
       extension,
@@ -75,14 +69,12 @@ export function createExtension(extensionData) {
 }
 
 export function updateExtension(pk, extensionData) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = `update-extension-${pk}`;
-    const extension = await dispatch(
-      makeApiRequest(requestId, `v2/extension/${pk}/`, {
-        method: 'PATCH',
-        body: prepareExtensionFormData(extensionData),
-      }),
-    );
+    const extension = await dispatch(makeApiRequest(requestId, `v2/extension/${pk}/`, {
+      method: 'PATCH',
+      body: prepareExtensionFormData(extensionData),
+    }));
     dispatch({
       type: EXTENSION_RECEIVE,
       extension,
@@ -91,7 +83,7 @@ export function updateExtension(pk, extensionData) {
 }
 
 export function loadExtensionListingColumns() {
-  return async dispatch => {
+  return async (dispatch) => {
     const columns = window.localStorage.getItem('extension_listing_columns');
 
     if (columns) {
@@ -104,7 +96,7 @@ export function loadExtensionListingColumns() {
 }
 
 export function saveExtensionListingColumns(columns) {
-  return dispatch => {
+  return (dispatch) => {
     window.localStorage.setItem('extension_listing_columns', columns);
 
     dispatch({

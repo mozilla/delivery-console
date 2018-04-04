@@ -67,13 +67,7 @@ export default class RecipeForm extends React.PureComponent {
   }
 
   render() {
-    const {
-      isCreationForm,
-      isLoading,
-      onSubmit,
-      recipe,
-      selectedActionName,
-    } = this.props;
+    const { isCreationForm, isLoading, onSubmit, recipe, selectedActionName } = this.props;
 
     const ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
 
@@ -85,11 +79,7 @@ export default class RecipeForm extends React.PureComponent {
       <Form onSubmit={onSubmit} className="recipe-form">
         <Row gutter={16}>
           <Col xs={24} sm={18}>
-            <FormItem
-              name="name"
-              label="Name"
-              initialValue={recipe.get('name')}
-            >
+            <FormItem name="name" label="Name" initialValue={recipe.get('name')}>
               <Input disabled={isLoading} />
             </FormItem>
           </Col>
@@ -111,34 +101,20 @@ export default class RecipeForm extends React.PureComponent {
         >
           <Input disabled={isLoading} type="textarea" rows="4" />
         </FormItem>
-        <FormItem
-          name="action_id"
-          label="Action"
-          initialValue={recipe.getIn(['action', 'id'])}
-        >
+        <FormItem name="action_id" label="Action" initialValue={recipe.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />
         </FormItem>
         {ArgumentsFields && (
           <fieldset>
             <legend>Action Arguments</legend>
-            <ArgumentsFields
-              recipeArguments={recipe.get('arguments')}
-              disabled={isLoading}
-            />
+            <ArgumentsFields recipeArguments={recipe.get('arguments')} disabled={isLoading} />
           </fieldset>
         )}
         {selectedActionName &&
-          !ArgumentsFields && (
-            <ArgumentEditorMissingError name={selectedActionName} />
-          )}
+          !ArgumentsFields && <ArgumentEditorMissingError name={selectedActionName} />}
         <FormActions>
           <FormActions.Primary>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={isLoading}
-              id="rf-save-button"
-            >
+            <Button type="primary" htmlType="submit" disabled={isLoading} id="rf-save-button">
               Save
             </Button>
           </FormActions.Primary>
@@ -169,22 +145,14 @@ export class ActionSelect extends React.PureComponent {
 
     return (
       <div id="rf-action-select">
-        <Select
-          placeholder="Select an action..."
-          value={stringValue}
-          {...props}
-        >
+        <Select placeholder="Select an action..." value={stringValue} {...props}>
           {actions.toList().map(action => {
             const actionId = action.get('id');
             const actionName = action.get('name');
             const actionValue = (actionId || '').toString(10);
 
             return (
-              <Select.Option
-                key={actionId}
-                value={actionValue}
-                className={`rf-${actionName}`}
-              >
+              <Select.Option key={actionId} value={actionValue} className={`rf-${actionName}`}>
                 {actionName}
               </Select.Option>
             );
@@ -214,10 +182,7 @@ class ArgumentEditorMissingError extends React.PureComponent {
     if (githubUrl) {
       const url = new URL(githubUrl);
       url.pathname += '/issues/new';
-      url.searchParams.set(
-        'title',
-        `Argument fields missing for action "${name}"`,
-      );
+      url.searchParams.set('title', `Argument fields missing for action "${name}"`);
       fileIssueUrl = url.toString();
     }
 
@@ -228,8 +193,7 @@ class ArgumentEditorMissingError extends React.PureComponent {
           message="Error - Argument editor not available"
           description={
             <span>
-              This is a bug. Please{' '}
-              <a href={fileIssueUrl}>file an issue on GitHub for it.</a>
+              This is a bug. Please <a href={fileIssueUrl}>file an issue on GitHub for it.</a>
             </span>
           }
           type="error"

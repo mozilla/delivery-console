@@ -2,11 +2,7 @@
 
 import { getRequest } from 'normandy/state/app/requests/selectors';
 
-import {
-  REQUEST_FAILURE,
-  REQUEST_SEND,
-  REQUEST_SUCCESS,
-} from 'normandy/state/action-types';
+import { REQUEST_FAILURE, REQUEST_SEND, REQUEST_SUCCESS } from 'normandy/state/action-types';
 
 import APIClient from 'normandy/utils/api';
 

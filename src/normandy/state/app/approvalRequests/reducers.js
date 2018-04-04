@@ -25,8 +25,8 @@ function items(state = new Map(), action) {
     case RECIPE_HISTORY_RECEIVE: {
       const revisions = fromJS(action.revisions);
 
-      return state.withMutations(mutState => {
-        revisions.forEach(revision => {
+      return state.withMutations((mutState) => {
+        revisions.forEach((revision) => {
           const approvalId = revision.getIn(['approval_request', 'id'], null);
           if (approvalId) {
             mutState.set(approvalId, revision.get('approval_request'));

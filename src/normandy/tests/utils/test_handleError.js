@@ -16,10 +16,7 @@ describe('handleError util', () => {
   });
 
   it('should determine a message based on the error given', () => {
-    const { context, message, reason } = handleError(
-      'Test.',
-      new Error('Error Message.'),
-    );
+    const { context, message, reason } = handleError('Test.', new Error('Error Message.'));
     expect(context).toBe('Test.');
     expect(message).toBe('Test. Error Message.');
     expect(reason).toBe('Error Message.');
@@ -48,10 +45,9 @@ describe('handleError util', () => {
 
     describe('should handle 403 errors', () => {
       it('should handle a "not logged in" 403 error', () => {
-        const err = new APIClient.APIError(
-          'Authentication credentials were not provided',
-          { status: 403 },
-        );
+        const err = new APIClient.APIError('Authentication credentials were not provided', {
+          status: 403,
+        });
 
         const { context, message, reason } = handleError('Test.', err);
         expect(context).toBe('Test.');
@@ -79,12 +75,8 @@ describe('handleError util', () => {
 
       const { context, message, reason } = handleError('Test.', err);
       expect(context).toBe('Test.');
-      expect(message).toBe(
-        `Test. ${ERR_MESSAGES.SERVER_FAILED} (Something from the server.)`,
-      );
-      expect(reason).toBe(
-        `${ERR_MESSAGES.SERVER_FAILED} (Something from the server.)`,
-      );
+      expect(message).toBe(`Test. ${ERR_MESSAGES.SERVER_FAILED} (Something from the server.)`);
+      expect(reason).toBe(`${ERR_MESSAGES.SERVER_FAILED} (Something from the server.)`);
     });
 
     it('should fall back to server messages if the response status is unrecognized', () => {

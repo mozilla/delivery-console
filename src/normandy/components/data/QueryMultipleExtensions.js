@@ -27,10 +27,7 @@ export default class QueryMultipleExtensions extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { fetchExtensionsPage, filters, pageNumber } = this.props;
-    if (
-      pageNumber !== nextProps.pageNumber ||
-      !isEqual(filters, nextProps.filters)
-    ) {
+    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
       fetchExtensionsPage(nextProps.pageNumber, nextProps.filters);
     }
   }

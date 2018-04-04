@@ -1,9 +1,6 @@
 import { fromJS } from 'immutable';
 
-import {
-  SERVICE_INFO_RECEIVE,
-  USER_RECEIVE,
-} from 'normandy/state/action-types';
+import { SERVICE_INFO_RECEIVE, USER_RECEIVE } from 'normandy/state/action-types';
 import {
   getCurrentUser,
   isPeerApprovalEnforced,
@@ -39,9 +36,7 @@ describe('getCurrentUser', () => {
 
 describe('isPeerApprovalEnforced', () => {
   it('should return the correct value', () => {
-    expect(isPeerApprovalEnforced(STATE)).toEqual(
-      serviceInfo.peer_approval_enforced,
-    );
+    expect(isPeerApprovalEnforced(STATE)).toEqual(serviceInfo.peer_approval_enforced);
   });
 });
 

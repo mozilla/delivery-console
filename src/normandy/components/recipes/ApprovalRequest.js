@@ -47,11 +47,7 @@ export default class ApprovalRequest extends React.PureComponent {
   };
 
   async handleSubmit(values, context) {
-    const {
-      approvalRequest,
-      approveApprovalRequest,
-      rejectApprovalRequest,
-    } = this.props;
+    const { approvalRequest, approveApprovalRequest, rejectApprovalRequest } = this.props;
 
     this.setState({
       isSubmitting: true,
@@ -72,10 +68,7 @@ export default class ApprovalRequest extends React.PureComponent {
       await action(approvalRequest.get('id'), values);
       message.success(successMessage);
     } catch (error) {
-      handleError(
-        `Unable to ${context.approved ? 'approve' : 'reject'} request.`,
-        error,
-      );
+      handleError(`Unable to ${context.approved ? 'approve' : 'reject'} request.`, error);
 
       if (error.data) {
         this.setState({ formErrors: error.data });
@@ -127,11 +120,7 @@ export default class ApprovalRequest extends React.PureComponent {
                   <dd>{approvalRequest.getIn(['creator', 'email'])}</dd>
 
                   <dt>Requested</dt>
-                  <dd
-                    title={moment(approvalRequest.get('created')).format(
-                      'MMMM Do YYYY, h:mm a',
-                    )}
-                  >
+                  <dd title={moment(approvalRequest.get('created')).format('MMMM Do YYYY, h:mm a')}>
                     {moment(approvalRequest.get('created')).fromNow()}
                   </dd>
                 </dl>

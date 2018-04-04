@@ -1,11 +1,7 @@
 import { fromJS } from 'immutable';
 import * as matchers from 'jasmine-immutable-matchers';
 
-import {
-  ACTION_RECEIVE,
-  REVISION_RECEIVE,
-  USER_RECEIVE,
-} from 'normandy/state/action-types';
+import { ACTION_RECEIVE, REVISION_RECEIVE, USER_RECEIVE } from 'normandy/state/action-types';
 import actionsReducer from 'normandy/state/app/actions/reducers';
 import revisionsReducer from 'normandy/state/app/revisions/reducers';
 import usersReducer from 'normandy/state/app/users/reducers';

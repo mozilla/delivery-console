@@ -8,7 +8,7 @@ import { approvalRequestReceived } from 'normandy/state/app/approvalRequests/act
 import { makeApiRequest } from 'normandy/state/app/requests/actions';
 
 export function revisionReceived(revision) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: REVISION_RECEIVE,
       revision,
@@ -33,36 +33,30 @@ export function revisionReceived(revision) {
 }
 
 export function fetchRevision(pk) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = `fetch-revision-${pk}`;
-    const revision = await dispatch(
-      makeApiRequest(requestId, `v2/recipe_revision/${pk}/`),
-    );
+    const revision = await dispatch(makeApiRequest(requestId, `v2/recipe_revision/${pk}/`));
     dispatch(revisionReceived(revision));
   };
 }
 
 export function fetchAllRevisions() {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = 'fetch-all-revisions';
-    const revisions = await dispatch(
-      makeApiRequest(requestId, 'v2/recipe_revision/'),
-    );
+    const revisions = await dispatch(makeApiRequest(requestId, 'v2/recipe_revision/'));
 
-    revisions.forEach(revision => {
+    revisions.forEach((revision) => {
       dispatch(revisionReceived(revision));
     });
   };
 }
 
 export function requestRevisionApproval(pk) {
-  return async dispatch => {
+  return async (dispatch) => {
     const requestId = `request-revision-approval-${pk}`;
-    const approvalRequest = await dispatch(
-      makeApiRequest(requestId, `v2/recipe_revision/${pk}/request_approval/`, {
-        method: 'POST',
-      }),
-    );
+    const approvalRequest = await dispatch(makeApiRequest(requestId, `v2/recipe_revision/${pk}/request_approval/`, {
+      method: 'POST',
+    }));
 
     dispatch(approvalRequestReceived(approvalRequest));
 

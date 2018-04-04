@@ -95,11 +95,7 @@ class App extends Component<AppProps, AppState> {
                 path="/shield"
                 component={props =>
                   this.state.username ? (
-                    <Normandy
-                      authToken={this.state.authToken}
-                      urlPrefix="/shield"
-                      {...props}
-                    />
+                    <Normandy authToken={this.state.authToken} urlPrefix="/shield" {...props} />
                   ) : (
                     <Redirect to="/login/?next=/shield" />
                   )
@@ -111,8 +107,7 @@ class App extends Component<AppProps, AppState> {
                   <div>
                     <h2>404 - Page Not Found</h2>
                     <p>
-                      No delivery-console match for{' '}
-                      <code>{location.pathname}</code>
+                      No delivery-console match for <code>{location.pathname}</code>
                     </p>
                   </div>
                 )}
