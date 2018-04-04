@@ -14,26 +14,6 @@ import {
 } from './auth0Utils';
 import auth0 from 'auth0-js';
 
-// Mock the localStorage API.
-global.localStorage = (function() {
-  var store = {};
-
-  return {
-    getItem: function(key) {
-      return store[key] || null;
-    },
-    removeItem: function(key) {
-      delete store[key];
-    },
-    setItem: function(key, value) {
-      store[key] = value.toString();
-    },
-    clear: function() {
-      store = {};
-    },
-  };
-})();
-
 const webAuthMock = {
   authorize: jest.fn(),
   parseHash: jest.fn(),
