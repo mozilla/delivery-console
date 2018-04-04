@@ -11,7 +11,8 @@ import {
   logout,
   setSession,
   webAuthHandler,
-} from './auth0';
+} from './auth0Utils';
+import auth0 from 'auth0-js';
 
 // Mock the localStorage API.
 global.localStorage = (function() {
@@ -39,9 +40,7 @@ const webAuthMock = {
   client: { userInfo: jest.fn() },
 };
 
-global.auth0 = {
-  WebAuth: jest.fn(() => webAuthMock),
-};
+auth0.WebAuth = jest.fn(() => webAuthMock);
 
 const authResult = {
   accessToken: 'access token',
@@ -69,7 +68,7 @@ describe('webAuthHandler', () => {
 describe('initWebAuth', () => {
   it('returns an initialized web auth', () => {
     const webAuth = initWebAuth();
-    expect(global.auth0.WebAuth).toHaveBeenCalledWith({
+    expect(auth0.WebAuth).toHaveBeenCalledWith({
       domain: AUTH0_DOMAIN,
       clientID: AUTH0_CLIENT_ID,
       redirectUri: AUTH0_CALLBACK_URL,
