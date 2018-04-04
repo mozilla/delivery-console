@@ -5,13 +5,14 @@ import React from 'react';
 
 import handleError from 'normandy/utils/handleError';
 
-// Simple error class used when a form fails to validate.
-export class ValidationError extends Error {
-  constructor(data) {
-    super();
-    this.fields = data;
-  }
+// Simple error used when a form fails to validate.
+export function ValidationError(data = {}) {
+  this.fields = data;
+  this.message = 'Validation error.';
+  this.stack = Error().stack;
 }
+ValidationError.prototype = Object.create(Error.prototype);
+ValidationError.prototype.name = 'ValidationError';
 
 /**
  * Decorator used to wrap forms for collecting and validating user input.

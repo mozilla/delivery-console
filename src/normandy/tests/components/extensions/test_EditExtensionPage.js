@@ -23,18 +23,4 @@ describe('<EditExtensionPage>', () => {
     const wrapper = shallow(<EditExtensionPage {...props} />);
     expect(wrapper.find(QueryExtension).length).toBe(1);
   });
-
-  // it('should fire updateExtension when the form is submitted', () => {
-  //   let called = false;
-  //   const callback = () => new Promise(resolve => { called = true; resolve(); });
-  //   const wrapper = mount(
-  //     <Provider store={mockStore}>
-  //       <EditExtensionPage {...props} updateExtension={callback} />
-  //     </Provider>,
-  //   );
-
-  //   wrapper.find('[type="submit"]').get(0).click();
-
-  //   setTimeout(() => { expect(called).toBe(true); }, 1);
-  // });
 });

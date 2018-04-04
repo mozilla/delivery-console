@@ -5,42 +5,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import { addSessionView } from 'normandy/state/app/session/actions';
 
-@connect(() => ({}), { addSessionView })
 export default class RecipeDetails extends React.PureComponent {
   static propTypes = {
-    addSessionView: PropTypes.func.isRequired,
     recipe: PropTypes.instanceOf(Map).isRequired,
   };
-
-  componentDidMount() {
-    const recipeName = this.props.recipe.get('name');
-    if (recipeName) {
-      this.props.addSessionView(
-        'recipe',
-        recipeName,
-        this.props.recipe.get('identicon_seed'),
-      );
-    }
-  }
-
-  componentWillReceiveProps({ recipe }) {
-    const oldRecipe = this.props.recipe;
-
-    // New recipe means we add a session view.
-    if (
-      !is(oldRecipe, recipe) &&
-      oldRecipe.get('name') !== recipe.get('name')
-    ) {
-      const recipeName = recipe.get('name');
-      this.props.addSessionView(
-        'recipe',
-        recipeName,
-        recipe.get('identicon_seed'),
-      );
-    }
-  }
 
   render() {
     const { recipe } = this.props;

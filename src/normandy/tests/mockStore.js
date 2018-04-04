@@ -1,4 +1,6 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -14,5 +16,11 @@ export function createMockStore() {
 }
 
 export function wrapMockStore(element) {
-  return <Provider store={createMockStore()}>{element}</Provider>;
+  return (
+    <Provider store={createMockStore()}>
+      <MemoryRouter initialEntries={[ '/asdf/2' ]}>
+        {element}
+      </MemoryRouter>
+    </Provider>
+  );
 }

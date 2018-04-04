@@ -11,8 +11,6 @@ import LoadingOverlay from 'normandy/components/common/LoadingOverlay';
 import RecipeForm from 'normandy/components/recipes/RecipeForm';
 import QueryRecipe from 'normandy/components/data/QueryRecipe';
 
-import { addSessionView } from 'normandy/state/app/session/actions';
-
 import { updateRecipe } from 'normandy/state/app/recipes/actions';
 import { getRecipe } from 'normandy/state/app/recipes/selectors';
 import { getRecipeForRevision } from 'normandy/state/app/revisions/selectors';
@@ -33,14 +31,12 @@ import { getUrlParamAsInt } from 'normandy/state/router/selectors';
     };
   },
   {
-    addSessionView,
     updateRecipe,
   },
 )
 @autobind
 export default class EditRecipePage extends React.PureComponent {
   static propTypes = {
-    addSessionView: PropTypes.func.isRequired,
     updateRecipe: PropTypes.func.isRequired,
     recipeId: PropTypes.number.isRequired,
     recipe: PropTypes.instanceOf(Map),
@@ -49,31 +45,6 @@ export default class EditRecipePage extends React.PureComponent {
   static defaultProps = {
     recipe: null,
   };
-
-  componentDidMount() {
-    const recipeName = this.props.recipe.get('name');
-    if (recipeName) {
-      this.props.addSessionView(
-        'recipe',
-        recipeName,
-        this.props.recipe.get('identicon_seed'),
-      );
-    }
-  }
-
-  componentWillReceiveProps({ recipe }) {
-    const oldRecipe = this.props.recipe;
-
-    // New recipe means we add a session view.
-    if (!is(oldRecipe, recipe)) {
-      const recipeName = recipe.get('name');
-      this.props.addSessionView(
-        'recipe',
-        recipeName,
-        recipe.get('identicon_seed'),
-      );
-    }
-  }
 
   onFormSuccess() {
     message.success('Recipe updated!');

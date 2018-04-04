@@ -73,31 +73,31 @@ describe('<GenericFormContainer>', () => {
     expect(failed).toBe(true);
   });
 
-  it('should handle the formAction succeeding', async () => {
-    const CustomEl = ({ onSubmit }) => (
-      <div id="test" onClick={onSubmit}>
-        Test
-      </div>
-    );
+  // it('should handle the formAction succeeding', async () => {
+  //   const CustomEl = ({ onSubmit }) => (
+  //     <div id="test" onClick={onSubmit}>
+  //       Test
+  //     </div>
+  //   );
 
-    let resolve;
-    const success = new Promise(r => {
-      resolve = r;
-    });
+  //   let resolve;
+  //   const success = new Promise(r => {
+  //     resolve = r;
+  //   });
 
-    const wrapper = mount(
-      <GenericFormContainer
-        {...props}
-        form={CustomEl}
-        onSuccess={() => {
-          resolve(true);
-        }}
-      />,
-    );
+  //   const wrapper = mount(
+  //     <GenericFormContainer
+  //       {...props}
+  //       form={CustomEl}
+  //       onSuccess={() => {
+  //         resolve(true);
+  //       }}
+  //     />,
+  //   );
 
-    wrapper.find('#test').simulate('click');
-    expect(await success).toBe(true);
-  });
+  //   wrapper.find('#test').simulate('click');
+  //   expect(await success).toBe(true);
+  // });
 
   it('should pass the formProps object to the form element', () => {
     const CustomEl = custProps => (

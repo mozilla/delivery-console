@@ -9,6 +9,7 @@ describe('<NavigationMenu>', () => {
     router: {},
     recipeSessionHistory: new List(),
     extensionSessionHistory: new List(),
+    history: {},
   };
 
   it('should work', () => {

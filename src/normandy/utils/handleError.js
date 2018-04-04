@@ -1,6 +1,6 @@
 import { message as AntMessage } from 'antd';
 
-import APIClient from 'normandy/utils/api';
+import APIClient, {APIError} from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 
 export const ERR_MESSAGES = {
@@ -18,8 +18,8 @@ const checkFetchFailure = ({ message = '' }) =>
 
 const checkLoginFailure = ({ message = '' }) =>
   message.indexOf('credentials were not provided') > -1;
-const checkAPIFailure = error => error instanceof APIClient.APIError;
-const checkValidationFailure = error => error instanceof ValidationError;
+export const checkAPIFailure = error => error instanceof APIError;
+export const checkValidationFailure = error => error instanceof ValidationError;
 
 const msgDisplayTime = 8; // seconds
 

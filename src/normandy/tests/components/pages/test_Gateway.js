@@ -9,14 +9,4 @@ describe('<Gateway>', () => {
 
     expect(wrapper).not.toThrow();
   });
-
-  it('should have a link to the recipe listing', () => {
-    const wrapper = shallow(<Gateway />);
-    expect(wrapper.find('[href="/recipe/"]').length).toBe(1);
-  });
-
-  it('should have a link to the extension listing', () => {
-    const wrapper = shallow(<Gateway />);
-    expect(wrapper.find('[href="/extension/"]').length).toBe(1);
-  });
 });

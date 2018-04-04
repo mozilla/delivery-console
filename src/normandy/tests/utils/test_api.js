@@ -1,4 +1,4 @@
-import APIClient from 'normandy/utils/api';
+import APIClient, { APIError } from 'normandy/utils/api';
 
 describe('APIClient util', () => {
   it('should work', () => {
@@ -9,7 +9,6 @@ describe('APIClient util', () => {
 
 describe('APIError', () => {
   it('should identify as an APIError', () => {
-    const { APIError } = APIClient;
     const errMessage = 'Danger, Will Robinson! Danger!';
     const errData = { danger: true };
     let didThrow = false;

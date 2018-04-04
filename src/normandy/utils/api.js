@@ -2,15 +2,15 @@ import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill();
 
-export default class APIClient {
-  static APIError = class APIError extends Error {
-    constructor(message, data) {
-      super(message);
-      this.name = 'APIError';
-      this.data = data;
-    }
-  };
+export function APIError(message, data = {}) {
+  this.data = data;
+  this.message = message;
+  this.stack = Error().stack;
+}
+APIError.prototype = Object.create(Error.prototype);
+APIError.prototype.name = 'APIError';
 
+export default class APIClient {
   constructor(root = '/api/') {
     this.root = root;
   }
@@ -70,7 +70,7 @@ export default class APIClient {
 
       data = { ...data, status: response.status };
 
-      throw new APIClient.APIError(message, data, err);
+      throw new APIError(message, data, err);
     }
 
     if (response.status !== 204) {
