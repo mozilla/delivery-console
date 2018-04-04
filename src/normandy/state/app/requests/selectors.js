@@ -1,7 +1,7 @@
 import { DEFAULT_REQUEST } from 'normandy/state/constants';
 
 export function getRequest(state, id, defaultsTo = DEFAULT_REQUEST) {
-  return state.app.requests.get(id, defaultsTo);
+  return state.requests.get(id, defaultsTo);
 }
 
 export function isRequestInProgress(state, id) {
@@ -10,7 +10,7 @@ export function isRequestInProgress(state, id) {
 }
 
 export function areAnyRequestsInProgress(state) {
-  const { requests } = state.app;
+  const { requests } = state;
 
   if (requests.size === 0) {
     return false;

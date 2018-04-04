@@ -21,7 +21,7 @@ import {
 import { getUser } from 'normandy/state/app/users/selectors';
 
 export function getRevision(state, id, defaultsTo = null) {
-  const revision = state.app.revisions.items.get(id);
+  const revision = state.revisions.items.get(id);
 
   if (revision) {
     const action = getAction(state, revision.getIn(['recipe', 'action_id']));

@@ -5,7 +5,7 @@ import { DEFAULT_RECIPE_LISTING_COLUMNS } from 'normandy/state/constants';
 import { getRevision } from 'normandy/state/app/revisions/selectors';
 
 export function getRecipe(state, id, defaultsTo = null) {
-  const recipe = state.app.recipes.items.get(id);
+  const recipe = state.recipes.items.get(id);
 
   if (recipe) {
     const action = getAction(state, recipe.get('action_id'));
@@ -28,11 +28,11 @@ export function getRecipe(state, id, defaultsTo = null) {
 }
 
 export function getRecipeListingCount(state) {
-  return state.app.recipes.listing.get('count');
+  return state.recipes.listing.get('count');
 }
 
 export function getRecipeListing(state) {
-  const recipes = state.app.recipes.listing.get('results', new List([]));
+  const recipes = state.recipes.listing.get('results', new List([]));
   return recipes.map(id => getRecipe(state, id));
 }
 
@@ -44,23 +44,23 @@ export function getRecipeListingFlattenedAction(state) {
 }
 
 export function getRecipeListingPageNumber(state) {
-  return state.app.recipes.listing.get('pageNumber');
+  return state.recipes.listing.get('pageNumber');
 }
 
 export function getRecipeListingColumns(
   state,
   defaultsTo = DEFAULT_RECIPE_LISTING_COLUMNS,
 ) {
-  return state.app.recipes.listing.get('columns', defaultsTo);
+  return state.recipes.listing.get('columns', defaultsTo);
 }
 
 export function getRecipeHistory(state, id) {
-  const history = state.app.recipes.history.get(id, new List([]));
+  const history = state.recipes.history.get(id, new List([]));
   return history.map(revisionId => getRevision(state, revisionId));
 }
 
 export function getRecipeFilters(state) {
-  return state.app.recipes.filters;
+  return state.recipes.filters;
 }
 
 export function isRecipeEnabled(state, id, defaultsTo = false) {
