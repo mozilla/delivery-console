@@ -185,8 +185,14 @@ export class RequestInfo extends React.PureComponent {
       return null;
     }
 
-    const requestCreator = revision.getIn(['approval_request', 'creator', 'email']);
-    const requestCreationTime = moment(revision.getIn(['approval_request', 'created']));
+    const requestCreator = revision.getIn([
+      'approval_request',
+      'creator',
+      'email',
+    ]);
+    const requestCreationTime = moment(
+      revision.getIn(['approval_request', 'created']),
+    );
 
     const fullTime = requestCreationTime.format('MMMM Do YYYY, h:mm a');
     const simpleTime = requestCreationTime.format('L');
@@ -231,7 +237,9 @@ export class ApprovalComment extends React.PureComponent {
           showIcon
           message={
             <span>
-              <strong>“{revision.getIn(['approval_request', 'comment'])}”</strong>
+              <strong>
+                “{revision.getIn(['approval_request', 'comment'])}”
+              </strong>
               <label>— {approver}</label>
             </span>
           }

@@ -6,7 +6,8 @@ import { wrapMockStore } from 'normandy/tests/mockStore';
 
 describe('<EnrollmentStatus>', () => {
   it('should work', () => {
-    const wrapper = () => mount(wrapMockStore(<EnrollmentStatus recipe={{}} />));
+    const wrapper = () =>
+      mount(wrapMockStore(<EnrollmentStatus recipe={{}} />));
     expect(wrapper).not.toThrow();
   });
 
@@ -14,26 +15,34 @@ describe('<EnrollmentStatus>', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Disabled');
-    expect(wrapper.find('.status-icon').props().className).toContain('anticon-minus');
+    expect(wrapper.find('.status-icon').props().className).toContain(
+      'anticon-minus',
+    );
   });
 
   it('should print `active` if the recipe is enabled and NOT paused', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: false } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Active');
-    expect(wrapper.find('.status-icon').props().className).toContain('anticon-check');
+    expect(wrapper.find('.status-icon').props().className).toContain(
+      'anticon-check',
+    );
   });
 
   it('should print `paused` if the recipe is enabled and paused', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: true } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Paused');
-    expect(wrapper.find('.status-icon').props().className).toContain('anticon-pause');
+    expect(wrapper.find('.status-icon').props().className).toContain(
+      'anticon-pause',
+    );
   });
 
   it('should add a "lowkey" class when the recipe is disabled', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
-    expect(wrapper.find('.status-link').props().className).toContain('is-lowkey');
+    expect(wrapper.find('.status-link').props().className).toContain(
+      'is-lowkey',
+    );
   });
 });

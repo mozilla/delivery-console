@@ -53,9 +53,16 @@ export default class EditExtensionPage extends React.PureComponent {
     const oldExtensions = this.props.extension;
 
     // New extension means we add a session view.
-    if (!is(oldExtensions, extension) && oldExtensions.get('name') !== extension.get('name')) {
+    if (
+      !is(oldExtensions, extension) &&
+      oldExtensions.get('name') !== extension.get('name')
+    ) {
       const extensionName = extension.get('name');
-      this.props.addSessionView('extension', extensionName, extension.get('identicon_seed'));
+      this.props.addSessionView(
+        'extension',
+        extensionName,
+        extension.get('identicon_seed'),
+      );
     }
   }
 

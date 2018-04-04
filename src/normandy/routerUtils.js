@@ -30,7 +30,7 @@ export const replaceUrlVariables = (url, params) => {
   const urlParams = url.match(/:[a-z]+/gi);
 
   if (urlParams) {
-    urlParams.forEach((piece) => {
+    urlParams.forEach(piece => {
       newUrl = newUrl.replace(piece, params[piece.slice(1)] || piece);
     });
   }

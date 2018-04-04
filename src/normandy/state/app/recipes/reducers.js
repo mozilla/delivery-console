@@ -24,7 +24,10 @@ function filters(state = new Map(), action) {
 function history(state = new Map(), action) {
   switch (action.type) {
     case RECIPE_HISTORY_RECEIVE:
-      return state.set(action.recipeId, fromJS(action.revisions.map(revision => revision.id)));
+      return state.set(
+        action.recipeId,
+        fromJS(action.revisions.map(revision => revision.id)),
+      );
 
     case RECIPE_DELETE:
       return state.remove(action.recipeId);
@@ -38,11 +41,18 @@ const formatRecipe = recipe =>
   recipe.withMutations(mutRecipe =>
     mutRecipe
       .set('action_id', mutRecipe.getIn(['action', 'id'], null))
-      .set('latest_revision_id', mutRecipe.getIn(['latest_revision', 'id'], null))
-      .set('approved_revision_id', mutRecipe.getIn(['approved_revision', 'id'], null))
+      .set(
+        'latest_revision_id',
+        mutRecipe.getIn(['latest_revision', 'id'], null),
+      )
+      .set(
+        'approved_revision_id',
+        mutRecipe.getIn(['approved_revision', 'id'], null),
+      )
       .remove('action')
       .remove('latest_revision')
-      .remove('approved_revision'));
+      .remove('approved_revision'),
+  );
 
 function items(state = new Map(), action) {
   switch (action.type) {
@@ -54,8 +64,8 @@ function items(state = new Map(), action) {
     case RECIPE_PAGE_RECEIVE: {
       const recipes = fromJS(action.recipes.results);
 
-      return state.withMutations((mutState) => {
-        recipes.forEach((receivedRecipe) => {
+      return state.withMutations(mutState => {
+        recipes.forEach(receivedRecipe => {
           mutState.set(receivedRecipe.get('id'), formatRecipe(receivedRecipe));
         });
       });
@@ -75,12 +85,17 @@ function listing(state = new Map(), action) {
       return state
         .set('count', action.recipes.count)
         .set('pageNumber', action.pageNumber)
-        .set('results', fromJS(action.recipes.results.map(result => result.id)));
+        .set(
+          'results',
+          fromJS(action.recipes.results.map(result => result.id)),
+        );
 
     case RECIPE_LISTING_COLUMNS_CHANGE:
       return state.set(
         'columns',
-        RECIPE_LISTING_COLUMNS.filter(column => action.columns.includes(column)),
+        RECIPE_LISTING_COLUMNS.filter(column =>
+          action.columns.includes(column),
+        ),
       );
 
     default:

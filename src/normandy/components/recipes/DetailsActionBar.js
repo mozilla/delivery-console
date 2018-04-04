@@ -12,14 +12,21 @@ import {
   enableRecipe as enableRecipeAction,
 } from 'normandy/state/app/recipes/actions';
 import { requestRevisionApproval as requestRevisionApprovalAction } from 'normandy/state/app/revisions/actions';
-import { getLatestRevisionIdForRecipe, getRecipe } from 'normandy/state/app/recipes/selectors';
+import {
+  getLatestRevisionIdForRecipe,
+  getRecipe,
+} from 'normandy/state/app/recipes/selectors';
 import {
   isApprovableRevision,
   isLatestApprovedRevision,
   isLatestRevision,
   isRevisionPendingApproval,
 } from 'normandy/state/app/revisions/selectors';
-import { getRouterPath, getUrlParam, getUrlParamAsInt } from 'normandy/state/router/selectors';
+import {
+  getRouterPath,
+  getUrlParam,
+  getUrlParamAsInt,
+} from 'normandy/state/router/selectors';
 
 @withRouter
 @connect(

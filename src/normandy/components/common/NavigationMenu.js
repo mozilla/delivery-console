@@ -25,7 +25,11 @@ export default class NavigationMenu extends React.PureComponent {
   };
 
   render() {
-    const { recipeSessionHistory, extensionSessionHistory, history } = this.props;
+    const {
+      recipeSessionHistory,
+      extensionSessionHistory,
+      history,
+    } = this.props;
     const { pathname, search } = history;
 
     return (

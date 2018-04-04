@@ -26,11 +26,14 @@ export default class ShowHeartbeatFields extends React.Component {
     const { form, recipeArguments, disabled } = this.props;
 
     const repeatCount =
-      form.getFieldValue('arguments.repeatEvery') || recipeArguments.get('repeatEvery', 'X');
+      form.getFieldValue('arguments.repeatEvery') ||
+      recipeArguments.get('repeatEvery', 'X');
 
     return (
       <Row>
-        <p className="action-info">Shows a single message or survey prompt to the user.</p>
+        <p className="action-info">
+          Shows a single message or survey prompt to the user.
+        </p>
         <Col sm={24} md={11}>
           <FormItem
             label="Survey ID"
@@ -89,7 +92,9 @@ export default class ShowHeartbeatFields extends React.Component {
             label="Include Telemetry UUID?"
             initialValue={recipeArguments.get('includeTelemetryUUID', false)}
           >
-            <CheckBox disabled={disabled}>Include UUID in Post-Answer URL and Telemetry</CheckBox>
+            <CheckBox disabled={disabled}>
+              Include UUID in Post-Answer URL and Telemetry
+            </CheckBox>
           </FormItem>
         </Col>
         <Col sm={24}>
@@ -149,17 +154,21 @@ class RepeatSelect extends React.PureComponent {
       {
         name: 'once',
         label: 'Show this prompt once.',
-        tooltip: 'Prompt the user only once, regardless if they interact with it or not.',
+        tooltip:
+          'Prompt the user only once, regardless if they interact with it or not.',
       },
       {
         name: 'nag',
-        label: 'Show until the user interacts with the hearbeat prompt, then never again.',
+        label:
+          'Show until the user interacts with the hearbeat prompt, then never again.',
         tooltip: `Prompts the user every day until they click Learn More, the engagement button, or
         submit a star rating, then never appears again.`,
       },
       {
         name: 'xdays',
-        label: `Show users every ${repeatCount === 1 ? 'day' : `${repeatCount} ${dayUnit}`}.`,
+        label: `Show users every ${
+          repeatCount === 1 ? 'day' : `${repeatCount} ${dayUnit}`
+        }.`,
         tooltip: `Prompts the user as soon as possible, then waits ${repeatCount} ${dayUnit} to appear
         again.`,
       },

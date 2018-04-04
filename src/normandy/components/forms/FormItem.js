@@ -83,7 +83,9 @@ export default class FormItem extends React.PureComponent {
 
     if (trimWhitespace) {
       if (config.getValueFromEvent) {
-        throw Error('config.getValueFromEvent is already defined, do not also use trimWhitespace.');
+        throw Error(
+          'config.getValueFromEvent is already defined, do not also use trimWhitespace.',
+        );
       }
     }
 

@@ -1,7 +1,10 @@
 import { fromJS } from 'immutable';
 import * as matchers from 'jasmine-immutable-matchers';
 
-import { APPROVAL_REQUEST_RECEIVE, USER_RECEIVE } from 'normandy/state/action-types';
+import {
+  APPROVAL_REQUEST_RECEIVE,
+  USER_RECEIVE,
+} from 'normandy/state/action-types';
 import approvalRequestsReducer from 'normandy/state/app/approvalRequests/reducers';
 import { getApprovalRequest } from 'normandy/state/app/approvalRequests/selectors';
 import usersReducer from 'normandy/state/app/users/reducers';
@@ -31,7 +34,9 @@ describe('getApprovalRequest', () => {
   });
 
   it('should return the approval request', () => {
-    expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(fromJS(approvalRequest));
+    expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(
+      fromJS(approvalRequest),
+    );
   });
 
   it('should return `null` for invalid ID', () => {

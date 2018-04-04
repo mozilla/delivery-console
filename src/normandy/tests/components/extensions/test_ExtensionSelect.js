@@ -28,7 +28,9 @@ describe('<ExtensionSelect>', () => {
     const wrapper = mount(wrapMockStore(<ExtensionSelect {...props} />));
 
     // Determine if the ant placeholder is present on the page.
-    const placeholderElement = wrapper.find('.ant-select-selection__placeholder');
+    const placeholderElement = wrapper.find(
+      '.ant-select-selection__placeholder',
+    );
     expect(placeholderElement.length).toBe(1);
 
     // Determine if the placeholder is actually visible to the user.

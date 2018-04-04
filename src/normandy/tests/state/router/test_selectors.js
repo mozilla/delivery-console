@@ -2,7 +2,10 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { push, initializeCurrentLocation } from 'redux-little-router';
 
 import reducers from 'normandy/state';
-import { enhancer as routerEnhancer, middleware as routerMiddleware } from 'normandy/routes';
+import {
+  enhancer as routerEnhancer,
+  middleware as routerMiddleware,
+} from 'normandy/routes';
 import {
   getUrlParam,
   getUrlParamAsInt,

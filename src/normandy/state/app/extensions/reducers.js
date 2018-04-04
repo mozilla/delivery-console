@@ -24,12 +24,17 @@ function listing(state = new Map(), action) {
       return state
         .set('count', action.extensions.count)
         .set('pageNumber', action.pageNumber)
-        .set('results', fromJS(action.extensions.results.map(extension => extension.id)));
+        .set(
+          'results',
+          fromJS(action.extensions.results.map(extension => extension.id)),
+        );
 
     case EXTENSION_LISTING_COLUMNS_CHANGE:
       return state.set(
         'columns',
-        EXTENSION_LISTING_COLUMNS.filter(column => action.columns.includes(column)),
+        EXTENSION_LISTING_COLUMNS.filter(column =>
+          action.columns.includes(column),
+        ),
       );
 
     default:

@@ -11,7 +11,7 @@ import { makeApiRequest } from 'normandy/state/app/requests/actions';
 import { revisionReceived } from 'normandy/state/app/revisions/actions';
 
 export function recipeReceived(recipe) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: RECIPE_RECEIVE,
       recipe,
@@ -24,30 +24,39 @@ export function recipeReceived(recipe) {
 
     dispatch(revisionReceived(recipe.latest_revision));
 
-    if (recipe.approved_revision && recipe.approved_revision.id !== recipe.latest_revision.id) {
+    if (
+      recipe.approved_revision &&
+      recipe.approved_revision.id !== recipe.latest_revision.id
+    ) {
       dispatch(revisionReceived(recipe.approved_revision));
     }
   };
 }
 
 export function fetchRecipe(pk) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `fetch-recipe-${pk}`;
-    const recipe = await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/`));
+    const recipe = await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/`),
+    );
     dispatch(recipeReceived(recipe));
   };
 }
 
 export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
-  return async (dispatch) => {
+  return async dispatch => {
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
-    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
-    const recipes = await dispatch(makeApiRequest(requestId, 'v2/recipe/', {
-      data: {
-        ...filters,
-        page: pageNumber,
-      },
-    }));
+    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join(
+      '-',
+    )}`;
+    const recipes = await dispatch(
+      makeApiRequest(requestId, 'v2/recipe/', {
+        data: {
+          ...filters,
+          page: pageNumber,
+        },
+      }),
+    );
 
     dispatch({
       type: RECIPE_PAGE_RECEIVE,
@@ -58,12 +67,14 @@ export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
 }
 
 export function createRecipe(recipeData) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = 'create-recipe';
-    const recipe = await dispatch(makeApiRequest(requestId, 'v2/recipe/', {
-      method: 'POST',
-      data: recipeData,
-    }));
+    const recipe = await dispatch(
+      makeApiRequest(requestId, 'v2/recipe/', {
+        method: 'POST',
+        data: recipeData,
+      }),
+    );
     dispatch(recipeReceived(recipe));
 
     return recipe.id;
@@ -71,23 +82,27 @@ export function createRecipe(recipeData) {
 }
 
 export function updateRecipe(pk, recipeData) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `update-recipe-${pk}`;
-    const recipe = await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/`, {
-      method: 'PATCH',
-      data: recipeData,
-    }));
+    const recipe = await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/`, {
+        method: 'PATCH',
+        data: recipeData,
+      }),
+    );
     dispatch(recipeReceived(recipe));
   };
 }
 
 export function deleteRecipe(pk) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `delete-recipe-${pk}`;
 
-    await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/`, {
-      method: 'DELETE',
-    }));
+    await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/`, {
+        method: 'DELETE',
+      }),
+    );
 
     dispatch({
       type: RECIPE_DELETE,
@@ -97,29 +112,35 @@ export function deleteRecipe(pk) {
 }
 
 export function enableRecipe(pk) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `enable-recipe-${pk}`;
-    const recipe = await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/enable/`, {
-      method: 'POST',
-    }));
+    const recipe = await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/enable/`, {
+        method: 'POST',
+      }),
+    );
     dispatch(recipeReceived(recipe));
   };
 }
 
 export function disableRecipe(pk) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `enable-recipe-${pk}`;
-    const recipe = await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/disable/`, {
-      method: 'POST',
-    }));
+    const recipe = await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/disable/`, {
+        method: 'POST',
+      }),
+    );
     dispatch(recipeReceived(recipe));
   };
 }
 
 export function fetchRecipeHistory(pk) {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = `fetch-recipe-history-${pk}`;
-    const revisions = await dispatch(makeApiRequest(requestId, `v2/recipe/${pk}/history/`));
+    const revisions = await dispatch(
+      makeApiRequest(requestId, `v2/recipe/${pk}/history/`),
+    );
 
     dispatch({
       type: RECIPE_HISTORY_RECEIVE,
@@ -130,7 +151,7 @@ export function fetchRecipeHistory(pk) {
 }
 
 export function fetchRecipeFilters() {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = 'fetch-recipe-filters';
     const filters = await dispatch(makeApiRequest(requestId, 'v2/filters/'));
 
@@ -142,7 +163,7 @@ export function fetchRecipeFilters() {
 }
 
 export function loadRecipeListingColumns() {
-  return async (dispatch) => {
+  return async dispatch => {
     const columns = window.localStorage.getItem('recipe_listing_columns');
 
     if (columns) {
@@ -155,7 +176,7 @@ export function loadRecipeListingColumns() {
 }
 
 export function saveRecipeListingColumns(columns) {
-  return (dispatch) => {
+  return dispatch => {
     window.localStorage.setItem('recipe_listing_columns', columns);
 
     dispatch({

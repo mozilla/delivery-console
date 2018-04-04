@@ -1,7 +1,13 @@
 import faker from 'faker';
 import { Map } from 'immutable';
 
-import { AutoIncrementField, DateField, Factory, Field, SubFactory } from 'normandy/tests/factory';
+import {
+  AutoIncrementField,
+  DateField,
+  Factory,
+  Field,
+  SubFactory,
+} from 'normandy/tests/factory';
 import { ActionFactory } from 'normandy/tests/state/actions';
 import { RevisionFactory } from 'normandy/tests/state/revisions';
 
@@ -73,7 +79,9 @@ export class RecipeFactory extends SimpleRecipeFactory {
       }
 
       if (this.data.latest_revision === null) {
-        this.data.latest_revision = RevisionFactory.build(this.data.approved_revision);
+        this.data.latest_revision = RevisionFactory.build(
+          this.data.approved_revision,
+        );
       }
     }
 

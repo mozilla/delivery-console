@@ -19,24 +19,28 @@ describe('<QueryMultipleExtensions>', () => {
 
   it('should call fetchExtensionsPage on mount', () => {
     let called = false;
-    mount(<QueryMultipleExtensions
-      {...props}
-      fetchExtensionsPage={() => {
+    mount(
+      <QueryMultipleExtensions
+        {...props}
+        fetchExtensionsPage={() => {
           called = true;
         }}
-    />);
+      />,
+    );
 
     expect(called).toBe(true);
   });
 
   it('should call fetchExtensionsPage if the `pageNumber` changes', () => {
     let callCount = 0;
-    const wrapper = shallow(<QueryMultipleExtensions
-      {...props}
-      fetchExtensionsPage={() => {
+    const wrapper = shallow(
+      <QueryMultipleExtensions
+        {...props}
+        fetchExtensionsPage={() => {
           callCount += 1;
         }}
-    />);
+      />,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ pageNumber: 2 });
@@ -54,14 +58,16 @@ describe('<QueryMultipleExtensions>', () => {
 
   it('should call fetchExtensionsPage once if container props change', () => {
     let callCount = 0;
-    const wrapper = mount(<div fakeProp={1}>
-      <QueryMultipleExtensions
-        {...props}
-        fetchExtensionsPage={() => {
+    const wrapper = mount(
+      <div fakeProp={1}>
+        <QueryMultipleExtensions
+          {...props}
+          fetchExtensionsPage={() => {
             callCount += 1;
           }}
-      />
-    </div>);
+        />
+      </div>,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ fakeProp: 2 });

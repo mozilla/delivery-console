@@ -12,7 +12,7 @@ import {
 const STORAGE_KEY = 'normandy-sesh-info';
 
 export function fetchSessionInfo() {
-  return async (dispatch) => {
+  return async dispatch => {
     const requestId = 'fetch-session-info';
     dispatch({
       type: REQUEST_SEND,

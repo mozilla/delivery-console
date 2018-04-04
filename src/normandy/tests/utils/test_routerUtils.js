@@ -27,7 +27,9 @@ describe('Router utils', () => {
     });
 
     it('should find deeply nested routes', () => {
-      expect(searchRouteTree(routes, 'nested')).toBe('/test2/nested/even/further');
+      expect(searchRouteTree(routes, 'nested')).toBe(
+        '/test2/nested/even/further',
+      );
     });
 
     it('should return `null` when a route is not found', () => {

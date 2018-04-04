@@ -14,7 +14,9 @@ describe('Revisions reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
+    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(
+      INITIAL_STATE,
+    );
   });
 
   it('should handle REVISION_RECEIVE', () => {
@@ -37,7 +39,9 @@ describe('Revisions reducer', () => {
       revision,
     });
 
-    expect(updatedState.items).toEqualImmutable(INITIAL_STATE.items.set(revision.id, fromJS(reducedRevision)));
+    expect(updatedState.items).toEqualImmutable(
+      INITIAL_STATE.items.set(revision.id, fromJS(reducedRevision)),
+    );
   });
 
   it('should handle RECIPE_DELETE', () => {

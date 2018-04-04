@@ -2,7 +2,9 @@ import Immutable, { Map } from 'immutable';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TestComponent, { ArgumentsValue } from 'normandy/components/recipes/RecipeDetails';
+import TestComponent, {
+  ArgumentsValue,
+} from 'normandy/components/recipes/RecipeDetails';
 
 const { WrappedComponent: RecipeDetails } = TestComponent;
 
@@ -36,8 +38,12 @@ describe('<ArgumentsValue>', () => {
   });
 
   it('should render extra_filter_expression as code', () => {
-    const wrapper = shallow(<ArgumentsValue name="extra_filter_expression" value="code" />);
-    expect(wrapper.find('.value').html()).toBe('<div class="value"><pre><code>code</code></pre></div>');
+    const wrapper = shallow(
+      <ArgumentsValue name="extra_filter_expression" value="code" />,
+    );
+    expect(wrapper.find('.value').html()).toBe(
+      '<div class="value"><pre><code>code</code></pre></div>',
+    );
   });
 
   it('should render branches as a table', () => {
@@ -65,11 +71,15 @@ describe('<ArgumentsValue>', () => {
       const testData = { slug: 'one', value: { test: 'fake-value' }, ratio: 1 };
       // Test against Maps
       let value = Immutable.fromJS(testData);
-      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify(testData));
+      expect(ArgumentsValue.stringifyImmutable(value)).toBe(
+        JSON.stringify(testData),
+      );
 
       // Test against Lists
       value = Immutable.fromJS([testData]);
-      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify([testData]));
+      expect(ArgumentsValue.stringifyImmutable(value)).toBe(
+        JSON.stringify([testData]),
+      );
     });
 
     it('should use a JSON string for copy/pasting Immutable fields', () => {

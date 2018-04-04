@@ -21,24 +21,28 @@ describe('<QueryFilteredRecipes>', () => {
 
   it('should call fetchFilteredRecipesPage on mount', () => {
     let called = false;
-    mount(<QueryFilteredRecipes
-      {...props}
-      fetchFilteredRecipesPage={() => {
+    mount(
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
           called = true;
         }}
-    />);
+      />,
+    );
 
     expect(called).toBe(true);
   });
 
   it('should call fetchFilteredRecipesPage if the `pageNumber` changes', () => {
     let callCount = 0;
-    const wrapper = shallow(<QueryFilteredRecipes
-      {...props}
-      fetchFilteredRecipesPage={() => {
+    const wrapper = shallow(
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
           callCount += 1;
         }}
-    />);
+      />,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ pageNumber: 2 });
@@ -56,12 +60,14 @@ describe('<QueryFilteredRecipes>', () => {
 
   it('should call fetchFilteredRecipesPage if the `filters` change', () => {
     let callCount = 0;
-    const wrapper = shallow(<QueryFilteredRecipes
-      {...props}
-      fetchFilteredRecipesPage={() => {
+    const wrapper = shallow(
+      <QueryFilteredRecipes
+        {...props}
+        fetchFilteredRecipesPage={() => {
           callCount += 1;
         }}
-    />);
+      />,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ filters: new Map({ fake: 'data' }) });
@@ -76,14 +82,16 @@ describe('<QueryFilteredRecipes>', () => {
 
   it('should call fetchFilteredRecipesPage once if container props change', () => {
     let callCount = 0;
-    const wrapper = mount(<div fakeProp={1}>
-      <QueryFilteredRecipes
-        {...props}
-        fetchFilteredRecipesPage={() => {
+    const wrapper = mount(
+      <div fakeProp={1}>
+        <QueryFilteredRecipes
+          {...props}
+          fetchFilteredRecipesPage={() => {
             callCount += 1;
           }}
-      />
-    </div>);
+        />
+      </div>,
+    );
     expect(callCount).toBe(1);
 
     wrapper.setProps({ fakeProp: 2 });

@@ -18,24 +18,28 @@ describe('<QuerySessionInfo>', () => {
 
   it('should call fetchSessionInfo on mount', () => {
     let called = false;
-    shallow(<QuerySessionInfo
-      fetchSessionInfo={() => {
+    shallow(
+      <QuerySessionInfo
+        fetchSessionInfo={() => {
           called = true;
         }}
-    />);
+      />,
+    );
 
     expect(called).toBe(true);
   });
 
   it('should call fetchSessionInfo once if container props change', () => {
     let callCount = 0;
-    const wrapper = mount(<div fakeProp={1}>
-      <QuerySessionInfo
-        fetchSessionInfo={() => {
+    const wrapper = mount(
+      <div fakeProp={1}>
+        <QuerySessionInfo
+          fetchSessionInfo={() => {
             callCount += 1;
           }}
-      />
-    </div>);
+        />
+      </div>,
+    );
 
     wrapper.setProps({ fakeProp: 2 });
     wrapper.setProps({ fakeProp: 3 });

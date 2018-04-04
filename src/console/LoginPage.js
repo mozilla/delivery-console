@@ -72,7 +72,11 @@ class LoginPage extends Component<Props, State> {
           </FormItem>
 
           <FormItem>
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
               Log in
             </Button>
           </FormItem>

@@ -13,7 +13,10 @@ describe('getExtension', () => {
       ...INITIAL_STATE.app,
       extensions: {
         ...INITIAL_STATE.app.extensions,
-        items: INITIAL_STATE.app.extensions.items.set(extension.id, fromJS(extension)),
+        items: INITIAL_STATE.app.extensions.items.set(
+          extension.id,
+          fromJS(extension),
+        ),
       },
     },
   };

@@ -35,7 +35,13 @@ export default class DocumentUrlInput extends React.PureComponent {
     }
 
     return (
-      <Input disabled={disabled} type="url" addonAfter={addonAfter} value={value} {...props} />
+      <Input
+        disabled={disabled}
+        type="url"
+        addonAfter={addonAfter}
+        value={value}
+        {...props}
+      />
     );
   }
 }
