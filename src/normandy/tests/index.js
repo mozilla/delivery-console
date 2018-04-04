@@ -6,5 +6,5 @@ import Adapter from 'enzyme-adapter-react-16';
 // Configure Enzyme adapter
 configure({ adapter: new Adapter() });
 
-const testsContext = require.context(".", true, /\btest_/);
+const testsContext = require.context('.', true, /\btest_/);
 testsContext.keys().forEach(testsContext);

@@ -6,7 +6,6 @@ import RecipeDetails, {
   ArgumentsValue,
 } from 'normandy/components/recipes/RecipeDetails';
 
-
 describe('<RecipeDetails>', () => {
   const props = {
     recipe: new Map(),

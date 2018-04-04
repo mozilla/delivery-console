@@ -5,7 +5,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-
 export default class RecipeDetails extends React.PureComponent {
   static propTypes = {
     recipe: PropTypes.instanceOf(Map).isRequired,

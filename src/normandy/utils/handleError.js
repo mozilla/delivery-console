@@ -1,6 +1,6 @@
 import { message as AntMessage } from 'antd';
 
-import APIClient, {APIError} from 'normandy/utils/api';
+import APIClient, { APIError } from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 
 export const ERR_MESSAGES = {

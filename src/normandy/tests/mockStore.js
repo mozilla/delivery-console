@@ -18,9 +18,7 @@ export function createMockStore() {
 export function wrapMockStore(element) {
   return (
     <Provider store={createMockStore()}>
-      <MemoryRouter initialEntries={[ '/asdf/2' ]}>
-        {element}
-      </MemoryRouter>
+      <MemoryRouter initialEntries={['/asdf/2']}>{element}</MemoryRouter>
     </Provider>
   );
 }

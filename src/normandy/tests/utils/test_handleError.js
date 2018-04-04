@@ -1,7 +1,10 @@
 import APIClient, { APIError } from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 import handleError, { ERR_MESSAGES } from 'normandy/utils/handleError';
-import { checkAPIFailure, checkValidationFailure } from 'normandy/utils/handleError';
+import {
+  checkAPIFailure,
+  checkValidationFailure,
+} from 'normandy/utils/handleError';
 
 describe('handleError util', () => {
   it('should work', () => {
@@ -36,7 +39,7 @@ describe('handleError util', () => {
   });
 
   describe('API Errors', () => {
-    it('should detect APIErrors', () =>{
+    it('should detect APIErrors', () => {
       const err = new APIError('Something from the server.', {
         status: 400,
       });
@@ -44,7 +47,7 @@ describe('handleError util', () => {
       expect(checkAPIFailure(err)).toBe(true);
     });
 
-    it('should detect ValidationErrors', () =>{
+    it('should detect ValidationErrors', () => {
       const err = new ValidationError();
 
       expect(checkValidationFailure(err)).toBe(true);
