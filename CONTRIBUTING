@@ -8,7 +8,8 @@ When contributing code to the repository, here are a few things to know:
 - The pull-requests will all run in CircleCI.
 - Every new developer feature should come with documentation. E.g. "How to run lint checking". New tools and tricks that comes in without documentation is a fail.
 - Avoid global CSS that isn't tied to a specific component.
-- Run lint check and all tests locally before making a pull request using `yarn run lint`. In any case, pre-commit hooks will block your commit if there are linting issues. You can (but should not) skip the pre-commit hooks with `git commit --no-verify ...`.
+- Run lint check and all tests locally before making a pull request using `yarn run lint`. 
+  - This will be enforced by pre-commit hooks that run the linter before every commit. You can (but should not) skip the pre-commit hooks with `git commit --no-verify ...`.
 - Don't assume that network calls always work. Check for and deal with failing network calls beyond console.error.
 - camelCase all the things (except class names) and camelCase acronyms. I.e. myUrl instead of myURL.
 - Favor simple over complex.
