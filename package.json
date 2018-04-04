@@ -12,6 +12,7 @@
     "js-cookie": "^2.2.0",
     "lodash.get": "^4.4.2",
     "photon-ant": "^0.1.4",
+    "raven-js": "^3.24.0",
     "react": "^16.2.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.2.0",
