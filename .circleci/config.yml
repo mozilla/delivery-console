@@ -39,9 +39,6 @@ jobs:
       # run tests!
       - run: yarn test
 
-      # run build!
-      - run: yarn run build
-
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
