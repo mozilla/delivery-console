@@ -13,7 +13,6 @@ import {
   getQueryParamAsInt,
   getCurrentURL,
   getRouterPath,
-  getBreadcrumbs,
 } from 'normandy/state/router/selectors';
 
 describe('route selectors', () => {
@@ -114,37 +113,6 @@ describe('route selectors', () => {
       store.dispatch(push('/recipe/42/?old=foo'));
       const val = getRouterPath(store.getState());
       expect(val).toEqual('/recipe/42/');
-    });
-  });
-
-  describe('getBreadcrumbs', () => {
-    it('works for the root', () => {
-      store.dispatch(push('/'));
-      const val = getBreadcrumbs(store.getState());
-      expect(val).toEqual([{ name: 'Home', link: '/' }]);
-    });
-
-    it('works for interior pages', () => {
-      // using route /recipe/:recipeId/
-      store.dispatch(push('/recipe/42/'));
-      const val = getBreadcrumbs(store.getState());
-      expect(val).toEqual([
-        { name: 'Home', link: '/' },
-        { name: 'Recipes Listing', link: '/recipe/' },
-        { name: 'View Recipe', link: '/recipe/42/' },
-      ]);
-    });
-
-    it('works for leaf pages', () => {
-      // using route /recipe/:recipeId/edit/
-      store.dispatch(push('/recipe/42/edit/'));
-      const val = getBreadcrumbs(store.getState());
-      expect(val).toEqual([
-        { name: 'Home', link: '/' },
-        { name: 'Recipes Listing', link: '/recipe/' },
-        { name: 'View Recipe', link: '/recipe/42/' },
-        { name: 'Edit Recipe', link: '/recipe/42/edit/' },
-      ]);
     });
   });
 });
