@@ -7,9 +7,22 @@ require('es6-promise').polyfill();
 configure({ adapter: new Adapter() });
 
 // localStorage mock for tests
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn(),
-};
+const localStorageMock = (function() {
+  var store = {};
+
+  return {
+    getItem: function(key) {
+      return store[key] || null;
+    },
+    removeItem: function(key) {
+      delete store[key];
+    },
+    setItem: function(key, value) {
+      store[key] = value.toString();
+    },
+    clear: function() {
+      store = {};
+    },
+  };
+})();
 global.localStorage = localStorageMock;
