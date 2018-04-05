@@ -8,4 +8,4 @@ One admin to rule them all
 
 # Contributing
 
-Please check the [CONTRIBUTING file](CONTRIBUTING).
+Please check the [contribution guidelines](CONTRIBUTING.md).
