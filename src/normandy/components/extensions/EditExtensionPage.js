@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import autobind from 'autobind-decorator';
-import { Map, is } from 'immutable';
+import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';

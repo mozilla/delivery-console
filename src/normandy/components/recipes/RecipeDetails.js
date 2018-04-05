@@ -1,8 +1,7 @@
 import { Card, Icon, Tooltip } from 'antd';
-import { is, List, Map } from 'immutable';
+import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 export default class RecipeDetails extends React.PureComponent {

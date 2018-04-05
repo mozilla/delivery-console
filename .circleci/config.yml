@@ -5,9 +5,10 @@
 version: 2
 jobs:
   build:
+
     docker:
       # Based on https://nodejs.org/en/
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -37,7 +38,7 @@ jobs:
       - run: yarn run lint
 
       # run tests!
-      - run: yarn test
+      - run: yarn run test
 
       # build all the things!
       - run: yarn run build

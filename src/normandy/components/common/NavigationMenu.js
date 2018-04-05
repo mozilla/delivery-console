@@ -4,9 +4,6 @@ import React from 'react';
 import { NormandyLink as Link } from 'normandy/Router';
 import { withRouter } from 'react-router';
 
-import { getSessionHistory } from 'normandy/state/app/session/selectors';
-import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
-
 const { Item } = Menu;
 
 @withRouter
