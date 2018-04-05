@@ -40,18 +40,6 @@ jobs:
       # run tests!
       - run: yarn run test
 
-      # build all the things!
-      - run: yarn run build
-
-      - deploy:
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./bin/deploy.sh latest
-            fi
-            if [ -n "${CIRCLE_TAG}" ]; then
-              ./bin/deploy.sh "$CIRCLE_TAG"
-            fi
-
   docs:
     docker:
       - image: circleci/python:3.6
