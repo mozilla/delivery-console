@@ -1,5 +1,3 @@
-/* @flow */
-
 import React, { Component } from 'react';
 
 import 'console/App.less';
@@ -32,23 +30,7 @@ const Homepage = props => (
   </div>
 );
 
-type AppProps = {};
-type UserInfo = {
-  family_name: string,
-  given_name: string,
-  locale: string,
-  name: string,
-  nickname: string,
-  picture: string,
-  sub: string,
-  updated_at: string,
-};
-type AppState = {
-  userInfo: ?UserInfo,
-  accessToken: ?string,
-};
-
-class App extends Component<AppProps, AppState> {
+class App extends Component {
   state = {
     userInfo: null,
     accessToken: null,
