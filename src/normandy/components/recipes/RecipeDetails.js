@@ -52,7 +52,7 @@ export default class RecipeDetails extends React.PureComponent {
 export class ArgumentsValue extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.any,
   };
 
   static defaultProps = {

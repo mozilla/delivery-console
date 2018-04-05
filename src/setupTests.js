@@ -1,4 +1,6 @@
-import { configure } from 'enzyme';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 require('es6-promise').polyfill();
@@ -7,9 +9,8 @@ require('es6-promise').polyfill();
 configure({ adapter: new Adapter() });
 
 // localStorage mock for tests
-const localStorageMock = (function() {
-  var store = {};
-
+const mockLocalStorage = () => {
+  let store = {};
   return {
     getItem: function(key) {
       return store[key] || null;
@@ -24,5 +25,19 @@ const localStorageMock = (function() {
       store = {};
     },
   };
-})();
-global.localStorage = localStorageMock;
+};
+
+// Globals used in testing.
+
+global.auth0 = {
+  WebAuth: jest.fn(() => ({
+    authorize: jest.fn(),
+    parseHash: jest.fn(),
+    client: { userInfo: jest.fn() },
+  })),
+};
+global.localStorage = mockLocalStorage();
+global.mount = mount;
+global.shallow = shallow;
+global.React = React;
+global.ReactDOM = ReactDOM;
