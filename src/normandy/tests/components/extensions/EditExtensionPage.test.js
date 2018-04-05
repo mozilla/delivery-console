@@ -10,13 +10,13 @@ describe('<EditExtensionPage>', () => {
     updateExtension: () => Promise.resolve(),
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<EditExtensionPage {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should have a QueryExtension component', () => {
+  it('should have a QueryExtension component', () => {
     const wrapper = shallow(<EditExtensionPage {...props} />);
     expect(wrapper.find(QueryExtension).length).toBe(1);
   });

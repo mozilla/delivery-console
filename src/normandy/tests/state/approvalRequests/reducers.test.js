@@ -19,13 +19,13 @@ describe('Approval requests reducer', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return initial state by default', () => {
+  it('should return initial state by default', () => {
     expect(approvalRequestsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  test('should handle APPROVAL_REQUEST_RECEIVE', () => {
+  it('should handle APPROVAL_REQUEST_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
       approver_id: approvalRequest.approver
@@ -50,7 +50,7 @@ describe('Approval requests reducer', () => {
     );
   });
 
-  test('should handle APPROVAL_REQUEST_DELETE', () => {
+  it('should handle APPROVAL_REQUEST_DELETE', () => {
     const state = approvalRequestsReducer(undefined, {
       type: APPROVAL_REQUEST_RECEIVE,
       approvalRequest,
@@ -64,7 +64,7 @@ describe('Approval requests reducer', () => {
     expect(updatedState).toEqual(INITIAL_STATE);
   });
 
-  test('should handle RECIPE_HISTORY_RECEIVE', () => {
+  it('should handle RECIPE_HISTORY_RECEIVE', () => {
     const appRequest = {
       id: 'test',
       arbitrary_data: 123,

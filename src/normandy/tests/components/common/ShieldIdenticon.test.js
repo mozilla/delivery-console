@@ -7,13 +7,13 @@ describe('<ShieldIdenticon>', () => {
     className: null,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => mount(<ShieldIdenticon {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should use the v2 api to resolve identicons', () => {
+  it('should use the v2 api to resolve identicons', () => {
     const wrapper = mount(<ShieldIdenticon {...props} />);
 
     const nestedImg = wrapper.find('img');

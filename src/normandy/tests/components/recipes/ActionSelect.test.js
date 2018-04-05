@@ -9,13 +9,13 @@ describe('<ActionSelect>', () => {
     value: '',
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => mount(<ActionSelect {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should handle actions with or without IDs', () => {
+  it('should handle actions with or without IDs', () => {
     const actions = fromJS({
       action1: { id: undefined, name: 'One' },
       action2: { id: null, name: 'Two' },

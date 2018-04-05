@@ -10,7 +10,7 @@ describe('<RecipeForm>', () => {
     selectedAction: new Map(),
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<RecipeForm {...props} />);
 
     expect(wrapper).not.toThrow();

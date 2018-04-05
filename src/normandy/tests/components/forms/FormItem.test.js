@@ -18,13 +18,13 @@ describe('<FormItem>', () => {
     rules: null,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<WrappedFormItem {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should correctly trim whitespace', () => {
+  it('should correctly trim whitespace', () => {
     const whitespaceBefore = createFakeEvent('   foobar');
     const whitespaceAfter = createFakeEvent('foobar   ');
     const noWhitespace = createFakeEvent('foobar');
@@ -35,7 +35,7 @@ describe('<FormItem>', () => {
     expect(FormItem.trimValue(noWhitespace)).toBe(expectedValue);
   });
 
-  test('should not trim whitespace from the middle of a string', () => {
+  it('should not trim whitespace from the middle of a string', () => {
     const whitespaceMiddleString = 'foo    bar';
     const whiteSpaceMiddleEvent = createFakeEvent(whitespaceMiddleString);
 

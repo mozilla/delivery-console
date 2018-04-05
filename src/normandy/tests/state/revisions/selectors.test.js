@@ -39,15 +39,15 @@ describe('getRevision', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the revision', () => {
+  it('should return the revision', () => {
     expect(getRevision(STATE, revision.id)).toEqualImmutable(fromJS(revision));
   });
 
-  test('should return `null` for invalid ID', () => {
+  it('should return `null` for invalid ID', () => {
     expect(getRevision(STATE, 'invalid')).toEqual(null);
   });
 
-  test('should return default value for invalid ID with default provided', () => {
+  it('should return default value for invalid ID with default provided', () => {
     expect(getRevision(STATE, 'invalid', 'default')).toEqual('default');
   });
 });

@@ -13,7 +13,7 @@ describe('<ApprovalRequest>', () => {
     revision: new Map(),
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<ApprovalRequest {...props} />);
 
     expect(wrapper).not.toThrow();

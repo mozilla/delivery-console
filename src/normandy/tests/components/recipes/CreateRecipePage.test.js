@@ -8,7 +8,7 @@ describe('<CreateRecipePage>', () => {
     push: () => {},
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<CreateRecipePage {...props} />);
 
     expect(wrapper).not.toThrow();

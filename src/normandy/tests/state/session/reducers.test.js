@@ -8,13 +8,13 @@ import sessionReducer from 'normandy/state/app/session/reducers';
 import { INITIAL_STATE, SessionFactory } from 'normandy/tests/state/session';
 
 describe('Session reducer', () => {
-  test('should return initial state by default', () => {
+  it('should return initial state by default', () => {
     expect(sessionReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  test('should handle SESSION_INFO_RECEIVE', () => {
+  it('should handle SESSION_INFO_RECEIVE', () => {
     expect(
       sessionReducer(undefined, {
         type: SESSION_INFO_RECEIVE,
@@ -24,7 +24,7 @@ describe('Session reducer', () => {
   });
 
   describe('SESSION_INFO_HISTORY_VIEW', () => {
-    test('should add an item to the state history', () => {
+    it('should add an item to the state history', () => {
       const fakeItem = SessionFactory.build();
 
       const result = sessionReducer(undefined, {
@@ -35,7 +35,7 @@ describe('Session reducer', () => {
       expect(is(result.history, new List([fakeItem]))).toBe(true);
     });
 
-    test('should only have unique items in history', () => {
+    it('should only have unique items in history', () => {
       const fakeItem = SessionFactory.build();
       const fakeItem2 = SessionFactory.build();
 
@@ -61,7 +61,7 @@ describe('Session reducer', () => {
       expect(is(result.history, new List([fakeItem2, fakeItem]))).toBe(true);
     });
 
-    test('should arrange order from latest to oldest', () => {
+    it('should arrange order from latest to oldest', () => {
       const fakeItem = SessionFactory.build();
       const fakeItem2 = SessionFactory.build();
       const fakeItem3 = SessionFactory.build();

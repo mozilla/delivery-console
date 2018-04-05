@@ -21,13 +21,13 @@ describe('Recipes reducer', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return initial state by default', () => {
+  it('should return initial state by default', () => {
     expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  test('should handle RECIPE_RECEIVE', () => {
+  it('should handle RECIPE_RECEIVE', () => {
     const reducedRecipe = {
       ...recipe,
       action_id: recipe.action.id,
@@ -51,7 +51,7 @@ describe('Recipes reducer', () => {
     );
   });
 
-  test('should handle RECIPE_DELETE', () => {
+  it('should handle RECIPE_DELETE', () => {
     const state = recipesReducer(undefined, {
       type: RECIPE_RECEIVE,
       recipe,
@@ -65,7 +65,7 @@ describe('Recipes reducer', () => {
     expect(updateState).toEqual(INITIAL_STATE);
   });
 
-  test('should handle RECIPE_FILTERS_RECEIVE', () => {
+  it('should handle RECIPE_FILTERS_RECEIVE', () => {
     expect(
       recipesReducer(undefined, {
         type: RECIPE_FILTERS_RECEIVE,
@@ -77,7 +77,7 @@ describe('Recipes reducer', () => {
     });
   });
 
-  test('should handle RECIPE_HISTORY_RECEIVE', () => {
+  it('should handle RECIPE_HISTORY_RECEIVE', () => {
     expect(
       recipesReducer(undefined, {
         type: RECIPE_HISTORY_RECEIVE,

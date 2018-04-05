@@ -7,13 +7,13 @@ describe('<QueryExtensionListingColumns>', () => {
     loadExtensionListingColumns: () => {},
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<QueryExtensionListingColumns {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should call loadExtensionListingColumns on mount', () => {
+  it('should call loadExtensionListingColumns on mount', () => {
     let called = false;
     shallow(
       <QueryExtensionListingColumns
@@ -26,7 +26,7 @@ describe('<QueryExtensionListingColumns>', () => {
     expect(called).toBe(true);
   });
 
-  test('should call loadExtensionListingColumns once if container props change', () => {
+  it('should call loadExtensionListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <Stub fakeProp={1}>
@@ -45,7 +45,7 @@ describe('<QueryExtensionListingColumns>', () => {
     expect(callCount).toBe(1);
   });
 
-  test('should not render anything', () => {
+  it('should not render anything', () => {
     const wrapper = shallow(<QueryExtensionListingColumns {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

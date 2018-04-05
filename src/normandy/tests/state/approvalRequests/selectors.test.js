@@ -33,17 +33,17 @@ describe('getApprovalRequest', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the approval request', () => {
+  it('should return the approval request', () => {
     expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(
       fromJS(approvalRequest),
     );
   });
 
-  test('should return `null` for invalid ID', () => {
+  it('should return `null` for invalid ID', () => {
     expect(getApprovalRequest(STATE, 0)).toEqual(null);
   });
 
-  test('should return default value for invalid ID with default provided', () => {
+  it('should return default value for invalid ID with default provided', () => {
     expect(getApprovalRequest(STATE, 0, 'default')).toEqual('default');
   });
 });

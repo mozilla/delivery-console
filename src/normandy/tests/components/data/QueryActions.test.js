@@ -7,13 +7,13 @@ describe('<QueryActions>', () => {
     fetchAllActions: () => {},
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<QueryActions {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should call fetchAllActions on mount', () => {
+  it('should call fetchAllActions on mount', () => {
     let called = false;
     shallow(
       <QueryActions
@@ -26,7 +26,7 @@ describe('<QueryActions>', () => {
     expect(called).toBe(true);
   });
 
-  test('should call fetchAllActions once if container props change', () => {
+  it('should call fetchAllActions once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <Stub fakeProp={1}>
@@ -45,7 +45,7 @@ describe('<QueryActions>', () => {
     expect(callCount).toBe(1);
   });
 
-  test('should not render anything', () => {
+  it('should not render anything', () => {
     const wrapper = shallow(<QueryActions {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

@@ -5,7 +5,7 @@ describe('<FormActions>', () => {
     children: <div>Hello</div>,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<FormActions {...props} />);
 
     expect(wrapper).not.toThrow();
@@ -17,7 +17,7 @@ describe('<FormActions.Primary>', () => {
     children: <div>Hello</div>,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<FormActions.Primary {...props} />);
 
     expect(wrapper).not.toThrow();
@@ -29,7 +29,7 @@ describe('<FormActions.Secondary>', () => {
     children: <div>Hello</div>,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<FormActions.Secondary {...props} />);
 
     expect(wrapper).not.toThrow();

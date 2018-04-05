@@ -8,13 +8,13 @@ describe('<QueryExtension>', () => {
     pk: 1,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<QueryExtension {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should call fetchExtension on mount', () => {
+  it('should call fetchExtension on mount', () => {
     let called = false;
     mount(
       <QueryExtension
@@ -28,7 +28,7 @@ describe('<QueryExtension>', () => {
     expect(called).toBe(true);
   });
 
-  test('should call fetchExtension if the `pk` changes', () => {
+  it('should call fetchExtension if the `pk` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
       <QueryExtension
@@ -53,7 +53,7 @@ describe('<QueryExtension>', () => {
     expect(callCount).toBe(3);
   });
 
-  test('should call fetchExtension once if container props change', () => {
+  it('should call fetchExtension once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <Stub fakeProp={1}>
@@ -74,7 +74,7 @@ describe('<QueryExtension>', () => {
     expect(callCount).toBe(1);
   });
 
-  test('should not render anything', () => {
+  it('should not render anything', () => {
     const wrapper = shallow(<QueryExtension {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

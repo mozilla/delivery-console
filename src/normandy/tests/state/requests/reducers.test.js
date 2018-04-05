@@ -15,13 +15,13 @@ describe('Requests reducer', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return initial state by default', () => {
+  it('should return initial state by default', () => {
     expect(requestsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  test('should handle REQUEST_SEND', () => {
+  it('should handle REQUEST_SEND', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_SEND,
@@ -32,7 +32,7 @@ describe('Requests reducer', () => {
     );
   });
 
-  test('should handle REQUEST_SUCCESS', () => {
+  it('should handle REQUEST_SUCCESS', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_SUCCESS,
@@ -43,7 +43,7 @@ describe('Requests reducer', () => {
 
   const ERROR = { message: 'test message' };
 
-  test('should handle REQUEST_FAILURE', () => {
+  it('should handle REQUEST_FAILURE', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_FAILURE,

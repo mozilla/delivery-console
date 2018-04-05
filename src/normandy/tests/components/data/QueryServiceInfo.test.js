@@ -7,13 +7,13 @@ describe('<QueryServiceInfo>', () => {
     fetchServiceInfo: () => {},
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<QueryServiceInfo {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should call fetchServiceInfo on mount', () => {
+  it('should call fetchServiceInfo on mount', () => {
     let called = false;
     shallow(
       <QueryServiceInfo
@@ -26,7 +26,7 @@ describe('<QueryServiceInfo>', () => {
     expect(called).toBe(true);
   });
 
-  test('should call fetchServiceInfo once if container props change', () => {
+  it('should call fetchServiceInfo once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <Stub fakeProp={1}>
@@ -45,7 +45,7 @@ describe('<QueryServiceInfo>', () => {
     expect(callCount).toBe(1);
   });
 
-  test('should not render anything', () => {
+  it('should not render anything', () => {
     const wrapper = shallow(<QueryServiceInfo {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

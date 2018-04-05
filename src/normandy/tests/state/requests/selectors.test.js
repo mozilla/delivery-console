@@ -18,15 +18,15 @@ describe('getRequest', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the request', () => {
+  it('should return the request', () => {
     expect(getRequest(STATE, 'test')).toEqualImmutable(REQUEST);
   });
 
-  test('should return the DEFAULT_REQUEST object for invalid ID', () => {
+  it('should return the DEFAULT_REQUEST object for invalid ID', () => {
     expect(getRequest(STATE, 'invalid')).toEqualImmutable(DEFAULT_REQUEST);
   });
 
-  test('should return default value for invalid ID with default provided', () => {
+  it('should return default value for invalid ID with default provided', () => {
     expect(getRequest(STATE, 'invalid', 'default')).toEqual('default');
   });
 });

@@ -11,7 +11,7 @@ describe('<RecipeDetailPage>', () => {
     revisionId: 'abc',
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<RecipeDetailPage {...props} />);
 
     expect(wrapper).not.toThrow();

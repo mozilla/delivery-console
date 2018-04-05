@@ -18,7 +18,7 @@ describe('<DetailsActionBar>', () => {
     routerPath: '/path/to/page',
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<DetailsActionBar {...props} />);
 
     expect(wrapper).not.toThrow();

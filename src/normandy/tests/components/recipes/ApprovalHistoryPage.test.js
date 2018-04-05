@@ -9,7 +9,7 @@ describe('<ApprovalHistoryPage>', () => {
     recipeId: 123,
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<ApprovalHistoryPage {...props} />);
 
     expect(wrapper).not.toThrow();

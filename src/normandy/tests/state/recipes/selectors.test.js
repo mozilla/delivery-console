@@ -49,15 +49,15 @@ describe('getRecipe', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the recipe', () => {
+  it('should return the recipe', () => {
     expect(getRecipe(STATE, recipe.id)).toEqualImmutable(fromJS(recipe));
   });
 
-  test('should return `null` for invalid ID', () => {
+  it('should return `null` for invalid ID', () => {
     expect(getRecipe(STATE, 'invalid')).toEqual(null);
   });
 
-  test('should return default value for invalid ID with default provided', () => {
+  it('should return default value for invalid ID with default provided', () => {
     expect(getRecipe(STATE, 'invalid', 'default')).toEqual('default');
   });
 });
@@ -78,7 +78,7 @@ describe('getRecipeFilters', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the list of filters', () => {
+  it('should return the list of filters', () => {
     expect(getRecipeFilters(STATE)).toEqualImmutable(fromJS(FILTERS));
   });
 });
@@ -116,7 +116,7 @@ describe('getRecipeHistory', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return the list of revisions', () => {
+  it('should return the list of revisions', () => {
     expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(
       fromJS([recipe.latest_revision]),
     );

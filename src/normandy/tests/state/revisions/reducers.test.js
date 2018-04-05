@@ -13,13 +13,13 @@ describe('Revisions reducer', () => {
     jest.addMatchers(matchers);
   });
 
-  test('should return initial state by default', () => {
+  it('should return initial state by default', () => {
     expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  test('should handle REVISION_RECEIVE', () => {
+  it('should handle REVISION_RECEIVE', () => {
     const reducedRevision = {
       ...revision,
       recipe: {
@@ -44,7 +44,7 @@ describe('Revisions reducer', () => {
     );
   });
 
-  test('should handle RECIPE_DELETE', () => {
+  it('should handle RECIPE_DELETE', () => {
     const state = revisionsReducer(undefined, {
       type: REVISION_RECEIVE,
       revision,

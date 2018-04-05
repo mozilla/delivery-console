@@ -12,7 +12,7 @@ describe('<CloneRecipePage>', () => {
     revisionId: 'abc',
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<CloneRecipePage {...props} />);
 
     expect(wrapper).not.toThrow();

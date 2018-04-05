@@ -7,13 +7,13 @@ describe('<QueryRecipeListingColumns>', () => {
     loadRecipeListingColumns: () => {},
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<QueryRecipeListingColumns {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  test('should call loadRecipeListingColumns on mount', () => {
+  it('should call loadRecipeListingColumns on mount', () => {
     let called = false;
     shallow(
       <QueryRecipeListingColumns
@@ -26,7 +26,7 @@ describe('<QueryRecipeListingColumns>', () => {
     expect(called).toBe(true);
   });
 
-  test('should call loadRecipeListingColumns once if container props change', () => {
+  it('should call loadRecipeListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <Stub fakeProp={1}>
@@ -45,7 +45,7 @@ describe('<QueryRecipeListingColumns>', () => {
     expect(callCount).toBe(1);
   });
 
-  test('should not render anything', () => {
+  it('should not render anything', () => {
     const wrapper = shallow(<QueryRecipeListingColumns {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

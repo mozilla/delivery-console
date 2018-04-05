@@ -7,7 +7,7 @@ describe('<ConsoleLogFields>', () => {
     recipeArguments: new Map(),
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<ConsoleLogFields {...props} />);
 
     expect(wrapper).not.toThrow();

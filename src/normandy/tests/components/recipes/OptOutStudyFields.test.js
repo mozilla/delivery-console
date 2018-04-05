@@ -8,7 +8,7 @@ describe('<OptOutStudyFields>', () => {
     recipeArguments: new Map(),
   };
 
-  test('should work', () => {
+  it('should work', () => {
     const wrapper = () => shallow(<OptOutStudyFields {...props} />);
 
     expect(wrapper).not.toThrow();
