@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
 import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
 import { wrapMockStore } from 'normandy/tests/mockStore';
 
@@ -15,7 +14,9 @@ describe('<EnrollmentStatus>', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Disabled');
-    expect(wrapper.find('.status-icon').props().className).toContain(
+
+    // throw new Error('asdf ' + wrapper.html)
+    expect(wrapper.find('i.status-icon').props().className).toContain(
       'anticon-minus',
     );
   });
@@ -24,7 +25,7 @@ describe('<EnrollmentStatus>', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: false } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Active');
-    expect(wrapper.find('.status-icon').props().className).toContain(
+    expect(wrapper.find('i.status-icon').props().className).toContain(
       'anticon-check',
     );
   });
@@ -33,7 +34,7 @@ describe('<EnrollmentStatus>', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: true } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Paused');
-    expect(wrapper.find('.status-icon').props().className).toContain(
+    expect(wrapper.find('i.status-icon').props().className).toContain(
       'anticon-pause',
     );
   });
@@ -41,8 +42,8 @@ describe('<EnrollmentStatus>', () => {
   it('should add a "lowkey" class when the recipe is disabled', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
-    expect(wrapper.find('.status-link').props().className).toContain(
-      'is-lowkey',
-    );
+    expect(
+      wrapper.find('NormandyLink.status-link').props().className,
+    ).toContain('is-lowkey');
   });
 });

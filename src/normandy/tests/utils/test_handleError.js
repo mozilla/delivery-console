@@ -1,6 +1,10 @@
-import APIClient from 'normandy/utils/api';
+import APIClient, { APIError } from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 import handleError, { ERR_MESSAGES } from 'normandy/utils/handleError';
+import {
+  checkAPIFailure,
+  checkValidationFailure,
+} from 'normandy/utils/handleError';
 
 describe('handleError util', () => {
   it('should work', () => {
@@ -35,8 +39,22 @@ describe('handleError util', () => {
   });
 
   describe('API Errors', () => {
+    it('should detect APIErrors', () => {
+      const err = new APIError('Something from the server.', {
+        status: 400,
+      });
+
+      expect(checkAPIFailure(err)).toBe(true);
+    });
+
+    it('should detect ValidationErrors', () => {
+      const err = new ValidationError();
+
+      expect(checkValidationFailure(err)).toBe(true);
+    });
+
     it('should handle 400 errors', () => {
-      const err = new APIClient.APIError('Something from the server.', {
+      const err = new APIError('Something from the server.', {
         status: 400,
       });
 
@@ -48,7 +66,7 @@ describe('handleError util', () => {
 
     describe('should handle 403 errors', () => {
       it('should handle a "not logged in" 403 error', () => {
-        const err = new APIClient.APIError(
+        const err = new APIError(
           'Authentication credentials were not provided',
           {
             status: 403,
@@ -62,7 +80,7 @@ describe('handleError util', () => {
       });
 
       it('should handle a "no permission" 403 error', () => {
-        const err = new APIClient.APIError(
+        const err = new APIError(
           'User does not have permission to perform that action.',
           { status: 403 },
         );
@@ -75,7 +93,7 @@ describe('handleError util', () => {
     });
 
     it('should handle 500 errors', () => {
-      const err = new APIClient.APIError('Something from the server.', {
+      const err = new APIError('Something from the server.', {
         status: 500,
       });
 
@@ -90,7 +108,7 @@ describe('handleError util', () => {
     });
 
     it('should fall back to server messages if the response status is unrecognized', () => {
-      const err = new APIClient.APIError('Something from the server.', {
+      const err = new APIError('Something from the server.', {
         status: 123,
       });
 

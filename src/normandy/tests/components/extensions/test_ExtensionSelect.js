@@ -29,12 +29,12 @@ describe('<ExtensionSelect>', () => {
 
     // Determine if the ant placeholder is present on the page.
     const placeholderElement = wrapper.find(
-      '.ant-select-selection__placeholder',
+      'div.ant-select-selection__placeholder',
     );
     expect(placeholderElement.length).toBe(1);
 
     // Determine if the placeholder is actually visible to the user.
-    const placeholderStyle = placeholderElement.get(0).style;
+    const placeholderStyle = placeholderElement.prop('style');
     expect(placeholderStyle.display).toBe('block');
   });
 });

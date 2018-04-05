@@ -31,7 +31,7 @@ describe('<IdenticonField>', () => {
           }}
         />,
       );
-      const next = wrapper.find('.btn-next');
+      const next = wrapper.find('button.btn-next');
 
       next.simulate('click');
 
@@ -48,7 +48,7 @@ describe('<IdenticonField>', () => {
           }}
         />,
       );
-      const next = wrapper.find('.btn-next');
+      const next = wrapper.find('button.btn-next');
 
       expect(wrapper.state().history.size).toBe(1);
       expect(value).toBe(props.value);
@@ -69,14 +69,15 @@ describe('<IdenticonField>', () => {
           }}
         />,
       );
-      const prev = wrapper.find('.btn-prev');
-      const next = wrapper.find('.btn-next');
-
+      let prev = wrapper.find('button.btn-prev');
       // Disabled at first until we move forward in history
       expect(prev.props().disabled).toBe(true);
       const originalValue = value;
 
+      const next = wrapper.find('button.btn-next');
       next.simulate('click');
+
+      prev = wrapper.find('button.btn-prev');
       expect(prev.props().disabled).toBe(false);
 
       prev.simulate('click');
@@ -93,8 +94,8 @@ describe('<IdenticonField>', () => {
           }}
         />,
       );
-      const prev = wrapper.find('.btn-prev');
-      const next = wrapper.find('.btn-next');
+      const prev = wrapper.find('button.btn-prev');
+      const next = wrapper.find('button.btn-next');
 
       next.simulate('click');
       const originalValue = value;

@@ -2,11 +2,9 @@ import Immutable, { Map } from 'immutable';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TestComponent, {
+import RecipeDetails, {
   ArgumentsValue,
 } from 'normandy/components/recipes/RecipeDetails';
-
-const { WrappedComponent: RecipeDetails } = TestComponent;
 
 describe('<RecipeDetails>', () => {
   const props = {
