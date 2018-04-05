@@ -9,12 +9,9 @@ describe('getAction', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      actions: {
-        ...INITIAL_STATE.app.actions,
-        items: INITIAL_STATE.app.actions.items.set(action.id, fromJS(action)),
-      },
+    actions: {
+      ...INITIAL_STATE.actions,
+      items: INITIAL_STATE.actions.items.set(action.id, fromJS(action)),
     },
   };
 

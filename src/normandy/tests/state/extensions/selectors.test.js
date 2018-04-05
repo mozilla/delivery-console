@@ -9,15 +9,12 @@ describe('getExtension', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      extensions: {
-        ...INITIAL_STATE.app.extensions,
-        items: INITIAL_STATE.app.extensions.items.set(
-          extension.id,
-          fromJS(extension),
-        ),
-      },
+    extensions: {
+      ...INITIAL_STATE.extensions,
+      items: INITIAL_STATE.extensions.items.set(
+        extension.id,
+        fromJS(extension),
+      ),
     },
   };
 

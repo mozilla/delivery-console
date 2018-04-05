@@ -18,21 +18,18 @@ describe('getRevision', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      actions: actionsReducer(undefined, {
-        type: ACTION_RECEIVE,
-        action: revision.recipe.action,
-      }),
-      revisions: revisionsReducer(undefined, {
-        type: REVISION_RECEIVE,
-        revision,
-      }),
-      users: usersReducer(undefined, {
-        type: USER_RECEIVE,
-        user: revision.user,
-      }),
-    },
+    actions: actionsReducer(undefined, {
+      type: ACTION_RECEIVE,
+      action: revision.recipe.action,
+    }),
+    revisions: revisionsReducer(undefined, {
+      type: REVISION_RECEIVE,
+      revision,
+    }),
+    users: usersReducer(undefined, {
+      type: USER_RECEIVE,
+      user: revision.user,
+    }),
   };
 
   beforeEach(() => {

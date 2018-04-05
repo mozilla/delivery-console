@@ -15,10 +15,8 @@ const createSessions = (count, category) => {
 
 describe('getSessionHistory', () => {
   const state = {
-    app: {
-      session: {
-        ...INITIAL_STATE,
-      },
+    session: {
+      ...INITIAL_STATE,
     },
   };
 
@@ -32,20 +30,20 @@ describe('getSessionHistory', () => {
 
     // Test getting 'recipe' session history.
     const recipeHistory = new List([recipes[0], recipes[1]]);
-    state.app.session.history = recipeHistory;
+    state.session.history = recipeHistory;
     const recipeQuery = getSessionHistory(state, 'recipe');
     expect(is(recipeQuery, recipeHistory)).toBe(true);
 
     // Test getting 'extension' session history.
     const extHistory = new List([extensions[0], extensions[1]]);
-    state.app.session.history = extHistory;
+    state.session.history = extHistory;
     const extensionQuery = getSessionHistory(state, 'extension');
     expect(is(extensionQuery, extHistory)).toBe(true);
   });
 
   it('should return an empty history list if none of the given category is available', () => {
     const fakeHistory = new List(createSessions(2, 'recipe'));
-    state.app.session.history = fakeHistory;
+    state.session.history = fakeHistory;
     expect(getSessionHistory(state, 'extension')).toEqual(new List());
     expect(is(getSessionHistory(state, 'recipe'), fakeHistory)).toBe(true);
   });
