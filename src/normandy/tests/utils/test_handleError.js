@@ -1,4 +1,4 @@
-import APIClient, { APIError } from 'normandy/utils/api';
+import { APIError } from 'normandy/utils/api';
 import { ValidationError } from 'normandy/utils/forms';
 import handleError, { ERR_MESSAGES } from 'normandy/utils/handleError';
 import {
