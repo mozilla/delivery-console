@@ -18,17 +18,14 @@ const serviceInfo = ServiceInfoFactory.build();
 
 const STATE = {
   ...INITIAL_STATE,
-  app: {
-    ...INITIAL_STATE.app,
-    serviceInfo: serviceInfoReducer(undefined, {
-      type: SERVICE_INFO_RECEIVE,
-      serviceInfo,
-    }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: serviceInfo.user,
-    }),
-  },
+  serviceInfo: serviceInfoReducer(undefined, {
+    type: SERVICE_INFO_RECEIVE,
+    serviceInfo,
+  }),
+  users: usersReducer(undefined, {
+    type: USER_RECEIVE,
+    user: serviceInfo.user,
+  }),
 };
 
 describe('getCurrentUser', () => {

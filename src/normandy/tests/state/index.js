@@ -10,15 +10,13 @@ import { INITIAL_STATE as serviceInfo } from 'normandy/tests/state/serviceInfo';
 import { INITIAL_STATE as users } from 'normandy/tests/state/users';
 
 export const INITIAL_STATE = {
-  app: {
-    actions,
-    approvalRequests,
-    extensions,
-    recipes,
-    requests,
-    revisions,
-    serviceInfo,
-    users,
-  },
+  actions,
+  approvalRequests,
+  extensions,
+  recipes,
+  requests,
+  revisions,
+  serviceInfo,
+  users,
   router,
 };

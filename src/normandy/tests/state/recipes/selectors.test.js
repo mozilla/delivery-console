@@ -24,25 +24,22 @@ describe('getRecipe', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      actions: actionsReducer(undefined, {
-        type: ACTION_RECEIVE,
-        action: recipe.action,
-      }),
-      recipes: recipesReducer(undefined, {
-        type: RECIPE_RECEIVE,
-        recipe,
-      }),
-      revisions: revisionsReducer(undefined, {
-        type: REVISION_RECEIVE,
-        revision: recipe.latest_revision,
-      }),
-      users: usersReducer(undefined, {
-        type: USER_RECEIVE,
-        user: recipe.latest_revision.user,
-      }),
-    },
+    actions: actionsReducer(undefined, {
+      type: ACTION_RECEIVE,
+      action: recipe.action,
+    }),
+    recipes: recipesReducer(undefined, {
+      type: RECIPE_RECEIVE,
+      recipe,
+    }),
+    revisions: revisionsReducer(undefined, {
+      type: REVISION_RECEIVE,
+      revision: recipe.latest_revision,
+    }),
+    users: usersReducer(undefined, {
+      type: USER_RECEIVE,
+      user: recipe.latest_revision.user,
+    }),
   };
 
   beforeEach(() => {
@@ -65,12 +62,9 @@ describe('getRecipe', () => {
 describe('getRecipeFilters', () => {
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      recipes: {
-        ...INITIAL_STATE.app.recipes,
-        filters: fromJS(FILTERS),
-      },
+    recipes: {
+      ...INITIAL_STATE.recipes,
+      filters: fromJS(FILTERS),
     },
   };
 
@@ -88,28 +82,25 @@ describe('getRecipeHistory', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      actions: actionsReducer(undefined, {
-        type: ACTION_RECEIVE,
-        action: recipe.action,
-      }),
-      recipes: {
-        ...INITIAL_STATE.app.recipes,
-        history: INITIAL_STATE.app.recipes.history.set(
-          recipe.id,
-          fromJS([recipe.latest_revision.id]),
-        ),
-      },
-      revisions: revisionsReducer(undefined, {
-        type: REVISION_RECEIVE,
-        revision: recipe.latest_revision,
-      }),
-      users: usersReducer(undefined, {
-        type: USER_RECEIVE,
-        user: recipe.latest_revision.user,
-      }),
+    actions: actionsReducer(undefined, {
+      type: ACTION_RECEIVE,
+      action: recipe.action,
+    }),
+    recipes: {
+      ...INITIAL_STATE.recipes,
+      history: INITIAL_STATE.recipes.history.set(
+        recipe.id,
+        fromJS([recipe.latest_revision.id]),
+      ),
     },
+    revisions: revisionsReducer(undefined, {
+      type: REVISION_RECEIVE,
+      revision: recipe.latest_revision,
+    }),
+    users: usersReducer(undefined, {
+      type: USER_RECEIVE,
+      user: recipe.latest_revision.user,
+    }),
   };
 
   beforeEach(() => {

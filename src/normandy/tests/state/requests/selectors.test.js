@@ -8,10 +8,7 @@ describe('getRequest', () => {
   const REQUEST = DEFAULT_REQUEST.set('inProgress', true);
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      requests: INITIAL_STATE.app.requests.set('test', REQUEST),
-    },
+    requests: INITIAL_STATE.requests.set('test', REQUEST),
   };
 
   beforeEach(() => {

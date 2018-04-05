@@ -16,17 +16,14 @@ describe('getApprovalRequest', () => {
 
   const STATE = {
     ...INITIAL_STATE,
-    app: {
-      ...INITIAL_STATE.app,
-      approvalRequests: approvalRequestsReducer(undefined, {
-        type: APPROVAL_REQUEST_RECEIVE,
-        approvalRequest,
-      }),
-      users: usersReducer(undefined, {
-        type: USER_RECEIVE,
-        user: approvalRequest.creator,
-      }),
-    },
+    approvalRequests: approvalRequestsReducer(undefined, {
+      type: APPROVAL_REQUEST_RECEIVE,
+      approvalRequest,
+    }),
+    users: usersReducer(undefined, {
+      type: USER_RECEIVE,
+      user: approvalRequest.creator,
+    }),
   };
 
   beforeEach(() => {

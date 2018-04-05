@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import reducers from 'normandy/state';
+import reducers from '../../state/reducer';
 
 export function createMockStore() {
   return createStore(
