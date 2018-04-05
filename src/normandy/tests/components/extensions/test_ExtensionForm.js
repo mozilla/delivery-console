@@ -12,7 +12,7 @@ describe('<ExtensionForm>', () => {
     onSubmit: () => {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<ExtensionForm {...props} />);
 
     expect(wrapper).not.toThrow();

@@ -12,16 +12,16 @@ import { INITIAL_STATE } from 'normandy/tests/state/requests';
 
 describe('Requests reducer', () => {
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(requestsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle REQUEST_SEND', () => {
+  test('should handle REQUEST_SEND', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_SEND,
@@ -32,7 +32,7 @@ describe('Requests reducer', () => {
     );
   });
 
-  it('should handle REQUEST_SUCCESS', () => {
+  test('should handle REQUEST_SUCCESS', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_SUCCESS,
@@ -43,7 +43,7 @@ describe('Requests reducer', () => {
 
   const ERROR = { message: 'test message' };
 
-  it('should handle REQUEST_FAILURE', () => {
+  test('should handle REQUEST_FAILURE', () => {
     expect(
       requestsReducer(undefined, {
         type: REQUEST_FAILURE,

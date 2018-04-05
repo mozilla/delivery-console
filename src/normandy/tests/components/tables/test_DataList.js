@@ -17,7 +17,7 @@ describe('<DataList>', () => {
     push: () => {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<DataList {...props} />);
 
     expect(wrapper).not.toThrow();

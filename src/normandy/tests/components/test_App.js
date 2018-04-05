@@ -8,7 +8,7 @@ describe('<App>', () => {
     children: <div>Hello</div>,
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<App {...props} />);
 
     expect(wrapper).not.toThrow();

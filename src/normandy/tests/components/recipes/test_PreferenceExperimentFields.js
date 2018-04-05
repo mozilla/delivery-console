@@ -16,14 +16,14 @@ describe('<PreferenceExperimentFields>', () => {
     recipeArguments: new Map(),
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<PreferenceExperimentFields {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
   describe('<StringPreferenceField>', () => {
-    it('should correctly trim whitespace', () => {
+    test('should correctly trim whitespace', () => {
       const trimmedValues = [];
       const stringPrefFieldInstance = new StringPreferenceField({
         onChange: value => {
@@ -43,7 +43,7 @@ describe('<PreferenceExperimentFields>', () => {
       expect(trimmedValues.every(value => value === 'foobar')).toBe(true);
     });
 
-    it('should not trim whitespace from the middle of a string', () => {
+    test('should not trim whitespace from the middle of a string', () => {
       let trimmedValue;
       const stringPrefFieldInstance = new StringPreferenceField({
         onChange: value => {

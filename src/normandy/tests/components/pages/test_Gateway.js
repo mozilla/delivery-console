@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Gateway from 'normandy/components/pages/Gateway';
 
 describe('<Gateway>', () => {
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<Gateway />);
 
     expect(wrapper).not.toThrow();

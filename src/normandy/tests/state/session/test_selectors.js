@@ -22,11 +22,11 @@ describe('getSessionHistory', () => {
     },
   };
 
-  it('should return an empty list if no history is present', () => {
+  test('should return an empty list if no history is present', () => {
     expect(getSessionHistory(state), 'recipe').toEqual(new List([]));
   });
 
-  it('should return the history list for the appropriate category', () => {
+  test('should return the history list for the appropriate category', () => {
     const recipes = createSessions(2, 'recipe');
     const extensions = createSessions(2, 'extension');
 
@@ -43,7 +43,7 @@ describe('getSessionHistory', () => {
     expect(is(extensionQuery, extHistory)).toBe(true);
   });
 
-  it('should return an empty history list if none of the given category is available', () => {
+  test('should return an empty history list if none of the given category is available', () => {
     const fakeHistory = new List(createSessions(2, 'recipe'));
     state.app.session.history = fakeHistory;
     expect(getSessionHistory(state, 'extension')).toEqual(new List());

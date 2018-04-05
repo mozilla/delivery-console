@@ -10,16 +10,16 @@ describe('Revisions reducer', () => {
   const revision = RevisionFactory.build();
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle REVISION_RECEIVE', () => {
+  test('should handle REVISION_RECEIVE', () => {
     const reducedRevision = {
       ...revision,
       recipe: {
@@ -44,7 +44,7 @@ describe('Revisions reducer', () => {
     );
   });
 
-  it('should handle RECIPE_DELETE', () => {
+  test('should handle RECIPE_DELETE', () => {
     const state = revisionsReducer(undefined, {
       type: REVISION_RECEIVE,
       revision,

@@ -18,15 +18,15 @@ describe('getAction', () => {
     },
   };
 
-  it('should return the action', () => {
+  test('should return the action', () => {
     expect(getAction(STATE, action.id)).toEqual(fromJS(action));
   });
 
-  it('should return `null` for invalid ID', () => {
+  test('should return `null` for invalid ID', () => {
     expect(getAction(STATE, 0)).toEqual(null);
   });
 
-  it('should return default value for invalid ID with default provided', () => {
+  test('should return default value for invalid ID with default provided', () => {
     expect(getAction(STATE, 0, 'default')).toEqual('default');
   });
 });

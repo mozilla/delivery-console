@@ -21,7 +21,7 @@ describe('<RecipeListing>', () => {
     status: null,
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<RecipeListing {...props} />);
 
     expect(wrapper).not.toThrow();

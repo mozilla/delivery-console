@@ -11,11 +11,11 @@ class FakeComponent extends React.PureComponent {
 
 describe('Forms utils', () => {
   describe('createForm', () => {
-    it('should exist', () => {
+    test('should exist', () => {
       expect(!!createForm).toBe(true);
     });
 
-    it('should return the nested React element', () => {
+    test('should return the nested React element', () => {
       const FakeForm = createForm({})(FakeComponent);
       const form = mount(<FakeForm />);
       expect(form.find(FakeComponent).length).toBe(1);
@@ -23,17 +23,17 @@ describe('Forms utils', () => {
   });
 
   describe('connectFormProps', () => {
-    it('should exist', () => {
+    test('should exist', () => {
       expect(!!connectFormProps).toBe(true);
     });
 
-    it('should return the nested React component', () => {
+    test('should return the nested React component', () => {
       const ConnectedComponent = connectFormProps(FakeComponent);
       const comp = mount(<ConnectedComponent />);
       expect(comp.find(FakeComponent).length).toBe(1);
     });
 
-    it('should add `form` and `formErrors` props to the nested component', () => {
+    test('should add `form` and `formErrors` props to the nested component', () => {
       const ConnectedComponent = connectFormProps(FakeComponent);
       const comp = mount(<ConnectedComponent />);
       const props = Object.keys(comp.find(FakeComponent).props());

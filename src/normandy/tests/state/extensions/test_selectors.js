@@ -21,15 +21,15 @@ describe('getExtension', () => {
     },
   };
 
-  it('should return the extension', () => {
+  test('should return the extension', () => {
     expect(getExtension(STATE, extension.id)).toEqual(fromJS(extension));
   });
 
-  it('should return `null` for invalid ID', () => {
+  test('should return `null` for invalid ID', () => {
     expect(getExtension(STATE, 0)).toEqual(null);
   });
 
-  it('should return default value for invalid ID with default provided', () => {
+  test('should return default value for invalid ID with default provided', () => {
     expect(getExtension(STATE, 0, 'default')).toEqual('default');
   });
 });

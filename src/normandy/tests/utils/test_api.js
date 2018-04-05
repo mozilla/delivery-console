@@ -1,14 +1,14 @@
 import APIClient, { APIError } from 'normandy/utils/api';
 
 describe('APIClient util', () => {
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => new APIClient();
     expect(wrapper).not.toThrow();
   });
 });
 
 describe('APIError', () => {
-  it('should identify as an APIError', () => {
+  test('should identify as an APIError', () => {
     const errMessage = 'Danger, Will Robinson! Danger!';
     const errData = { danger: true };
     let didThrow = false;

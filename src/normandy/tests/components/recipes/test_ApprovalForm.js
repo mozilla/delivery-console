@@ -14,7 +14,7 @@ describe('<ApprovalForm>', () => {
     onSubmit: () => {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<ApprovalForm {...props} />);
 
     expect(wrapper).not.toThrow();

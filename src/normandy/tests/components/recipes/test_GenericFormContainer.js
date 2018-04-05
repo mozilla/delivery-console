@@ -13,13 +13,13 @@ describe('<GenericFormContainer>', () => {
     formProps: {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => mount(<GenericFormContainer {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  it('should nest the `form` prop as a child', () => {
+  test('should nest the `form` prop as a child', () => {
     const CustomEl = () => <div id="test">Custom</div>;
 
     const wrapper = mount(<GenericFormContainer {...props} form={CustomEl} />);
@@ -28,7 +28,7 @@ describe('<GenericFormContainer>', () => {
     expect(wrapper.find('#test').text()).toContain('Custom');
   });
 
-  it('should fire the formAction on submission', () => {
+  test('should fire the formAction on submission', () => {
     const CustomEl = ({ onSubmit }) => (
       <div id="test" onClick={onSubmit}>
         Test
@@ -49,7 +49,7 @@ describe('<GenericFormContainer>', () => {
     expect(fired).toBe(true);
   });
 
-  it('should handle the formAction failing', () => {
+  test('should handle the formAction failing', () => {
     const CustomEl = ({ onSubmit }) => (
       <div id="test" onClick={onSubmit}>
         Test
@@ -73,7 +73,7 @@ describe('<GenericFormContainer>', () => {
     expect(failed).toBe(true);
   });
 
-  it('should handle the formAction succeeding', async () => {
+  test('should handle the formAction succeeding', async () => {
     const CustomEl = ({ onSubmit }) => (
       <div id="test" onClick={onSubmit}>
         Test
@@ -99,7 +99,7 @@ describe('<GenericFormContainer>', () => {
     expect(await success).toBe(true);
   });
 
-  it('should pass the formProps object to the form element', () => {
+  test('should pass the formProps object to the form element', () => {
     const CustomEl = custProps => (
       <div id="test" {...custProps}>
         Custom

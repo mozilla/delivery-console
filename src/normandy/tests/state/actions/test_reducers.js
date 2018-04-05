@@ -5,13 +5,13 @@ import actionsReducer from 'normandy/state/app/actions/reducers';
 import { INITIAL_STATE, ActionFactory } from 'normandy/tests/state/actions';
 
 describe('Actions reducer', () => {
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(actionsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle ACTION_RECEIVE', () => {
+  test('should handle ACTION_RECEIVE', () => {
     const action = ActionFactory.build();
 
     expect(

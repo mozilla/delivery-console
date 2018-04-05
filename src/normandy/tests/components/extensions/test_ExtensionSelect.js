@@ -16,7 +16,7 @@ describe('<ExtensionSelect>', () => {
     size: 'default',
   };
 
-  it('should work', () => {
+  test('should work', () => {
     // Need to wrap the components with a mock store in order to mount the nested
     // (but connected) query component.
     const wrapper = () => mount(wrapMockStore(<ExtensionSelect {...props} />));
@@ -24,7 +24,7 @@ describe('<ExtensionSelect>', () => {
     expect(wrapper).not.toThrow();
   });
 
-  it('should display the placeholder element appropriately', () => {
+  test('should display the placeholder element appropriately', () => {
     const wrapper = mount(wrapMockStore(<ExtensionSelect {...props} />));
 
     // Determine if the ant placeholder is present on the page.

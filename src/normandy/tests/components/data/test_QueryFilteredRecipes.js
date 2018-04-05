@@ -13,13 +13,13 @@ describe('<QueryFilteredRecipes>', () => {
     pageNumber: 1,
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<QueryFilteredRecipes {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  it('should call fetchFilteredRecipesPage on mount', () => {
+  test('should call fetchFilteredRecipesPage on mount', () => {
     let called = false;
     mount(
       <QueryFilteredRecipes
@@ -33,7 +33,7 @@ describe('<QueryFilteredRecipes>', () => {
     expect(called).toBe(true);
   });
 
-  it('should call fetchFilteredRecipesPage if the `pageNumber` changes', () => {
+  test('should call fetchFilteredRecipesPage if the `pageNumber` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
       <QueryFilteredRecipes
@@ -58,7 +58,7 @@ describe('<QueryFilteredRecipes>', () => {
     expect(callCount).toBe(3);
   });
 
-  it('should call fetchFilteredRecipesPage if the `filters` change', () => {
+  test('should call fetchFilteredRecipesPage if the `filters` change', () => {
     let callCount = 0;
     const wrapper = shallow(
       <QueryFilteredRecipes
@@ -80,7 +80,7 @@ describe('<QueryFilteredRecipes>', () => {
     expect(callCount).toBe(3);
   });
 
-  it('should call fetchFilteredRecipesPage once if container props change', () => {
+  test('should call fetchFilteredRecipesPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
@@ -101,7 +101,7 @@ describe('<QueryFilteredRecipes>', () => {
     expect(callCount).toBe(1);
   });
 
-  it('should not render anything', () => {
+  test('should not render anything', () => {
     const wrapper = shallow(<QueryFilteredRecipes {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

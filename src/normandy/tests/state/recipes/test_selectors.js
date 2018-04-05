@@ -46,18 +46,18 @@ describe('getRecipe', () => {
   };
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return the recipe', () => {
+  test('should return the recipe', () => {
     expect(getRecipe(STATE, recipe.id)).toEqualImmutable(fromJS(recipe));
   });
 
-  it('should return `null` for invalid ID', () => {
+  test('should return `null` for invalid ID', () => {
     expect(getRecipe(STATE, 'invalid')).toEqual(null);
   });
 
-  it('should return default value for invalid ID with default provided', () => {
+  test('should return default value for invalid ID with default provided', () => {
     expect(getRecipe(STATE, 'invalid', 'default')).toEqual('default');
   });
 });
@@ -75,10 +75,10 @@ describe('getRecipeFilters', () => {
   };
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return the list of filters', () => {
+  test('should return the list of filters', () => {
     expect(getRecipeFilters(STATE)).toEqualImmutable(fromJS(FILTERS));
   });
 });
@@ -113,10 +113,10 @@ describe('getRecipeHistory', () => {
   };
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return the list of revisions', () => {
+  test('should return the list of revisions', () => {
     expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(
       fromJS([recipe.latest_revision]),
     );

@@ -14,7 +14,7 @@ describe('<HistoryTimeline>', () => {
     selectedRevisionId: 'abc',
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<HistoryTimeline {...props} />);
 
     expect(wrapper).not.toThrow();

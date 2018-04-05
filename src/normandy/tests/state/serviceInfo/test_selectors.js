@@ -32,13 +32,13 @@ const STATE = {
 };
 
 describe('getCurrentUser', () => {
-  it('should return the current user', () => {
+  test('should return the current user', () => {
     expect(getCurrentUser(STATE)).toEqual(fromJS(serviceInfo.user));
   });
 });
 
 describe('isPeerApprovalEnforced', () => {
-  it('should return the correct value', () => {
+  test('should return the correct value', () => {
     expect(isPeerApprovalEnforced(STATE)).toEqual(
       serviceInfo.peer_approval_enforced,
     );
@@ -46,7 +46,7 @@ describe('isPeerApprovalEnforced', () => {
 });
 
 describe('getLogoutUrl', () => {
-  it('should return the correct value', () => {
+  test('should return the correct value', () => {
     expect(getLogoutUrl(STATE)).toEqual(serviceInfo.logout_url);
   });
 });

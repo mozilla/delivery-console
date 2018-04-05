@@ -12,7 +12,7 @@ describe('<NavigationMenu>', () => {
     history: {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<NavigationMenu {...props} />);
 
     expect(wrapper).not.toThrow();

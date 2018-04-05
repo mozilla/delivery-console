@@ -30,20 +30,20 @@ describe('getApprovalRequest', () => {
   };
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return the approval request', () => {
+  test('should return the approval request', () => {
     expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(
       fromJS(approvalRequest),
     );
   });
 
-  it('should return `null` for invalid ID', () => {
+  test('should return `null` for invalid ID', () => {
     expect(getApprovalRequest(STATE, 0)).toEqual(null);
   });
 
-  it('should return default value for invalid ID with default provided', () => {
+  test('should return default value for invalid ID with default provided', () => {
     expect(getApprovalRequest(STATE, 0, 'default')).toEqual('default');
   });
 });

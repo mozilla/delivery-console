@@ -15,7 +15,7 @@ import TestComponent, {
 const { WrappedComponent: HistoryItem } = TestComponent;
 
 describe('<HistoryItem>', () => {
-  it('should work', () => {
+  test('should work', () => {
     const props = {
       isLatestRevision: () => {},
       revision: new Map(),
@@ -41,7 +41,7 @@ describe('<HistoryItem>', () => {
       revisionNo: 6,
     };
 
-    it('should highlight when it is the selected revision', () => {
+    test('should highlight when it is the selected revision', () => {
       const wrapper = mount(
         wrapMockStore(<HistoryItem {...props} selectedRevisionId="abc123" />),
       );
@@ -57,7 +57,7 @@ describe('<HistoryItem>', () => {
       expect(el.props().dot.props.color).toBe('blue');
     });
 
-    it('should NOT highlight when it is NOT the selected revision', () => {
+    test('should NOT highlight when it is NOT the selected revision', () => {
       const wrapper = mount(
         wrapMockStore(<HistoryItem {...props} selectedRevisionId="aeiou" />),
       );
@@ -74,13 +74,13 @@ describe('<HistoryItem>', () => {
       revision: new Map(),
     };
 
-    it('should work', () => {
+    test('should work', () => {
       const wrapper = () => mount(<HistoryItemPopover {...props} />);
 
       expect(wrapper).not.toThrow();
     });
 
-    it('should show RevisionInfo by default', () => {
+    test('should show RevisionInfo by default', () => {
       const wrapper = mount(<HistoryItemPopover {...props} />);
 
       // Determine that the RevisionInfo is rendering an element.
@@ -92,7 +92,7 @@ describe('<HistoryItem>', () => {
       expect(wrapper.find(ApprovalComment).children().length).toBe(0);
     });
 
-    it('should show RequestInfo if a request is open', () => {
+    test('should show RequestInfo if a request is open', () => {
       const revision = fromJS({ approval_request: {} });
       const wrapper = mount(<HistoryItemPopover revision={revision} />);
 
@@ -102,7 +102,7 @@ describe('<HistoryItem>', () => {
       expect(wrapper.find(ApprovalComment).children().length).toBe(0);
     });
 
-    it('should show an ApprovalComment if a request was responded to', () => {
+    test('should show an ApprovalComment if a request was responded to', () => {
       const revision = fromJS({ approval_request: { approved: true } });
       const wrapper = mount(<HistoryItemPopover revision={revision} />);
 
@@ -117,7 +117,7 @@ describe('<HistoryItem>', () => {
       revision: new Map(),
     };
 
-    it('should work', () => {
+    test('should work', () => {
       const wrapper = () => mount(<RevisionInfo {...props} />);
 
       expect(wrapper).not.toThrow();
@@ -129,7 +129,7 @@ describe('<HistoryItem>', () => {
       revision: new Map(),
     };
 
-    it('should work', () => {
+    test('should work', () => {
       const wrapper = () => mount(<RequestInfo {...props} />);
 
       expect(wrapper).not.toThrow();
@@ -141,7 +141,7 @@ describe('<HistoryItem>', () => {
       revision: new Map(),
     };
 
-    it('should work', () => {
+    test('should work', () => {
       const wrapper = () => mount(<ApprovalComment {...props} />);
 
       expect(wrapper).not.toThrow();

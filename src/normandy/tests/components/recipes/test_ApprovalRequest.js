@@ -16,7 +16,7 @@ describe('<ApprovalRequest>', () => {
     revision: new Map(),
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<ApprovalRequest {...props} />);
 
     expect(wrapper).not.toThrow();

@@ -16,16 +16,16 @@ describe('Approval requests reducer', () => {
   const approvalRequest = ApprovalRequestFactory.build();
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(approvalRequestsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle APPROVAL_REQUEST_RECEIVE', () => {
+  test('should handle APPROVAL_REQUEST_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
       approver_id: approvalRequest.approver
@@ -50,7 +50,7 @@ describe('Approval requests reducer', () => {
     );
   });
 
-  it('should handle APPROVAL_REQUEST_DELETE', () => {
+  test('should handle APPROVAL_REQUEST_DELETE', () => {
     const state = approvalRequestsReducer(undefined, {
       type: APPROVAL_REQUEST_RECEIVE,
       approvalRequest,
@@ -64,7 +64,7 @@ describe('Approval requests reducer', () => {
     expect(updatedState).toEqual(INITIAL_STATE);
   });
 
-  it('should handle RECIPE_HISTORY_RECEIVE', () => {
+  test('should handle RECIPE_HISTORY_RECEIVE', () => {
     const appRequest = {
       id: 'test',
       arbitrary_data: 123,

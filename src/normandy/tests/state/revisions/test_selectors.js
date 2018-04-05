@@ -36,18 +36,18 @@ describe('getRevision', () => {
   };
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return the revision', () => {
+  test('should return the revision', () => {
     expect(getRevision(STATE, revision.id)).toEqualImmutable(fromJS(revision));
   });
 
-  it('should return `null` for invalid ID', () => {
+  test('should return `null` for invalid ID', () => {
     expect(getRevision(STATE, 'invalid')).toEqual(null);
   });
 
-  it('should return default value for invalid ID with default provided', () => {
+  test('should return default value for invalid ID with default provided', () => {
     expect(getRevision(STATE, 'invalid', 'default')).toEqual('default');
   });
 });

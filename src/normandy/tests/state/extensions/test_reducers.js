@@ -10,13 +10,13 @@ import {
 describe('Extensions reducer', () => {
   const extension = ExtensionFactory.build();
 
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(extensionsReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle EXTENSION_RECEIVE', () => {
+  test('should handle EXTENSION_RECEIVE', () => {
     expect(
       extensionsReducer(undefined, {
         type: EXTENSION_RECEIVE,

@@ -10,7 +10,7 @@ describe('<ShowHeartbeatFields>', () => {
     recipeArguments: new Map(),
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<ShowHeartbeatFields {...props} />);
 
     expect(wrapper).not.toThrow();

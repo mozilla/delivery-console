@@ -13,7 +13,7 @@ describe('<EditRecipePage>', () => {
     recipe: new Map(),
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<EditRecipePage {...props} />);
 
     expect(wrapper).not.toThrow();

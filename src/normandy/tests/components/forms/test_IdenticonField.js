@@ -10,18 +10,18 @@ describe('<IdenticonField>', () => {
     value: 'test',
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => mount(<IdenticonField {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  it('should use the v1 shield generation', () => {
+  test('should use the v1 shield generation', () => {
     expect(IdenticonField.generateSeed().slice(0, 3)).toBe('v1:');
   });
 
   describe('selection buttons', () => {
-    it('should generate a new item if at the end of the history', () => {
+    test('should generate a new item if at the end of the history', () => {
       let { value } = props;
       const wrapper = mount(
         <IdenticonField
@@ -38,7 +38,7 @@ describe('<IdenticonField>', () => {
       expect(value).not.toBe(props.value);
     });
 
-    it('should track a history of viewed icons', () => {
+    test('should track a history of viewed icons', () => {
       let { value } = props;
       const wrapper = mount(
         <IdenticonField
@@ -59,7 +59,7 @@ describe('<IdenticonField>', () => {
       expect(value).not.toBe(props.value);
     });
 
-    it('should go back in history if possible', () => {
+    test('should go back in history if possible', () => {
       let { value } = props;
       const wrapper = mount(
         <IdenticonField
@@ -84,7 +84,7 @@ describe('<IdenticonField>', () => {
       expect(value).toBe(originalValue);
     });
 
-    it('should recall icons from history if moving forward', () => {
+    test('should recall icons from history if moving forward', () => {
       let { value } = props;
       const wrapper = mount(
         <IdenticonField

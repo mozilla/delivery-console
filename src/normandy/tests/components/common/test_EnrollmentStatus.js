@@ -4,13 +4,13 @@ import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
 import { wrapMockStore } from 'normandy/tests/mockStore';
 
 describe('<EnrollmentStatus>', () => {
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () =>
       mount(wrapMockStore(<EnrollmentStatus recipe={{}} />));
     expect(wrapper).not.toThrow();
   });
 
-  it('should print `disabled` if the recipe is not enabled', () => {
+  test('should print `disabled` if the recipe is not enabled', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Disabled');
@@ -21,7 +21,7 @@ describe('<EnrollmentStatus>', () => {
     );
   });
 
-  it('should print `active` if the recipe is enabled and NOT paused', () => {
+  test('should print `active` if the recipe is enabled and NOT paused', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: false } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Active');
@@ -30,7 +30,7 @@ describe('<EnrollmentStatus>', () => {
     );
   });
 
-  it('should print `paused` if the recipe is enabled and paused', () => {
+  test('should print `paused` if the recipe is enabled and paused', () => {
     const recipe = { enabled: true, arguments: { isEnrollmentPaused: true } };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.text()).toContain('Paused');
@@ -39,7 +39,7 @@ describe('<EnrollmentStatus>', () => {
     );
   });
 
-  it('should add a "lowkey" class when the recipe is disabled', () => {
+  test('should add a "lowkey" class when the recipe is disabled', () => {
     const recipe = { enabled: false };
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(

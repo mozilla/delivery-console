@@ -14,7 +14,7 @@ describe('<ListingActionBar>', () => {
     saveExtensionListingColumns: () => {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<ListingActionBar {...props} />);
 
     expect(wrapper).not.toThrow();

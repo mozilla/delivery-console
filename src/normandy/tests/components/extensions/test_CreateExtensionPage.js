@@ -11,7 +11,7 @@ describe('<CreateExtensionPage>', () => {
     push: () => {},
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<CreateExtensionPage {...props} />);
 
     expect(wrapper).not.toThrow();

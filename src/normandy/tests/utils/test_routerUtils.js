@@ -21,18 +21,18 @@ describe('Router utils', () => {
       },
     };
 
-    it('should find shallow routes', () => {
+    test('should find shallow routes', () => {
       expect(searchRouteTree(routes, 'home')).toBe('/');
       expect(searchRouteTree(routes, 'test')).toBe('/test');
     });
 
-    it('should find deeply nested routes', () => {
+    test('should find deeply nested routes', () => {
       expect(searchRouteTree(routes, 'nested')).toBe(
         '/test2/nested/even/further',
       );
     });
 
-    it('should return `null` when a route is not found', () => {
+    test('should return `null` when a route is not found', () => {
       expect(searchRouteTree(routes, 'not present')).toBe(null);
       expect(searchRouteTree(routes, 'testtt')).toBe(null);
       expect(searchRouteTree(routes, 'test ')).toBe(null);
@@ -42,7 +42,7 @@ describe('Router utils', () => {
   });
 
   describe('replaceUrlVariables', () => {
-    it('should handle strings without variables', () => {
+    test('should handle strings without variables', () => {
       // No trailing slash
       let url = replaceUrlVariables('/hey/ron', {});
       expect(url).toBe('/hey/ron');
@@ -52,7 +52,7 @@ describe('Router utils', () => {
       expect(url).toBe('/hey/ron/');
     });
 
-    it('should replace variables in strings', () => {
+    test('should replace variables in strings', () => {
       // No trailing slash
       let url = replaceUrlVariables('/hey/:name', { name: 'billy' });
       expect(url).toBe('/hey/billy');
@@ -62,7 +62,7 @@ describe('Router utils', () => {
       expect(url).toBe('/hey/billy/');
     });
 
-    it('should replace multiple variables', () => {
+    test('should replace multiple variables', () => {
       // No trailing slash
       let url = replaceUrlVariables('/:one/:two', {
         one: 'that',

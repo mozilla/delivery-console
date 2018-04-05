@@ -10,7 +10,7 @@ describe('<EnvAlert>', () => {
     currentUrl: 'http://localhost:8000/',
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<EnvAlert {...props} />);
 
     expect(wrapper).not.toThrow();
@@ -19,7 +19,7 @@ describe('<EnvAlert>', () => {
   describe('findFragmentsInURL', () => {
     const testStrings = ['normandy-admin', 'stage', '/normandy/'];
 
-    it('should find a piece of a string amongst an array of strings', () => {
+    test('should find a piece of a string amongst an array of strings', () => {
       let result = EnvAlert.findFragmentsInURL(
         'https://www.normandy-admin.stage.com/normandy/',
         testStrings,
@@ -43,7 +43,7 @@ describe('<EnvAlert>', () => {
   describe('production env', () => {
     const url = 'https://www.normandy-admin.prod.com/normandy/';
 
-    it('should not render on production', () => {
+    test('should not render on production', () => {
       const wrapper = mount(<EnvAlert currentUrl={url} />);
       expect(wrapper.children().length).toBe(0);
     });
@@ -52,12 +52,12 @@ describe('<EnvAlert>', () => {
   describe('staging env', () => {
     const url = 'https://www.normandy-admin.stage.com/normandy/';
 
-    it('should render on staging', () => {
+    test('should render on staging', () => {
       const wrapper = mount(<EnvAlert currentUrl={url} />);
       expect(wrapper.children().length).not.toBe(0);
     });
 
-    it('should say it is a staging environment', () => {
+    test('should say it is a staging environment', () => {
       const wrapper = mount(<EnvAlert currentUrl={url} />);
       expect(wrapper.text()).toContain('staging environment');
     });
@@ -66,12 +66,12 @@ describe('<EnvAlert>', () => {
   describe('dev env', () => {
     const url = 'http://localhost:8000/normandy/';
 
-    it('should render on dev', () => {
+    test('should render on dev', () => {
       const wrapper = mount(<EnvAlert currentUrl={url} />);
       expect(wrapper.children().length).not.toBe(0);
     });
 
-    it('should say it is a dev environment', () => {
+    test('should say it is a dev environment', () => {
       const wrapper = mount(<EnvAlert currentUrl={url} />);
       expect(wrapper.text()).toContain('development environment');
     });

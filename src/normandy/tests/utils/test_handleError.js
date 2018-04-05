@@ -7,19 +7,19 @@ import {
 } from 'normandy/utils/handleError';
 
 describe('handleError util', () => {
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => handleError();
     expect(wrapper).not.toThrow();
   });
 
-  it('should return the context', () => {
+  test('should return the context', () => {
     const { context, message, reason } = handleError('Test error');
     expect(context).toBe('Test error');
     expect(message).toBe('Test error');
     expect(reason).toBe('');
   });
 
-  it('should determine a message based on the error given', () => {
+  test('should determine a message based on the error given', () => {
     const { context, message, reason } = handleError(
       'Test.',
       new Error('Error Message.'),
@@ -29,7 +29,7 @@ describe('handleError util', () => {
     expect(reason).toBe('Error Message.');
   });
 
-  it('should detect form validation errors', () => {
+  test('should detect form validation errors', () => {
     const err = new ValidationError({ field: 'Validation message.' });
     const { context, message, reason } = handleError('Test.', err);
 
@@ -39,7 +39,7 @@ describe('handleError util', () => {
   });
 
   describe('API Errors', () => {
-    it('should detect APIErrors', () => {
+    test('should detect APIErrors', () => {
       const err = new APIError('Something from the server.', {
         status: 400,
       });
@@ -47,13 +47,13 @@ describe('handleError util', () => {
       expect(checkAPIFailure(err)).toBe(true);
     });
 
-    it('should detect ValidationErrors', () => {
+    test('should detect ValidationErrors', () => {
       const err = new ValidationError();
 
       expect(checkValidationFailure(err)).toBe(true);
     });
 
-    it('should handle 400 errors', () => {
+    test('should handle 400 errors', () => {
       const err = new APIError('Something from the server.', {
         status: 400,
       });
@@ -65,7 +65,7 @@ describe('handleError util', () => {
     });
 
     describe('should handle 403 errors', () => {
-      it('should handle a "not logged in" 403 error', () => {
+      test('should handle a "not logged in" 403 error', () => {
         const err = new APIError(
           'Authentication credentials were not provided',
           {
@@ -79,7 +79,7 @@ describe('handleError util', () => {
         expect(reason).toBe(ERR_MESSAGES.NOT_LOGGED_IN);
       });
 
-      it('should handle a "no permission" 403 error', () => {
+      test('should handle a "no permission" 403 error', () => {
         const err = new APIError(
           'User does not have permission to perform that action.',
           { status: 403 },
@@ -92,7 +92,7 @@ describe('handleError util', () => {
       });
     });
 
-    it('should handle 500 errors', () => {
+    test('should handle 500 errors', () => {
       const err = new APIError('Something from the server.', {
         status: 500,
       });
@@ -107,7 +107,7 @@ describe('handleError util', () => {
       );
     });
 
-    it('should fall back to server messages if the response status is unrecognized', () => {
+    test('should fall back to server messages if the response status is unrecognized', () => {
       const err = new APIError('Something from the server.', {
         status: 123,
       });
@@ -119,7 +119,7 @@ describe('handleError util', () => {
     });
   });
 
-  it('should detect when a user is offline', () => {
+  test('should detect when a user is offline', () => {
     const { context, message, reason } = handleError('Test.', new Error(), {
       checkUserOnline: () => false,
     });
@@ -128,7 +128,7 @@ describe('handleError util', () => {
     expect(reason).toBe(ERR_MESSAGES.NO_INTERNET);
   });
 
-  it('should notify the user somehow', () => {
+  test('should notify the user somehow', () => {
     let called = false;
     handleError('Test.', new Error(), {
       notifyUser: () => {

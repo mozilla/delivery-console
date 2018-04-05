@@ -11,13 +11,13 @@ describe('<QueryMultipleExtensions>', () => {
     pageNumber: 1,
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<QueryMultipleExtensions {...props} />);
 
     expect(wrapper).not.toThrow();
   });
 
-  it('should call fetchExtensionsPage on mount', () => {
+  test('should call fetchExtensionsPage on mount', () => {
     let called = false;
     mount(
       <QueryMultipleExtensions
@@ -31,7 +31,7 @@ describe('<QueryMultipleExtensions>', () => {
     expect(called).toBe(true);
   });
 
-  it('should call fetchExtensionsPage if the `pageNumber` changes', () => {
+  test('should call fetchExtensionsPage if the `pageNumber` changes', () => {
     let callCount = 0;
     const wrapper = shallow(
       <QueryMultipleExtensions
@@ -56,7 +56,7 @@ describe('<QueryMultipleExtensions>', () => {
     expect(callCount).toBe(3);
   });
 
-  it('should call fetchExtensionsPage once if container props change', () => {
+  test('should call fetchExtensionsPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
       <div fakeProp={1}>
@@ -77,7 +77,7 @@ describe('<QueryMultipleExtensions>', () => {
     expect(callCount).toBe(1);
   });
 
-  it('should not render anything', () => {
+  test('should not render anything', () => {
     const wrapper = shallow(<QueryMultipleExtensions {...props} />);
     expect(wrapper.children().length).toBe(0);
   });

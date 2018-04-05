@@ -18,16 +18,16 @@ describe('Recipes reducer', () => {
   const recipe = RecipeFactory.build();
 
   beforeEach(() => {
-    jasmine.addMatchers(matchers);
+    this.addMatchers(matchers);
   });
 
-  it('should return initial state by default', () => {
+  test('should return initial state by default', () => {
     expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(
       INITIAL_STATE,
     );
   });
 
-  it('should handle RECIPE_RECEIVE', () => {
+  test('should handle RECIPE_RECEIVE', () => {
     const reducedRecipe = {
       ...recipe,
       action_id: recipe.action.id,
@@ -51,7 +51,7 @@ describe('Recipes reducer', () => {
     );
   });
 
-  it('should handle RECIPE_DELETE', () => {
+  test('should handle RECIPE_DELETE', () => {
     const state = recipesReducer(undefined, {
       type: RECIPE_RECEIVE,
       recipe,
@@ -65,7 +65,7 @@ describe('Recipes reducer', () => {
     expect(updateState).toEqual(INITIAL_STATE);
   });
 
-  it('should handle RECIPE_FILTERS_RECEIVE', () => {
+  test('should handle RECIPE_FILTERS_RECEIVE', () => {
     expect(
       recipesReducer(undefined, {
         type: RECIPE_FILTERS_RECEIVE,
@@ -77,7 +77,7 @@ describe('Recipes reducer', () => {
     });
   });
 
-  it('should handle RECIPE_HISTORY_RECEIVE', () => {
+  test('should handle RECIPE_HISTORY_RECEIVE', () => {
     expect(
       recipesReducer(undefined, {
         type: RECIPE_HISTORY_RECEIVE,

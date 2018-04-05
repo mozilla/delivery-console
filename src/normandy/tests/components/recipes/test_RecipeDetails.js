@@ -11,31 +11,31 @@ describe('<RecipeDetails>', () => {
     recipe: new Map(),
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<RecipeDetails {...props} />);
     expect(wrapper).not.toThrow();
   });
 });
 
 describe('<ArgumentsValue>', () => {
-  it('should render strings directly', () => {
+  test('should render strings directly', () => {
     const wrapper = shallow(<ArgumentsValue value="Hello, world!" />);
     expect(wrapper.find('.value').text()).toBe('Hello, world!');
   });
 
-  it('should render numbers directly', () => {
+  test('should render numbers directly', () => {
     const wrapper = shallow(<ArgumentsValue value={42} />);
     expect(wrapper.find('.value').text()).toBe('42');
   });
 
-  it('should render booleans as True and False', () => {
+  test('should render booleans as True and False', () => {
     let wrapper = shallow(<ArgumentsValue value />);
     expect(wrapper.find('.value').text()).toBe('True');
     wrapper = shallow(<ArgumentsValue value={false} />);
     expect(wrapper.find('.value').text()).toBe('False');
   });
 
-  it('should render extra_filter_expression as code', () => {
+  test('should render extra_filter_expression as code', () => {
     const wrapper = shallow(
       <ArgumentsValue name="extra_filter_expression" value="code" />,
     );
@@ -44,7 +44,7 @@ describe('<ArgumentsValue>', () => {
     );
   });
 
-  it('should render branches as a table', () => {
+  test('should render branches as a table', () => {
     const value = Immutable.fromJS([
       { slug: 'one', value: 1, ratio: 1 },
       { slug: 'two', value: 2, ratio: 3 },
@@ -65,7 +65,7 @@ describe('<ArgumentsValue>', () => {
   });
 
   describe('immutable objects', () => {
-    it('should convert Immutable objects into JSON strings', () => {
+    test('should convert Immutable objects into JSON strings', () => {
       const testData = { slug: 'one', value: { test: 'fake-value' }, ratio: 1 };
       // Test against Maps
       let value = Immutable.fromJS(testData);
@@ -80,7 +80,7 @@ describe('<ArgumentsValue>', () => {
       );
     });
 
-    it('should use a JSON string for copy/pasting Immutable fields', () => {
+    test('should use a JSON string for copy/pasting Immutable fields', () => {
       const argumentVal = new Map({ slug: 'one', value: false, ratio: 1 });
       const expectedText = ArgumentsValue.stringifyImmutable(argumentVal);
 

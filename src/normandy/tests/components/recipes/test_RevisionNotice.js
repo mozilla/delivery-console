@@ -12,7 +12,7 @@ describe('<RevisionNotice>', () => {
     status: null,
   };
 
-  it('should work', () => {
+  test('should work', () => {
     const wrapper = () => shallow(<RevisionNotice {...props} />);
 
     expect(wrapper).not.toThrow();
