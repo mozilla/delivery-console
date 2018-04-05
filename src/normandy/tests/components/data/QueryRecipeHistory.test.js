@@ -56,14 +56,14 @@ describe('<QueryRecipeHistory>', () => {
   it('should call fetchRecipeHistory once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryRecipeHistory
           {...props}
           fetchRecipeHistory={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
     expect(callCount).toBe(1);
 

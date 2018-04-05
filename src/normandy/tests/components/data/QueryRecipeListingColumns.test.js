@@ -29,13 +29,13 @@ describe('<QueryRecipeListingColumns>', () => {
   it('should call loadRecipeListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryRecipeListingColumns
           loadRecipeListingColumns={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

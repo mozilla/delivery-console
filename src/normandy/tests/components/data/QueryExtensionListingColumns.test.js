@@ -29,13 +29,13 @@ describe('<QueryExtensionListingColumns>', () => {
   it('should call loadExtensionListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryExtensionListingColumns
           loadExtensionListingColumns={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

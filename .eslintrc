@@ -1,0 +1,11 @@
+{
+  "overrides": [{
+    "files": "**/*.test.js",
+    "globals": {
+      "shallow": true,
+      "React": true,
+      "ReactDOM": true,
+      "mount": true
+    }
+  }]
+}

@@ -29,13 +29,13 @@ describe('<QueryServiceInfo>', () => {
   it('should call fetchServiceInfo once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryServiceInfo
           fetchServiceInfo={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

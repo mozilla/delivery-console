@@ -56,14 +56,14 @@ describe('<QueryRevision>', () => {
   it('should call fetchRevision once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryRevision
           {...props}
           fetchRevision={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
     expect(callCount).toBe(1);
 

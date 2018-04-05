@@ -80,14 +80,14 @@ describe('<QueryFilteredRecipes>', () => {
   it('should call fetchFilteredRecipesPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryFilteredRecipes
           {...props}
           fetchFilteredRecipesPage={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
     expect(callCount).toBe(1);
 

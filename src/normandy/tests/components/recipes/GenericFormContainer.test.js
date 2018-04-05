@@ -3,7 +3,7 @@ import GenericFormContainer from 'normandy/components/recipes/GenericFormContain
 
 describe('<GenericFormContainer>', () => {
   const props = {
-    form: () => <Stub />,
+    form: () => <div />,
     formAction: async () => true,
     onFailure: () => {},
     onSuccess: () => {},

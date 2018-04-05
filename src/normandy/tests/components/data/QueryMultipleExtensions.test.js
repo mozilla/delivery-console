@@ -56,14 +56,14 @@ describe('<QueryMultipleExtensions>', () => {
   it('should call fetchExtensionsPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <Stub fakeProp={1}>
+      <div fakeProp={1}>
         <QueryMultipleExtensions
           {...props}
           fetchExtensionsPage={() => {
             callCount += 1;
           }}
         />
-      </Stub>,
+      </div>,
     );
     expect(callCount).toBe(1);
 
