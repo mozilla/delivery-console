@@ -1,28 +1,8 @@
-// @flow
-
 import auth0 from 'auth0-js';
 
 export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
 export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
 export const AUTH0_CALLBACK_URL = window.location.href;
-
-export type AuthResult = {
-  accessToken: string,
-  idToken: string,
-  expiresIn: number,
-};
-
-export type HashParser = (() => void, string, AuthResult) => void;
-
-export type WebAuth = {
-  parseHash: ((string, AuthResult) => void) => void,
-  authorize: () => void,
-  client: {
-    userInfo: (string, (string, AuthResult) => void) => void,
-  },
-};
-
-export type UserInfo = any;
 
 export function webAuthHandler(
   callback: AuthResult => void,
