@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import ConsoleLogFields from 'normandy/components/recipes/ConsoleLogFields';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import WrappedFormItem from 'normandy/components/forms/FormItem';
 

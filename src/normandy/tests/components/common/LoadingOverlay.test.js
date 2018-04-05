@@ -1,6 +1,5 @@
 import { Spin } from 'antd';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 
 import LoadingOverlay, {
   SimpleLoadingOverlay,

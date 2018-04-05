@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+
 import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
 import { wrapMockStore } from 'normandy/tests/mockStore';
 

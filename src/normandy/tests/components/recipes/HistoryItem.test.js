@@ -1,7 +1,6 @@
 import { Timeline } from 'antd';
 import { fromJS, Map } from 'immutable';
 import React from 'react';
-import { mount } from 'enzyme';
 
 import { wrapMockStore } from 'normandy/tests/mockStore';
 

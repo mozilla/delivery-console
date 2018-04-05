@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
 

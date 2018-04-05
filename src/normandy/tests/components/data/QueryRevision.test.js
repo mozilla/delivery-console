@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 
 import TestComponent from 'normandy/components/data/QueryRevision';
 
@@ -8,7 +7,7 @@ const { WrappedComponent: QueryRevision } = TestComponent;
 describe('<QueryRevision>', () => {
   const props = {
     fetchRevision: () => {},
-    pk: 1,
+    pk: '1',
   };
 
   test('should work', () => {
@@ -43,30 +42,30 @@ describe('<QueryRevision>', () => {
     );
     expect(callCount).toBe(1);
 
-    wrapper.setProps({ pk: 2 });
+    wrapper.setProps({ pk: '2' });
     expect(callCount).toBe(2);
 
     wrapper.setProps({ irrelevant: true });
     expect(callCount).toBe(2);
 
-    wrapper.setProps({ pk: 2 });
+    wrapper.setProps({ pk: '2' });
     expect(callCount).toBe(2);
 
-    wrapper.setProps({ pk: 3 });
+    wrapper.setProps({ pk: '3' });
     expect(callCount).toBe(3);
   });
 
   test('should call fetchRevision once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <Stub fakeProp={1}>
         <QueryRevision
           {...props}
           fetchRevision={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </Stub>,
     );
     expect(callCount).toBe(1);
 

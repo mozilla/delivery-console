@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 
 import IdenticonField from 'normandy/components/forms/IdenticonField';
 

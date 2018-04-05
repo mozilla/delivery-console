@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 
 import TestComponent from 'normandy/components/data/QueryExtensionListingColumns';
 
@@ -32,13 +31,13 @@ describe('<QueryExtensionListingColumns>', () => {
   test('should call loadExtensionListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <Stub fakeProp={1}>
         <QueryExtensionListingColumns
           loadExtensionListingColumns={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </Stub>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

@@ -1,7 +1,6 @@
 import { Switch } from 'antd';
 import autobind from 'autobind-decorator';
 import React from 'react';
-import { mount } from 'enzyme';
 
 import LabeledInput from 'normandy/components/forms/LabeledInput';
 

@@ -1,4 +1,3 @@
-import { mount } from 'enzyme';
 import { List } from 'immutable';
 import React from 'react';
 

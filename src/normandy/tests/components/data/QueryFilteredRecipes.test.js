@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 
 import TestComponent from 'normandy/components/data/QueryFilteredRecipes';
 
@@ -83,14 +82,14 @@ describe('<QueryFilteredRecipes>', () => {
   test('should call fetchFilteredRecipesPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <Stub fakeProp={1}>
         <QueryFilteredRecipes
           {...props}
           fetchFilteredRecipesPage={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </Stub>,
     );
     expect(callCount).toBe(1);
 

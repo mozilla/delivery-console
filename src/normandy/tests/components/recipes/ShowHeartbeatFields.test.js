@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import ShowHeartbeatFields from 'normandy/components/recipes/ShowHeartbeatFields';
 

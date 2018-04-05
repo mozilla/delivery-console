@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 
 import TestComponent from 'normandy/components/common/EnvAlert';
 

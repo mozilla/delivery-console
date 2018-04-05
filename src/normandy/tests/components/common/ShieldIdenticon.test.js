@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 
 import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 

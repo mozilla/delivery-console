@@ -1,6 +1,5 @@
 import { List } from 'immutable';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import TestComponent from 'normandy/components/recipes/ListingActionBar';
 

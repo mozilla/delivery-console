@@ -1,6 +1,5 @@
 import { List, Map } from 'immutable';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import OptOutStudyFields from 'normandy/components/recipes/OptOutStudyFields';
 
