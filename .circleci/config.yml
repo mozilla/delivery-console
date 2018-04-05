@@ -40,6 +40,9 @@ jobs:
       # run tests!
       - run: yarn run test
 
+      # build all the things!
+      - run: yarn run build
+
   docs:
     docker:
       - image: circleci/python:3.6
