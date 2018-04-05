@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jasmine-immutable-matchers';
+import * as matchers from 'jest-immutable-matchers';
 
 import {
   APPROVAL_REQUEST_RECEIVE,

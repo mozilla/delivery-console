@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jasmine-immutable-matchers';
+import * as matchers from 'jest-immutable-matchers';
 
 import { RECIPE_DELETE, REVISION_RECEIVE } from 'normandy/state/action-types';
 import revisionsReducer from 'normandy/state/app/revisions/reducers';

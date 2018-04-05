@@ -1,4 +1,4 @@
-import * as matchers from 'jasmine-immutable-matchers';
+import * as matchers from 'jest-immutable-matchers';
 
 import { DEFAULT_REQUEST } from 'normandy/state/constants';
 import { getRequest } from 'normandy/state/app/requests/selectors';

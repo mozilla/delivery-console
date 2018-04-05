@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import * as matchers from 'jasmine-immutable-matchers';
+import * as matchers from 'jest-immutable-matchers';
 
 import {
   REQUEST_FAILURE,
