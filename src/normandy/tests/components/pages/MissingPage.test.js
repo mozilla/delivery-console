@@ -1,5 +1,3 @@
-import React from 'react';
-
 import MissingPage from 'normandy/components/pages/MissingPage';
 
 describe('<MissingPage>', () => {

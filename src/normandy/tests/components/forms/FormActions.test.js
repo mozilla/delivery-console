@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FormActions from 'normandy/components/forms/FormActions';
 
 describe('<FormActions>', () => {

@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/recipes/ApprovalRequest';
 
 const { WrappedComponent: ApprovalRequest } = TestComponent;

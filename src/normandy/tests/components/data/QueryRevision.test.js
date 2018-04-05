@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/data/QueryRevision';
 
 const { WrappedComponent: QueryRevision } = TestComponent;

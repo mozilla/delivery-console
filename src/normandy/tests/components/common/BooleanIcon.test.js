@@ -1,5 +1,3 @@
-import React from 'react';
-
 import BooleanIcon from 'normandy/components/common/BooleanIcon';
 
 describe('<BooleanIcon>', () => {

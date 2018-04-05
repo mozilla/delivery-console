@@ -1,6 +1,4 @@
 import { List } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/recipes/HistoryTimeline';
 
 const { WrappedComponent: HistoryTimeline } = TestComponent;

@@ -1,6 +1,4 @@
 import { List } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/recipes/ListingActionBar';
 
 const { WrappedComponent: ListingActionBar } = TestComponent;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/extensions/ExtensionForm';
 
 const { WrappedComponent: ExtensionForm } = TestComponent;

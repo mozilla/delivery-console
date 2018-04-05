@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/data/QueryFilteredRecipes';
 
 const { WrappedComponent: QueryFilteredRecipes } = TestComponent;

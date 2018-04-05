@@ -1,6 +1,4 @@
 import { List, Map } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/recipes/RecipeDetailPage';
 
 const { WrappedComponent: RecipeDetailPage } = TestComponent;

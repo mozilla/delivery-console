@@ -1,5 +1,3 @@
-import React from 'react';
-
 import QueryExtension from 'normandy/components/data/QueryExtension';
 import TestComponent from 'normandy/components/extensions/EditExtensionPage';
 

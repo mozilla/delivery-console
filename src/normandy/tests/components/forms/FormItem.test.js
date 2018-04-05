@@ -1,5 +1,3 @@
-import React from 'react';
-
 import WrappedFormItem from 'normandy/components/forms/FormItem';
 
 const FormItem = WrappedFormItem.wrappedComponent;

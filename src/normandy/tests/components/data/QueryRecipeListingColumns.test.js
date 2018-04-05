@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/data/QueryRecipeListingColumns';
 
 const { WrappedComponent: QueryRecipeListingColumns } = TestComponent;

@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import ShowHeartbeatFields from 'normandy/components/recipes/ShowHeartbeatFields';
 
 describe('<ShowHeartbeatFields>', () => {

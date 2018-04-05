@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/data/QueryMultipleExtensions';
 
 const { WrappedComponent: QueryMultipleExtensions } = TestComponent;

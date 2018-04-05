@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import RecipeForm from 'normandy/components/recipes/RecipeForm';
 
 describe('<RecipeForm>', () => {

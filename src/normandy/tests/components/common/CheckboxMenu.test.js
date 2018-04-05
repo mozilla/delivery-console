@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CheckboxMenu from 'normandy/components/common/CheckboxMenu';
 
 describe('<CheckboxMenu>', () => {

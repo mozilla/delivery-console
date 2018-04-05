@@ -1,7 +1,5 @@
 import { Timeline } from 'antd';
 import { fromJS, Map } from 'immutable';
-import React from 'react';
-
 import { wrapMockStore } from 'normandy/tests/mockStore';
 
 import TestComponent, {

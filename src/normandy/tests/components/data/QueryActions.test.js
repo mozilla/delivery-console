@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/data/QueryActions';
 
 const { WrappedComponent: QueryActions } = TestComponent;

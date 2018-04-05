@@ -1,6 +1,4 @@
 import { List } from 'immutable';
-import React from 'react';
-
 import { wrapMockStore } from 'normandy/tests/mockStore';
 import TestComponent from 'normandy/components/extensions/ExtensionSelect';
 

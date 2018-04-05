@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/recipes/CreateRecipePage';
 
 const { WrappedComponent: CreateRecipePage } = TestComponent;

@@ -1,6 +1,4 @@
 import { Map, fromJS } from 'immutable';
-import React from 'react';
-
 import { ActionSelect as TestComponent } from 'normandy/components/recipes/RecipeForm';
 
 const { WrappedComponent: ActionSelect } = TestComponent;

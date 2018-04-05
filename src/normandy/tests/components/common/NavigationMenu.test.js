@@ -1,6 +1,4 @@
 import { List } from 'immutable';
-import React from 'react';
-
 import NavigationMenu from 'normandy/components/common/NavigationMenu';
 
 describe('<NavigationMenu>', () => {

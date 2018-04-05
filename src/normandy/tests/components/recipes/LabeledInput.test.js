@@ -1,7 +1,5 @@
 import { Switch } from 'antd';
 import autobind from 'autobind-decorator';
-import React from 'react';
-
 import LabeledInput from 'normandy/components/forms/LabeledInput';
 
 @autobind

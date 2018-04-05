@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TestComponent from 'normandy/components/common/EnvAlert';
 
 const { WrappedComponent: EnvAlert } = TestComponent;

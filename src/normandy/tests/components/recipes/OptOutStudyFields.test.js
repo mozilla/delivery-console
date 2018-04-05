@@ -1,6 +1,4 @@
 import { List, Map } from 'immutable';
-import React from 'react';
-
 import OptOutStudyFields from 'normandy/components/recipes/OptOutStudyFields';
 
 describe('<OptOutStudyFields>', () => {

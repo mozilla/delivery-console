@@ -1,6 +1,4 @@
 import { List } from 'immutable';
-import React from 'react';
-
 import TestComponent from 'normandy/components/tables/DataList';
 
 const { WrappedComponent: DataList } = TestComponent;

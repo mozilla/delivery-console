@@ -1,6 +1,4 @@
 import Immutable, { Map } from 'immutable';
-import React from 'react';
-
 import RecipeDetails, {
   ArgumentsValue,
 } from 'normandy/components/recipes/RecipeDetails';

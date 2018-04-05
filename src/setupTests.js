@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -52,3 +53,5 @@ global.localStorage = mockLocalStorage();
 global.Stub = Stub;
 global.mount = mount;
 global.shallow = shallow;
+global.React = React;
+global.ReactDOM = ReactDOM;

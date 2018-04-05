@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Gateway from 'normandy/components/pages/Gateway';
 
 describe('<Gateway>', () => {

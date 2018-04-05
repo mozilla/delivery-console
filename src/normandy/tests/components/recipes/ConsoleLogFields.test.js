@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import ConsoleLogFields from 'normandy/components/recipes/ConsoleLogFields';
 
 describe('<ConsoleLogFields>', () => {

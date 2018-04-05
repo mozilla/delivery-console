@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ShieldIdenticon from 'normandy/components/common/ShieldIdenticon';
 
 describe('<ShieldIdenticon>', () => {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IdenticonField from 'normandy/components/forms/IdenticonField';
 
 describe('<IdenticonField>', () => {

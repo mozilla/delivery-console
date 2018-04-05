@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types, react/display-name, jsx-a11y/no-static-element-interactions */
-import React from 'react';
-
 import GenericFormContainer from 'normandy/components/recipes/GenericFormContainer';
 
 describe('<GenericFormContainer>', () => {

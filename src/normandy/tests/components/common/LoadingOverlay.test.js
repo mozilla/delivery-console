@@ -1,6 +1,4 @@
 import { Spin } from 'antd';
-import React from 'react';
-
 import LoadingOverlay, {
   SimpleLoadingOverlay,
 } from 'normandy/components/common/LoadingOverlay';

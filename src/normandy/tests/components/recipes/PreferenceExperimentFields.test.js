@@ -1,6 +1,4 @@
 import { Map } from 'immutable';
-import React from 'react';
-
 import PreferenceExperimentFields, {
   StringPreferenceField,
 } from 'normandy/components/recipes/PreferenceExperimentFields';

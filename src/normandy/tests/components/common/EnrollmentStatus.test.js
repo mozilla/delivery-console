@@ -1,5 +1,3 @@
-import React from 'react';
-
 import EnrollmentStatus from 'normandy/components/common/EnrollmentStatus';
 import { wrapMockStore } from 'normandy/tests/mockStore';
 
