@@ -48,7 +48,7 @@
     "babel-polyfill": "6.26.0",
     "enzyme": "3.3.0",
     "faker": "4.1.0",
-    "flow-bin": "0.66.0",
+    "flow-bin": "0.69.0",
     "pre-commit": "1.2.2",
     "jasmine": "2.99.0",
     "jasmine-immutable-matchers": "2.0.1",
