@@ -52,7 +52,7 @@ class App extends Component {
     fetchUserInfo(this.onUserInfo);
   };
 
-  onUserInfo = (accessToken: string, userInfo: UserInfo) => {
+  onUserInfo = (accessToken, userInfo) => {
     this.setState({ userInfo, accessToken });
   };
 
