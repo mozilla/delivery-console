@@ -4,11 +4,7 @@ export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
 export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
 export const AUTH0_CALLBACK_URL = window.location.href;
 
-export function webAuthHandler(
-  callback: AuthResult => void,
-  err: string,
-  authResult: AuthResult,
-) {
+export function webAuthHandler(callback, err, authResult) {
   if (err) {
     throw new Error(err);
   }
@@ -33,7 +29,7 @@ export function initWebAuth() {
   return webAuth;
 }
 
-export function setSession(authResult: AuthResult) {
+export function setSession(authResult) {
   // Set the time that the access token will expire at.
   const expiresAt = JSON.stringify(
     authResult.expiresIn * 1000 + new Date().getTime(),
@@ -42,7 +38,7 @@ export function setSession(authResult: AuthResult) {
   localStorage.setItem('expires_at', expiresAt);
 }
 
-export function login(initFunc: () => WebAuth = initWebAuth) {
+export function login(initFunc = initWebAuth) {
   const webAuth = initFunc();
   webAuth.authorize();
 }
@@ -55,9 +51,9 @@ export function logout() {
 
 // Check if the user has logged in.
 export function checkLogin(
-  onLoggedIn: () => void,
-  initFunc: () => WebAuth = initWebAuth,
-  handler: HashParser = webAuthHandler,
+  onLoggedIn,
+  initFunc = initWebAuth,
+  handler = webAuthHandler,
 ) {
   try {
     if (!handler) {
@@ -81,11 +77,7 @@ export function isAuthenticated() {
   return new Date().getTime() < expiresAt;
 }
 
-export function handleUserInfo(
-  onUserInfo: UserInfo => void,
-  err: string,
-  profile: UserInfo,
-) {
+export function handleUserInfo(onUserInfo, err, profile) {
   if (err) {
     throw new Error(err);
   }
@@ -94,10 +86,7 @@ export function handleUserInfo(
   }
 }
 
-export function fetchUserInfo(
-  callback: (string, UserInfo) => void,
-  initFunc: () => WebAuth = initWebAuth,
-) {
+export function fetchUserInfo(callback, initFunc = initWebAuth) {
   const session = localStorage.getItem('session');
   if (!session) {
     return;
