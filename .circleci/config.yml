@@ -8,7 +8,7 @@ jobs:
 
     docker:
       # Based on https://nodejs.org/en/
-      - image: circleci/node:8-browsers@sha256:209a64f62031033bed7cdb1f7696e3711b37292b797ff91c0e0a2fc1068f9c46
+      - image: circleci/node:8-browsers@sha256:22e4d1c8a61a410b64cf73057cd0f8f391ca563211c40829f0a465dc53155749
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
