@@ -45,7 +45,7 @@ jobs:
 
   docs:
     docker:
-      - image: circleci/python:3.6@sha256:e57c33324800550e9d3b01e5237d556df823eef60f7d5788ca33c1cf3c2bbb13
+      - image: circleci/python:3.6@sha256:24392e05951f6b4cf4d2822c50e1d093a5faa067b4a6eb190908a3012dee1328
 
     working_directory: ~/repo
 
