@@ -1,5 +1,5 @@
 import App from './App';
-import { wrapMockStore } from 'normandy/tests/mockStore';
+import { wrapMockStore } from 'console/tests/mockStore';
 
 describe('delivery-console', () => {
   it('renders without crashing', () => {

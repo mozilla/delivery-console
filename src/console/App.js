@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import 'console/App.less';
+import './App.less';
+import ConsoleRouter from './Router';
 
-import Normandy from 'normandy/App';
-import { BrowserRouter, NavLink, Link } from 'react-router-dom';
+// import Normandy from 'console/App';
+import { BrowserRouter, NavLink } from 'react-router-dom';
 
-import { Route, Redirect, Switch } from 'react-router';
 import {
   checkLogin,
   fetchUserInfo,
@@ -21,19 +21,6 @@ import { getAccessToken, getUserInfo } from './selectors';
 
 import { Button, Layout } from 'antd';
 const { Header, Content } = Layout;
-
-const Homepage = props => (
-  <div>
-    <h3>Welcome {props.userInfo ? 'back' : 'home'}!</h3>
-    {props.userInfo ? (
-      <p>
-        Go to the <Link to="/shield">SHIELD control panel</Link>.
-      </p>
-    ) : (
-      <p>You are not logged in! Please use the login button in the header.</p>
-    )}
-  </div>
-);
 
 const CurrentUserInfo = props => {
   if (props.userInfo) {
@@ -104,7 +91,8 @@ export default class App extends Component {
             <NavLink exact to="/">
               Home
             </NavLink>
-            <NavLink to="/shield">SHIELD</NavLink>
+            <NavLink to="/recipe">Recipes</NavLink>
+            <NavLink to="/extension">Extensions</NavLink>
 
             <CurrentUserInfo
               userInfo={this.props.userInfo}
@@ -113,42 +101,7 @@ export default class App extends Component {
             />
           </Header>
           <Content className="app-content">
-            <Switch>
-              {/* Homepage */}
-              <Route
-                exact
-                path="/"
-                component={() => <Homepage userInfo={this.props.userInfo} />}
-              />
-
-              {/* Normandy App */}
-              <Route
-                path="/shield"
-                component={props =>
-                  this.props.userInfo ? (
-                    <Normandy
-                      authToken={this.props.accessToken}
-                      urlPrefix="/shield"
-                      {...props}
-                    />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
-              />
-
-              <Route
-                component={({ location }) => (
-                  <div>
-                    <h2>404 - Page Not Found</h2>
-                    <p>
-                      No delivery-console match for{' '}
-                      <code>{location.pathname}</code>
-                    </p>
-                  </div>
-                )}
-              />
-            </Switch>
+            <ConsoleRouter />
           </Content>
         </Layout>
       </BrowserRouter>
