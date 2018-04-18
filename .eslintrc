@@ -1,4 +1,5 @@
 {
+  "extends": "react-app",
   "overrides": [{
     "files": "**/*.test.js",
     "globals": {

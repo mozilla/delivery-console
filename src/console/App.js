@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 
 import 'console/App.less';
 
@@ -13,6 +16,8 @@ import {
   login,
   logout,
 } from './auth0Utils';
+import { setUserInfo, userLogin, userLogout } from './actions';
+import { getAccessToken, getUserInfo } from './selectors';
 
 import { Button, Layout } from 'antd';
 const { Header, Content } = Layout;
@@ -30,16 +35,31 @@ const Homepage = props => (
   </div>
 );
 
-class App extends Component {
-  state = {
-    userInfo: null,
-    accessToken: null,
+@connect(
+  (state, props) => ({
+    userInfo: getUserInfo(state),
+    accessToken: getAccessToken(state),
+  }),
+  {
+    userLogin: userLogin,
+    userLogout: userLogout,
+    setUserInfo: setUserInfo,
+  },
+)
+export default class App extends Component {
+  static propTypes = {
+    userInfo: PropTypes.instanceOf(Map),
+    accessToken: PropTypes.string,
+    userLogin: PropTypes.func.isRequired,
+    userLogout: PropTypes.func.isRequired,
+    setUserInfo: PropTypes.func.isRequired,
   };
 
   componentDidMount = () => {
     checkLogin(this.onLoggedIn);
-    if (isAuthenticated()) {
-      this.onLoggedIn();
+    const accessToken = isAuthenticated();
+    if (accessToken) {
+      this.onLoggedIn({ accessToken });
     }
   };
 
@@ -48,17 +68,22 @@ class App extends Component {
     login();
   };
 
-  onLoggedIn = () => {
-    fetchUserInfo(this.onUserInfo);
+  onLoggedIn = authResult => {
+    if (authResult && authResult.accessToken) {
+      this.props.userLogin(authResult.accessToken);
+    }
+    if (!this.props.userInfo) {
+      fetchUserInfo(this.onUserInfo);
+    }
   };
 
-  onUserInfo = (accessToken, userInfo) => {
-    this.setState({ userInfo, accessToken });
+  onUserInfo = userInfo => {
+    this.props.setUserInfo(userInfo);
   };
 
   onUserLogout = () => {
     logout();
-    this.setState({ userInfo: null, accessToken: null });
+    this.props.userLogout();
   };
 
   render() {
@@ -73,10 +98,10 @@ class App extends Component {
             </NavLink>
             <NavLink to="/shield">SHIELD</NavLink>
 
-            {(this.state.userInfo && (
-              <Button onClick={this.onUserLogout}>{`Logged in as ${
-                this.state.userInfo.nickname
-              }`}</Button>
+            {(this.props.userInfo && (
+              <Button
+                onClick={this.onUserLogout}
+              >{`Logged in as ${this.props.userInfo.get('nickname')}`}</Button>
             )) || <Button onClick={this.onUserLogin}>Login</Button>}
           </Header>
           <Content className="app-content">
@@ -85,16 +110,16 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                component={() => <Homepage userInfo={this.state.userInfo} />}
+                component={() => <Homepage userInfo={this.props.userInfo} />}
               />
 
               {/* Normandy App */}
               <Route
                 path="/shield"
                 component={props =>
-                  this.state.userInfo ? (
+                  this.props.userInfo ? (
                     <Normandy
-                      authToken={this.state.accessToken}
+                      authToken={this.props.accessToken}
                       urlPrefix="/shield"
                       {...props}
                     />
@@ -122,5 +147,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

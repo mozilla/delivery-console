@@ -74,7 +74,7 @@ export function isAuthenticated() {
     return false;
   }
   const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '0');
-  return new Date().getTime() < expiresAt;
+  return (new Date().getTime() < expiresAt && session) || false;
 }
 
 export function handleUserInfo(onUserInfo, err, profile) {
@@ -98,6 +98,6 @@ export function fetchUserInfo(callback, initFunc = initWebAuth) {
   const webAuth = initFunc();
   webAuth.client.userInfo(
     auth.accessToken,
-    handleUserInfo.bind(null, callback.bind(null, auth.accessToken)),
+    handleUserInfo.bind(null, callback),
   );
 }

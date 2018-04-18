@@ -135,7 +135,7 @@ describe('isAuthenticated', () => {
     }));
     global.localStorage.setItem('session', 'a session');
     global.localStorage.setItem('expires_at', 100);
-    expect(isAuthenticated()).toBe(true);
+    expect(isAuthenticated()).toBe('a session');
   });
   it('returns false if there is no session', () => {
     global.localStorage.clear();
