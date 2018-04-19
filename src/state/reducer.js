@@ -9,6 +9,7 @@ import revisions from '../normandy/state/app/revisions/reducers';
 import serviceInfo from '../normandy/state/app/serviceInfo/reducers';
 import session from '../normandy/state/app/session/reducers';
 import users from '../normandy/state/app/users/reducers';
+import console from '../console/reducers';
 
 const reducer = combineReducers({
   actions,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   serviceInfo,
   session,
   users,
+  console,
 });
 
 export default reducer;
