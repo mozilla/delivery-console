@@ -1,7 +1,7 @@
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 
 import 'console/App.less';
 
@@ -35,16 +35,24 @@ const Homepage = props => (
   </div>
 );
 
+const CurrentUserInfo = props => {
+  if (props.userInfo) {
+    return (
+      <Button onClick={props.onUserLogout}>{`Logged in as ${props.userInfo.get(
+        'nickname',
+      )}`}</Button>
+    );
+  } else {
+    return <Button onClick={props.onUserLogin}>Login</Button>;
+  }
+};
+
 @connect(
   (state, props) => ({
     userInfo: getUserInfo(state),
     accessToken: getAccessToken(state),
   }),
-  {
-    userLogin: userLogin,
-    userLogout: userLogout,
-    setUserInfo: setUserInfo,
-  },
+  { userLogin, userLogout, setUserInfo },
 )
 export default class App extends Component {
   static propTypes = {
@@ -98,11 +106,11 @@ export default class App extends Component {
             </NavLink>
             <NavLink to="/shield">SHIELD</NavLink>
 
-            {(this.props.userInfo && (
-              <Button
-                onClick={this.onUserLogout}
-              >{`Logged in as ${this.props.userInfo.get('nickname')}`}</Button>
-            )) || <Button onClick={this.onUserLogin}>Login</Button>}
+            <CurrentUserInfo
+              userInfo={this.props.userInfo}
+              onUserLogout={this.onUserLogout}
+              onUserLogin={this.onUserLogin}
+            />
           </Header>
           <Content className="app-content">
             <Switch>

@@ -1,6 +1,4 @@
-export const SET_USER_INFO = 'SET_USER_INFO';
-export const USER_LOGIN = 'USER_LOGIN';
-export const USER_LOGOUT = 'USER_LOGOUT';
+import { SET_USER_INFO, USER_LOGIN, USER_LOGOUT } from './action-types';
 
 export const setUserInfo = userInfo => {
   return dispatch =>
