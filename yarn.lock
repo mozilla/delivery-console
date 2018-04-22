@@ -311,9 +311,9 @@ antd@3.0.0:
     shallowequal "^1.0.1"
     warning "~3.0.0"
 
-antd@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-3.4.1.tgz#9f93c712e14d692a3db70fa3f254c79874cd3822"
+antd@3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.4.2.tgz#97f426eb89bdcde4fe5c6c081c783437751e6f66"
   dependencies:
     array-tree-filter "^2.0.0"
     babel-runtime "6.x"
@@ -354,7 +354,7 @@ antd@3.4.1:
     rc-upload "~2.4.0"
     rc-util "^4.0.4"
     react-lazy-load "^3.0.12"
-    react-slick "~0.22.3"
+    react-slick "~0.23.1"
     shallowequal "^1.0.1"
     warning "~3.0.0"
 
@@ -7453,15 +7453,14 @@ react-slick@~0.15.4:
     object-assign "^4.1.0"
     slick-carousel "^1.6.0"
 
-react-slick@~0.22.3:
-  version "0.22.3"
-  resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.22.3.tgz#667991b2496e6b10bcca2a2e676ffadf34e7d56c"
+react-slick@~0.23.1:
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.23.1.tgz#15791c4107f0ba3a5688d5bd97b7b7ceaa0dd181"
   dependencies:
-    can-use-dom "^0.1.0"
     classnames "^2.2.5"
-    create-react-class "^15.5.2"
     enquire.js "^2.1.6"
     json2mq "^0.2.0"
+    lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
 react-test-renderer@^16.0.0-0:
