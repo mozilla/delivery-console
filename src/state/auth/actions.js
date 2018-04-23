@@ -1,4 +1,8 @@
-import { SET_USER_INFO, USER_LOGIN, USER_LOGOUT } from './action-types';
+import {
+  SET_USER_INFO,
+  USER_LOGIN,
+  USER_LOGOUT,
+} from 'console/state/action-types';
 
 export const setUserInfo = userInfo => {
   return dispatch =>
@@ -22,3 +26,11 @@ export const userLogout = () => {
       type: USER_LOGOUT,
     });
 };
+
+export function getUserInfo(state, defaultsTo = null) {
+  return state.auth.loginInfo.get('userInfo', defaultsTo);
+}
+
+export function getAccessToken(state, defaultsTo = null) {
+  return state.auth.loginInfo.get('accessToken', defaultsTo);
+}

@@ -11,7 +11,7 @@ import {
   logout,
   setSession,
   webAuthHandler,
-} from './auth0Utils';
+} from 'console/utils/auth0';
 import auth0 from 'auth0-js';
 
 const webAuthMock = {

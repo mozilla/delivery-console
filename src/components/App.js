@@ -1,40 +1,113 @@
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { BrowserRouter, NavLink } from 'react-router-dom';
+import 'console/less/layout.less';
+import { connect } from 'react-redux';
 
-import NavigationMenu from 'console/components/common/NavigationMenu';
+import {
+  checkLogin,
+  fetchUserInfo,
+  isAuthenticated,
+  login,
+  logout,
+} from 'console/utils/auth0';
+import { setUserInfo, userLogin, userLogout } from 'console/state/auth/actions';
+import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
+
+import AppRouter from 'console/components/router';
 import QueryActions from 'console/components/data/QueryActions';
 import QueryServiceInfo from 'console/components/data/QueryServiceInfo';
+const { Header, Content } = Layout;
 
-const { Content, Header } = Layout;
+const CurrentUserInfo = props => {
+  if (props.userInfo) {
+    return (
+      <Button onClick={props.onUserLogout}>{`Logged in as ${props.userInfo.get(
+        'nickname',
+      )}`}</Button>
+    );
+  } else {
+    return <Button onClick={props.onUserLogin}>Login</Button>;
+  }
+};
 
-export default class App extends React.PureComponent {
+@connect(
+  (state, props) => ({
+    userInfo: getUserInfo(state),
+    accessToken: getAccessToken(state),
+  }),
+  { userLogin, userLogout, setUserInfo },
+)
+export default class App extends React.Component {
   static propTypes = {
-    children: PropTypes.node,
+    userInfo: PropTypes.instanceOf(Map),
+    accessToken: PropTypes.string,
+    userLogin: PropTypes.func.isRequired,
+    userLogout: PropTypes.func.isRequired,
+    setUserInfo: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
-    children: null,
+  componentDidMount = () => {
+    checkLogin(this.onLoggedIn);
+    const accessToken = isAuthenticated();
+    if (accessToken) {
+      this.onLoggedIn({ accessToken });
+    }
+  };
+
+  onUserLogin = () => {
+    // Call auth0.login which will start the login redirection dance.
+    login();
+  };
+
+  onLoggedIn = authResult => {
+    if (authResult && authResult.accessToken) {
+      this.props.userLogin(authResult.accessToken);
+    }
+    if (!this.props.userInfo) {
+      fetchUserInfo(this.onUserInfo);
+    }
+  };
+
+  onUserInfo = userInfo => {
+    this.props.setUserInfo(userInfo);
+  };
+
+  onUserLogout = () => {
+    logout();
+    this.props.userLogout();
   };
 
   render() {
-    const { children } = this.props;
-
     return (
-      <Layout>
-        <QueryActions />
-        <QueryServiceInfo />
-
+      <BrowserRouter>
         <Layout>
-          <Header className="sidebar">
-            <NavigationMenu />
+          <QueryActions />
+          <QueryServiceInfo />
+          <Header className="app-header">
+            <h1>Delivery Console</h1>
+
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+            <NavLink to="/recipe">Recipes</NavLink>
+            <NavLink to="/extension">Extensions</NavLink>
+
+            <CurrentUserInfo
+              userInfo={this.props.userInfo}
+              onUserLogout={this.onUserLogout}
+              onUserLogin={this.onUserLogin}
+            />
           </Header>
 
           <Layout className="content-wrapper">
-            <Content className="content">{children}</Content>
+            <Content className="content">
+              <AppRouter />
+            </Content>
           </Layout>
         </Layout>
-      </Layout>
+      </BrowserRouter>
     );
   }
 }

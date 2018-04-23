@@ -1,15 +1,9 @@
-import React from 'react';
-
 import App from 'console/components/App';
+import { wrapMockStore } from 'console/tests/mockStore';
 
-describe('<App>', () => {
-  const props = {
-    children: <div>Hello</div>,
-  };
-
-  it('should work', () => {
-    const wrapper = () => shallow(<App {...props} />);
-
+describe('delivery-console', () => {
+  it('renders without crashing', () => {
+    const wrapper = () => shallow(wrapMockStore(<App />));
     expect(wrapper).not.toThrow();
   });
 });

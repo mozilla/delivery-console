@@ -1,7 +1,11 @@
 import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
 
-import { SET_USER_INFO, USER_LOGIN, USER_LOGOUT } from './action-types';
+import {
+  SET_USER_INFO,
+  USER_LOGIN,
+  USER_LOGOUT,
+} from 'console/state/action-types';
 
 function loginInfo(state = new Map(), action) {
   switch (action.type) {

@@ -1,9 +1,26 @@
 @import '../less/main.less';
 
-.app {
-  &.ant-layout {
-    min-height: 100vh;
-  }
+#root {
+  height: 100%;
+}
+
+.content-wrapper .content {
+  padding: 2em;
+}
+
+.sidebar.ant-layout-header {
+  align-items: end;
+  display: flex;
+  height: 47px;
+  line-height: 47px;
+}
+
+.righted {
+  text-align: right;
+}
+
+.app.ant-layout {
+  min-height: 100vh;
 }
 
 .app-content {
