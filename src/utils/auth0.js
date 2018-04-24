@@ -1,11 +1,12 @@
 import auth0 from 'auth0-js';
 
-export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
-export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
+export const AUTH0_CLIENT_ID = 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';
+export const AUTH0_DOMAIN = 'auth.mozilla.auth0.com';
 export const AUTH0_CALLBACK_URL = window.location.href;
 
 export function webAuthHandler(callback, err, authResult) {
   if (err) {
+    console.log('aouch');
     throw new Error(err);
   }
   if (authResult && authResult.accessToken && authResult.idToken) {
@@ -22,7 +23,7 @@ export function initWebAuth() {
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
-    audience: 'http://minimal-demo-iam.localhost:8000', // 'https://' + AUTH0_DOMAIN + '/userinfo',
+    audience: 'https://auth.mozilla.auth0.com/userinfo', // 'https://' + AUTH0_DOMAIN + '/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
   });
