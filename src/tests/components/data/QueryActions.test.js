@@ -29,7 +29,7 @@ describe('<QueryActions>', () => {
   it('should call fetchAllActions once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <div fakeprop={1}>
         <QueryActions
           fetchAllActions={() => {
             callCount += 1;
@@ -38,9 +38,9 @@ describe('<QueryActions>', () => {
       </div>,
     );
 
-    wrapper.setProps({ fakeProp: 2 });
-    wrapper.setProps({ fakeProp: 3 });
-    wrapper.setProps({ fakeProp: 4 });
+    wrapper.setProps({ fakeprop: 2 });
+    wrapper.setProps({ fakeprop: 3 });
+    wrapper.setProps({ fakeprop: 4 });
 
     expect(callCount).toBe(1);
   });

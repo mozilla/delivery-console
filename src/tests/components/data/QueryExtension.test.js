@@ -56,7 +56,7 @@ describe('<QueryExtension>', () => {
   it('should call fetchExtension once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <div fakeprop={1}>
         <QueryExtension
           {...props}
           fetchExtension={() => {
@@ -67,9 +67,9 @@ describe('<QueryExtension>', () => {
     );
     expect(callCount).toBe(1);
 
-    wrapper.setProps({ fakeProp: 2 });
-    wrapper.setProps({ fakeProp: 3 });
-    wrapper.setProps({ fakeProp: 4 });
+    wrapper.setProps({ fakeprop: 2 });
+    wrapper.setProps({ fakeprop: 3 });
+    wrapper.setProps({ fakeprop: 4 });
 
     expect(callCount).toBe(1);
   });
