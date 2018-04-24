@@ -29,19 +29,22 @@ const authResult = {
 };
 
 describe('webAuthHandler', () => {
-  const callback = jest.fn();
   it('throws an error', () => {
-    expect(() => webAuthHandler(callback, 'some error', 'some result')).toThrow(
-      'some error',
-    );
+    const callback = jest.fn();
+    const onError = jest.fn();
+    webAuthHandler(callback, onError, 'some error', 'some result');
+    expect(callback).toHaveBeenCalledTimes(0);
+    expect(onError).toHaveBeenCalledWith('some error');
   });
   it('sets the session and runs the callback', () => {
+    const callback = jest.fn();
+    const onError = jest.fn();
     window.location = { hash: 'some hash' };
 
-    webAuthHandler(callback, null, authResult);
+    webAuthHandler(callback, onError, null, authResult);
     expect(window.location.hash).toEqual('');
     expect(callback).toHaveBeenCalledWith(authResult);
-    expect(callback).toHaveBeenCalledWith(authResult);
+    expect(onError).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -52,7 +55,7 @@ describe('initWebAuth', () => {
       domain: AUTH0_DOMAIN,
       clientID: AUTH0_CLIENT_ID,
       redirectUri: AUTH0_CALLBACK_URL,
-      audience: 'http://minimal-demo-iam.localhost:8000', // 'https://' + AUTH0_DOMAIN + '/userinfo',
+      audience: 'https://auth.mozilla.auth0.com/userinfo',
       responseType: 'token id_token',
       scope: 'openid profile',
     });
@@ -105,22 +108,24 @@ describe('logout', () => {
 describe('checkLogin', () => {
   it('checks if logged in', () => {
     const onLoggedIn = jest.fn();
+    const onError = jest.fn();
     const parseHash = jest.fn();
     const handler = jest.fn();
     const initWebAuth = jest.fn(() => ({ parseHash: parseHash }));
-    checkLogin(onLoggedIn, initWebAuth, handler);
+    checkLogin(onLoggedIn, onError, initWebAuth, handler);
     expect(initWebAuth).toHaveBeenCalledTimes(1);
     expect(parseHash).toHaveBeenCalledTimes(1);
   });
   it('logs a message in the console if the login failed', () => {
     const onLoggedIn = jest.fn();
+    const onError = jest.fn();
     const parseHash = jest.fn(() => {
       throw new Error('foo');
     });
     const handler = jest.fn();
     const initWebAuth = jest.fn(() => ({ parseHash: parseHash }));
     global.console.error = jest.fn();
-    checkLogin(onLoggedIn, initWebAuth, handler);
+    checkLogin(onLoggedIn, onError, initWebAuth, handler);
     expect(global.console.error).toHaveBeenCalledWith(
       'Login failed',
       new Error('foo'),
