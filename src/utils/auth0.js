@@ -4,13 +4,11 @@ export const AUTH0_CLIENT_ID = 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';
 export const AUTH0_DOMAIN = 'auth.mozilla.auth0.com';
 export const AUTH0_CALLBACK_URL = window.location.href;
 
-export function webAuthHandler(callback, err, authResult) {
+export function webAuthHandler(callback, onError, err, authResult) {
+  window.location.hash = '';
   if (err) {
-    console.log('aouch');
-    throw new Error(err);
-  }
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    window.location.hash = '';
+    onError(err);
+  } else if (authResult && authResult.accessToken && authResult.idToken) {
     setSession(authResult);
     if (callback) {
       callback(authResult);
@@ -23,7 +21,7 @@ export function initWebAuth() {
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
-    audience: 'https://auth.mozilla.auth0.com/userinfo', // 'https://' + AUTH0_DOMAIN + '/userinfo',
+    audience: 'https://auth.mozilla.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
   });
@@ -53,6 +51,7 @@ export function logout() {
 // Check if the user has logged in.
 export function checkLogin(
   onLoggedIn,
+  onLoginFailed,
   initFunc = initWebAuth,
   handler = webAuthHandler,
 ) {
@@ -61,7 +60,7 @@ export function checkLogin(
       throw new Error('Must provide a hash parser handler');
     }
     const webAuth = initFunc();
-    const boundHandler = handler.bind(null, onLoggedIn);
+    const boundHandler = handler.bind(null, onLoggedIn, onLoginFailed);
     webAuth.parseHash(boundHandler);
   } catch (err) {
     console.error('Login failed', err);

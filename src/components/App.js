@@ -1,4 +1,4 @@
-import { Button, Layout } from 'antd';
+import { Alert, Button, Layout } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter, NavLink } from 'react-router-dom';
@@ -12,8 +12,8 @@ import {
   login,
   logout,
 } from 'console/utils/auth0';
-import { setUserInfo, userLogin, userLogout } from 'console/state/auth/actions';
-import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
+import { setLoginFailed, setUserInfo, userLogin, userLogout } from 'console/state/auth/actions';
+import { getAccessToken, getError, getUserInfo } from 'console/state/auth/selectors';
 
 import AppRouter from 'console/components/router';
 import QueryActions from 'console/components/data/QueryActions';
@@ -32,12 +32,20 @@ const CurrentUserInfo = props => {
   }
 };
 
+const Error = ({ error }) => {
+  if (error) {
+    return <Alert message={error} type="error" />;
+  }
+  return null;
+};
+
 @connect(
   (state, props) => ({
     userInfo: getUserInfo(state),
     accessToken: getAccessToken(state),
+    error: getError(state),
   }),
-  { userLogin, userLogout, setUserInfo },
+  { userLogin, userLogout, setLoginFailed, setUserInfo },
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -45,11 +53,12 @@ export default class App extends React.Component {
     accessToken: PropTypes.string,
     userLogin: PropTypes.func.isRequired,
     userLogout: PropTypes.func.isRequired,
+    setLoginFailed: PropTypes.func.isRequired,
     setUserInfo: PropTypes.func.isRequired,
   };
 
   componentDidMount = () => {
-    checkLogin(this.onLoggedIn);
+    checkLogin(this.onLoggedIn, this.onLoginFailed);
     const accessToken = isAuthenticated();
     if (accessToken) {
       this.onLoggedIn({ accessToken });
@@ -68,6 +77,10 @@ export default class App extends React.Component {
     if (!this.props.userInfo) {
       fetchUserInfo(this.onUserInfo);
     }
+  };
+
+  onLoginFailed = err => {
+    this.props.setLoginFailed(`${err.error}: ${err.errorDescription}`);
   };
 
   onUserInfo = userInfo => {
@@ -100,6 +113,8 @@ export default class App extends React.Component {
               onUserLogin={this.onUserLogin}
             />
           </Header>
+
+          <Error error={this.props.error} />
 
           <Layout className="content-wrapper">
             <Content className="content">

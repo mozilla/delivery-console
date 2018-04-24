@@ -1,8 +1,17 @@
 import {
+  SET_LOGIN_FAILED,
   SET_USER_INFO,
   USER_LOGIN,
   USER_LOGOUT,
 } from 'console/state/action-types';
+
+export const setLoginFailed = error => {
+  return dispatch =>
+    dispatch({
+      type: SET_LOGIN_FAILED,
+      error,
+    });
+};
 
 export const setUserInfo = userInfo => {
   return dispatch =>
