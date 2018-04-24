@@ -1,19 +1,20 @@
 import { combineReducers } from 'redux';
 
-import actions from '../normandy/state/app/actions/reducers';
-import approvalRequests from '../normandy/state/app/approvalRequests/reducers';
-import extensions from '../normandy/state/app/extensions/reducers';
-import recipes from '../normandy/state/app/recipes/reducers';
-import requests from '../normandy/state/app/requests/reducers';
-import revisions from '../normandy/state/app/revisions/reducers';
-import serviceInfo from '../normandy/state/app/serviceInfo/reducers';
-import session from '../normandy/state/app/session/reducers';
-import users from '../normandy/state/app/users/reducers';
-import console from '../console/reducers';
+import actions from 'console/state/actions/reducers';
+import approvalRequests from 'console/state/approvalRequests/reducers';
+import auth from 'console/state/auth/reducers';
+import extensions from 'console/state/extensions/reducers';
+import recipes from 'console/state/recipes/reducers';
+import requests from 'console/state/requests/reducers';
+import revisions from 'console/state/revisions/reducers';
+import serviceInfo from 'console/state/serviceInfo/reducers';
+import session from 'console/state/session/reducers';
+import users from 'console/state/users/reducers';
 
 const reducer = combineReducers({
   actions,
   approvalRequests,
+  auth,
   extensions,
   recipes,
   requests,
@@ -21,7 +22,6 @@ const reducer = combineReducers({
   serviceInfo,
   session,
   users,
-  console,
 });
 
 export default reducer;

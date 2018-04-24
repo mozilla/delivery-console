@@ -1,0 +1,63 @@
+@import '../less/main.less';
+
+#root {
+  height: 100%;
+}
+
+.content-wrapper .content {
+  padding: 2em;
+}
+
+.sidebar.ant-layout-header {
+  align-items: end;
+  display: flex;
+  height: 47px;
+  line-height: 47px;
+}
+
+.righted {
+  text-align: right;
+}
+
+.app.ant-layout {
+  min-height: 100vh;
+}
+
+.app-content {
+  padding: 2em;
+}
+
+.ant-layout-header.app-header {
+  align-items: center;
+  background: @blue-60;
+  color: @white;
+  display: flex;
+  position: relative;
+  z-index: 5;
+
+  button {
+    margin-left: 1em;
+  }
+
+  h1 {
+    color: @white;
+    margin: 0 1em 0 0;
+  }
+
+  a {
+    background: @blue-60;
+    color: @white;
+    padding: 0 2em;
+
+    &,
+    &:focus,
+    &:active {
+      border-radius: 0;
+    }
+
+    &.active {
+      background: @white;
+      color: @blue-60;
+    }
+  }
+}

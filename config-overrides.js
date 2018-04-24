@@ -7,18 +7,9 @@ module.exports = function(config, env) {
     ...config.resolve,
     alias: {
       ...config.resolve.alias,
-      console: path.resolve(__dirname, './src/console/'),
-      normandy: path.resolve(__dirname, './src/normandy/'),
+      console: path.resolve(__dirname, './src/'),
     },
   };
-
-  // If an --app=something parameter is present when running this script,
-  // change the entry point to start the given app.
-  let selectedApp = process.argv.find(arg => arg.startsWith('--app'));
-  if (selectedApp) {
-    selectedApp = selectedApp.split('=')[1];
-    config.entry = path.resolve(__dirname, `./src/${selectedApp}/index.js`);
-  }
 
   // LESS support
   config = rewireLess(config, env);

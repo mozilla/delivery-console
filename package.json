@@ -40,7 +40,8 @@
     "lint:eslintfix": "eslint -c node_modules/eslint-config-react-app/index.js --max-warnings 0 --fix 'src/**/*.js'",
     "lint:prettier-eslint": "prettier-eslint --list-different 'src/**/*.js' | ./lint_problems.sh",
     "lint:prettier-eslintfix": "prettier-eslint --write 'src/**/*.js'",
-    "lint": "yarn run lint:prettier-eslint && yarn run lint:eslint && yarn run lint:less"
+    "lint": "yarn run lint:prettier-eslint && yarn run lint:eslint && yarn run lint:less",
+    "lint:fix": "yarn run lint:prettier-eslintfix && yarn run lint:eslintfix && yarn run lint:less"
   },
   "devDependencies": {
     "babel-plugin-import": "1.7.0",
@@ -62,8 +63,7 @@
   "jest": {
     "moduleNameMapper": {
       ".*\\.less$": "<rootDir>/StubModule.js",
-      "^console/(.*)$": "<rootDir>/src/console/$1",
-      "^normandy/(.*)$": "<rootDir>/src/normandy/$1"
+      "^console/(.*)$": "<rootDir>/src/$1"
     }
   },
   "pre-commit": [
