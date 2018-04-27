@@ -7,8 +7,9 @@ describe('<ListingActionBar>', () => {
   const props = {
     columns: new List(),
     getCurrentURL: () => {},
+    history: {},
     push: () => {},
-    saveExtensionListingColumns: () => {},
+    saveRecipeListingColumns: () => {},
   };
 
   it('should work', () => {
