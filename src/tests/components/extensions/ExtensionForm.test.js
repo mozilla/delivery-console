@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/extensions/ExtensionForm';
+import { Map } from 'immutable';
 
 const { WrappedComponent: ExtensionForm } = TestComponent;
 
