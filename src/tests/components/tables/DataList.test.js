@@ -9,6 +9,7 @@ describe('<DataList>', () => {
     columns: new List(),
     dataSource: [],
     getCurrentURL: () => {},
+    history: {},
     ordering: 'surprise-me',
     onRowClick: () => {},
     push: () => {},
