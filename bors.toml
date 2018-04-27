@@ -1,0 +1,4 @@
+status = [
+  "ci/circleci: build",
+  "ci/circleci: docs",
+]
