@@ -10,6 +10,7 @@ function createFakeEvent(string) {
 describe('<PreferenceExperimentFields>', () => {
   const props = {
     disabled: false,
+    form: {},
     recipeArguments: new Map(),
   };
 
