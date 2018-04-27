@@ -1,5 +1,6 @@
 import { Map } from 'immutable';
 import TestComponent from 'console/components/data/QueryFilteredRecipes';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryFilteredRecipes } = TestComponent;
 
@@ -80,14 +81,14 @@ describe('<QueryFilteredRecipes>', () => {
   it('should call fetchFilteredRecipesPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryFilteredRecipes
           {...props}
           fetchFilteredRecipesPage={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
     expect(callCount).toBe(1);
 

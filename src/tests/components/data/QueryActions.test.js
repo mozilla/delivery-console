@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryActions';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryActions } = TestComponent;
 
@@ -29,13 +30,13 @@ describe('<QueryActions>', () => {
   it('should call fetchAllActions once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryActions
           fetchAllActions={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

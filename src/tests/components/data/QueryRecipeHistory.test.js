@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryRecipeHistory';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryRecipeHistory } = TestComponent;
 
@@ -56,14 +57,14 @@ describe('<QueryRecipeHistory>', () => {
   it('should call fetchRecipeHistory once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryRecipeHistory
           {...props}
           fetchRecipeHistory={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
     expect(callCount).toBe(1);
 

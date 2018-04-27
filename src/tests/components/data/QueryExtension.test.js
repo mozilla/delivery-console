@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryExtension';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryExtension } = TestComponent;
 
@@ -56,14 +57,14 @@ describe('<QueryExtension>', () => {
   it('should call fetchExtension once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryExtension
           {...props}
           fetchExtension={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
     expect(callCount).toBe(1);
 

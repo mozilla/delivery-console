@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryServiceInfo';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryServiceInfo } = TestComponent;
 
@@ -29,13 +30,13 @@ describe('<QueryServiceInfo>', () => {
   it('should call fetchServiceInfo once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryServiceInfo
           fetchServiceInfo={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

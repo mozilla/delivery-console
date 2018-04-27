@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryMultipleExtensions';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryMultipleExtensions } = TestComponent;
 
@@ -56,14 +57,14 @@ describe('<QueryMultipleExtensions>', () => {
   it('should call fetchExtensionsPage once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryMultipleExtensions
           {...props}
           fetchExtensionsPage={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
     expect(callCount).toBe(1);
 

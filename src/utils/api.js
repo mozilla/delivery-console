@@ -1,6 +1,5 @@
 import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
-require('es6-promise').polyfill();
 
 export function APIError(message, data = {}) {
   this.data = data;

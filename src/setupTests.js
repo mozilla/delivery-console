@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-require('es6-promise').polyfill();
-
 // Configure Enzyme adapter
 configure({ adapter: new Adapter() });
 

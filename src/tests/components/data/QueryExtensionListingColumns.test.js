@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryExtensionListingColumns';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryExtensionListingColumns } = TestComponent;
 
@@ -29,13 +30,13 @@ describe('<QueryExtensionListingColumns>', () => {
   it('should call loadExtensionListingColumns once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryExtensionListingColumns
           loadExtensionListingColumns={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
 
     wrapper.setProps({ fakeProp: 2 });

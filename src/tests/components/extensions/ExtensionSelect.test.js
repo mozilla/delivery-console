@@ -10,7 +10,7 @@ describe('<ExtensionSelect>', () => {
     extensions: new List(),
     isLoadingSearch: false,
     onChange: () => {},
-    size: 'default',
+    size: 'small',
   };
 
   it('should work', () => {

@@ -5,6 +5,7 @@ const { WrappedComponent: CreateExtensionPage } = TestComponent;
 describe('<CreateExtensionPage>', () => {
   const props = {
     createExtension: () => Promise.resolve(123),
+    history: {},
     push: () => {},
   };
 

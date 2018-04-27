@@ -5,7 +5,7 @@ import React from 'react';
 @autobind
 export default class GenericFormContainer extends React.PureComponent {
   static propTypes = {
-    form: PropTypes.node.isRequired,
+    form: PropTypes.func.isRequired, // This is a React component which is decorated with `createForm` from src/utils/forms.js
     formAction: PropTypes.func.isRequired,
     onFailure: PropTypes.func.isRequired,
     onSuccess: PropTypes.func.isRequired,

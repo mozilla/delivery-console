@@ -1,4 +1,5 @@
 import TestComponent from 'console/components/data/QueryRevision';
+import { StubComponent } from 'console/tests/utils';
 
 const { WrappedComponent: QueryRevision } = TestComponent;
 
@@ -56,14 +57,14 @@ describe('<QueryRevision>', () => {
   it('should call fetchRevision once if container props change', () => {
     let callCount = 0;
     const wrapper = mount(
-      <div fakeProp={1}>
+      <StubComponent fakeProp={1}>
         <QueryRevision
           {...props}
           fetchRevision={() => {
             callCount += 1;
           }}
         />
-      </div>,
+      </StubComponent>,
     );
     expect(callCount).toBe(1);
 

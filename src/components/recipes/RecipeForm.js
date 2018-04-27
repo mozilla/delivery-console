@@ -174,8 +174,8 @@ export class ActionSelect extends React.PureComponent {
           value={stringValue}
           {...props}
         >
-          {actions.toList().map(action => {
-            const actionId = action.get('id');
+          {actions.toList().map((action, index) => {
+            const actionId = action.get('id') || index;
             const actionName = action.get('name');
             const actionValue = (actionId || '').toString(10);
 

@@ -7,7 +7,7 @@ describe('<RecipeDetailPage>', () => {
   const props = {
     history: new List(),
     recipeId: 123,
-    revision: new Map(),
+    revision: new Map().set('identicon_seed', 'foobar'),
     revisionId: 'abc',
   };
 

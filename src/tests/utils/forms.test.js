@@ -16,7 +16,7 @@ describe('Forms utils', () => {
 
     it('should return the nested React element', () => {
       const FakeForm = createForm({})(FakeComponent);
-      const form = mount(<FakeForm />);
+      const form = mount(<FakeForm onSubmit={() => {}} />);
       expect(form.find(FakeComponent).length).toBe(1);
     });
   });

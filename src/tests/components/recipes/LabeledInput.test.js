@@ -1,14 +1,14 @@
-import { Switch } from 'antd';
 import autobind from 'autobind-decorator';
 import LabeledInput from 'console/components/forms/LabeledInput';
+import { StubComponent } from 'console/tests/utils';
 
 @autobind
 class TestInput extends LabeledInput {
   getElement() {
-    return Switch;
+    return StubComponent;
   }
   getElementProps() {
-    return { checked: this.props.value, testProp: 123 };
+    return { checked: this.props.value, fakeProp: 123 };
   }
   handleLabelClick() {
     this.props.onChange();
@@ -64,17 +64,17 @@ describe('<LabeledInput>', () => {
   describe('getElementProps', () => {
     it('should pass properties into the internal component', () => {
       const wrapper = factory();
-      expect(wrapper.find(Switch).length).toBe(1);
-      expect(wrapper.find(Switch).props().testProp).toBe(123);
+      expect(wrapper.find(StubComponent).length).toBe(1);
+      expect(wrapper.find(StubComponent).props().fakeProp).toBe(123);
     });
 
     it('should pass dynamic props (`value` as a `checked` prop)', () => {
       const wrapper = factory({ value: true });
-      expect(wrapper.find(Switch).length).toBe(1);
-      expect(wrapper.find(Switch).props().checked).toBe(true);
+      expect(wrapper.find(StubComponent).length).toBe(1);
+      expect(wrapper.find(StubComponent).props().checked).toBe(true);
 
       wrapper.setProps({ value: false });
-      expect(wrapper.find(Switch).props().checked).toBe(false);
+      expect(wrapper.find(StubComponent).props().checked).toBe(false);
     });
   });
 });

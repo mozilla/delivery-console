@@ -38,6 +38,7 @@ describe('<LoadingOverlay>', () => {
   const props = {
     children: <div id="content">Hello world!</div>,
     isLoading: false,
+    requestIds: 'content',
   };
 
   it('should work', () => {

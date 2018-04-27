@@ -9,6 +9,7 @@ describe('<ExtensionListing>', () => {
     count: 10,
     extensions: new List(),
     getCurrentURL: () => {},
+    history: {},
     ordering: null,
     pageNumber: 1,
     push: () => {},
