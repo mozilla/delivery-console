@@ -6,6 +6,7 @@ describe('<CreateRecipePage>', () => {
   const props = {
     createRecipe: () => {},
     push: () => {},
+    history: {},
   };
 
   it('should work', () => {
