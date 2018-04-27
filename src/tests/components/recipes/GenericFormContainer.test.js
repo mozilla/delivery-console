@@ -97,7 +97,7 @@ describe('<GenericFormContainer>', () => {
   });
 
   it('should pass the formProps object to the form element', () => {
-    const CustomEl = custProps => (
+    const CustomEl = ({ onBeforeSubmit, ...custProps }) => (
       <div id="test" {...custProps}>
         Custom
       </div>
