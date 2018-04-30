@@ -12,8 +12,17 @@ import {
   login,
   logout,
 } from 'console/utils/auth0';
-import { setLoginFailed, setUserInfo, userLogin, userLogout } from 'console/state/auth/actions';
-import { getAccessToken, getError, getUserInfo } from 'console/state/auth/selectors';
+import {
+  setLoginFailed,
+  setUserInfo,
+  userLogin,
+  userLogout,
+} from 'console/state/auth/actions';
+import {
+  getAccessToken,
+  getError,
+  getUserInfo,
+} from 'console/state/auth/selectors';
 
 import AppRouter from 'console/components/router';
 import QueryActions from 'console/components/data/QueryActions';

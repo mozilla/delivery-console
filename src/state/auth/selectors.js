@@ -7,5 +7,5 @@ export function getAccessToken(state, defaultsTo = null) {
 }
 
 export function getError(state, defaultsTo = null) {
-  return state.console.loginInfo.get('error', defaultsTo);
+  return state.auth.loginInfo.get('error', defaultsTo);
 }
