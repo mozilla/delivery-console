@@ -1,10 +1,11 @@
-import { Alert, Button, Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter, NavLink } from 'react-router-dom';
 import 'console/less/layout.less';
 import { connect } from 'react-redux';
 
+import Error from './Error';
 import {
   checkLogin,
   fetchUserInfo,
@@ -39,13 +40,6 @@ const CurrentUserInfo = props => {
   } else {
     return <Button onClick={props.onUserLogin}>Login</Button>;
   }
-};
-
-const Error = ({ error }) => {
-  if (error) {
-    return <Alert message={error} type="error" />;
-  }
-  return null;
 };
 
 @connect(
