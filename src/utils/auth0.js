@@ -2,7 +2,13 @@ import auth0 from 'auth0-js';
 
 export const AUTH0_CLIENT_ID = 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';
 export const AUTH0_DOMAIN = 'auth.mozilla.auth0.com';
-export const AUTH0_CALLBACK_URL = window.location.href;
+// PUBLIC_URL is by default set to the `homepage` entry in the package.json
+// file, and can be overloaded using `PUBLIC_URL='/foo' yarn run start`.
+export const AUTH0_CALLBACK_URL =
+  window.location.protocol +
+  '//' +
+  window.location.host +
+  process.env.PUBLIC_URL;
 
 export function webAuthHandler(callback, onError, err, authResult) {
   window.location.hash = '';
