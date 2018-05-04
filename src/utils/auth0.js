@@ -1,8 +1,11 @@
 import auth0 from 'auth0-js';
 
-export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
-export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
-export const AUTH0_CALLBACK_URL = window.location.href;
+// Default is for minimal-demo-iam.auth0.com
+const OIDC_CLIENT_ID =
+  process.env.REACT_APP_OIDC_CLIENT_ID || 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
+const OIDC_DOMAIN =
+  process.env.REACT_APP_OIDC_DOMAIN || 'minimal-demo-iam.auth0.com';
+const OIDC_CALLBACK_URL = window.location.href;
 
 export function webAuthHandler(callback, err, authResult) {
   if (err) {
@@ -19,12 +22,13 @@ export function webAuthHandler(callback, err, authResult) {
 
 export function initWebAuth() {
   const webAuth = new auth0.WebAuth({
-    domain: AUTH0_DOMAIN,
-    clientID: AUTH0_CLIENT_ID,
-    redirectUri: AUTH0_CALLBACK_URL,
-    audience: 'http://minimal-demo-iam.localhost:8000', // 'https://' + AUTH0_DOMAIN + '/userinfo',
+    domain: OIDC_DOMAIN,
+    clientID: OIDC_CLIENT_ID,
+    redirectUri: OIDC_CALLBACK_URL,
+    // audience: 'http://minimal-demo-iam.localhost:8000', // 'https://' + OIDC_DOMAIN + '/userinfo',
+    audience: 'https://' + OIDC_DOMAIN + '/userinfo', // XXX works??
     responseType: 'token id_token',
-    scope: 'openid profile',
+    scope: 'openid profile email',
   });
   return webAuth;
 }

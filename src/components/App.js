@@ -41,8 +41,8 @@ const CurrentUserInfo = props => {
 )
 export default class App extends React.Component {
   static propTypes = {
-    userInfo: PropTypes.instanceOf(Map),
-    accessToken: PropTypes.string,
+    userInfo: PropTypes.object,
+    accessToken: PropTypes.object,
     userLogin: PropTypes.func.isRequired,
     userLogout: PropTypes.func.isRequired,
     setUserInfo: PropTypes.func.isRequired,
@@ -84,7 +84,15 @@ export default class App extends React.Component {
       <BrowserRouter>
         <Layout>
           <QueryActions />
-          <QueryServiceInfo />
+
+          {/* XXX Not sure what point there is to ping Normandy Recipe-server
+          unless you're logged in here. */}
+          {this.props.accessToken ? (
+            <QueryServiceInfo
+              accessToken={this.props.accessToken.accessToken}
+            />
+          ) : null}
+
           <Header className="app-header">
             <h1>Delivery Console</h1>
 
