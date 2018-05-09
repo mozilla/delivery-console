@@ -311,9 +311,9 @@ antd@3.0.0:
     shallowequal "^1.0.1"
     warning "~3.0.0"
 
-antd@3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-3.5.0.tgz#046200573be6177f3b8f015ea49a6d7e7d6d5371"
+antd@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.5.1.tgz#6efe9f05dd7a06d650808832ebb1783806da2e12"
   dependencies:
     array-tree-filter "^2.0.0"
     babel-runtime "6.x"
@@ -341,7 +341,7 @@ antd@3.5.0:
     rc-pagination "~1.16.1"
     rc-progress "~2.2.2"
     rc-rate "~2.4.0"
-    rc-select "~8.0.1"
+    rc-select "~8.0.7"
     rc-slider "~8.6.0"
     rc-steps "~3.1.0"
     rc-switch "~1.6.0"
@@ -7121,9 +7121,9 @@ rc-select@~7.3.2:
     rc-util "^4.0.4"
     warning "^3.0.0"
 
-rc-select@~8.0.1:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-8.0.2.tgz#42c7f4760d47a3696fd91a20db5a3f156408a791"
+rc-select@~8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-8.0.7.tgz#0ec4df5a91ee1492876b4cb7aaf8788531b7c9f6"
   dependencies:
     babel-runtime "^6.23.0"
     classnames "2.x"
