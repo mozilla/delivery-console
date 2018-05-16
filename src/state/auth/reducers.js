@@ -2,18 +2,18 @@ import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
 
 import {
-  SET_LOGIN_FAILED,
-  SET_USER_INFO,
   USER_LOGIN,
+  USER_LOGIN_FAILED,
   USER_LOGOUT,
+  USER_SET_INFO,
 } from 'console/state/action-types';
 
 function loginInfo(state = new Map(), action) {
   switch (action.type) {
-    case SET_LOGIN_FAILED:
+    case USER_LOGIN_FAILED:
       return state.set('error', fromJS(action.error));
 
-    case SET_USER_INFO:
+    case USER_SET_INFO:
       return state.set('userInfo', fromJS(action.userInfo));
 
     case USER_LOGOUT:
