@@ -2,6 +2,7 @@
   "name": "dev-console",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/",
   "dependencies": {
     "antd": "3.5.2",
     "auth0-js": "9.5.1",

@@ -1,15 +1,20 @@
 import auth0 from 'auth0-js';
 
-export const AUTH0_CLIENT_ID = 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
-export const AUTH0_DOMAIN = 'minimal-demo-iam.auth0.com';
-export const AUTH0_CALLBACK_URL = window.location.href;
+export const AUTH0_CLIENT_ID = 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';
+export const AUTH0_DOMAIN = 'auth.mozilla.auth0.com';
+// PUBLIC_URL is by default set to the `homepage` entry in the package.json
+// file, and can be overloaded using `PUBLIC_URL='/foo' yarn run start`.
+export const AUTH0_CALLBACK_URL =
+  window.location.protocol +
+  '//' +
+  window.location.host +
+  process.env.PUBLIC_URL;
 
-export function webAuthHandler(callback, err, authResult) {
+export function webAuthHandler(callback, onError, err, authResult) {
+  window.location.hash = '';
   if (err) {
-    throw new Error(err);
-  }
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    window.location.hash = '';
+    onError(err);
+  } else if (authResult && authResult.accessToken && authResult.idToken) {
     setSession(authResult);
     if (callback) {
       callback(authResult);
@@ -22,7 +27,7 @@ export function initWebAuth() {
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
-    audience: 'http://minimal-demo-iam.localhost:8000', // 'https://' + AUTH0_DOMAIN + '/userinfo',
+    audience: 'https://auth.mozilla.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
   });
@@ -52,6 +57,7 @@ export function logout() {
 // Check if the user has logged in.
 export function checkLogin(
   onLoggedIn,
+  onLoginFailed,
   initFunc = initWebAuth,
   handler = webAuthHandler,
 ) {
@@ -60,7 +66,7 @@ export function checkLogin(
       throw new Error('Must provide a hash parser handler');
     }
     const webAuth = initFunc();
-    const boundHandler = handler.bind(null, onLoggedIn);
+    const boundHandler = handler.bind(null, onLoggedIn, onLoginFailed);
     webAuth.parseHash(boundHandler);
   } catch (err) {
     console.error('Login failed', err);

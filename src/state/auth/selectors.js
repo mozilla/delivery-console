@@ -5,3 +5,7 @@ export function getUserInfo(state, defaultsTo = null) {
 export function getAccessToken(state, defaultsTo = null) {
   return state.auth.loginInfo.get('accessToken', defaultsTo);
 }
+
+export function getError(state, defaultsTo = null) {
+  return state.auth.loginInfo.get('error', defaultsTo);
+}
