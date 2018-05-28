@@ -12,9 +12,12 @@ import RecipeForm from 'console/components/recipes/RecipeForm';
 import { createRecipe as createAction } from 'console/state/recipes/actions';
 
 @withRouter
-@connect(null, {
-  createRecipe: createAction,
-})
+@connect(
+  null,
+  {
+    createRecipe: createAction,
+  },
+)
 @autobind
 export default class CreateRecipePage extends React.PureComponent {
   static propTypes = {

@@ -11,9 +11,12 @@ import ExtensionForm from 'console/components/extensions/ExtensionForm';
 import { createExtension as createExtensionAction } from 'console/state/extensions/actions';
 
 @withRouter
-@connect(null, {
-  createExtension: createExtensionAction,
-})
+@connect(
+  null,
+  {
+    createExtension: createExtensionAction,
+  },
+)
 @autobind
 export default class CreateExtensionPage extends React.PureComponent {
   static propTypes = {

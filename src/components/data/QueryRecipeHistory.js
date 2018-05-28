@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import { fetchRecipeHistory as fetchRecipeHistoryAction } from 'console/state/recipes/actions';
 
-@connect(null, {
-  fetchRecipeHistory: fetchRecipeHistoryAction,
-})
+@connect(
+  null,
+  {
+    fetchRecipeHistory: fetchRecipeHistoryAction,
+  },
+)
 export default class QueryRecipeHistory extends React.PureComponent {
   static propTypes = {
     fetchRecipeHistory: PropTypes.func.isRequired,

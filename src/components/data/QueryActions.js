@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import { fetchAllActions } from 'console/state/actions/actions';
 
-@connect(null, {
-  fetchAllActions,
-})
+@connect(
+  null,
+  {
+    fetchAllActions,
+  },
+)
 export default class QueryActions extends React.PureComponent {
   static propTypes = {
     fetchAllActions: PropTypes.func.isRequired,

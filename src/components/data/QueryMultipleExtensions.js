@@ -5,9 +5,12 @@ import { isEqual } from 'underscore';
 
 import { fetchExtensionsPage as fetchExtensionsPageAction } from 'console/state/extensions/actions';
 
-@connect(null, {
-  fetchExtensionsPage: fetchExtensionsPageAction,
-})
+@connect(
+  null,
+  {
+    fetchExtensionsPage: fetchExtensionsPageAction,
+  },
+)
 export default class QueryMultipleExtensions extends React.PureComponent {
   static propTypes = {
     fetchExtensionsPage: PropTypes.func.isRequired,

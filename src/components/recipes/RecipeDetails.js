@@ -89,7 +89,7 @@ export class ArgumentsValue extends React.PureComponent {
                 <ArgumentsValue name="value" value={branch.get('value')} />
               </td>
               <td className="right">
-                {Math.round(branch.get('ratio') / sumRatios * 100)}%
+                {Math.round((branch.get('ratio') / sumRatios) * 100)}%
               </td>
             </tr>
           ))}

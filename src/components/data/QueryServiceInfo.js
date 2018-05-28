@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import { fetchServiceInfo } from 'console/state/serviceInfo/actions';
 
-@connect(null, {
-  fetchServiceInfo,
-})
+@connect(
+  null,
+  {
+    fetchServiceInfo,
+  },
+)
 export default class QueryServiceInfo extends React.PureComponent {
   static propTypes = {
     fetchServiceInfo: PropTypes.func.isRequired,
