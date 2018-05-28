@@ -12,9 +12,12 @@ import FormItem from 'console/components/forms/FormItem';
 import { closeApprovalRequest as closeApprovalRequestAction } from 'console/state/approvalRequests/actions';
 import { createForm, ValidationError } from 'console/utils/forms';
 
-@connect(null, {
-  closeApprovalRequest: closeApprovalRequestAction,
-})
+@connect(
+  null,
+  {
+    closeApprovalRequest: closeApprovalRequestAction,
+  },
+)
 @createForm({})
 @autobind
 export default class ApprovalForm extends React.PureComponent {
