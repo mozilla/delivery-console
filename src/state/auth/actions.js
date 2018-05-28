@@ -1,36 +1,31 @@
 import {
-  SET_USER_INFO,
+  USER_INFO_SET,
   USER_LOGIN,
   USER_LOGOUT,
 } from 'console/state/action-types';
+import {
+  fetchUserInfo,
+} from 'console/utils/auth0';
 
-export const setUserInfo = userInfo => {
+export function setUserInfo(userInfo) {
   return dispatch =>
     dispatch({
-      type: SET_USER_INFO,
+      type: USER_INFO_SET,
       userInfo,
     });
-};
+}
 
-export const userLogin = accessToken => {
+export function logUserIn(accessToken) {
   return dispatch =>
     dispatch({
       type: USER_LOGIN,
       accessToken,
     });
-};
+}
 
-export const userLogout = () => {
+export function logUserOut() {
   return dispatch =>
     dispatch({
       type: USER_LOGOUT,
     });
-};
-
-export function getUserInfo(state, defaultsTo = null) {
-  return state.auth.loginInfo.get('userInfo', defaultsTo);
-}
-
-export function getAccessToken(state, defaultsTo = null) {
-  return state.auth.loginInfo.get('accessToken', defaultsTo);
 }

@@ -12,7 +12,7 @@ import {
   login,
   logout,
 } from 'console/utils/auth0';
-import { setUserInfo, userLogin, userLogout } from 'console/state/auth/actions';
+import { logUserIn, logUserOut, setUserInfo, } from 'console/state/auth/actions';
 import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
 
 import AppRouter from 'console/components/router';
@@ -37,7 +37,7 @@ const CurrentUserInfo = props => {
     userInfo: getUserInfo(state),
     accessToken: getAccessToken(state),
   }),
-  { userLogin, userLogout, setUserInfo },
+  { logUserIn, logUserOut, setUserInfo },
 )
 export default class App extends React.Component {
   static propTypes = {
@@ -85,8 +85,6 @@ export default class App extends React.Component {
         <Layout>
           <QueryActions />
 
-          {/* XXX Not sure what point there is to ping Normandy Recipe-server
-          unless you're logged in here. */}
           {this.props.accessToken ? (
             <QueryServiceInfo
               accessToken={this.props.accessToken.accessToken}

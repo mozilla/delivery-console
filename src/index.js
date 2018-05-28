@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DevConsoleApp from 'console/components/App';
+import App from 'console/components/App';
 import reducers from 'console/state/reducer';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
@@ -22,7 +22,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <DevConsoleApp />
+    <App />
   </Provider>,
   document.getElementById('root'),
 );
