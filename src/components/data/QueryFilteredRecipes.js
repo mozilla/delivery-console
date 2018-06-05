@@ -5,9 +5,12 @@ import { isEqual } from 'underscore';
 
 import { fetchFilteredRecipesPage } from 'console/state/recipes/actions';
 
-@connect(null, {
-  fetchFilteredRecipesPage,
-})
+@connect(
+  null,
+  {
+    fetchFilteredRecipesPage,
+  },
+)
 export default class QueryFilteredRecipes extends React.PureComponent {
   static propTypes = {
     fetchFilteredRecipesPage: PropTypes.func,

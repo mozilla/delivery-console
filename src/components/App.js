@@ -12,7 +12,7 @@ import {
   getAuthenticationInfoFromSession,
   startAuthenticationFlow,
 } from 'console/utils/auth0';
-import { logUserIn, logUserOut, setUserInfo, } from 'console/state/auth/actions';
+import { logUserIn, logUserOut, setUserInfo } from 'console/state/auth/actions';
 import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
 
 import AppRouter from 'console/components/router';

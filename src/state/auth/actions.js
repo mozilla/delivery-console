@@ -3,9 +3,6 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
 } from 'console/state/action-types';
-import {
-  fetchUserInfo,
-} from 'console/utils/auth0';
 
 export function setUserInfo(userInfo) {
   return dispatch =>

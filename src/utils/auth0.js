@@ -2,10 +2,13 @@ import auth0 from 'auth0-js';
 
 // Default is for minimal-demo-iam.auth0.com
 // TODO: We need a better way of configuring these
-const OIDC_CLIENT_ID = process.env.REACT_APP_OIDC_CLIENT_ID || 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
-const OIDC_DOMAIN = process.env.REACT_APP_OIDC_DOMAIN || 'minimal-demo-iam.auth0.com';
+const OIDC_CLIENT_ID =
+  process.env.REACT_APP_OIDC_CLIENT_ID || 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
+const OIDC_DOMAIN =
+  process.env.REACT_APP_OIDC_DOMAIN || 'minimal-demo-iam.auth0.com';
 const OIDC_CALLBACK_URL = window.location.href;
-const OIDC_AUDIENCE = process.env.REACT_APP_OIDC_AUDIENCE || `https://${OIDC_DOMAIN}/userinfo`;
+const OIDC_AUDIENCE =
+  process.env.REACT_APP_OIDC_AUDIENCE || `https://${OIDC_DOMAIN}/userinfo`;
 
 const webAuth = new auth0.WebAuth({
   domain: OIDC_DOMAIN,
@@ -15,7 +18,6 @@ const webAuth = new auth0.WebAuth({
   responseType: 'token id_token',
   scope: 'openid profile email',
 });
-
 
 export function webAuthHandler(callback, err, authResult) {
   if (err) {

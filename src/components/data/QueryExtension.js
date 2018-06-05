@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import { fetchExtension } from 'console/state/extensions/actions';
 
-@connect(null, {
-  fetchExtension,
-})
+@connect(
+  null,
+  {
+    fetchExtension,
+  },
+)
 export default class QueryExtension extends React.PureComponent {
   static propTypes = {
     fetchExtension: PropTypes.func.isRequired,

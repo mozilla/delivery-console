@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 import { fetchRevision as fetchRevisionAction } from 'console/state/revisions/actions';
 
-@connect(null, {
-  fetchRevision: fetchRevisionAction,
-})
+@connect(
+  null,
+  {
+    fetchRevision: fetchRevisionAction,
+  },
+)
 export default class QueryRevision extends React.PureComponent {
   static propTypes = {
     fetchRevision: PropTypes.func.isRequired,
