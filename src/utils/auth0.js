@@ -36,7 +36,7 @@ export function endSession() {
 
 export function isSessionExpired() {
   const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '0');
-  return new Date().getTime() < expiresAt;
+  return new Date().getTime() >= expiresAt;
 }
 
 export function getAuthenticationInfoFromSession() {
@@ -44,7 +44,7 @@ export function getAuthenticationInfoFromSession() {
   if (isSessionExpired()) {
     return false;
   }
-  return JSON.parse(localStorage.getItem('session') || false);
+  return JSON.parse(localStorage.getItem('session') || 'false');
 }
 
 export function startAuthenticationFlow() {
@@ -74,6 +74,7 @@ export function finishAuthenticationFlow(onLoggedIn, onLoginFailed) {
 
 export function handleUserInfo(onUserInfo, err, profile) {
   if (err) {
+    // TODO: Handle this error better
     throw new Error(err);
   }
   if (onUserInfo) {
@@ -83,7 +84,7 @@ export function handleUserInfo(onUserInfo, err, profile) {
 
 export function fetchUserInfo(callback) {
   const authInfo = getAuthenticationInfoFromSession();
-  if (authInfo && !authInfo.accessToken) {
+  if (authInfo && authInfo.accessToken) {
     webAuth.client.userInfo(
       authInfo.accessToken,
       handleUserInfo.bind(null, callback),

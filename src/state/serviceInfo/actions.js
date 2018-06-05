@@ -3,15 +3,11 @@
 import { SERVICE_INFO_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import { makeApiRequest } from 'console/state/requests/actions';
 
-export function fetchServiceInfo(accessToken) {
+export function fetchServiceInfo() {
   return async dispatch => {
     const requestId = 'fetch-service-info';
     const serviceInfo = await dispatch(
-      makeApiRequest(requestId, 'v2/service_info/', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
+      makeApiRequest(requestId, 'v2/service_info/'),
     );
 
     dispatch({

@@ -1,6 +1,8 @@
 import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 
+import { getAuthenticationInfoFromSession } from 'console/utils/auth0';
+
 export function APIError(message, data = {}) {
   this.data = data;
   this.message = message;
@@ -23,6 +25,15 @@ export default class APIClient {
       headers.append('Content-Type', 'application/json');
     }
     headers.append('X-CSRFToken', Cookie.get('csrftoken-20170707'));
+
+    const authInfo = getAuthenticationInfoFromSession();
+    if (
+      authInfo &&
+      options.method &&
+      !['GET', 'HEAD'].includes(options.method)
+    ) {
+      headers.append('Authorization', `Bearer ${authInfo.accessToken}`);
+    }
 
     const settings = {
       headers,
