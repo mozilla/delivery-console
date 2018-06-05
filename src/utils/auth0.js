@@ -3,9 +3,9 @@ import auth0 from 'auth0-js';
 // Default is for minimal-demo-iam.auth0.com
 // TODO: We need a better way of configuring these
 const OIDC_CLIENT_ID =
-  process.env.REACT_APP_OIDC_CLIENT_ID || 'WYRYpJyS5DnDyxLTRVGCQGCWGo2KNQLN';
+  process.env.REACT_APP_OIDC_CLIENT_ID || 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';
 const OIDC_DOMAIN =
-  process.env.REACT_APP_OIDC_DOMAIN || 'minimal-demo-iam.auth0.com';
+  process.env.REACT_APP_OIDC_DOMAIN || 'auth.mozilla.auth0.com';
 const OIDC_CALLBACK_URL = window.location.href;
 const OIDC_AUDIENCE =
   process.env.REACT_APP_OIDC_AUDIENCE || `https://${OIDC_DOMAIN}/userinfo`;
