@@ -3,6 +3,9 @@ import fetch from 'isomorphic-fetch';
 
 import { getAuthenticationInfoFromSession } from 'console/utils/auth0';
 
+const API_ROOT_URL =
+  process.env.REACT_APP_API_ROOT_URL || 'https://localhost:8000/api/';
+
 export function APIError(message, data = {}) {
   this.data = data;
   this.message = message;
@@ -12,7 +15,7 @@ APIError.prototype = Object.create(Error.prototype);
 APIError.prototype.name = 'APIError';
 
 export default class APIClient {
-  constructor(root = 'https://localhost:8000/api/') {
+  constructor(root = API_ROOT_URL) {
     this.root = root;
   }
 
