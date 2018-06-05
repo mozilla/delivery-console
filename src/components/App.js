@@ -5,6 +5,7 @@ import { BrowserRouter, NavLink } from 'react-router-dom';
 import 'console/less/layout.less';
 import { connect } from 'react-redux';
 
+import Error from './Error';
 import {
   endSession,
   finishAuthenticationFlow,
@@ -12,8 +13,17 @@ import {
   getAuthenticationInfoFromSession,
   startAuthenticationFlow,
 } from 'console/utils/auth0';
-import { logUserIn, logUserOut, setUserInfo } from 'console/state/auth/actions';
-import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
+import {
+  logUserIn,
+  logUserOut,
+  setLoginFailed,
+  setUserInfo,
+} from 'console/state/auth/actions';
+import {
+  getAccessToken,
+  getError,
+  getUserInfo,
+} from 'console/state/auth/selectors';
 
 import AppRouter from 'console/components/router';
 import QueryActions from 'console/components/data/QueryActions';
@@ -35,15 +45,17 @@ const CurrentUserInfo = props => {
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
+    error: getError(state),
     userInfo: getUserInfo(state),
   }),
-  { logUserIn, logUserOut, setUserInfo },
+  { logUserIn, logUserOut, setLoginFailed, setUserInfo },
 )
 export default class App extends React.Component {
   static propTypes = {
     accessToken: PropTypes.object,
     logUserIn: PropTypes.func.isRequired,
     logUserOut: PropTypes.func.isRequired,
+    setLoginFailed: PropTypes.func.isRequired,
     setUserInfo: PropTypes.func.isRequired,
     userInfo: PropTypes.object,
   };
@@ -70,6 +82,10 @@ export default class App extends React.Component {
     if (!this.props.userInfo) {
       fetchUserInfo(this.onUserInfo);
     }
+  };
+
+  onLoginFailed = err => {
+    this.props.setLoginFailed(`${err.error}: ${err.errorDescription}`);
   };
 
   onUserInfo = userInfo => {
@@ -108,6 +124,8 @@ export default class App extends React.Component {
               onLoginClick={this.onLoginClick}
             />
           </Header>
+
+          <Error error={this.props.error} />
 
           <Layout className="content-wrapper">
             <Content className="content">

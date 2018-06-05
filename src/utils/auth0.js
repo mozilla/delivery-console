@@ -19,19 +19,6 @@ const webAuth = new auth0.WebAuth({
   scope: 'openid profile email',
 });
 
-export function webAuthHandler(callback, err, authResult) {
-  if (err) {
-    throw new Error(err);
-  }
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    window.location.hash = '';
-    setSession(authResult);
-    if (callback) {
-      callback(authResult);
-    }
-  }
-}
-
 export function setSession(authResult) {
   // Set the time that the access token will expire at.
   const expiresAt = JSON.stringify(
@@ -64,8 +51,20 @@ export function startAuthenticationFlow() {
   webAuth.authorize();
 }
 
-export function finishAuthenticationFlow(callback) {
-  const boundHandler = webAuthHandler.bind(null, callback);
+export function webAuthHandler(callback, onError, err, authResult) {
+  window.location.hash = '';
+  if (err) {
+    onError(err);
+  } else if (authResult && authResult.accessToken && authResult.idToken) {
+    setSession(authResult);
+    if (callback) {
+      callback(authResult);
+    }
+  }
+}
+
+export function finishAuthenticationFlow(onLoggedIn, onLoginFailed) {
+  const boundHandler = webAuthHandler.bind(null, onLoggedIn, onLoginFailed);
   try {
     webAuth.parseHash(boundHandler);
   } catch (err) {

@@ -18,3 +18,7 @@ export function getAccessToken(state, defaultsTo = null) {
   }
   return accessToken;
 }
+
+export function getError(state, defaultsTo = null) {
+  return state.auth.loginInfo.get('error', defaultsTo);
+}
