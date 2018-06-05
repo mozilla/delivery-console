@@ -6,11 +6,11 @@ import 'console/less/layout.less';
 import { connect } from 'react-redux';
 
 import {
-  checkLogin,
+  endSession,
+  finishAuthenticationFlow,
   fetchUserInfo,
-  isAuthenticated,
-  login,
-  logout,
+  getAuthenticationInfoFromSession,
+  startAuthenticationFlow,
 } from 'console/utils/auth0';
 import { logUserIn, logUserOut, setUserInfo, } from 'console/state/auth/actions';
 import { getAccessToken, getUserInfo } from 'console/state/auth/selectors';
@@ -23,47 +23,49 @@ const { Header, Content } = Layout;
 const CurrentUserInfo = props => {
   if (props.userInfo) {
     return (
-      <Button onClick={props.onUserLogout}>{`Logged in as ${props.userInfo.get(
+      <Button onClick={props.onLogoutClick}>{`Logged in as ${props.userInfo.get(
         'nickname',
       )}`}</Button>
     );
   } else {
-    return <Button onClick={props.onUserLogin}>Login</Button>;
+    return <Button onClick={props.onLoginClick}>Login</Button>;
   }
 };
 
 @connect(
   (state, props) => ({
-    userInfo: getUserInfo(state),
     accessToken: getAccessToken(state),
+    userInfo: getUserInfo(state),
   }),
   { logUserIn, logUserOut, setUserInfo },
 )
 export default class App extends React.Component {
   static propTypes = {
-    userInfo: PropTypes.object,
     accessToken: PropTypes.object,
-    userLogin: PropTypes.func.isRequired,
-    userLogout: PropTypes.func.isRequired,
+    logUserIn: PropTypes.func.isRequired,
+    logUserOut: PropTypes.func.isRequired,
     setUserInfo: PropTypes.func.isRequired,
+    userInfo: PropTypes.object,
   };
 
   componentDidMount = () => {
-    checkLogin(this.onLoggedIn);
-    const accessToken = isAuthenticated();
-    if (accessToken) {
-      this.onLoggedIn({ accessToken });
+    // Check if we are in the middle of the authentication flow and attempt to complete
+    finishAuthenticationFlow(this.onLoggedIn);
+
+    const authInfo = getAuthenticationInfoFromSession();
+    if (authInfo) {
+      this.onLoggedIn(authInfo);
     }
   };
 
-  onUserLogin = () => {
-    // Call auth0.login which will start the login redirection dance.
-    login();
+  onLoginClick = () => {
+    // Start the login redirection dance.
+    startAuthenticationFlow();
   };
 
   onLoggedIn = authResult => {
-    if (authResult && authResult.accessToken) {
-      this.props.userLogin(authResult.accessToken);
+    if (authResult) {
+      this.props.logUserIn(authResult);
     }
     if (!this.props.userInfo) {
       fetchUserInfo(this.onUserInfo);
@@ -74,9 +76,9 @@ export default class App extends React.Component {
     this.props.setUserInfo(userInfo);
   };
 
-  onUserLogout = () => {
-    logout();
-    this.props.userLogout();
+  onLogoutClick = () => {
+    endSession();
+    this.props.logUserOut();
   };
 
   render() {
@@ -102,8 +104,8 @@ export default class App extends React.Component {
 
             <CurrentUserInfo
               userInfo={this.props.userInfo}
-              onUserLogout={this.onUserLogout}
-              onUserLogin={this.onUserLogin}
+              onLogoutClick={this.onLogoutClick}
+              onLoginClick={this.onLoginClick}
             />
           </Header>
 
