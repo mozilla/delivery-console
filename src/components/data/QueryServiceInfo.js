@@ -13,11 +13,10 @@ import { fetchServiceInfo } from 'console/state/serviceInfo/actions';
 export default class QueryServiceInfo extends React.PureComponent {
   static propTypes = {
     fetchServiceInfo: PropTypes.func.isRequired,
-    accessToken: PropTypes.string.isRequired,
   };
 
   componentWillMount() {
-    this.props.fetchServiceInfo(this.props.accessToken);
+    this.props.fetchServiceInfo();
   }
 
   render() {
