@@ -58,7 +58,7 @@ export default class QueryAuth0 extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { accessToken, fetchUserProfile } = this.props;
-    if (accessToken !== nextProps.accessToken) {
+    if (nextProps.accessToken && accessToken !== nextProps.accessToken) {
       fetchUserProfile(nextProps.accessToken);
     }
   }
