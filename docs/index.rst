@@ -22,6 +22,7 @@ Project docs:
 .. toctree::
 
    dev
+   config
    contributing
    auth
    ci
