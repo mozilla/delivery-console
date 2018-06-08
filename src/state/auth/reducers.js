@@ -2,29 +2,30 @@ import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
 
 import {
-  USER_INFO_SET,
   USER_LOGIN,
-  USER_LOGIN_FAILED,
+  USER_LOGIN_FAILURE,
   USER_LOGOUT,
+  USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
 
-function loginInfo(state = new Map(), action) {
+function session(state = new Map(), action) {
   switch (action.type) {
-    case USER_INFO_SET:
-      return state.set('userInfo', fromJS(action.userInfo));
+    case USER_PROFILE_RECEIVE:
+      return state.set('profile', fromJS(action.profile));
 
-    case USER_LOGIN_FAILED:
+    case USER_LOGIN_FAILURE:
       return state.set('error', fromJS(action.error));
 
     case USER_LOGOUT:
       return state
-        .remove('userInfo')
+        .remove('profile')
         .remove('accessToken')
         .remove('error');
 
     case USER_LOGIN:
       return state
-        .set('accessToken', fromJS(action.accessToken))
+        .set('accessToken', action.accessToken)
+        .set('expiresAt', action.expiresAt)
         .remove('error');
 
     default:
@@ -33,5 +34,5 @@ function loginInfo(state = new Map(), action) {
 }
 
 export default combineReducers({
-  loginInfo,
+  session,
 });

@@ -1,5 +1,6 @@
 /* eslint import/prefer-default-export: "off" */
 
+import { getAccessToken } from 'console/state/auth/selectors';
 import { getRequest } from 'console/state/requests/selectors';
 
 import {
@@ -17,8 +18,10 @@ export function makeApiRequest(requestId, endpoint, options = {}) {
       root = options.root;
       delete options.root;
     }
-    const api = new APIClient(root);
-    const request = getRequest(getState(), requestId);
+    const state = getState();
+    const accessToken = getAccessToken(state);
+    const api = new APIClient(root, accessToken);
+    const request = getRequest(state, requestId);
 
     if (request.inProgress) {
       return true;

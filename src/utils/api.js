@@ -1,10 +1,7 @@
 import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 
-import { getAuthenticationInfoFromSession } from 'console/utils/auth0';
-
-const API_ROOT_URL =
-  process.env.REACT_APP_API_ROOT_URL || 'https://localhost:8000/api/';
+import { NORMANDY_API_ROOT_URL } from 'console/settings';
 
 export function APIError(message, data = {}) {
   this.data = data;
@@ -15,8 +12,9 @@ APIError.prototype = Object.create(Error.prototype);
 APIError.prototype.name = 'APIError';
 
 export default class APIClient {
-  constructor(root = API_ROOT_URL) {
+  constructor(root = NORMANDY_API_ROOT_URL, accessToken = null) {
     this.root = root;
+    this.accessToken = accessToken;
   }
 
   async fetch(url, options) {
@@ -29,13 +27,8 @@ export default class APIClient {
     }
     headers.append('X-CSRFToken', Cookie.get('csrftoken-20170707'));
 
-    const authInfo = getAuthenticationInfoFromSession();
-    if (
-      authInfo &&
-      options.method &&
-      !['GET', 'HEAD'].includes(options.method)
-    ) {
-      headers.append('Authorization', `Bearer ${authInfo.accessToken}`);
+    if (this.accessToken) {
+      headers.append('Authorization', `Bearer ${this.accessToken}`);
     }
 
     const settings = {

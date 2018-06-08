@@ -1,7 +1,4 @@
-import {
-  searchRouteTree,
-  replaceUrlVariables,
-} from 'console/utils/routerUtils';
+import { searchRouteTree, replaceUrlVariables } from 'console/utils/router';
 
 describe('Router utils', () => {
   describe('searchRouteTree', () => {

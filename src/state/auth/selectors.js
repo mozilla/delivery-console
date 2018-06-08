@@ -1,24 +1,16 @@
-export function getUserInfo(state, defaultsTo = null) {
-  const got = state.auth.loginInfo.get('userInfo', defaultsTo);
-  if (got && typeof got === 'string') {
-    return JSON.parse(got);
-  }
-  return got;
+export function getUserProfile(state, defaultsTo = null) {
+  return state.auth.session.get('profile', defaultsTo);
 }
 
 export function getAccessToken(state, defaultsTo = null) {
-  const accessToken = state.auth.loginInfo.get('accessToken', defaultsTo);
-  if (accessToken && typeof accessToken === 'string') {
-    try {
-      return JSON.parse(accessToken);
-    } catch (ex) {
-      console.warn('Unrecognized accessToken string:', accessToken);
-      throw ex;
-    }
-  }
-  return accessToken;
+  return state.auth.session.get('accessToken', defaultsTo);
 }
 
 export function getError(state, defaultsTo = null) {
-  return state.auth.loginInfo.get('error', defaultsTo);
+  return state.auth.session.get('error', defaultsTo);
+}
+
+export function isSessionExpired(state) {
+  const expiresAt = state.session.get('expiresAt', 0);
+  return new Date().getTime() >= expiresAt;
 }
