@@ -3,7 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchUserProfile, logUserIn } from 'console/state/auth/actions';
+import {
+  fetchUserProfile,
+  loginFailed,
+  logUserIn,
+} from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { finishAuthenticationFlow } from 'console/utils/auth0';
 
@@ -13,6 +17,7 @@ import { finishAuthenticationFlow } from 'console/utils/auth0';
   }),
   {
     fetchUserProfile,
+    loginFailed,
     logUserIn,
   },
 )
@@ -22,6 +27,7 @@ export default class QueryAuth0 extends React.PureComponent {
     accessToken: PropTypes.string,
     fetchUserProfile: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
+    loginFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
   };
 
@@ -31,8 +37,7 @@ export default class QueryAuth0 extends React.PureComponent {
     try {
       authResult = await finishAuthenticationFlow();
     } catch (err) {
-      // TODO: Handle login failure
-      console.log(err);
+      loginFailed(err);
     }
 
     if (!authResult) {

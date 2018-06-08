@@ -23,7 +23,7 @@ export function fetchUserProfile(accessToken) {
   };
 }
 
-export function setLoginFailed(error) {
+export function loginFailed(error) {
   return dispatch =>
     dispatch({
       type: USER_LOGIN_FAILURE,
