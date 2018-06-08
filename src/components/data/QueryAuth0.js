@@ -32,6 +32,7 @@ export default class QueryAuth0 extends React.PureComponent {
   };
 
   async componentWillMount() {
+    const { fetchUserProfile, history, loginFailed, logUserIn } = this.props;
     let authResult;
 
     try {
@@ -46,12 +47,19 @@ export default class QueryAuth0 extends React.PureComponent {
 
     if (authResult) {
       const { state } = authResult;
-      this.props.logUserIn(authResult);
-      this.props.fetchUserProfile(authResult.accessToken);
+      logUserIn(authResult);
+      fetchUserProfile(authResult.accessToken);
 
       if (state) {
-        this.props.history.push(state);
+        history.push(state);
       }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { accessToken, fetchUserProfile } = this.props;
+    if (accessToken !== nextProps.accessToken) {
+      fetchUserProfile(nextProps.accessToken);
     }
   }
 
