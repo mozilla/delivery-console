@@ -36,7 +36,7 @@ export default class QueryAuth0 extends React.PureComponent {
     }
 
     if (!authResult) {
-      authResult = JSON.parse(localStorage.getItem('authResult') || 'null');
+      authResult = JSON.parse(localStorage.getItem('authResult'));
     }
 
     if (authResult) {

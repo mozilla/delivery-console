@@ -1,5 +1,6 @@
 /* eslint import/prefer-default-export: "off" */
 
+import { NORMANDY_API_ROOT_URL } from 'console/settings';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { getRequest } from 'console/state/requests/selectors';
 
@@ -11,13 +12,8 @@ import {
 
 import APIClient from 'console/utils/api';
 
-export function makeApiRequest(requestId, endpoint, options = {}) {
+export function makeApiRequest(requestId, root, endpoint, options = {}) {
   return async (dispatch, getState) => {
-    let root;
-    if ('root' in options) {
-      root = options.root;
-      delete options.root;
-    }
     const state = getState();
     const accessToken = getAccessToken(state);
     const api = new APIClient(root, accessToken);
@@ -53,4 +49,8 @@ export function makeApiRequest(requestId, endpoint, options = {}) {
 
     return data;
   };
+}
+
+export function makeNormandyApiRequest(requestId, endpoint, options = {}) {
+  return makeApiRequest(requestId, NORMANDY_API_ROOT_URL, endpoint, options);
 }

@@ -1,11 +1,11 @@
 import { ACTION_RECEIVE } from 'console/state/action-types';
-import { makeApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/requests/actions';
 
 export function fetchAction(pk) {
   return async dispatch => {
     const requestId = `fetch-action-${pk}`;
     const action = await dispatch(
-      makeApiRequest(requestId, `v2/action/${pk}/`),
+      makeNormandyApiRequest(requestId, `v2/action/${pk}/`),
     );
 
     dispatch({
@@ -18,7 +18,9 @@ export function fetchAction(pk) {
 export function fetchAllActions() {
   return async dispatch => {
     const requestId = 'fetch-all-actions';
-    const actions = await dispatch(makeApiRequest(requestId, 'v2/action/'));
+    const actions = await dispatch(
+      makeNormandyApiRequest(requestId, 'v2/action/'),
+    );
 
     actions.forEach(action => {
       dispatch({

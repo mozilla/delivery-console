@@ -10,7 +10,6 @@
     "enzyme-adapter-react-16": "1.1.1",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
-    "js-cookie": "2.2.0",
     "lodash.get": "4.4.2",
     "photon-ant": "0.1.4",
     "raven-js": "3.25.2",

@@ -5,7 +5,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 import { approvalRequestReceived } from 'console/state/approvalRequests/actions';
-import { makeApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/requests/actions';
 
 export function revisionReceived(revision) {
   return dispatch => {
@@ -36,7 +36,7 @@ export function fetchRevision(pk) {
   return async dispatch => {
     const requestId = `fetch-revision-${pk}`;
     const revision = await dispatch(
-      makeApiRequest(requestId, `v2/recipe_revision/${pk}/`),
+      makeNormandyApiRequest(requestId, `v2/recipe_revision/${pk}/`),
     );
     dispatch(revisionReceived(revision));
   };
@@ -46,7 +46,7 @@ export function fetchAllRevisions() {
   return async dispatch => {
     const requestId = 'fetch-all-revisions';
     const revisions = await dispatch(
-      makeApiRequest(requestId, 'v2/recipe_revision/'),
+      makeNormandyApiRequest(requestId, 'v2/recipe_revision/'),
     );
 
     revisions.forEach(revision => {
@@ -59,9 +59,13 @@ export function requestRevisionApproval(pk) {
   return async dispatch => {
     const requestId = `request-revision-approval-${pk}`;
     const approvalRequest = await dispatch(
-      makeApiRequest(requestId, `v2/recipe_revision/${pk}/request_approval/`, {
-        method: 'POST',
-      }),
+      makeNormandyApiRequest(
+        requestId,
+        `v2/recipe_revision/${pk}/request_approval/`,
+        {
+          method: 'POST',
+        },
+      ),
     );
 
     dispatch(approvalRequestReceived(approvalRequest));

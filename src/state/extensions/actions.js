@@ -3,13 +3,13 @@ import {
   EXTENSION_PAGE_RECEIVE,
   EXTENSION_RECEIVE,
 } from 'console/state/action-types';
-import { makeApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/requests/actions';
 
 export function fetchExtension(pk) {
   return async dispatch => {
     const requestId = `fetch-extension-${pk}`;
     const extension = await dispatch(
-      makeApiRequest(requestId, `v2/extension/${pk}/`),
+      makeNormandyApiRequest(requestId, `v2/extension/${pk}/`),
     );
 
     dispatch({
@@ -23,7 +23,7 @@ export function fetchExtensionsPage(pageNumber = 1, filters = {}) {
   return async dispatch => {
     const requestId = `fetch-extensions-page-${pageNumber}`;
     const extensions = await dispatch(
-      makeApiRequest(requestId, 'v2/extension/', {
+      makeNormandyApiRequest(requestId, 'v2/extension/', {
         data: {
           page: pageNumber,
           ...filters,
@@ -61,7 +61,7 @@ export function createExtension(extensionData) {
   return async dispatch => {
     const requestId = 'create-extension';
     const extension = await dispatch(
-      makeApiRequest(requestId, 'v2/extension/', {
+      makeNormandyApiRequest(requestId, 'v2/extension/', {
         method: 'POST',
         body: prepareExtensionFormData(extensionData),
       }),
@@ -78,7 +78,7 @@ export function updateExtension(pk, extensionData) {
   return async dispatch => {
     const requestId = `update-extension-${pk}`;
     const extension = await dispatch(
-      makeApiRequest(requestId, `v2/extension/${pk}/`, {
+      makeNormandyApiRequest(requestId, `v2/extension/${pk}/`, {
         method: 'PATCH',
         body: prepareExtensionFormData(extensionData),
       }),

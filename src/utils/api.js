@@ -1,7 +1,4 @@
-import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
-
-import { NORMANDY_API_ROOT_URL } from 'console/settings';
 
 export function APIError(message, data = {}) {
   this.data = data;
@@ -12,7 +9,7 @@ APIError.prototype = Object.create(Error.prototype);
 APIError.prototype.name = 'APIError';
 
 export default class APIClient {
-  constructor(root = NORMANDY_API_ROOT_URL, accessToken = null) {
+  constructor(root, accessToken) {
     this.root = root;
     this.accessToken = accessToken;
   }
@@ -25,7 +22,6 @@ export default class APIClient {
     if (!(options.body && options.body instanceof FormData)) {
       headers.append('Content-Type', 'application/json');
     }
-    headers.append('X-CSRFToken', Cookie.get('csrftoken-20170707'));
 
     if (this.accessToken) {
       headers.append('Authorization', `Bearer ${this.accessToken}`);
