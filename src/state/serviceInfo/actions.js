@@ -1,13 +1,13 @@
 /* eslint import/prefer-default-export: "off" */
 
 import { SERVICE_INFO_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
-import { makeApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/requests/actions';
 
 export function fetchServiceInfo() {
   return async dispatch => {
     const requestId = 'fetch-service-info';
     const serviceInfo = await dispatch(
-      makeApiRequest(requestId, 'v2/service_info/'),
+      makeNormandyApiRequest(requestId, 'v2/service_info/'),
     );
 
     dispatch({

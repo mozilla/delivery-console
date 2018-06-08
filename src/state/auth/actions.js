@@ -1,45 +1,60 @@
+import { omit } from 'underscore';
+
 import {
   USER_LOGIN,
-  USER_LOGIN_FAILED,
+  USER_LOGIN_FAILURE,
   USER_LOGOUT,
-  USER_SET_INFO,
+  USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
+import { fetchUserInfo } from 'console/utils/auth0';
 
-export const setLoginFailed = error => {
+export function userProfileReceived(profile) {
   return dispatch =>
     dispatch({
-      type: USER_LOGIN_FAILED,
+      type: USER_PROFILE_RECEIVE,
+      profile,
+    });
+}
+
+export function fetchUserProfile(accessToken) {
+  return async dispatch => {
+    const profile = await fetchUserInfo(accessToken);
+    dispatch(userProfileReceived(profile));
+  };
+}
+
+export function loginFailed(error) {
+  return dispatch =>
+    dispatch({
+      type: USER_LOGIN_FAILURE,
       error,
     });
-};
+}
 
-export const setUserInfo = userInfo => {
-  return dispatch =>
-    dispatch({
-      type: USER_SET_INFO,
-      userInfo,
-    });
-};
+export function logUserIn(authResult) {
+  return dispatch => {
+    const accessToken = authResult.accessToken;
+    const expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 
-export const userLogin = accessToken => {
-  return dispatch =>
+    const cleanAuthResult = omit(authResult, 'state');
+    localStorage.setItem('authResult', JSON.stringify(cleanAuthResult));
+    localStorage.setItem('expiresAt', JSON.stringify(expiresAt));
+
     dispatch({
       type: USER_LOGIN,
       accessToken,
+      expiresAt,
     });
-};
+  };
+}
 
-export const userLogout = () => {
-  return dispatch =>
+export function logUserOut() {
+  return dispatch => {
+    localStorage.removeItem('authResult');
+    localStorage.removeItem('expiresAt');
+
     dispatch({
       type: USER_LOGOUT,
     });
-};
-
-export function getUserInfo(state, defaultsTo = null) {
-  return state.auth.loginInfo.get('userInfo', defaultsTo);
-}
-
-export function getAccessToken(state, defaultsTo = null) {
-  return state.auth.loginInfo.get('accessToken', defaultsTo);
+  };
 }

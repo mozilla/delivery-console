@@ -4,7 +4,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 
-import { makeApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/requests/actions';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {
@@ -31,7 +31,7 @@ export function fetchApprovalRequest(pk) {
   return async dispatch => {
     const requestId = `fetch-approval-request-${pk}`;
     const response = dispatch(
-      makeApiRequest(requestId, `v2/approval_request/${pk}/`),
+      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/`),
     );
     const approvalRequest = await response;
 
@@ -43,7 +43,7 @@ export function fetchAllApprovalRequests() {
   return async dispatch => {
     const requestId = 'fetch-all-approval-requests';
     const approvalRequests = await dispatch(
-      makeApiRequest(requestId, 'v2/approval_request/'),
+      makeNormandyApiRequest(requestId, 'v2/approval_request/'),
     );
 
     approvalRequests.forEach(approvalRequest => {
@@ -56,7 +56,7 @@ export function approveApprovalRequest(pk, data) {
   return async dispatch => {
     const requestId = `approve-approval-request-${pk}`;
     const approvalRequest = await dispatch(
-      makeApiRequest(requestId, `v2/approval_request/${pk}/approve/`, {
+      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/approve/`, {
         method: 'POST',
         data,
       }),
@@ -70,7 +70,7 @@ export function rejectApprovalRequest(pk, data) {
   return async dispatch => {
     const requestId = `reject-approval-request-${pk}`;
     const approvalRequest = await dispatch(
-      makeApiRequest(requestId, `v2/approval_request/${pk}/reject/`, {
+      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/reject/`, {
         method: 'POST',
         data,
       }),
@@ -85,7 +85,7 @@ export function closeApprovalRequest(pk) {
     const requestId = `close-approval-request-${pk}`;
 
     await dispatch(
-      makeApiRequest(requestId, `v2/approval_request/${pk}/close/`, {
+      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/close/`, {
         method: 'POST',
       }),
     );

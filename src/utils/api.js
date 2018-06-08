@@ -1,4 +1,3 @@
-import * as Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 
 export function APIError(message, data = {}) {
@@ -10,8 +9,9 @@ APIError.prototype = Object.create(Error.prototype);
 APIError.prototype.name = 'APIError';
 
 export default class APIClient {
-  constructor(root = 'https://localhost:8000/api/') {
+  constructor(root, accessToken) {
     this.root = root;
+    this.accessToken = accessToken;
   }
 
   async fetch(url, options) {
@@ -22,7 +22,10 @@ export default class APIClient {
     if (!(options.body && options.body instanceof FormData)) {
       headers.append('Content-Type', 'application/json');
     }
-    headers.append('X-CSRFToken', Cookie.get('csrftoken-20170707'));
+
+    if (this.accessToken) {
+      headers.append('Authorization', `Bearer ${this.accessToken}`);
+    }
 
     const settings = {
       headers,
