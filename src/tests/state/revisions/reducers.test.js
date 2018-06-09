@@ -14,9 +14,7 @@ describe('Revisions reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(
-      INITIAL_STATE,
-    );
+    expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
   });
 
   it('should handle REVISION_RECEIVE', () => {

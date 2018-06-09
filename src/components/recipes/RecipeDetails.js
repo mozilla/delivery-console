@@ -30,10 +30,7 @@ export default class RecipeDetails extends React.PureComponent {
         <Card className="noHovering" key="action-details" title="Action">
           <dl className="details">
             <dt>Name</dt>
-            <ArgumentsValue
-              name="name"
-              value={recipe.getIn(['action', 'name'])}
-            />
+            <ArgumentsValue name="name" value={recipe.getIn(['action', 'name'])} />
 
             {recipe
               .get('arguments', new Map())
@@ -69,8 +66,7 @@ export class ArgumentsValue extends React.PureComponent {
   }
 
   renderBranchTable(branches) {
-    const sumRatios =
-      branches.map(branch => branch.get('ratio')).reduce((a, b) => a + b) || 1;
+    const sumRatios = branches.map(branch => branch.get('ratio')).reduce((a, b) => a + b) || 1;
 
     return (
       <table className="pref-experiment-branches">
@@ -88,9 +84,7 @@ export class ArgumentsValue extends React.PureComponent {
               <td>
                 <ArgumentsValue name="value" value={branch.get('value')} />
               </td>
-              <td className="right">
-                {Math.round((branch.get('ratio') / sumRatios) * 100)}%
-              </td>
+              <td className="right">{Math.round((branch.get('ratio') / sumRatios) * 100)}%</td>
             </tr>
           ))}
         </tbody>

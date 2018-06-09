@@ -65,16 +65,10 @@ export default class ExtensionSelect extends React.Component {
     let displayedList = this.props.extensions;
     const queryFilters = search ? { text: search } : {};
 
-    const {
-      placeholderElement,
-      loadingDisplay,
-      noOptionsDisplay,
-    } = ExtensionSelect;
+    const { placeholderElement, loadingDisplay, noOptionsDisplay } = ExtensionSelect;
 
     const { isLoadingSearch, disabled, onChange, size, value } = this.props;
-    const optGroupLabel = search
-      ? 'Search results'
-      : 'Recently uploaded extensions';
+    const optGroupLabel = search ? 'Search results' : 'Recently uploaded extensions';
 
     if (isLoadingSearch) {
       displayedList = new List();

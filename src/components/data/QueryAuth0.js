@@ -3,11 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import {
-  fetchUserProfile,
-  loginFailed,
-  logUserIn,
-} from 'console/state/auth/actions';
+import { fetchUserProfile, loginFailed, logUserIn } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { finishAuthenticationFlow } from 'console/utils/auth0';
 

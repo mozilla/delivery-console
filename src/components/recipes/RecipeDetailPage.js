@@ -12,10 +12,7 @@ import HistoryTimeline from 'console/components/recipes/HistoryTimeline';
 import RevisionNotice from 'console/components/recipes/RevisionNotice';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
-import {
-  getLatestRevisionIdForRecipe,
-  getRecipeHistory,
-} from 'console/state/recipes/selectors';
+import { getLatestRevisionIdForRecipe, getRecipeHistory } from 'console/state/recipes/selectors';
 import { getRevision } from 'console/state/revisions/selectors';
 import { getUrlParam, getUrlParamAsInt } from 'console/state/router/selectors';
 
@@ -50,20 +47,14 @@ export default class RecipeDetailPage extends React.PureComponent {
             <RevisionNotice revision={revision} />
             <Row type="flex" align="middle">
               <Col span={4}>
-                <ShieldIdenticon
-                  className="detail-icon"
-                  seed={revision.get('identicon_seed')}
-                />
+                <ShieldIdenticon className="detail-icon" seed={revision.get('identicon_seed')} />
               </Col>
               <Col span={20}>
                 <DetailsActionBar />
               </Col>
             </Row>
             <LoadingOverlay
-              requestIds={[
-                `fetch-recipe-${recipeId}`,
-                `fetch-revision-${revisionId}`,
-              ]}
+              requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}
             >
               <RecipeDetails recipe={revision.get('recipe', new Map())} />
             </LoadingOverlay>

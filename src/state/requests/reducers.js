@@ -1,10 +1,6 @@
 import { fromJS, Map } from 'immutable';
 
-import {
-  REQUEST_FAILURE,
-  REQUEST_SEND,
-  REQUEST_SUCCESS,
-} from 'console/state/action-types';
+import { REQUEST_FAILURE, REQUEST_SEND, REQUEST_SUCCESS } from 'console/state/action-types';
 
 export default function requests(state = new Map(), action) {
   switch (action.type) {

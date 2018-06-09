@@ -23,16 +23,10 @@ describe('<EnvAlert>', () => {
       );
       expect(result).toBe(true);
 
-      result = EnvAlert.findFragmentsInURL(
-        'http://firefox.com/normandy-admin/',
-        testStrings,
-      );
+      result = EnvAlert.findFragmentsInURL('http://firefox.com/normandy-admin/', testStrings);
       expect(result).toBe(true);
 
-      result = EnvAlert.findFragmentsInURL(
-        'http://mozilla.org/control',
-        testStrings,
-      );
+      result = EnvAlert.findFragmentsInURL('http://mozilla.org/control', testStrings);
       expect(result).toBe(false);
     });
   });

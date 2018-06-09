@@ -11,11 +11,7 @@ import actionsReducer from 'console/state/actions/reducers';
 import recipesReducer from 'console/state/recipes/reducers';
 import revisionsReducer from 'console/state/revisions/reducers';
 import usersReducer from 'console/state/users/reducers';
-import {
-  getRecipe,
-  getRecipeFilters,
-  getRecipeHistory,
-} from 'console/state/recipes/selectors';
+import { getRecipe, getRecipeFilters, getRecipeHistory } from 'console/state/recipes/selectors';
 import { INITIAL_STATE } from 'console/tests/state';
 import { FILTERS, RecipeFactory } from 'console/tests/state/recipes';
 
@@ -88,10 +84,7 @@ describe('getRecipeHistory', () => {
     }),
     recipes: {
       ...INITIAL_STATE.recipes,
-      history: INITIAL_STATE.recipes.history.set(
-        recipe.id,
-        fromJS([recipe.latest_revision.id]),
-      ),
+      history: INITIAL_STATE.recipes.history.set(recipe.id, fromJS([recipe.latest_revision.id])),
     },
     revisions: revisionsReducer(undefined, {
       type: REVISION_RECEIVE,
@@ -108,8 +101,6 @@ describe('getRecipeHistory', () => {
   });
 
   it('should return the list of revisions', () => {
-    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(
-      fromJS([recipe.latest_revision]),
-    );
+    expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(fromJS([recipe.latest_revision]));
   });
 });

@@ -42,11 +42,7 @@ export default class LabeledInput extends React.Component {
         <Element onChange={onChange} {...this.getElementProps()} />
 
         {children && (
-          <span
-            className="label"
-            onClick={this.handleLabelClick}
-            {...this.getLabelProps()}
-          >
+          <span className="label" onClick={this.handleLabelClick} {...this.getLabelProps()}>
             {children}
           </span>
         )}

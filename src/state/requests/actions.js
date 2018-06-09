@@ -4,11 +4,7 @@ import { NORMANDY_API_ROOT_URL } from 'console/settings';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { getRequest } from 'console/state/requests/selectors';
 
-import {
-  REQUEST_FAILURE,
-  REQUEST_SEND,
-  REQUEST_SUCCESS,
-} from 'console/state/action-types';
+import { REQUEST_FAILURE, REQUEST_SEND, REQUEST_SUCCESS } from 'console/state/action-types';
 
 import APIClient from 'console/utils/api';
 

@@ -8,9 +8,7 @@ import { makeNormandyApiRequest } from 'console/state/requests/actions';
 export function fetchExtension(pk) {
   return async dispatch => {
     const requestId = `fetch-extension-${pk}`;
-    const extension = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/extension/${pk}/`),
-    );
+    const extension = await dispatch(makeNormandyApiRequest(requestId, `v2/extension/${pk}/`));
 
     dispatch({
       type: EXTENSION_RECEIVE,

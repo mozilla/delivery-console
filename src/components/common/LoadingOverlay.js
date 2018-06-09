@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  areAnyRequestsInProgress,
-  isRequestInProgress,
-} from 'console/state/requests/selectors';
+import { areAnyRequestsInProgress, isRequestInProgress } from 'console/state/requests/selectors';
 
 export class SimpleLoadingOverlay extends React.PureComponent {
   static propTypes = {
@@ -53,10 +50,8 @@ export class SimpleLoadingOverlay extends React.PureComponent {
 export default class LoadingOverlay extends React.PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    requestIds: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.string,
-    ]).isRequired,
+    requestIds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string])
+      .isRequired,
   };
 
   static defaultProps = {
@@ -64,8 +59,6 @@ export default class LoadingOverlay extends React.PureComponent {
   };
 
   render() {
-    return (
-      <SimpleLoadingOverlay isVisible={this.props.isLoading} {...this.props} />
-    );
+    return <SimpleLoadingOverlay isVisible={this.props.isLoading} {...this.props} />;
   }
 }
