@@ -43,7 +43,7 @@
     "lint:fix": "yarn run lint:prettier-eslintfix && yarn run lint:eslintfix && yarn run lint:less"
   },
   "devDependencies": {
-    "babel-plugin-import": "1.7.0",
+    "babel-plugin-import": "1.8.0",
     "babel-plugin-transform-decorators-legacy": "1.3.5",
     "babel-polyfill": "6.26.0",
     "enzyme": "3.3.0",
