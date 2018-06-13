@@ -42,10 +42,7 @@ export default class DataList extends React.PureComponent {
 
   handleChangeSortFilters(pagination, filters, sorter) {
     const { getCurrentURL, history } = this.props;
-    const filterParams = mapObject(
-      filters,
-      values => values && values.join(','),
-    );
+    const filterParams = mapObject(filters, values => values && values.join(','));
 
     let ordering;
     if (!isEmpty(sorter)) {

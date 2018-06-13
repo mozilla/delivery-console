@@ -1,11 +1,7 @@
 import { Map } from 'immutable';
 import * as matchers from 'jest-immutable-matchers';
 
-import {
-  REQUEST_FAILURE,
-  REQUEST_SEND,
-  REQUEST_SUCCESS,
-} from 'console/state/action-types';
+import { REQUEST_FAILURE, REQUEST_SEND, REQUEST_SUCCESS } from 'console/state/action-types';
 import { DEFAULT_REQUEST } from 'console/state/constants';
 import requestsReducer from 'console/state/requests/reducers';
 import { INITIAL_STATE } from 'console/tests/state/requests';
@@ -16,9 +12,7 @@ describe('Requests reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(requestsReducer(undefined, { type: 'INITIAL' })).toEqual(
-      INITIAL_STATE,
-    );
+    expect(requestsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
   });
 
   it('should handle REQUEST_SEND', () => {
@@ -27,9 +21,7 @@ describe('Requests reducer', () => {
         type: REQUEST_SEND,
         requestId: 'test',
       }),
-    ).toEqualImmutable(
-      INITIAL_STATE.set('test', DEFAULT_REQUEST.set('inProgress', true)),
-    );
+    ).toEqualImmutable(INITIAL_STATE.set('test', DEFAULT_REQUEST.set('inProgress', true)));
   });
 
   it('should handle REQUEST_SUCCESS', () => {
@@ -50,8 +42,6 @@ describe('Requests reducer', () => {
         error: ERROR,
         requestId: 'test',
       }),
-    ).toEqualImmutable(
-      INITIAL_STATE.set('test', DEFAULT_REQUEST.set('error', new Map(ERROR))),
-    );
+    ).toEqualImmutable(INITIAL_STATE.set('test', DEFAULT_REQUEST.set('error', new Map(ERROR))));
   });
 });

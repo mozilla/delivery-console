@@ -17,9 +17,7 @@ export default class ApprovalDetails extends React.PureComponent {
         <dd>{request.getIn(['approver', 'email'])}</dd>
 
         <dt>Responsed</dt>
-        <dd
-          title={moment(request.get('created')).format('MMMM Do YYYY, h:mm a')}
-        >
+        <dd title={moment(request.get('created')).format('MMMM Do YYYY, h:mm a')}>
           {moment(request.get('created')).fromNow()}
         </dd>
 

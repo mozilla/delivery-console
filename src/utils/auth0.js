@@ -1,11 +1,6 @@
 import auth0 from 'auth0-js';
 
-import {
-  OIDC_DOMAIN,
-  OIDC_CLIENT_ID,
-  OIDC_CALLBACK_URL,
-  OIDC_AUDIENCE,
-} from 'console/settings';
+import { OIDC_DOMAIN, OIDC_CLIENT_ID, OIDC_CALLBACK_URL, OIDC_AUDIENCE } from 'console/settings';
 
 export const webAuth = new auth0.WebAuth({
   domain: OIDC_DOMAIN,

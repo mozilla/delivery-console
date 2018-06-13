@@ -4,9 +4,7 @@ import { makeNormandyApiRequest } from 'console/state/requests/actions';
 export function fetchAction(pk) {
   return async dispatch => {
     const requestId = `fetch-action-${pk}`;
-    const action = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/action/${pk}/`),
-    );
+    const action = await dispatch(makeNormandyApiRequest(requestId, `v2/action/${pk}/`));
 
     dispatch({
       type: ACTION_RECEIVE,
@@ -18,9 +16,7 @@ export function fetchAction(pk) {
 export function fetchAllActions() {
   return async dispatch => {
     const requestId = 'fetch-all-actions';
-    const actions = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/action/'),
-    );
+    const actions = await dispatch(makeNormandyApiRequest(requestId, 'v2/action/'));
 
     actions.forEach(action => {
       dispatch({

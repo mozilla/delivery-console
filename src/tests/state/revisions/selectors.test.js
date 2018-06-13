@@ -1,11 +1,7 @@
 import { fromJS } from 'immutable';
 import * as matchers from 'jest-immutable-matchers';
 
-import {
-  ACTION_RECEIVE,
-  REVISION_RECEIVE,
-  USER_RECEIVE,
-} from 'console/state/action-types';
+import { ACTION_RECEIVE, REVISION_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import actionsReducer from 'console/state/actions/reducers';
 import revisionsReducer from 'console/state/revisions/reducers';
 import usersReducer from 'console/state/users/reducers';

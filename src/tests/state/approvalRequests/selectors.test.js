@@ -1,10 +1,7 @@
 import { fromJS } from 'immutable';
 import * as matchers from 'jest-immutable-matchers';
 
-import {
-  APPROVAL_REQUEST_RECEIVE,
-  USER_RECEIVE,
-} from 'console/state/action-types';
+import { APPROVAL_REQUEST_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import approvalRequestsReducer from 'console/state/approvalRequests/reducers';
 import { getApprovalRequest } from 'console/state/approvalRequests/selectors';
 import usersReducer from 'console/state/users/reducers';

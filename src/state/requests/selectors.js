@@ -20,10 +20,7 @@ export function areAnyRequestsInProgress(state) {
 
   return requests
     .reduce((reduced, value) =>
-      reduced.set(
-        'inProgress',
-        reduced.get('inProgress') || value.get('inProgress'),
-      ),
+      reduced.set('inProgress', reduced.get('inProgress') || value.get('inProgress')),
     )
     .get('inProgress', false);
 }

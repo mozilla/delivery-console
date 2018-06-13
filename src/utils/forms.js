@@ -110,10 +110,7 @@ export function createForm({ validateFields, ...formConfig }) {
         let values;
         try {
           const defaultValues = await this.defaultValidateFields();
-          values = await customValidateFields.call(
-            this.formComponent,
-            defaultValues,
-          );
+          values = await customValidateFields.call(this.formComponent, defaultValues);
         } catch (error) {
           handleError('Could not validate form.', new ValidationError(error));
 
@@ -172,11 +169,7 @@ export function connectFormProps(Component) {
 
     render() {
       return (
-        <Component
-          form={this.context.form}
-          formErrors={this.context.formErrors}
-          {...this.props}
-        />
+        <Component form={this.context.form} formErrors={this.context.formErrors} {...this.props} />
       );
     }
   };

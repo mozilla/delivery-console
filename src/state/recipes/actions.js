@@ -24,10 +24,7 @@ export function recipeReceived(recipe) {
 
     dispatch(revisionReceived(recipe.latest_revision));
 
-    if (
-      recipe.approved_revision &&
-      recipe.approved_revision.id !== recipe.latest_revision.id
-    ) {
+    if (recipe.approved_revision && recipe.approved_revision.id !== recipe.latest_revision.id) {
       dispatch(revisionReceived(recipe.approved_revision));
     }
   };
@@ -36,9 +33,7 @@ export function recipeReceived(recipe) {
 export function fetchRecipe(pk) {
   return async dispatch => {
     const requestId = `fetch-recipe-${pk}`;
-    const recipe = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/`),
-    );
+    const recipe = await dispatch(makeNormandyApiRequest(requestId, `v2/recipe/${pk}/`));
     dispatch(recipeReceived(recipe));
   };
 }
@@ -46,9 +41,7 @@ export function fetchRecipe(pk) {
 export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
   return async dispatch => {
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
-    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join(
-      '-',
-    )}`;
+    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
     const recipes = await dispatch(
       makeNormandyApiRequest(requestId, 'v2/recipe/', {
         data: {
@@ -153,9 +146,7 @@ export function fetchRecipeHistory(pk) {
 export function fetchRecipeFilters() {
   return async dispatch => {
     const requestId = 'fetch-recipe-filters';
-    const filters = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/filters/'),
-    );
+    const filters = await dispatch(makeNormandyApiRequest(requestId, 'v2/filters/'));
 
     dispatch({
       type: RECIPE_FILTERS_RECEIVE,

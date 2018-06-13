@@ -11,10 +11,7 @@ describe('getExtension', () => {
     ...INITIAL_STATE,
     extensions: {
       ...INITIAL_STATE.extensions,
-      items: INITIAL_STATE.extensions.items.set(
-        extension.id,
-        fromJS(extension),
-      ),
+      items: INITIAL_STATE.extensions.items.set(extension.id, fromJS(extension)),
     },
   };
 

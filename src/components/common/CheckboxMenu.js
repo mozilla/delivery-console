@@ -21,11 +21,7 @@ export default class CheckboxMenu extends React.PureComponent {
     const { checkboxes, label, onChange, options } = this.props;
 
     const menu = (
-      <Checkbox.Group
-        onChange={onChange}
-        options={options}
-        defaultValue={checkboxes}
-      />
+      <Checkbox.Group onChange={onChange} options={options} defaultValue={checkboxes} />
     );
 
     return (

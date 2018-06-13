@@ -23,11 +23,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 
     return {
       recipeId,
-      recipe: getRecipeForRevision(
-        state,
-        recipe.getIn(['latest_revision', 'id']),
-        new Map(),
-      ),
+      recipe: getRecipeForRevision(state, recipe.getIn(['latest_revision', 'id']), new Map()),
     };
   },
   {

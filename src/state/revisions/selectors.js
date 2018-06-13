@@ -25,10 +25,7 @@ export function getRevision(state, id, defaultsTo = null) {
 
   if (revision) {
     const action = getAction(state, revision.getIn(['recipe', 'action_id']));
-    const approvalRequest = getApprovalRequest(
-      state,
-      revision.get('approval_request_id'),
-    );
+    const approvalRequest = getApprovalRequest(state, revision.get('approval_request_id'));
     const user = getUser(state, revision.get('user_id'));
 
     return revision

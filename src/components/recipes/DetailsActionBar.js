@@ -12,21 +12,14 @@ import {
   enableRecipe as enableRecipeAction,
 } from 'console/state/recipes/actions';
 import { requestRevisionApproval as requestRevisionApprovalAction } from 'console/state/revisions/actions';
-import {
-  getLatestRevisionIdForRecipe,
-  getRecipe,
-} from 'console/state/recipes/selectors';
+import { getLatestRevisionIdForRecipe, getRecipe } from 'console/state/recipes/selectors';
 import {
   isApprovableRevision,
   isLatestApprovedRevision,
   isLatestRevision,
   isRevisionPendingApproval,
 } from 'console/state/revisions/selectors';
-import {
-  getRouterPath,
-  getUrlParam,
-  getUrlParamAsInt,
-} from 'console/state/router/selectors';
+import { getRouterPath, getUrlParam, getUrlParamAsInt } from 'console/state/router/selectors';
 
 @withRouter
 @connect(

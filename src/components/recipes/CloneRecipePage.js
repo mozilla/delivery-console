@@ -80,16 +80,12 @@ export default class CloneRecipePage extends React.PureComponent {
   renderHeader() {
     const { isLatestRevision, recipe, recipeId, revisionId } = this.props;
 
-    const recipeDetailsURL = `/recipe/${recipeId}${
-      isLatestRevision ? '' : `/rev/${revisionId}`
-    }/`;
+    const recipeDetailsURL = `/recipe/${recipeId}${isLatestRevision ? '' : `/rev/${revisionId}`}/`;
 
     const recipeName = recipe.get('name');
 
     // Only display revision hash if we're _not_ on the latest version.
-    const revisionAddendum = isLatestRevision
-      ? ''
-      : `(Revision: ${revisionId.slice(0, 7)})`;
+    const revisionAddendum = isLatestRevision ? '' : `(Revision: ${revisionId.slice(0, 7)})`;
     const cloningMessage = `Cloning recipe values from "${recipeName}" ${revisionAddendum}`;
 
     return (
@@ -113,12 +109,7 @@ export default class CloneRecipePage extends React.PureComponent {
         <QueryRevision pk={revisionId} />
         {this.renderHeader()}
 
-        <LoadingOverlay
-          requestIds={[
-            `fetch-recipe-${recipeId}`,
-            `fetch-revision-${revisionId}`,
-          ]}
-        >
+        <LoadingOverlay requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}>
           <GenericFormContainer
             form={RecipeForm}
             formAction={this.formAction}

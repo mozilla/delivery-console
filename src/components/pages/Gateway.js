@@ -17,24 +17,17 @@ export default class Gateway extends React.PureComponent {
               <ul>
                 <li>...log something to remote consoles.</li>
                 <li>...temporarily flip a remote Firefox preference.</li>
-                <li>
-                  ...permanently roll out a remote Firefox preference change.
-                </li>
+                <li>...permanently roll out a remote Firefox preference change.</li>
               </ul>
 
-              <NavLink to="/recipe/">
-                Go to the Recipe Listing to start a new study.
-              </NavLink>
+              <NavLink to="/recipe/">Go to the Recipe Listing to start a new study.</NavLink>
             </Card>
           </Col>
 
           <Col xs={24} sm={8}>
             <Card>
               <ul>
-                <li>
-                  ...manage system addons used in conjunction with opt-out
-                  studies.
-                </li>
+                <li>...manage system addons used in conjunction with opt-out studies.</li>
               </ul>
 
               <NavLink to="/extension/">
