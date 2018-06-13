@@ -1,7 +1,5 @@
 import { Spin } from 'antd';
-import LoadingOverlay, {
-  SimpleLoadingOverlay,
-} from 'console/components/common/LoadingOverlay';
+import LoadingOverlay, { SimpleLoadingOverlay } from 'console/components/common/LoadingOverlay';
 
 describe('<SimpleLoadingOverlay>', () => {
   const props = {
@@ -23,9 +21,7 @@ describe('<SimpleLoadingOverlay>', () => {
   });
 
   it('should display its children when NOT visible', () => {
-    const wrapper = mount(
-      <SimpleLoadingOverlay {...props} isVisible={false} />,
-    );
+    const wrapper = mount(<SimpleLoadingOverlay {...props} isVisible={false} />);
 
     expect(wrapper.find(Spin).length).toBe(0);
     expect(wrapper.find('#content').length).toBe(1);

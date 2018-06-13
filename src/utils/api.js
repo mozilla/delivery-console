@@ -37,9 +37,7 @@ export default class APIClient {
     // Convert `data` to `body` or querystring if necessary.
     if ('data' in settings) {
       if ('body' in settings) {
-        throw new Error(
-          'Only pass one of `settings.data` and `settings.body`.',
-        );
+        throw new Error('Only pass one of `settings.data` and `settings.body`.');
       }
 
       if (['GET', 'HEAD'].includes(settings.method.toUpperCase())) {

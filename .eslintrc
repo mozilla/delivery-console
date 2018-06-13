@@ -1,5 +1,8 @@
 {
-  "extends": "react-app",
+  "extends": [
+    "react-app",
+    "prettier"
+  ],
   "overrides": [{
     "files": "**/*.test.js",
     "globals": {
@@ -8,5 +11,11 @@
       "ReactDOM": true,
       "mount": true
     }
-  }]
+  }],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }

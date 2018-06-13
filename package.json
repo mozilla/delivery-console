@@ -4,17 +4,17 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
-    "antd": "3.6.1",
+    "antd": "3.6.2",
     "auth0-js": "9.6.1",
     "autobind-decorator": "2.1.0",
     "enzyme-adapter-react-16": "1.1.1",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "lodash.get": "4.4.2",
-    "raven-js": "3.26.1",
-    "react": "16.4.0",
+    "raven-js": "3.26.2",
+    "react": "16.4.1",
     "react-copy-to-clipboard": "5.0.1",
-    "react-dom": "16.4.0",
+    "react-dom": "16.4.1",
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
@@ -34,24 +34,21 @@
     "test:jest": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
-    "lint:eslint": "eslint -c node_modules/eslint-config-react-app/index.js --max-warnings 0 'src/**/*.js'",
-    "lint:eslintfix": "eslint -c node_modules/eslint-config-react-app/index.js --max-warnings 0 --fix 'src/**/*.js'",
-    "lint:prettier-eslint": "prettier-eslint --list-different 'src/**/*.js' | ./lint_problems.sh",
-    "lint:prettier-eslintfix": "prettier-eslint --write 'src/**/*.js'",
-    "lint": "yarn run lint:prettier-eslint && yarn run lint:eslint && yarn run lint:less",
-    "lint:fix": "yarn run lint:prettier-eslintfix && yarn run lint:eslintfix && yarn run lint:less"
+    "lint:eslint": "eslint --max-warnings 0 'src/**/*.js'",
+    "lint:eslintfix": "eslint --max-warnings 0 --fix 'src/**/*.js'",
+    "lint": "yarn run lint:eslint && yarn run lint:less",
+    "lint:fix": "yarn run lint:eslintfix && yarn run lint:less"
   },
   "devDependencies": {
-    "babel-plugin-import": "1.7.0",
+    "babel-plugin-import": "1.8.0",
     "babel-plugin-transform-decorators-legacy": "1.3.5",
     "babel-polyfill": "6.26.0",
     "enzyme": "3.3.0",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-prettier": "2.6.0",
     "faker": "4.1.0",
     "jest-immutable-matchers": "2.0.1",
-    "pre-commit": "1.2.2",
     "prettier": "1.13.5",
-    "prettier-eslint": "8.8.1",
-    "prettier-eslint-cli": "4.7.1",
     "react-app-rewire-less": "2.1.1",
     "react-app-rewired": "1.5.2",
     "stylelint": "9.2.1",
@@ -63,8 +60,5 @@
       ".*\\.less$": "<rootDir>/StubModule.js",
       "^console/(.*)$": "<rootDir>/src/$1"
     }
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }

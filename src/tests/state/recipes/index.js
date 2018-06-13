@@ -1,13 +1,7 @@
 import faker from 'faker';
 import { Map } from 'immutable';
 
-import {
-  AutoIncrementField,
-  DateField,
-  Factory,
-  Field,
-  SubFactory,
-} from 'console/tests/factory';
+import { AutoIncrementField, DateField, Factory, Field, SubFactory } from 'console/tests/factory';
 import { ActionFactory } from 'console/tests/state/actions';
 import { RevisionFactory } from 'console/tests/state/revisions';
 
@@ -79,9 +73,7 @@ export class RecipeFactory extends SimpleRecipeFactory {
       }
 
       if (this.data.latest_revision === null) {
-        this.data.latest_revision = RevisionFactory.build(
-          this.data.approved_revision,
-        );
+        this.data.latest_revision = RevisionFactory.build(this.data.approved_revision);
       }
     }
 

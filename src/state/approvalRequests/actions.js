@@ -30,9 +30,7 @@ export function approvalRequestReceived(approvalRequest) {
 export function fetchApprovalRequest(pk) {
   return async dispatch => {
     const requestId = `fetch-approval-request-${pk}`;
-    const response = dispatch(
-      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/`),
-    );
+    const response = dispatch(makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/`));
     const approvalRequest = await response;
 
     dispatch(approvalRequestReceived(approvalRequest));

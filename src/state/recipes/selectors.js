@@ -10,10 +10,7 @@ export function getRecipe(state, id, defaultsTo = null) {
   if (recipe) {
     const action = getAction(state, recipe.get('action_id'));
     const latestRevision = getRevision(state, recipe.get('latest_revision_id'));
-    const approvedRevision = getRevision(
-      state,
-      recipe.get('approved_revision_id'),
-    );
+    const approvedRevision = getRevision(state, recipe.get('approved_revision_id'));
 
     return recipe
       .set('action', action)
@@ -38,19 +35,14 @@ export function getRecipeListing(state) {
 
 export function getRecipeListingFlattenedAction(state) {
   const recipes = getRecipeListing(state);
-  return recipes.map(item =>
-    item.set('action', item.getIn(['action', 'name'])),
-  );
+  return recipes.map(item => item.set('action', item.getIn(['action', 'name'])));
 }
 
 export function getRecipeListingPageNumber(state) {
   return state.recipes.listing.get('pageNumber');
 }
 
-export function getRecipeListingColumns(
-  state,
-  defaultsTo = DEFAULT_RECIPE_LISTING_COLUMNS,
-) {
+export function getRecipeListingColumns(state, defaultsTo = DEFAULT_RECIPE_LISTING_COLUMNS) {
   return state.recipes.listing.get('columns', defaultsTo);
 }
 

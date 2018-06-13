@@ -19,9 +19,6 @@ export function getExtensionListingPageNumber(state) {
   return state.extensions.listing.get('pageNumber');
 }
 
-export function getExtensionListingColumns(
-  state,
-  defaultsTo = DEFAULT_EXTENSION_LISTING_COLUMNS,
-) {
+export function getExtensionListingColumns(state, defaultsTo = DEFAULT_EXTENSION_LISTING_COLUMNS) {
   return state.extensions.listing.get('columns', defaultsTo);
 }

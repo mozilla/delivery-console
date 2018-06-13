@@ -33,9 +33,7 @@ describe('getCurrentUser', () => {
 
 describe('isPeerApprovalEnforced', () => {
   it('should return the correct value', () => {
-    expect(isPeerApprovalEnforced(STATE)).toEqual(
-      serviceInfo.peer_approval_enforced,
-    );
+    expect(isPeerApprovalEnforced(STATE)).toEqual(serviceInfo.peer_approval_enforced);
   });
 });
 

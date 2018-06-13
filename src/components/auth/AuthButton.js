@@ -26,19 +26,11 @@ export default class AuthButton extends React.Component {
   render() {
     if (this.props.userProfile) {
       const nickname = this.props.userProfile.get('nickname');
-      return (
-        <Button
-          onClick={this.props.logUserOut}
-        >{`Logged in as ${nickname}`}</Button>
-      );
+      return <Button onClick={this.props.logUserOut}>{`Logged in as ${nickname}`}</Button>;
     }
 
     return (
-      <Button
-        onClick={() => startAuthenticationFlow(this.props.location.pathname)}
-      >
-        Login
-      </Button>
+      <Button onClick={() => startAuthenticationFlow(this.props.location.pathname)}>Login</Button>
     );
   }
 }

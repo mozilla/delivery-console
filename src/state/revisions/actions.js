@@ -45,9 +45,7 @@ export function fetchRevision(pk) {
 export function fetchAllRevisions() {
   return async dispatch => {
     const requestId = 'fetch-all-revisions';
-    const revisions = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/recipe_revision/'),
-    );
+    const revisions = await dispatch(makeNormandyApiRequest(requestId, 'v2/recipe_revision/'));
 
     revisions.forEach(revision => {
       dispatch(revisionReceived(revision));
@@ -59,13 +57,9 @@ export function requestRevisionApproval(pk) {
   return async dispatch => {
     const requestId = `request-revision-approval-${pk}`;
     const approvalRequest = await dispatch(
-      makeNormandyApiRequest(
-        requestId,
-        `v2/recipe_revision/${pk}/request_approval/`,
-        {
-          method: 'POST',
-        },
-      ),
+      makeNormandyApiRequest(requestId, `v2/recipe_revision/${pk}/request_approval/`, {
+        method: 'POST',
+      }),
     );
 
     dispatch(approvalRequestReceived(approvalRequest));

@@ -79,11 +79,7 @@ export default class RecipeListing extends React.PureComponent {
           key="name"
           render={(text, record) => (
             <div className="recipe-listing-name">
-              <ShieldIdenticon
-                className="shieldicon"
-                seed={record.identicon_seed}
-                size={24}
-              />
+              <ShieldIdenticon className="shieldicon" seed={record.identicon_seed} size={24} />
               {RecipeListing.renderLinkedText(text, record)}
             </div>
           )}
@@ -139,10 +135,7 @@ export default class RecipeListing extends React.PureComponent {
           render={(text, record) => {
             const lastUpdated = moment(record.last_updated);
             return (
-              <NavLink
-                to={`/recipe/${record.id}/`}
-                title={lastUpdated.format('LLLL')}
-              >
+              <NavLink to={`/recipe/${record.id}/`} title={lastUpdated.format('LLLL')}>
                 {lastUpdated.fromNow()}
               </NavLink>
             );
@@ -202,21 +195,12 @@ export default class RecipeListing extends React.PureComponent {
   }
 
   render() {
-    const {
-      columns,
-      count,
-      ordering,
-      pageNumber,
-      recipes,
-      status,
-    } = this.props;
+    const { columns, count, ordering, pageNumber, recipes, status } = this.props;
 
     const filters = this.getFilters();
 
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
-    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join(
-      '-',
-    )}`;
+    const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
     return (
       <div>
         <QueryRecipeListingColumns />

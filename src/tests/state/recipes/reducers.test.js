@@ -8,11 +8,7 @@ import {
   RECIPE_HISTORY_RECEIVE,
 } from 'console/state/action-types';
 import recipesReducer from 'console/state/recipes/reducers';
-import {
-  FILTERS,
-  INITIAL_STATE,
-  RecipeFactory,
-} from 'console/tests/state/recipes';
+import { FILTERS, INITIAL_STATE, RecipeFactory } from 'console/tests/state/recipes';
 
 describe('Recipes reducer', () => {
   const recipe = RecipeFactory.build();
@@ -22,9 +18,7 @@ describe('Recipes reducer', () => {
   });
 
   it('should return initial state by default', () => {
-    expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(
-      INITIAL_STATE,
-    );
+    expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
   });
 
   it('should handle RECIPE_RECEIVE', () => {
@@ -32,9 +26,7 @@ describe('Recipes reducer', () => {
       ...recipe,
       action_id: recipe.action.id,
       latest_revision_id: recipe.latest_revision.id,
-      approved_revision_id: recipe.approved_revision
-        ? recipe.approved_revision.id
-        : null,
+      approved_revision_id: recipe.approved_revision ? recipe.approved_revision.id : null,
     };
 
     delete reducedRecipe.action;
@@ -86,10 +78,7 @@ describe('Recipes reducer', () => {
       }),
     ).toEqual({
       ...INITIAL_STATE,
-      history: INITIAL_STATE.history.set(
-        recipe.id,
-        new List([recipe.latest_revision.id]),
-      ),
+      history: INITIAL_STATE.history.set(recipe.id, new List([recipe.latest_revision.id])),
     });
   });
 });

@@ -1,17 +1,12 @@
 import { List, is } from 'immutable';
 
-import {
-  SESSION_INFO_RECEIVE,
-  SESSION_INFO_HISTORY_VIEW,
-} from 'console/state/action-types';
+import { SESSION_INFO_RECEIVE, SESSION_INFO_HISTORY_VIEW } from 'console/state/action-types';
 import sessionReducer from 'console/state/session/reducers';
 import { INITIAL_STATE, SessionFactory } from 'console/tests/state/session';
 
 describe('Session reducer', () => {
   it('should return initial state by default', () => {
-    expect(sessionReducer(undefined, { type: 'INITIAL' })).toEqual(
-      INITIAL_STATE,
-    );
+    expect(sessionReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
   });
 
   it('should handle SESSION_INFO_RECEIVE', () => {
@@ -85,18 +80,14 @@ describe('Session reducer', () => {
         item: fakeItem3,
       });
 
-      expect(
-        is(result.history, new List([fakeItem3, fakeItem2, fakeItem])),
-      ).toBe(true);
+      expect(is(result.history, new List([fakeItem3, fakeItem2, fakeItem]))).toBe(true);
 
       result = sessionReducer(result, {
         type: SESSION_INFO_HISTORY_VIEW,
         item: fakeItem,
       });
 
-      expect(
-        is(result.history, new List([fakeItem, fakeItem3, fakeItem2])),
-      ).toBe(true);
+      expect(is(result.history, new List([fakeItem, fakeItem3, fakeItem2]))).toBe(true);
     });
   });
 });
