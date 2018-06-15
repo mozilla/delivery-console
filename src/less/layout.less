@@ -2,10 +2,21 @@
 
 #root {
   height: 100%;
+
+  > .ant-layout {
+    min-height: 100%;
+  }
 }
 
-.content-wrapper .content {
-  padding: 2em;
+.content-wrapper {
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 1012px;
+
+  .content {
+    padding: 2em;
+  }
 }
 
 .sidebar.ant-layout-header {
@@ -28,10 +39,40 @@
 }
 
 .ant-layout-header.app-header {
-  align-items: center;
-  display: flex;
-  position: relative;
-  z-index: 5;
+  a {
+    color: #FFF;
+  }
+
+  .content-wrapper {
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 5;
+
+    > a {
+      padding: 0 2em;
+
+      &,
+      &:focus,
+      &:active {
+        border-radius: 0;
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .user-meta {
+      flex: 1;
+      text-align: right;
+
+      .anticon-caret-down {
+        font-size: 10px;
+        margin-left: 6px;
+      }
+    }
+  }
 
   button {
     margin-left: 1em;
@@ -40,20 +81,5 @@
   h1 {
     color: #FFF;
     margin: 0 1em 0 0;
-  }
-
-  a {
-    color: #FFF;
-    padding: 0 2em;
-
-    &,
-    &:focus,
-    &:active {
-      border-radius: 0;
-    }
-
-    &.active {
-      background: rgba(255, 255, 255, 0.1);
-    }
   }
 }

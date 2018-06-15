@@ -14,12 +14,12 @@ import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
 import { getLatestRevisionIdForRecipe, getRecipeHistory } from 'console/state/recipes/selectors';
 import { getRevision } from 'console/state/revisions/selectors';
-import { getUrlParam, getUrlParamAsInt } from 'console/state/router/selectors';
+import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect((state, props) => {
   const recipeId = getUrlParamAsInt(props, 'recipeId');
   const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-  const revisionId = getUrlParam(props, 'revisionId', latestRevisionId);
+  const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
   const revision = getRevision(state, revisionId, new Map());
 
   return {
@@ -34,7 +34,7 @@ export default class RecipeDetailPage extends React.PureComponent {
     history: PropTypes.instanceOf(List).isRequired,
     recipeId: PropTypes.number.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
-    revisionId: PropTypes.string.isRequired,
+    revisionId: PropTypes.number.isRequired,
   };
 
   render() {

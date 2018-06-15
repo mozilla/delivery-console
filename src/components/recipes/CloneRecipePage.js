@@ -13,7 +13,7 @@ import RecipeForm from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
 import { createRecipe as createAction } from 'console/state/recipes/actions';
-import { getUrlParam, getUrlParamAsInt } from 'console/state/router/selectors';
+import { getUrlParamAsInt } from 'console/state/router/selectors';
 import {
   getRecipeForRevision,
   isLatestRevision as isLatestRevisionSelector,
@@ -26,7 +26,7 @@ import { NavLink } from 'react-router-dom';
   (state, props) => {
     const recipeId = getUrlParamAsInt(props, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const revisionId = getUrlParam(props, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
     const recipe = getRecipeForRevision(state, revisionId, new Map());
     const isLatestRevision = isLatestRevisionSelector(state, revisionId);
 
@@ -49,7 +49,7 @@ export default class CloneRecipePage extends React.PureComponent {
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
     recipe: PropTypes.instanceOf(Map).isRequired,
-    revisionId: PropTypes.string.isRequired,
+    revisionId: PropTypes.number.isRequired,
   };
 
   onFormSuccess(newId) {

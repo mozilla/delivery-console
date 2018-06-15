@@ -30,15 +30,19 @@ export default class App extends React.Component {
           <QueryActions />
 
           <Header className="app-header">
-            <h1>Delivery Console</h1>
+            <div className="content-wrapper">
+              <h1>Delivery Console</h1>
 
-            <NavLink exact to="/">
-              Home
-            </NavLink>
-            <NavLink to="/recipe">Recipes</NavLink>
-            <NavLink to="/extension">Extensions</NavLink>
+              <NavLink exact to="/">
+                Home
+              </NavLink>
+              <NavLink to="/recipe">Recipes</NavLink>
+              <NavLink to="/extension">Extensions</NavLink>
 
-            <AuthButton />
+              <div className="user-meta">
+                <AuthButton />
+              </div>
+            </div>
           </Header>
 
           <Error error={this.props.error} />

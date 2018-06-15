@@ -1,0 +1,16 @@
+.no-bold {
+  font-weight: normal;
+}
+
+a.text-colored,
+.text-colored-links a {
+  color: @text-color;
+
+  &:hover {
+    color: @link-hover-color;
+  }
+
+  &:active {
+    color: @link-active-color;
+  }
+}
