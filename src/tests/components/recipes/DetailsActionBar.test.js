@@ -14,7 +14,7 @@ describe('<DetailsActionBar>', () => {
     recipe: new Map(),
     recipeId: 123,
     requestRevisionApproval: () => {},
-    revisionId: 'abc',
+    revisionId: 123,
     routerPath: '/path/to/page',
   };
 

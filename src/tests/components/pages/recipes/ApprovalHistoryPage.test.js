@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import TestComponent from 'console/components/recipes/ApprovalHistoryPage';
+import TestComponent from 'console/components/pages/recipes/ApprovalHistoryPage';
 
 const { WrappedComponent: ApprovalHistoryPage } = TestComponent;
 

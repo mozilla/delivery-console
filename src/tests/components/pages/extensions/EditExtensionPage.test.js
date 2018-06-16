@@ -1,5 +1,5 @@
 import QueryExtension from 'console/components/data/QueryExtension';
-import TestComponent from 'console/components/extensions/EditExtensionPage';
+import TestComponent from 'console/components/pages/extensions/EditExtensionPage';
 import { Map } from 'immutable';
 
 const { WrappedComponent: EditExtensionPage } = TestComponent;

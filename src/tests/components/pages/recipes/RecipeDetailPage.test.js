@@ -1,5 +1,5 @@
 import { List, Map } from 'immutable';
-import TestComponent from 'console/components/recipes/RecipeDetailPage';
+import TestComponent from 'console/components/pages/recipes/RecipeDetailPage';
 
 const { WrappedComponent: RecipeDetailPage } = TestComponent;
 
@@ -8,7 +8,7 @@ describe('<RecipeDetailPage>', () => {
     history: new List(),
     recipeId: 123,
     revision: new Map().set('identicon_seed', 'foobar'),
-    revisionId: 'abc',
+    revisionId: 123,
   };
 
   it('should work', () => {

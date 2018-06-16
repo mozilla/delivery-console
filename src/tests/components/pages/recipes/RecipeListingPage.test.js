@@ -1,9 +1,9 @@
 import { List } from 'immutable';
-import TestComponent from 'console/components/recipes/RecipeListing';
+import TestComponent from 'console/components/pages/recipes/RecipeListingPage';
 
-const { WrappedComponent: RecipeListing } = TestComponent;
+const { WrappedComponent: RecipeListingPage } = TestComponent;
 
-describe('<RecipeListing>', () => {
+describe('<RecipeListingPage>', () => {
   const props = {
     columns: new List(),
     count: null,
@@ -20,7 +20,7 @@ describe('<RecipeListing>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () => shallow(<RecipeListing {...props} />);
+    const wrapper = () => shallow(<RecipeListingPage {...props} />);
 
     expect(wrapper).not.toThrow();
   });

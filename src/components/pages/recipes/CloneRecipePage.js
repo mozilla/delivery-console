@@ -85,7 +85,7 @@ export default class CloneRecipePage extends React.PureComponent {
     const recipeName = recipe.get('name');
 
     // Only display revision hash if we're _not_ on the latest version.
-    const revisionAddendum = isLatestRevision ? '' : `(Revision: ${revisionId.slice(0, 7)})`;
+    const revisionAddendum = isLatestRevision ? '' : `(Revision: ${revisionId})`;
     const cloningMessage = `Cloning recipe values from "${recipeName}" ${revisionAddendum}`;
 
     return (

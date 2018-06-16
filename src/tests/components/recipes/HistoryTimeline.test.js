@@ -8,7 +8,7 @@ describe('<HistoryTimeline>', () => {
     history: new List(),
     isLatestRevision: () => {},
     recipeId: 123,
-    selectedRevisionId: 'abc',
+    selectedRevisionId: 123,
   };
 
   it('should work', () => {

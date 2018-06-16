@@ -31,7 +31,7 @@ export default class HistoryItem extends React.PureComponent {
     revision: PropTypes.instanceOf(Map).isRequired,
     status: PropTypes.instanceOf(Map).isRequired,
     selectedRevisionId: PropTypes.number.isRequired,
-    recipeId: PropTypes.string.isRequired,
+    recipeId: PropTypes.number.isRequired,
     revisionNo: PropTypes.number.isRequired,
   };
 
