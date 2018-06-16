@@ -12,7 +12,9 @@ export default class SwitchBox extends LabeledInput {
   }
 
   getElement() {
-    return Switch;
+    // TODO: Remove this hack-y fix for webpack build issue (#195)
+    const Element = Switch;
+    return Element;
   }
 
   getElementProps() {

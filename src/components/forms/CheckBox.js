@@ -6,7 +6,9 @@ import LabeledInput from './LabeledInput';
 @autobind
 export default class LabeledCheckbox extends LabeledInput {
   getElement() {
-    return Checkbox;
+    // TODO: Remove this hack-y fix for webpack build issue (#195)
+    const Element = Checkbox;
+    return Element;
   }
 
   getElementProps() {
