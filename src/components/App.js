@@ -9,9 +9,10 @@ import Error from './Error';
 import { getError } from 'console/state/auth/selectors';
 
 import AuthButton from 'console/components/auth/AuthButton';
-import AppRouter from 'console/components/router';
 import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
+import AppRouter from 'console/components/router';
+import CircleLogo from 'console/components/svg/CircleLogo';
 const { Header, Content } = Layout;
 
 @connect((state, props) => ({
@@ -31,6 +32,7 @@ export default class App extends React.Component {
 
           <Header className="app-header">
             <div className="content-wrapper">
+              <CircleLogo width="40px" height="40px" fill="white" />
               <h1>Delivery Console</h1>
 
               <NavLink exact to="/">
