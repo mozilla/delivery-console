@@ -47,7 +47,7 @@ import {
   },
 )
 @autobind
-export default class RecipeListing extends React.PureComponent {
+export default class RecipeListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
@@ -80,7 +80,7 @@ export default class RecipeListing extends React.PureComponent {
           render={(text, record) => (
             <div className="recipe-listing-name">
               <ShieldIdenticon className="shieldicon" seed={record.identicon_seed} size={24} />
-              {RecipeListing.renderLinkedText(text, record)}
+              {RecipeListingPage.renderLinkedText(text, record)}
             </div>
           )}
           sortOrder={DataList.getSortOrder('name', ordering)}
@@ -95,7 +95,7 @@ export default class RecipeListing extends React.PureComponent {
           title="Action"
           dataIndex="action"
           key="action"
-          render={RecipeListing.renderLinkedText}
+          render={RecipeListingPage.renderLinkedText}
         />
       );
     },
@@ -211,7 +211,7 @@ export default class RecipeListing extends React.PureComponent {
         <LoadingOverlay requestIds={requestId}>
           <DataList
             columns={columns}
-            columnRenderers={RecipeListing.columnRenderers}
+            columnRenderers={RecipeListingPage.columnRenderers}
             dataSource={recipes.toJS()}
             ordering={ordering}
             onRowClick={this.handleRowClick}

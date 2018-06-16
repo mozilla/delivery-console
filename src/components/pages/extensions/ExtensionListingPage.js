@@ -36,7 +36,7 @@ import {
   {},
 )
 @autobind
-export default class ExtensionListing extends React.PureComponent {
+export default class ExtensionListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
@@ -62,7 +62,7 @@ export default class ExtensionListing extends React.PureComponent {
           title="Name"
           dataIndex="name"
           key="name"
-          render={ExtensionListing.renderLinkedText}
+          render={ExtensionListingPage.renderLinkedText}
         />
       );
     },
@@ -73,7 +73,7 @@ export default class ExtensionListing extends React.PureComponent {
           title="XPI URL"
           dataIndex="xpi"
           key="xpi"
-          render={ExtensionListing.renderLinkedText}
+          render={ExtensionListingPage.renderLinkedText}
         />
       );
     },
@@ -121,7 +121,7 @@ export default class ExtensionListing extends React.PureComponent {
         <LoadingOverlay requestIds={`fetch-extensions-page-${pageNumber}`}>
           <DataList
             columns={columns}
-            columnRenderers={ExtensionListing.columnRenderers}
+            columnRenderers={ExtensionListingPage.columnRenderers}
             dataSource={extensions.toJS()}
             ordering={ordering}
             onRowClick={this.handleRowClick}

@@ -2,15 +2,16 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router';
 
-import CreateExtensionPage from 'console/components/extensions/CreateExtensionPage';
-import EditExtensionPage from 'console/components/extensions/EditExtensionPage';
-import ApprovalHistoryPage from 'console/components/recipes/ApprovalHistoryPage';
-import CreateRecipePage from 'console/components/recipes/CreateRecipePage';
-import CloneRecipePage from 'console/components/recipes/CloneRecipePage';
-import EditRecipePage from 'console/components/recipes/EditRecipePage';
-import ExtensionListing from 'console/components/extensions/ExtensionListing';
-import RecipeListing from 'console/components/recipes/RecipeListing';
-import RecipeDetailPage from 'console/components/recipes/RecipeDetailPage';
+import CreateExtensionPage from 'console/components/pages/extensions/CreateExtensionPage';
+import EditExtensionPage from 'console/components/pages/extensions/EditExtensionPage';
+import ApprovalHistoryPage from 'console/components/pages/recipes/ApprovalHistoryPage';
+import CreateRecipePage from 'console/components/pages/recipes/CreateRecipePage';
+import CloneRecipePage from 'console/components/pages/recipes/CloneRecipePage';
+import EditRecipePage from 'console/components/pages/recipes/EditRecipePage';
+import ExtensionListingPage from 'console/components/pages/extensions/ExtensionListingPage';
+import RecipeListingPage from 'console/components/pages/recipes/RecipeListingPage';
+import RecipeDetailPage from 'console/components/pages/recipes/RecipeDetailPage';
+import MissingPage from 'console/components/pages/MissingPage';
 
 const Homepage = props => (
   <div>
@@ -23,7 +24,7 @@ const Homepage = props => (
   </div>
 );
 
-export default class ConsoleRouter extends React.Component {
+export default class AppRouter extends React.Component {
   state = {};
 
   getRoutes() {
@@ -33,7 +34,7 @@ export default class ConsoleRouter extends React.Component {
       },
       // Recipes ---
       '/recipe': {
-        component: RecipeListing,
+        component: RecipeListingPage,
       },
       '/recipe/new': {
         component: CreateRecipePage,
@@ -59,7 +60,7 @@ export default class ConsoleRouter extends React.Component {
       },
       // Extensions ---
       '/extension': {
-        component: ExtensionListing,
+        component: ExtensionListingPage,
       },
       '/extension/new': {
         component: CreateExtensionPage,
@@ -78,16 +79,7 @@ export default class ConsoleRouter extends React.Component {
           return <Route key={route} exact path={route} {...routes[route]} />;
         })}
 
-        <Route
-          component={({ location }) => (
-            <div>
-              <h2>404 - Page Not Found</h2>
-              <p>
-                No route match for <code>{location.pathname}</code>
-              </p>
-            </div>
-          )}
-        />
+        <Route component={MissingPage} />
       </Switch>
     );
   }
