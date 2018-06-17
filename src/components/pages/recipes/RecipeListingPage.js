@@ -202,7 +202,7 @@ export default class RecipeListingPage extends React.PureComponent {
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
     const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
     return (
-      <div>
+      <div className="content-wrapper">
         <QueryRecipeListingColumns />
         <QueryFilteredRecipes pageNumber={pageNumber} filters={filters} />
 

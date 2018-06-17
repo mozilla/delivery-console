@@ -1,5 +1,7 @@
-.no-bold {
-  font-weight: normal;
+a {
+  &:focus {
+    text-decoration: none;
+  }
 }
 
 a.text-colored,
@@ -13,4 +15,12 @@ a.text-colored,
   &:active {
     color: @link-active-color;
   }
+}
+
+.no-bold {
+  font-weight: normal;
+}
+
+.righted {
+  text-align: right;
 }

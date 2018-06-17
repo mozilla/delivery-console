@@ -40,7 +40,7 @@ export default class RecipeDetailPage extends React.PureComponent {
   render() {
     const { history, recipeId, revision, revisionId } = this.props;
     return (
-      <div className="page-recipe-details">
+      <div className="content-wrapper page-recipe-details">
         <QueryRecipe pk={recipeId} />
         <Row gutter={24}>
           <Col span={16}>

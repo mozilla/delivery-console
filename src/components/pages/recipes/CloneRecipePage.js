@@ -104,7 +104,7 @@ export default class CloneRecipePage extends React.PureComponent {
     const { recipeId, revisionId } = this.props;
 
     return (
-      <div className="clone-page">
+      <div className="content-wrapper clone-page">
         <QueryRecipe pk={recipeId} />
         <QueryRevision pk={revisionId} />
         {this.renderHeader()}

@@ -40,7 +40,7 @@ export default class CreateRecipePage extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="content-wrapper">
         <h2>Create New Recipe</h2>
         <GenericFormContainer
           form={RecipeForm}

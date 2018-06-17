@@ -28,7 +28,7 @@ export default class ApprovalHistoryPage extends React.PureComponent {
     const { history, recipeId } = this.props;
 
     return (
-      <div>
+      <div className="content-wrapper">
         <QueryRecipe pk={recipeId} />
         <QueryRecipeHistory pk={recipeId} />
 

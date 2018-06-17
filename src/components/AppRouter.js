@@ -12,25 +12,13 @@ import ExtensionListingPage from 'console/components/pages/extensions/ExtensionL
 import RecipeListingPage from 'console/components/pages/recipes/RecipeListingPage';
 import RecipeDetailPage from 'console/components/pages/recipes/RecipeDetailPage';
 import MissingPage from 'console/components/pages/MissingPage';
-
-const Homepage = props => (
-  <div>
-    <h3>Welcome {props.userInfo ? 'back' : 'home'}!</h3>
-    {props.userInfo ? (
-      <p>Hello there!</p>
-    ) : (
-      <p>You are not logged in! Please use the login button in the header.</p>
-    )}
-  </div>
-);
+import HomePage from 'console/components/pages/HomePage';
 
 export default class AppRouter extends React.Component {
-  state = {};
-
   getRoutes() {
     return {
       '/': {
-        component: () => <Homepage userInfo={this.state.userInfo} />,
+        component: HomePage,
       },
       // Recipes ---
       '/recipe': {

@@ -51,7 +51,7 @@ export default class EditExtensionPage extends React.PureComponent {
   render() {
     const { extensionId, extension } = this.props;
     return (
-      <div>
+      <div className="content-wrapper">
         <QueryExtension pk={extensionId} />
         <h2>Edit Extension</h2>
 

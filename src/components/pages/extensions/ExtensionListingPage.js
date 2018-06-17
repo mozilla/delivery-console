@@ -112,7 +112,7 @@ export default class ExtensionListingPage extends React.PureComponent {
     const { columns, count, extensions, ordering, pageNumber } = this.props;
 
     return (
-      <div>
+      <div className="content-wrapper">
         <QueryExtensionListingColumns />
         <QueryMultipleExtensions pageNumber={pageNumber} />
 

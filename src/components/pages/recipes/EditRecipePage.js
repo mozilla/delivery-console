@@ -59,7 +59,7 @@ export default class EditRecipePage extends React.PureComponent {
     const { recipeId, recipe } = this.props;
 
     return (
-      <div className="edit-page">
+      <div className="content-wrapper edit-page">
         <QueryRecipe pk={recipeId} />
         <LoadingOverlay requestIds={`fetch-recipe-${recipeId}`}>
           <h2>Edit Recipe</h2>

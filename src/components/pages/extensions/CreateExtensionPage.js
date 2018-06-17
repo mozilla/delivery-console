@@ -40,7 +40,7 @@ export default class CreateExtensionPage extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div className="content-wrapper">
         <h2>Add New Extension</h2>
         <GenericFormContainer
           form={ExtensionForm}
