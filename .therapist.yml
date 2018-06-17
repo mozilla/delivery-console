@@ -1,11 +1,11 @@
 actions:
   eslint:
-    run: ./node_modules/.bin/eslint --max-warnings 0 {files}
+    run: yarn eslint --max-warnings 0 {files}
     include:
       - "*.js"
       - "*.jsx"
   stylelint:
-    run: ./node_modules/.bin/stylelint {files}
+    run: yarn stylelint {files}
     include:
       - "*.css"
       - "*.less"
