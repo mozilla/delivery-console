@@ -124,7 +124,7 @@ export default class ExtensionListingPage extends React.PureComponent {
             columnRenderers={ExtensionListingPage.columnRenderers}
             dataSource={extensions.toJS()}
             ordering={ordering}
-            onRowClick={this.handleRowClick}
+            onRow={this.handleRowClick}
           />
         </LoadingOverlay>
 

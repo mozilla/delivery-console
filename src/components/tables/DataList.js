@@ -24,13 +24,13 @@ export default class DataList extends React.PureComponent {
     dataSource: PropTypes.array.isRequired,
     getCurrentURL: PropTypes.func.isRequired,
     ordering: PropTypes.string,
-    onRowClick: PropTypes.func,
+    onRow: PropTypes.func,
     history: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
     ordering: null,
-    onRowClick: null,
+    onRow: null,
   };
 
   static getSortOrder = (field, ordering) => {
@@ -60,7 +60,7 @@ export default class DataList extends React.PureComponent {
   }
 
   render() {
-    const { columnRenderers, columns, dataSource, onRowClick } = this.props;
+    const { columnRenderers, columns, dataSource, onRow } = this.props;
 
     return (
       <Table
@@ -69,7 +69,7 @@ export default class DataList extends React.PureComponent {
         pagination={false}
         rowKey="id"
         onChange={this.handleChangeSortFilters}
-        onRowClick={onRowClick}
+        onRow={onRow}
         bordered
       >
         {columns.map(column => columnRenderers[column](this.props))}
