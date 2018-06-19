@@ -214,7 +214,7 @@ export default class RecipeListingPage extends React.PureComponent {
             columnRenderers={RecipeListingPage.columnRenderers}
             dataSource={recipes.toJS()}
             ordering={ordering}
-            onRow={this.handleRowClick}
+            onRowClick={this.handleRowClick}
             status={status}
           />
         </LoadingOverlay>
