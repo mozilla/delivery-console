@@ -17,8 +17,8 @@ export const items = [
 
 export default class HomePage extends React.PureComponent {
   renderCards(items) {
-    return items.map(item => (
-      <Col span={8}>
+    return items.map((item, index) => (
+      <Col span={8} key={index}>
         <NavigationCard {...item} />
       </Col>
     ));
@@ -27,7 +27,11 @@ export default class HomePage extends React.PureComponent {
   renderRows(items) {
     const rows = [];
     for (let i = 0; i < items.length; i += 3) {
-      rows.push(<Row gutter={20}>{this.renderCards(items.slice(i, i + 3))}</Row>);
+      rows.push(
+        <Row gutter={20} key={i}>
+          {this.renderCards(items.slice(i, i + 3))}
+        </Row>,
+      );
     }
     return rows;
   }
