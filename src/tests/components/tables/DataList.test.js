@@ -11,7 +11,7 @@ describe('<DataList>', () => {
     getCurrentURL: () => {},
     history: {},
     ordering: 'surprise-me',
-    onRow: () => {},
+    onRowClick: () => {},
     push: () => {},
   };
 
