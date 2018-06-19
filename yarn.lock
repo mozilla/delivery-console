@@ -215,9 +215,9 @@ antd@3.0.0:
     shallowequal "^1.0.1"
     warning "~3.0.0"
 
-antd@3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-3.6.2.tgz#ae679e3138d24f73aa133a73a96a3b8fd5ce3ddd"
+antd@3.6.3:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.6.3.tgz#29ad00da47b9162a7935672a6c8ba43f45713aff"
   dependencies:
     array-tree-filter "^2.0.0"
     babel-runtime "6.x"
