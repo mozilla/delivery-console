@@ -17,8 +17,8 @@ describe('<HistoryItem>', () => {
       isLatestRevision: () => {},
       revision: new Map(),
       status: new Map(),
-      selectedRevisionId: 'abc123',
-      recipeId: 'def234',
+      selectedRevisionId: 123,
+      recipeId: 234,
       revisionNo: 6,
     };
 
@@ -31,15 +31,15 @@ describe('<HistoryItem>', () => {
     const props = {
       isLatestRevision: () => {},
       revision: new Map({
-        id: 'abc123',
+        id: 123,
       }),
       status: new Map(),
-      recipeId: 'def234',
+      recipeId: 234,
       revisionNo: 6,
     };
 
     it('should highlight when it is the selected revision', () => {
-      const wrapper = mount(wrapMockStore(<HistoryItem {...props} selectedRevisionId="abc123" />));
+      const wrapper = mount(wrapMockStore(<HistoryItem {...props} selectedRevisionId={123} />));
 
       // We can test against the Timeline.Item inheritting proper visual styles.
       const el = wrapper.find(Timeline.Item);
@@ -53,7 +53,7 @@ describe('<HistoryItem>', () => {
     });
 
     it('should NOT highlight when it is NOT the selected revision', () => {
-      const wrapper = mount(wrapMockStore(<HistoryItem {...props} selectedRevisionId="aeiou" />));
+      const wrapper = mount(wrapMockStore(<HistoryItem {...props} selectedRevisionId={234} />));
 
       const el = wrapper.find(Timeline.Item);
       expect(el.length).toBe(1);

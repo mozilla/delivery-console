@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Avatar, Button, Icon, Popover } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -23,14 +23,48 @@ export default class AuthButton extends React.Component {
     userProfile: PropTypes.object,
   };
 
+  popoverTitle(nickname) {
+    return (
+      <div>
+        <div className="no-bold">Logged in as</div>
+        {nickname}
+      </div>
+    );
+  }
+
+  menu() {
+    return (
+      <div>
+        <div className="text-colored-links">
+          <a onClick={this.props.logUserOut}>Log Out</a>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     if (this.props.userProfile) {
       const nickname = this.props.userProfile.get('nickname');
-      return <Button onClick={this.props.logUserOut}>{`Logged in as ${nickname}`}</Button>;
+      const picture = this.props.userProfile.get('picture');
+      return (
+        <Popover
+          content={this.menu()}
+          title={this.popoverTitle(nickname)}
+          trigger="click"
+          placement="bottomRight"
+        >
+          <a className="ant-dropdown-link">
+            <Avatar src={picture} icon="user" />
+            <Icon type="caret-down" />
+          </a>
+        </Popover>
+      );
     }
 
     return (
-      <Button onClick={() => startAuthenticationFlow(this.props.location.pathname)}>Login</Button>
+      <Button type="primary" onClick={() => startAuthenticationFlow(this.props.location.pathname)}>
+        Log In
+      </Button>
     );
   }
 }

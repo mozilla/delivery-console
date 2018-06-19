@@ -11,7 +11,6 @@
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "lodash.get": "4.4.2",
-    "photon-ant": "0.1.4",
     "raven-js": "3.26.2",
     "react": "16.4.1",
     "react-copy-to-clipboard": "5.0.1",

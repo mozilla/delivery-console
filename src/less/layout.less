@@ -2,62 +2,74 @@
 
 #root {
   height: 100%;
-}
 
-.content-wrapper .content {
-  padding: 2em;
-}
-
-.sidebar.ant-layout-header {
-  align-items: end;
-  display: flex;
-  height: 47px;
-  line-height: 47px;
-}
-
-.righted {
-  text-align: right;
-}
-
-.app.ant-layout {
-  min-height: 100vh;
-}
-
-.app-content {
-  padding: 2em;
-}
-
-.ant-layout-header.app-header {
-  align-items: center;
-  background: @blue-60;
-  color: @white;
-  display: flex;
-  position: relative;
-  z-index: 5;
-
-  button {
-    margin-left: 1em;
+  > .ant-layout {
+    min-height: 100%;
   }
+}
 
-  h1 {
-    color: @white;
-    margin: 0 1em 0 0;
-  }
+.content-wrapper {
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 1012px;
+}
 
-  a {
-    background: @blue-60;
-    color: @white;
-    padding: 0 2em;
-
-    &,
-    &:focus,
-    &:active {
-      border-radius: 0;
+.ant-layout-header {
+  &.app-header {
+    a {
+      color: #FFF;
     }
 
-    &.active {
-      background: @white;
-      color: @blue-60;
+    .content-wrapper {
+      align-items: center;
+      display: flex;
+      position: relative;
+      z-index: 5;
+
+      > a {
+        display: flex;
+
+        &:active,
+        &:focus {
+          text-decoration: none;
+        }
+      }
+
+      .user-meta {
+        flex: 1;
+        text-align: right;
+
+        .anticon-caret-down {
+          font-size: 10px;
+          margin-left: 6px;
+        }
+      }
+    }
+
+    button {
+      margin-left: 1em;
+    }
+
+    h1 {
+      color: #FFF;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: normal;
+      margin: 0 2em 0 1em;
+      width: 64px;
+    }
+  }
+
+  &.navigator {
+    background: #FFF;
+    border-bottom: 1px solid @border-color-base;
+    margin-bottom: 24px;
+  }
+
+  .ant-affix & {
+    &.navigator {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
   }
 }

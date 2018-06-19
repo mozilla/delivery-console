@@ -1,0 +1,31 @@
+html,
+body {
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+a.text-colored,
+.text-colored-links a {
+  color: @text-color;
+
+  &:hover {
+    color: @link-hover-color;
+  }
+
+  &:active {
+    color: @link-active-color;
+  }
+}
+
+.no-bold {
+  font-weight: normal;
+}
+
+.righted {
+  text-align: right;
+}
