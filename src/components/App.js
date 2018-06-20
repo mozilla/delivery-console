@@ -2,7 +2,6 @@ import { Layout } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter, Link } from 'react-router-dom';
-import 'console/less/layout.less';
 import { connect } from 'react-redux';
 
 import Error from './Error';

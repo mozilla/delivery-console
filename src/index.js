@@ -1,3 +1,5 @@
+import 'console/less/index.less';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'console/components/App';
