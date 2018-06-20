@@ -27,11 +27,9 @@ export default class AuthButton extends React.Component {
     const nickname = userProfile.get('nickname');
     const email = userProfile.get('email');
     return (
-      <div>
+      <div title={`Email: ${email}`}>
         <div className="no-bold">Logged in as</div>
         {nickname}
-        <br />
-        {email}
       </div>
     );
   }
