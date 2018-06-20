@@ -74,3 +74,36 @@ When working on an individual app, there is a need to stub out certain values/pr
     );
 
 ``App.js`` outlines the actual React component for the app, while ``index.js`` mounts the app to the DOM with some fake data.
+
+
+FSEvent Errors Running ``jest``
+===============================
+
+If you encounter an error like this, when running ``yarn run test:jest``:
+
+.. code-block:: bash
+
+    ▶ yarn run test:jest
+    yarn run v1.7.0
+    $ react-app-rewired test --env=jsdom
+    2018-06-20 13:55 node[6928] (FSEvents.framework) FSEventStreamStart: register_with_server: ERROR: f2d_register_rpc() => (null) (-22)
+    2018-06-20 13:55 node[6928] (FSEvents.framework) FSEventStreamStart: register_with_server: ERROR: f2d_register_rpc() => (null) (-22)
+    2018-06-20 13:55 node[6928] (FSEvents.framework) FSEventStreamStart: register_with_server: ERROR: f2d_register_rpc() => (null) (-22)
+    events.js:167
+          throw er; // Unhandled 'error' event
+          ^
+    
+    Error: EMFILE: too many open files, watch
+        at FSEvent.FSWatcher._handle.onchange (fs.js:1372:28)
+    Emitted 'error' event at:
+        at FSEvent.FSWatcher._handle.onchange (fs.js:1378:12)
+    error Command failed with exit code 1.
+    info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+    
+A probable cause is that you don't have ``watchman`` installed. For example, on macOS you can fix this by installing...:
+
+.. code-block:: bash
+
+    $ brew update
+    $ brew install watchman
+    
