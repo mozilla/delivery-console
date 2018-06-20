@@ -23,11 +23,15 @@ export default class AuthButton extends React.Component {
     userProfile: PropTypes.object,
   };
 
-  popoverTitle(nickname) {
+  popoverTitle(userProfile) {
+    const nickname = userProfile.get('nickname');
+    const email = userProfile.get('email');
     return (
       <div>
         <div className="no-bold">Logged in as</div>
         {nickname}
+        <br />
+        {email}
       </div>
     );
   }
@@ -44,12 +48,11 @@ export default class AuthButton extends React.Component {
 
   render() {
     if (this.props.userProfile) {
-      const nickname = this.props.userProfile.get('nickname');
       const picture = this.props.userProfile.get('picture');
       return (
         <Popover
           content={this.menu()}
-          title={this.popoverTitle(nickname)}
+          title={this.popoverTitle(this.props.userProfile)}
           trigger="click"
           placement="bottomRight"
         >
