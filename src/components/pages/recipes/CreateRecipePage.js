@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import RecipeForm from 'console/components/recipes/RecipeForm';
+import QueryActions from 'console/components/data/QueryActions';
 
 import { createRecipe as createAction } from 'console/state/recipes/actions';
 
@@ -41,6 +42,7 @@ export default class CreateRecipePage extends React.PureComponent {
   render() {
     return (
       <div className="content-wrapper">
+        <QueryActions />
         <h2>Create New Recipe</h2>
         <GenericFormContainer
           form={RecipeForm}
