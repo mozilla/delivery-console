@@ -5,6 +5,7 @@ import {
   USER_LOGIN_FAILURE,
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
+  AUTH_STARTED,
 } from 'console/state/action-types';
 import { fetchUserInfo } from 'console/utils/auth0';
 
@@ -57,4 +58,12 @@ export function logUserOut() {
       type: USER_LOGOUT,
     });
   };
+}
+
+export function setAuthStarted(started = true) {
+  return dispatch =>
+    dispatch({
+      type: AUTH_STARTED,
+      started,
+    });
 }

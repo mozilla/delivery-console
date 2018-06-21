@@ -6,6 +6,7 @@ import {
   USER_LOGIN_FAILURE,
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
+  AUTH_STARTED,
 } from 'console/state/action-types';
 
 function session(state = new Map(), action) {
@@ -27,6 +28,9 @@ function session(state = new Map(), action) {
         .set('accessToken', action.accessToken)
         .set('expiresAt', action.expiresAt)
         .remove('error');
+
+    case AUTH_STARTED:
+      return state.set('authStarted', action.started);
 
     default:
       return state;

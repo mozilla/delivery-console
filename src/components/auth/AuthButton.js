@@ -4,22 +4,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { logUserOut } from 'console/state/auth/actions';
-import { getUserProfile } from 'console/state/auth/selectors';
+import { logUserOut, setAuthStarted } from 'console/state/auth/actions';
+import { getAuthStarted, getUserProfile } from 'console/state/auth/selectors';
 import { startAuthenticationFlow } from 'console/utils/auth0';
 
 @connect(
   (state, props) => ({
     userProfile: getUserProfile(state),
+    authStarted: getAuthStarted(state),
   }),
   {
     logUserOut,
+    setAuthStarted,
   },
 )
 @withRouter
 export default class AuthButton extends React.Component {
   static propTypes = {
+    authStarted: PropTypes.bool.isRequired,
     logUserOut: PropTypes.func.isRequired,
+    setAuthStarted: PropTypes.func.isRequired,
     userProfile: PropTypes.object,
   };
 
@@ -63,7 +67,20 @@ export default class AuthButton extends React.Component {
     }
 
     return (
-      <Button type="primary" onClick={() => startAuthenticationFlow(this.props.location.pathname)}>
+      <Button
+        type="primary"
+        loading={this.props.authStarted}
+        onClick={() => {
+          this.props.setAuthStarted(true);
+          startAuthenticationFlow(this.props.location.pathname);
+
+          // In case you have terrible network, the going to the auth0 page might be slow.
+          // Or, it might be stuck. Or, the user hits Esc to cancel the redirect.
+          window.setTimeout(() => {
+            this.props.setAuthStarted(false);
+          }, 3000);
+        }}
+      >
         Log In
       </Button>
     );
