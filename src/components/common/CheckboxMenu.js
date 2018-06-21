@@ -1,4 +1,4 @@
-import { Button, Checkbox, Dropdown } from 'antd';
+import { Button, Checkbox, Popover } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,13 +21,18 @@ export default class CheckboxMenu extends React.PureComponent {
     const { checkboxes, label, onChange, options } = this.props;
 
     const menu = (
-      <Checkbox.Group onChange={onChange} options={options} defaultValue={checkboxes} />
+      <Checkbox.Group
+        className="checkbox-menu"
+        onChange={onChange}
+        options={options}
+        defaultValue={checkboxes}
+      />
     );
 
     return (
-      <Dropdown overlay={menu}>
+      <Popover content={menu} trigger="click" placement="bottomLeft">
         <Button icon="bars">{label}</Button>
-      </Dropdown>
+      </Popover>
     );
   }
 }
