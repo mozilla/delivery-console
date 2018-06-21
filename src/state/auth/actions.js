@@ -8,12 +8,11 @@ import {
 } from 'console/state/action-types';
 
 export function userProfileReceived(profile) {
-  return dispatch => {
+  return dispatch =>
     dispatch({
       type: USER_PROFILE_RECEIVE,
       profile,
     });
-  };
 }
 
 export function loginFailed(error) {
