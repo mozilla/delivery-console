@@ -1,11 +1,8 @@
-import { Layout } from 'antd';
+import { Layout, notification } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import Error from './Error';
-import { getError } from 'console/state/auth/selectors';
 
 import AuthButton from 'console/components/auth/AuthButton';
 import NavBar from 'console/components/navigation/NavBar';
@@ -13,6 +10,8 @@ import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
 import AppRouter from 'console/components/AppRouter';
 import CircleLogo from 'console/components/svg/CircleLogo';
+import { getError } from 'console/state/auth/selectors';
+
 const { Header } = Layout;
 
 @connect((state, props) => ({
@@ -22,6 +21,17 @@ export default class App extends React.Component {
   static propTypes = {
     error: PropTypes.object,
   };
+
+  getSnapshotBeforeUpdate() {
+    const { error } = this.props;
+
+    if (error) {
+      notification['error']({
+        message: 'Login Failed',
+        description: error.get('errorDescription'),
+      });
+    }
+  }
 
   render() {
     return (
@@ -47,8 +57,6 @@ export default class App extends React.Component {
           </Header>
 
           <NavBar />
-
-          <Error error={this.props.error} />
 
           <AppRouter />
         </Layout>
