@@ -10,7 +10,6 @@ import GenericFormContainer from 'console/components/recipes/GenericFormContaine
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
-import QueryActions from 'console/components/data/QueryActions';
 
 import { updateRecipe } from 'console/state/recipes/actions';
 import { getRecipe } from 'console/state/recipes/selectors';
@@ -62,7 +61,6 @@ export default class EditRecipePage extends React.PureComponent {
     return (
       <div className="content-wrapper edit-page">
         <QueryRecipe pk={recipeId} />
-        <QueryActions />
         <LoadingOverlay requestIds={`fetch-recipe-${recipeId}`}>
           <h2>Edit Recipe</h2>
           <GenericFormContainer
