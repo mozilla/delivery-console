@@ -15,20 +15,21 @@ import { getError } from 'console/state/auth/selectors';
 const { Header } = Layout;
 
 @connect((state, props) => ({
-  error: getError(state),
+  authError: getError(state),
 }))
 export default class App extends React.Component {
   static propTypes = {
-    error: PropTypes.object,
+    authError: PropTypes.object,
   };
 
-  getSnapshotBeforeUpdate() {
-    const { error } = this.props;
+  componentDidUpdate() {
+    const { authError } = this.props;
 
-    if (error) {
+    if (authError) {
       notification['error']({
-        message: 'Login Failed',
-        description: error.get('errorDescription'),
+        message: 'Authentication Error',
+        description: `${authError.get('error')}: ${authError.get('errorDescription')}`,
+        duration: 0,
       });
     }
   }
