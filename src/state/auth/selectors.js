@@ -6,6 +6,13 @@ export function getAccessToken(state, defaultsTo = null) {
   return state.auth.session.get('accessToken', defaultsTo);
 }
 
+/**
+ * Gets the authentication error from the state
+ *
+ * @param state  The current state
+ * @param defaultsTo  A fallback value
+ * @returns {Immutable.Map({error: String, errorDescription: String})}
+ */
 export function getError(state, defaultsTo = null) {
   return state.auth.session.get('error', defaultsTo);
 }
