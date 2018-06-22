@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { isEmpty, mapObject } from 'underscore';
+import { isEmpty } from 'lodash';
 
 import { getCurrentURL as getCurrentURLSelector } from 'console/state/router/selectors';
 
@@ -42,7 +42,10 @@ export default class DataList extends React.PureComponent {
 
   handleChangeSortFilters(pagination, filters, sorter) {
     const { getCurrentURL, history } = this.props;
-    const filterParams = mapObject(filters, values => values && values.join(','));
+    const filterParams = {};
+    Object.entries(filters).forEach(([key, values]) => {
+      filterParams[key] = values && values.join(',');
+    });
 
     let ordering;
     if (!isEmpty(sorter)) {

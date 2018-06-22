@@ -1,4 +1,4 @@
-import { omit } from 'underscore';
+import { omit } from 'lodash';
 
 import {
   USER_LOGIN,
