@@ -27,3 +27,14 @@ export function finishAuthenticationFlow() {
     });
   });
 }
+
+export function refreshAuthentication(returnUrl) {
+  return new Promise((resolve, reject) => {
+    webAuth.checkSession({ state: returnUrl }, (err, authResult) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(authResult);
+    });
+  });
+}

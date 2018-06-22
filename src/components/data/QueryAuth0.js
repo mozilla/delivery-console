@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import { loginFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
-import { finishAuthenticationFlow } from 'console/utils/auth0';
+import { finishAuthenticationFlow, refreshAuthentication } from 'console/utils/auth0';
+import { REFRESH_AUTH_PREEMPTIVE_SECONDS, REFRESH_AUTH_PERIOD_SECONDS } from 'console/settings';
 
 @connect(
   (state, props) => ({
@@ -28,7 +29,7 @@ export default class QueryAuth0 extends React.PureComponent {
   };
 
   async componentDidMount() {
-    const { history, loginFailed, logUserIn, userProfileReceived } = this.props;
+    const { loginFailed } = this.props;
     let authResult;
 
     try {
@@ -45,16 +46,52 @@ export default class QueryAuth0 extends React.PureComponent {
     }
 
     if (authResult) {
-      const { state } = authResult;
-      logUserIn(authResult);
-      // Since we include 'id_token' for the 'responseType' in auth0.WebAuth
-      // the authresult will contain the user profile as .idTokenPayload
-      // included with the accessToken. Use this now to update the state so that we
-      // can display the name and avatar you logged in as.
-      userProfileReceived(authResult.idTokenPayload);
+      this.postProcessAuthResult(authResult);
 
-      if (state) {
-        history.push(state);
+      // Start a never-ending loop over periodically checking if the accessToken is about to
+      // or has expired.
+      await this.accessTokenRefreshLoop();
+    }
+  }
+
+  postProcessAuthResult = authResult => {
+    const { history, logUserIn, userProfileReceived } = this.props;
+    const { state } = authResult;
+    logUserIn(authResult);
+    // Since we include 'id_token' for the 'responseType' in auth0.WebAuth
+    // the authresult will contain the user profile as .idTokenPayload
+    // included with the accessToken. Use this now to update the state so that we
+    // can display the name and avatar you logged in as.
+    userProfileReceived(authResult.idTokenPayload);
+
+    if (state) {
+      history.push(state);
+    }
+  };
+
+  async accessTokenRefreshLoop() {
+    if (!localStorage.getItem('expiresAt')) {
+      // The user has logged out probably. Either way, no point bothering to refresh.
+      return;
+    }
+    const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+    const left = expiresAt - new Date().getTime();
+    const preemptive = REFRESH_AUTH_PREEMPTIVE_SECONDS * 1000;
+
+    const accessTokenRefreshLoopTimer = window.setTimeout(async () => {
+      await this.accessTokenRefreshLoop();
+    }, REFRESH_AUTH_PERIOD_SECONDS * 1000);
+
+    if (left - preemptive < 0) {
+      // Time to refresh!
+      console.warn('Time to refresh auth session');
+      try {
+        const authResult = await refreshAuthentication(this.props.location.pathname);
+        this.postProcessAuthResult(authResult);
+      } catch (err) {
+        window.clearTimeout(accessTokenRefreshLoopTimer);
+        console.error(err);
+        this.props.loginFailed(err);
       }
     }
   }

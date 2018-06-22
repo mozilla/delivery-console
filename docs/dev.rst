@@ -92,18 +92,50 @@ If you encounter an error like this, when running ``yarn run test:jest``:
     events.js:167
           throw er; // Unhandled 'error' event
           ^
-    
+
     Error: EMFILE: too many open files, watch
         at FSEvent.FSWatcher._handle.onchange (fs.js:1372:28)
     Emitted 'error' event at:
         at FSEvent.FSWatcher._handle.onchange (fs.js:1378:12)
     error Command failed with exit code 1.
     info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-    
+
 A probable cause is that you don't have ``watchman`` installed. For example, on macOS you can fix this by installing...:
 
 .. code-block:: bash
 
     $ brew update
     $ brew install watchman
-    
+
+Debugging Silent Authentication
+===============================
+
+The way the authentication works is that a never-ending loop checks if the access token has
+expired, or is about to expire. Actually, it only uses ``localStorage.expiresAt`` to do this.
+To debug this you can either sit very patiently and wait till the check ticks again, or you
+can speed it up manually. First, to control how often the check ticks, you can override
+``REACT_APP_REFRESH_AUTH_PERIOD_SECONDS`` when starting the dev server:
+
+.. code-block:: bash
+
+    ▶ REACT_APP_REFRESH_AUTH_PERIOD_SECONDS=10 yarn start
+
+That will cause the check to run every 10 seconds.
+
+Secondly, to avoid awaiting for the access token to expire, you can paste this function
+into the Web Console:
+
+.. code-block:: javascript
+
+    window.windExpires = hours => {
+      let expires = JSON.parse(localStorage.getItem('expiresAt')) - hours * 1000 * 3600;
+      localStorage.setItem('expiresAt', JSON.stringify(expires));
+   };
+
+Now you can type, in the Web Console:
+
+.. code-block:: javascript
+
+    windExpires(1.5)
+
+That will simulate that 1.5 hours on the ``localStorage.expiresAt`` has gone past.
