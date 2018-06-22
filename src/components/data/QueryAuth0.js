@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchUserProfile, loginFailed, logUserIn } from 'console/state/auth/actions';
+import { loginFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { finishAuthenticationFlow } from 'console/utils/auth0';
 
@@ -12,23 +12,23 @@ import { finishAuthenticationFlow } from 'console/utils/auth0';
     accessToken: getAccessToken(state),
   }),
   {
-    fetchUserProfile,
     loginFailed,
     logUserIn,
+    userProfileReceived,
   },
 )
 @withRouter
 export default class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
-    fetchUserProfile: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     loginFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    userProfileReceived: PropTypes.func.isRequired,
   };
 
-  async componentWillMount() {
-    const { fetchUserProfile, history, loginFailed, logUserIn } = this.props;
+  async componentDidMount() {
+    const { history, loginFailed, logUserIn, userProfileReceived } = this.props;
     let authResult;
 
     try {
@@ -38,24 +38,24 @@ export default class QueryAuth0 extends React.PureComponent {
     }
 
     if (!authResult) {
+      // It if was null from finishAuthenticationFlow() it means it didn't pick anything
+      // up from the window.location.hash so we can potentially use what was stored in
+      // localStorage.
       authResult = JSON.parse(localStorage.getItem('authResult'));
     }
 
     if (authResult) {
       const { state } = authResult;
       logUserIn(authResult);
-      fetchUserProfile(authResult.accessToken);
+      // Since we include 'id_token' for the 'responseType' in auth0.WebAuth
+      // the authresult will contain the user profile as .idTokenPayload
+      // included with the accessToken. Use this now to update the state so that we
+      // can display the name and avatar you logged in as.
+      userProfileReceived(authResult.idTokenPayload);
 
       if (state) {
         history.push(state);
       }
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { accessToken, fetchUserProfile } = this.props;
-    if (nextProps.accessToken && accessToken !== nextProps.accessToken) {
-      fetchUserProfile(nextProps.accessToken);
     }
   }
 

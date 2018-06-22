@@ -6,7 +6,6 @@ import {
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
-import { fetchUserInfo } from 'console/utils/auth0';
 
 export function userProfileReceived(profile) {
   return dispatch =>
@@ -14,13 +13,6 @@ export function userProfileReceived(profile) {
       type: USER_PROFILE_RECEIVE,
       profile,
     });
-}
-
-export function fetchUserProfile(accessToken) {
-  return async dispatch => {
-    const profile = await fetchUserInfo(accessToken);
-    dispatch(userProfileReceived(profile));
-  };
 }
 
 export function loginFailed(error) {

@@ -27,14 +27,3 @@ export function finishAuthenticationFlow() {
     });
   });
 }
-
-export function fetchUserInfo(accessToken) {
-  return new Promise((resolve, reject) => {
-    webAuth.client.userInfo(accessToken, (err, userInfo) => {
-      if (err) {
-        reject(new Error(err));
-      }
-      resolve(userInfo);
-    });
-  });
-}
