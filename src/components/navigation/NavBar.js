@@ -1,62 +1,62 @@
-import { Affix, Breadcrumb, Button, Layout, Select } from 'antd';
+import { Affix, Breadcrumb, Button, Dropdown, Icon, Layout, Menu } from 'antd';
 import autobind from 'autobind-decorator';
-import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { LinkButton } from 'console/components/common/LinkButton';
 import { cards } from 'console/components/pages/HomePage';
 import { getCurrentRouteTree } from 'console/state/router/selectors';
 
-const { Item } = Breadcrumb;
 const { Header } = Layout;
-const { Option } = Select;
 
-@connect(
-  state => ({
-    routeTree: getCurrentRouteTree(state),
-  }),
-  {
-    push,
-  },
-)
+@connect(state => ({
+  routeTree: getCurrentRouteTree(state),
+}))
 @autobind
 export default class NavBar extends React.PureComponent {
   static propTypes = {
-    push: PropTypes.func.isRequired,
     routeTree: PropTypes.array.isRequired,
   };
 
-  handleChange(url) {
-    this.props.push(url);
-  }
-
   renderCrumbs() {
-    const { handleChange } = this;
     const crumbs = this.props.routeTree.reverse().slice(1);
+
     return crumbs.map((crumb, index, origCrumbs) => {
-      if (index === 0 && cards.find(e => e.listingUrl === crumb.pathname)) {
-        return (
-          <Item key={index}>
-            <Select defaultValue={crumb.pathname} onChange={handleChange}>
-              {cards.map(card => (
-                <Option key={card.listingUrl} value={card.listingUrl}>
-                  {card.title}
-                </Option>
-              ))}
-            </Select>
-          </Item>
+      const selectedCard = cards.find(e => e.listingUrl === crumb.pathname);
+      let crumbItem = crumb.crumbText;
+
+      if (index === 0 && selectedCard) {
+        const menu = (
+          <Menu>
+            {cards.map(card => (
+              <Menu.Item>
+                <Link to={card.listingUrl}>{card.title}</Link>
+              </Menu.Item>
+            ))}
+          </Menu>
         );
-      } else if (index === origCrumbs.length - 1) {
-        return <Item key={index}>{crumb.crumbText}</Item>;
+
+        crumbItem = (
+          <div className="card-selector">
+            <LinkButton
+              className="left-btn"
+              to={selectedCard.listingUrl}
+              disabled={index === origCrumbs.length - 1}
+            >
+              {selectedCard.title}
+            </LinkButton>
+            <Dropdown overlay={menu} placement="bottomRight" trigger="click">
+              <Button className="right-btn" icon="ellipsis" />
+            </Dropdown>
+          </div>
+        );
+      } else if (index !== origCrumbs.length - 1) {
+        crumbItem = <Link to={crumb.pathname}>{crumbItem}</Link>;
       }
 
-      return (
-        <Item key={index}>
-          <Link to={crumb.pathname}>{crumb.crumbText}</Link>
-        </Item>
-      );
+      return <Breadcrumb.Item key={index}>{crumbItem}</Breadcrumb.Item>;
     });
   }
 
@@ -69,12 +69,12 @@ export default class NavBar extends React.PureComponent {
       <Affix>
         <Header className="navigator">
           <div className="content-wrapper">
-            <Breadcrumb>
-              <Item>
+            <Breadcrumb separator={<Icon type="right" />}>
+              <Breadcrumb.Item>
                 <Link to="/">
                   <Button icon="home" />
                 </Link>
-              </Item>
+              </Breadcrumb.Item>
               {this.renderCrumbs()}
             </Breadcrumb>
           </div>
