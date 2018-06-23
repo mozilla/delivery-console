@@ -61,7 +61,7 @@ export function getCurrentUrl(state, applyQueryParams) {
   };
 
   const search = Object.entries(queryParams)
-    .filter(([key, value]) => value !== undefined && value !== null)
+    .filter(([key, value]) => value)
     .map(([key, value]) => (value === true ? key : `${key}=${value}`))
     .join('&');
 

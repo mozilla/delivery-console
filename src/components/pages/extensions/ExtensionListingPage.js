@@ -105,8 +105,8 @@ export default class ExtensionListingPage extends React.PureComponent {
     this.props.push(getCurrentUrl({ page }));
   }
 
-  handleRowClick(record) {
-    this.props.push(`/extension/${record.id}/`);
+  getUrlFromRecord(record) {
+    return `/extension/${record.id}/`;
   }
 
   render() {
@@ -125,7 +125,7 @@ export default class ExtensionListingPage extends React.PureComponent {
             columnRenderers={ExtensionListingPage.columnRenderers}
             dataSource={extensions.toJS()}
             ordering={ordering}
-            onRowClick={this.handleRowClick}
+            getUrlFromRecord={this.getUrlFromRecord}
           />
         </LoadingOverlay>
 
