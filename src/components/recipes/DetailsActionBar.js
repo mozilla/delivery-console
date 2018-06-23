@@ -19,22 +19,22 @@ import {
   isLatestRevision,
   isRevisionPendingApproval,
 } from 'console/state/revisions/selectors';
-import { getRouterPath, getUrlParamAsInt } from 'console/state/router/selectors';
+import { getCurrentPathname, getUrlParamAsInt } from 'console/state/router/selectors';
 
 @withRouter
 @connect(
   (state, props) => {
-    const recipeId = getUrlParamAsInt(props, 'recipeId');
+    const recipeId = getUrlParamAsInt(state, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
     const recipe = getRecipe(state, recipeId, new Map());
-    const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
 
     return {
       isLatest: isLatestRevision(state, revisionId),
       isLatestApproved: isLatestApprovedRevision(state, revisionId),
       isPendingApproval: isRevisionPendingApproval(state, revisionId),
       isApprovable: isApprovableRevision(state, revisionId),
-      routerPath: getRouterPath(props),
+      routerPath: getCurrentPathname(state),
       recipe,
       recipeId,
       revisionId,

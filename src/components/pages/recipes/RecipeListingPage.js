@@ -24,7 +24,7 @@ import {
   getRecipeListingFlattenedAction,
 } from 'console/state/recipes/selectors';
 import {
-  getCurrentURL as getCurrentURLSelector,
+  getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
@@ -34,12 +34,12 @@ import {
   (state, props) => ({
     columns: getRecipeListingColumns(state),
     count: getRecipeListingCount(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(props, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(props, 'page', 1),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    ordering: getQueryParam(state, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(state, 'page', 1),
     recipes: getRecipeListingFlattenedAction(state),
-    searchText: getQueryParam(props, 'searchText'),
-    status: getQueryParam(props, 'status'),
+    searchText: getQueryParam(state, 'searchText'),
+    status: getQueryParam(state, 'status'),
   }),
   {
     fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
@@ -52,7 +52,7 @@ export default class RecipeListingPage extends React.PureComponent {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
     fetchFilteredRecipesPage: PropTypes.func.isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
@@ -170,8 +170,8 @@ export default class RecipeListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ page }));
+    const { getCurrentUrl, history } = this.props;
+    history.push(getCurrentUrl({ page }));
   }
 
   handleRowClick(record, index, event) {

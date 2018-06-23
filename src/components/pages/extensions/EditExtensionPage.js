@@ -16,7 +16,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => {
-    const extensionId = getUrlParamAsInt(props, 'extensionId');
+    const extensionId = getUrlParamAsInt(state, 'extensionId');
     const extension = getExtension(state, extensionId, new Map());
     return {
       extension,

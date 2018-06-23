@@ -18,7 +18,7 @@ import {
   getExtensionListing,
 } from 'console/state/extensions/selectors';
 import {
-  getCurrentURL as getCurrentURLSelector,
+  getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
@@ -29,9 +29,9 @@ import {
     columns: getExtensionListingColumns(state),
     count: getExtensionListingCount(state),
     extensions: getExtensionListing(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(props, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(props, 'page', 1),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    ordering: getQueryParam(state, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(state, 'page', 1),
   }),
   {},
 )
@@ -41,7 +41,7 @@ export default class ExtensionListingPage extends React.PureComponent {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
     extensions: PropTypes.instanceOf(List).isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
     history: PropTypes.object.isRequired,
@@ -100,8 +100,8 @@ export default class ExtensionListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ page }));
+    const { getCurrentUrl, history } = this.props;
+    history.push(getCurrentUrl({ page }));
   }
 
   handleRowClick(record) {

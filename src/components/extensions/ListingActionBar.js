@@ -10,13 +10,13 @@ import { NavLink } from 'react-router-dom';
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveExtensionListingColumns as saveExtensionListingColumnsAction } from 'console/state/extensions/actions';
 import { getExtensionListingColumns } from 'console/state/extensions/selectors';
-import { getCurrentURL as getCurrentURLSelector } from 'console/state/router/selectors';
+import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
 
 @withRouter
 @connect(
   state => ({
     columns: getExtensionListingColumns(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
   }),
   {
     saveExtensionListingColumns: saveExtensionListingColumnsAction,
@@ -26,14 +26,14 @@ import { getCurrentURL as getCurrentURLSelector } from 'console/state/router/sel
 export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     saveExtensionListingColumns: PropTypes.func.isRequired,
   };
 
   handleChangeSearch(value) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ searchText: value || undefined }));
+    const { getCurrentUrl, history } = this.props;
+    history.push(getCurrentUrl({ searchText: value || undefined }));
   }
 
   render() {

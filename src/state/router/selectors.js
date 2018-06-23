@@ -1,51 +1,70 @@
-export function getUrlParam(props, name, defaultsTo) {
-  if (!props.match) {
-    throw new Error('getUrlParam: no match in props', props, name);
+import { matchRoutes } from 'react-router-config';
+
+import consoleUrls from 'console/urls';
+import { collapseUrlsToRoutesList } from 'console/utils/router';
+
+let applicationRoutes;
+
+export function getCurrentPathname(state) {
+  return state.router.location.pathname;
+}
+
+export function getUrlParam(state, key, defaultsTo) {
+  if (!applicationRoutes) {
+    applicationRoutes = collapseUrlsToRoutesList(consoleUrls);
   }
-  return props.match.params[name] || defaultsTo;
-}
-export function getUrlParamAsInt(props, name, defaultsTo) {
-  return parseInt(getUrlParam(props, name, defaultsTo), 10);
-}
 
-export function getAllQueryParams(props, defaultsTo) {
-  const location = props.location;
-  if (!props.location) {
-    throw new Error('getAllQueryParams: no location in props', props);
+  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
+
+  if (route && route.match) {
+    return route.match.params[key] || defaultsTo;
   }
 
-  let strParams = (location ? location.search : '').replace('?', '');
-  strParams = strParams.split('&');
-  strParams = strParams.map(x => x.split('='));
-
-  const compiled = {};
-  strParams.forEach(set => {
-    compiled[set[0]] = set[1];
-  });
-
-  return compiled;
+  return defaultsTo;
 }
 
-export function getQueryParam(props, key, defaultsTo) {
-  const params = getAllQueryParams(props, {});
+export function getUrlParamAsInt(state, name, defaultsTo) {
+  return parseInt(getUrlParam(state, name, defaultsTo), 10);
+}
 
+export function getAllQueryParams(state, defaultsTo) {
+  const search = state.router.location.search;
+
+  if (!search) {
+    return defaultsTo;
+  }
+
+  return search
+    .slice(1)
+    .split('&')
+    .map(item => item.split('='))
+    .reduce((obj, item) => {
+      obj[item[0]] = item[1] === undefined ? true : item[1];
+      return obj;
+    }, {});
+}
+
+export function getQueryParam(state, key, defaultsTo) {
+  const params = getAllQueryParams(state, {});
   return params[key] || defaultsTo;
 }
 
-export function getQueryParamAsInt(props, key, defaultsTo) {
-  return parseInt(getQueryParam(props, key, defaultsTo), 10);
+export function getQueryParamAsInt(state, key, defaultsTo) {
+  return parseInt(getQueryParam(state, key, defaultsTo), 10);
 }
 
-export function getCurrentURL(props, queryParams) {
-  return {
-    pathname: props.location.pathname,
-    query: {
-      ...getAllQueryParams(props, {}),
-      ...queryParams,
-    },
+export function getCurrentUrl(state, applyQueryParams) {
+  const queryParams = {
+    ...getAllQueryParams(state, {}),
+    ...applyQueryParams,
   };
-}
 
-export function getRouterPath(props) {
-  return props.location.pathname;
+  const search = Object.entries(queryParams)
+    .map(item => (item[0] === true ? item[0] : `${item[0]}=${item[1]}`))
+    .join('&');
+
+  return {
+    pathname: getCurrentPathname(state),
+    search: search ? `?${search}` : '',
+  };
 }

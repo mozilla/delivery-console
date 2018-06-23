@@ -1,14 +1,15 @@
 import { Layout, notification } from 'antd';
+import { ConnectedRouter } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AuthButton from 'console/components/auth/AuthButton';
 import NavBar from 'console/components/navigation/NavBar';
 import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
-import AppRouter from 'console/components/AppRouter';
+import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { getError } from 'console/state/auth/selectors';
 
@@ -20,6 +21,7 @@ const { Header } = Layout;
 export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
+    history: PropTypes.object.isRequired,
   };
 
   componentDidUpdate() {
@@ -36,7 +38,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <ConnectedRouter history={this.props.history}>
         <Layout>
           <QueryAuth0 />
           <QueryActions />
@@ -59,9 +61,9 @@ export default class App extends React.Component {
 
           <NavBar />
 
-          <AppRouter />
+          <Routes />
         </Layout>
-      </BrowserRouter>
+      </ConnectedRouter>
     );
   }
 }

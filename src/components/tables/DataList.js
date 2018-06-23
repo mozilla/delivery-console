@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { isEmpty } from 'lodash';
 
-import { getCurrentURL as getCurrentURLSelector } from 'console/state/router/selectors';
+import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
 
 @withRouter
 @connect(
   state => ({
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
   }),
   {},
 )
@@ -22,7 +22,7 @@ export default class DataList extends React.PureComponent {
     columnRenderers: PropTypes.object.isRequired,
     columns: PropTypes.instanceOf(List).isRequired,
     dataSource: PropTypes.array.isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     onRowClick: PropTypes.func,
     history: PropTypes.object.isRequired,
@@ -41,7 +41,7 @@ export default class DataList extends React.PureComponent {
   };
 
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentURL, history } = this.props;
+    const { getCurrentUrl, history } = this.props;
     const filterParams = {};
     Object.entries(filters).forEach(([key, values]) => {
       filterParams[key] = values && values.join(',');
@@ -54,7 +54,7 @@ export default class DataList extends React.PureComponent {
     }
 
     history.push(
-      getCurrentURL({
+      getCurrentUrl({
         page: undefined, // Return to the first page
         ordering,
         ...filterParams,

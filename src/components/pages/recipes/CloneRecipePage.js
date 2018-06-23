@@ -24,9 +24,9 @@ import { NavLink } from 'react-router-dom';
 @withRouter
 @connect(
   (state, props) => {
-    const recipeId = getUrlParamAsInt(props, 'recipeId');
+    const recipeId = getUrlParamAsInt(state, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
     const recipe = getRecipeForRevision(state, revisionId, new Map());
     const isLatestRevision = isLatestRevisionSelector(state, revisionId);
 
