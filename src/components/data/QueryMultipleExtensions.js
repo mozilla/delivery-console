@@ -3,12 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
-import { fetchExtensionsPage as fetchExtensionsPageAction } from 'console/state/extensions/actions';
+import { fetchExtensionsPage } from 'console/state/extensions/actions';
 
 @connect(
   null,
   {
-    fetchExtensionsPage: fetchExtensionsPageAction,
+    fetchExtensionsPage,
   },
 )
 export default class QueryMultipleExtensions extends React.PureComponent {
@@ -24,14 +24,14 @@ export default class QueryMultipleExtensions extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { fetchExtensionsPage, filters, pageNumber } = this.props;
-    fetchExtensionsPage(pageNumber, filters);
+    const { filters, pageNumber } = this.props;
+    this.props.fetchExtensionsPage(pageNumber, filters);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchExtensionsPage, filters, pageNumber } = this.props;
+    const { filters, pageNumber } = this.props;
     if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
-      fetchExtensionsPage(nextProps.pageNumber, nextProps.filters);
+      this.props.fetchExtensionsPage(nextProps.pageNumber, nextProps.filters);
     }
   }
 

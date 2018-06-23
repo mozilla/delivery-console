@@ -10,7 +10,7 @@ import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryExtension from 'console/components/data/QueryExtension';
 import ExtensionForm from 'console/components/extensions/ExtensionForm';
-import { updateExtension as updateExtensionAction } from 'console/state/extensions/actions';
+import { updateExtension } from 'console/state/extensions/actions';
 import { getExtension } from 'console/state/extensions/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
@@ -24,7 +24,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
     };
   },
   {
-    updateExtension: updateExtensionAction,
+    updateExtension,
   },
 )
 @autobind
@@ -44,8 +44,8 @@ export default class EditExtensionPage extends React.PureComponent {
   }
 
   async formAction(values) {
-    const { updateExtension, extensionId } = this.props;
-    return updateExtension(extensionId, values);
+    const { extensionId } = this.props;
+    return this.props.updateExtension(extensionId, values);
   }
 
   render() {

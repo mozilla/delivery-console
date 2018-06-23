@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchRecipe as fetchRecipeAction } from 'console/state/recipes/actions';
+import { fetchRecipe } from 'console/state/recipes/actions';
 
 @connect(
   null,
   {
-    fetchRecipe: fetchRecipeAction,
+    fetchRecipe,
   },
 )
 export default class QueryRecipe extends React.PureComponent {
@@ -17,14 +17,14 @@ export default class QueryRecipe extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { fetchRecipe, pk } = this.props;
-    fetchRecipe(pk);
+    const { pk } = this.props;
+    this.props.fetchRecipe(pk);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchRecipe, pk } = this.props;
+    const { pk } = this.props;
     if (pk !== nextProps.pk) {
-      fetchRecipe(nextProps.pk);
+      this.props.fetchRecipe(nextProps.pk);
     }
   }
 

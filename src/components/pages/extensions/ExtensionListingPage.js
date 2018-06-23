@@ -1,10 +1,10 @@
 import { Pagination, Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
@@ -23,7 +23,6 @@ import {
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getExtensionListingColumns(state),
@@ -33,7 +32,9 @@ import {
     ordering: getQueryParam(state, 'ordering', '-last_updated'),
     pageNumber: getQueryParamAsInt(state, 'page', 1),
   }),
-  {},
+  {
+    push,
+  },
 )
 @autobind
 export default class ExtensionListingPage extends React.PureComponent {
@@ -44,7 +45,7 @@ export default class ExtensionListingPage extends React.PureComponent {
     getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -100,12 +101,12 @@ export default class ExtensionListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentUrl, history } = this.props;
-    history.push(getCurrentUrl({ page }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ page }));
   }
 
   handleRowClick(record) {
-    this.props.history.push(`/extension/${record.id}/`);
+    this.props.push(`/extension/${record.id}/`);
   }
 
   render() {

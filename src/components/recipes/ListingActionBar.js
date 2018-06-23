@@ -1,21 +1,20 @@
 import { Button, Col, Input, Row } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
-import { saveRecipeListingColumns as saveRecipeListingColumnsAction } from 'console/state/recipes/actions';
+import { saveRecipeListingColumns } from 'console/state/recipes/actions';
 import { getRecipeListingColumns } from 'console/state/recipes/selectors';
 import {
   getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
 } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),
@@ -23,7 +22,8 @@ import {
     searchText: getQueryParam(state, 'searchText'),
   }),
   {
-    saveRecipeListingColumns: saveRecipeListingColumnsAction,
+    push,
+    saveRecipeListingColumns,
   },
 )
 @autobind
@@ -31,7 +31,7 @@ export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentUrl: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
   };
@@ -41,8 +41,8 @@ export default class ListingActionBar extends React.PureComponent {
   };
 
   handleChangeSearch(value) {
-    const { getCurrentUrl, history } = this.props;
-    history.push(getCurrentUrl({ searchText: value || undefined }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ searchText: value || undefined }));
   }
 
   render() {

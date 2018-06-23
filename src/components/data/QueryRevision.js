@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchRevision as fetchRevisionAction } from 'console/state/revisions/actions';
+import { fetchRevision } from 'console/state/revisions/actions';
 
 @connect(
   null,
   {
-    fetchRevision: fetchRevisionAction,
+    fetchRevision,
   },
 )
 export default class QueryRevision extends React.PureComponent {
@@ -17,14 +17,14 @@ export default class QueryRevision extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { fetchRevision, pk } = this.props;
-    fetchRevision(pk);
+    const { pk } = this.props;
+    this.props.fetchRevision(pk);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchRevision, pk } = this.props;
+    const { pk } = this.props;
     if (pk !== nextProps.pk) {
-      fetchRevision(nextProps.pk);
+      this.props.fetchRevision(nextProps.pk);
     }
   }
 

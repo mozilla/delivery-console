@@ -5,13 +5,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { withRouter } from 'react-router';
 
-import {
-  disableRecipe as disableRecipeAction,
-  enableRecipe as enableRecipeAction,
-} from 'console/state/recipes/actions';
-import { requestRevisionApproval as requestRevisionApprovalAction } from 'console/state/revisions/actions';
+import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
+import { requestRevisionApproval } from 'console/state/revisions/actions';
 import { getLatestRevisionIdForRecipe, getRecipe } from 'console/state/recipes/selectors';
 import {
   isApprovableRevision,
@@ -21,7 +17,6 @@ import {
 } from 'console/state/revisions/selectors';
 import { getCurrentPathname, getUrlParamAsInt } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
@@ -41,9 +36,9 @@ import { getCurrentPathname, getUrlParamAsInt } from 'console/state/router/selec
     };
   },
   {
-    disableRecipe: disableRecipeAction,
-    enableRecipe: enableRecipeAction,
-    requestRevisionApproval: requestRevisionApprovalAction,
+    disableRecipe,
+    enableRecipe,
+    requestRevisionApproval,
   },
 )
 @autobind
@@ -63,28 +58,28 @@ export default class DetailsActionBar extends React.PureComponent {
   };
 
   handleDisableClick() {
-    const { disableRecipe, recipeId } = this.props;
+    const { recipeId } = this.props;
     Modal.confirm({
       title: 'Are you sure you want to disable this recipe?',
       onOk() {
-        disableRecipe(recipeId);
+        this.props.disableRecipe(recipeId);
       },
     });
   }
 
   handlePublishClick() {
-    const { enableRecipe, recipeId } = this.props;
+    const { recipeId } = this.props;
     Modal.confirm({
       title: 'Are you sure you want to publish this recipe?',
       onOk() {
-        enableRecipe(recipeId);
+        this.props.enableRecipe(recipeId);
       },
     });
   }
 
   handleRequestClick() {
-    const { requestRevisionApproval, revisionId } = this.props;
-    requestRevisionApproval(revisionId);
+    const { revisionId } = this.props;
+    this.props.requestRevisionApproval(revisionId);
   }
 
   render() {

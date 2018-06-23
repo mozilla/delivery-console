@@ -1,32 +1,32 @@
 import { message } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import ExtensionForm from 'console/components/extensions/ExtensionForm';
-import { createExtension as createExtensionAction } from 'console/state/extensions/actions';
+import { createExtension } from 'console/state/extensions/actions';
 
-@withRouter
 @connect(
   null,
   {
-    createExtension: createExtensionAction,
+    createExtension,
+    push,
   },
 )
 @autobind
 export default class CreateExtensionPage extends React.PureComponent {
   static propTypes = {
     createExtension: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   onFormSuccess(extensionId) {
     message.success('Extension saved');
-    this.props.history.push(`/extension/${extensionId}/`);
+    this.props.push(`/extension/${extensionId}/`);
   }
 
   onFormFailure(err) {
@@ -34,8 +34,7 @@ export default class CreateExtensionPage extends React.PureComponent {
   }
 
   async formAction(values) {
-    const { createExtension } = this.props;
-    return createExtension(values);
+    return this.props.createExtension(values);
   }
 
   render() {

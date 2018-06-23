@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 
 import { logUserOut } from 'console/state/auth/actions';
 import { getUserProfile } from 'console/state/auth/selectors';
+import { getCurrentPathname } from 'console/state/router/selectors';
 import { startAuthenticationFlow } from 'console/utils/auth0';
 
 @connect(
   (state, props) => ({
+    pathname: getCurrentPathname(state),
     userProfile: getUserProfile(state),
   }),
   {
@@ -18,6 +20,7 @@ import { startAuthenticationFlow } from 'console/utils/auth0';
 export default class AuthButton extends React.Component {
   static propTypes = {
     logUserOut: PropTypes.func.isRequired,
+    pathname: PropTypes.string.isRequired,
     userProfile: PropTypes.object,
   };
 
@@ -61,7 +64,7 @@ export default class AuthButton extends React.Component {
     }
 
     return (
-      <Button type="primary" onClick={() => startAuthenticationFlow(this.props.location.pathname)}>
+      <Button type="primary" onClick={() => startAuthenticationFlow(this.props.pathname)}>
         Log In
       </Button>
     );

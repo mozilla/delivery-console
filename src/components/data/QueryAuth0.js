@@ -1,7 +1,7 @@
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { loginFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
@@ -15,20 +15,20 @@ import { finishAuthenticationFlow } from 'console/utils/auth0';
     loginFailed,
     logUserIn,
     userProfileReceived,
+    push,
   },
 )
-@withRouter
 export default class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
-    history: PropTypes.object.isRequired,
     loginFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     userProfileReceived: PropTypes.func.isRequired,
   };
 
   async componentDidMount() {
-    const { history, loginFailed, logUserIn, userProfileReceived } = this.props;
+    const { loginFailed, logUserIn, userProfileReceived } = this.props;
     let authResult;
 
     try {
@@ -54,7 +54,7 @@ export default class QueryAuth0 extends React.PureComponent {
       userProfileReceived(authResult.idTokenPayload);
 
       if (state) {
-        history.push(state);
+        this.props.push(state);
       }
     }
   }

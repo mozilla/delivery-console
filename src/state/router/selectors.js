@@ -10,6 +10,7 @@ export function getCurrentPathname(state) {
 }
 
 export function getUrlParam(state, key, defaultsTo) {
+  // Cache the application routes
   if (!applicationRoutes) {
     applicationRoutes = collapseUrlsToRoutesList(consoleUrls);
   }
@@ -38,8 +39,8 @@ export function getAllQueryParams(state, defaultsTo) {
     .slice(1)
     .split('&')
     .map(item => item.split('='))
-    .reduce((obj, item) => {
-      obj[item[0]] = item[1] === undefined ? true : item[1];
+    .reduce((obj, [key, value]) => {
+      obj[key] = value === undefined ? true : value;
       return obj;
     }, {});
 }
@@ -60,7 +61,8 @@ export function getCurrentUrl(state, applyQueryParams) {
   };
 
   const search = Object.entries(queryParams)
-    .map(item => (item[0] === true ? item[0] : `${item[0]}=${item[1]}`))
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([key, value]) => (value === true ? key : `${key}=${value}`))
     .join('&');
 
   return {

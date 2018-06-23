@@ -1,11 +1,11 @@
 import { Pagination, Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import BooleanIcon from 'console/components/common/BooleanIcon';
@@ -17,7 +17,6 @@ import ListingActionBar from 'console/components/recipes/ListingActionBar';
 import DataList from 'console/components/tables/DataList';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
-import { fetchFilteredRecipesPage as fetchFilteredRecipesPageAction } from 'console/state/recipes/actions';
 import {
   getRecipeListingColumns,
   getRecipeListingCount,
@@ -29,7 +28,6 @@ import {
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),
@@ -42,8 +40,8 @@ import {
     status: getQueryParam(state, 'status'),
   }),
   {
-    fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
     openNewWindow: window.open,
+    push,
   },
 )
 @autobind
@@ -51,12 +49,11 @@ export default class RecipeListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
-    fetchFilteredRecipesPage: PropTypes.func.isRequired,
     getCurrentUrl: PropTypes.func.isRequired,
     openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
     recipes: PropTypes.instanceOf(List).isRequired,
     searchText: PropTypes.string,
     status: PropTypes.string,
@@ -170,8 +167,8 @@ export default class RecipeListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentUrl, history } = this.props;
-    history.push(getCurrentUrl({ page }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ page }));
   }
 
   handleRowClick(record, index, event) {
@@ -183,8 +180,7 @@ export default class RecipeListingPage extends React.PureComponent {
     // If we're here, the user clicked the row itself, which now needs to behave
     // as if it was a native link click. This includes opening a new tab if using
     // a modifier key (like ctrl).
-
-    let navTo = this.props.history.push.bind(this.props.history);
+    let navTo = this.props.push;
 
     // No link but the user requested a new window.
     if (event.ctrlKey || event.metaKey || event.button === 1) {

@@ -1,16 +1,21 @@
 import { Affix, Button, Layout } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { getCurrentPathname } from 'console/state/router/selectors';
 
 const { Header } = Layout;
 
-@withRouter
+@connect(state => ({ pathname: getCurrentPathname(state) }))
 export default class NavBar extends React.PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    pathname: PropTypes.string.isRequired,
+  };
 
   render() {
-    if (this.props.location.pathname === '/') {
+    if (this.props.pathname === '/') {
       return null;
     }
 

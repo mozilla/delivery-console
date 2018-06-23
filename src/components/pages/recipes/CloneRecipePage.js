@@ -1,10 +1,10 @@
 import { Alert, message } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import handleError from 'console/utils/handleError';
@@ -12,7 +12,7 @@ import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
-import { createRecipe as createAction } from 'console/state/recipes/actions';
+import { createRecipe } from 'console/state/recipes/actions';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 import {
   getRecipeForRevision,
@@ -21,7 +21,6 @@ import {
 import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
 import { NavLink } from 'react-router-dom';
 
-@withRouter
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
@@ -38,13 +37,13 @@ import { NavLink } from 'react-router-dom';
     };
   },
   {
-    createRecipe: createAction,
+    createRecipe,
+    push,
   },
 )
 @autobind
 export default class CloneRecipePage extends React.PureComponent {
   static propTypes = {
-    history: PropTypes.object.isRequired,
     createRecipe: PropTypes.func.isRequired,
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
@@ -54,7 +53,7 @@ export default class CloneRecipePage extends React.PureComponent {
 
   onFormSuccess(newId) {
     message.success('Recipe saved');
-    this.props.history.push(`/recipe/${newId}/`);
+    this.props.push(`/recipe/${newId}/`);
   }
 
   onFormFailure(err) {

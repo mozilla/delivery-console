@@ -1,20 +1,21 @@
 import { Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { isEmpty } from 'lodash';
 
 import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   state => ({
     getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
   }),
-  {},
+  {
+    push,
+  },
 )
 @autobind
 export default class DataList extends React.PureComponent {
@@ -25,7 +26,7 @@ export default class DataList extends React.PureComponent {
     getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     onRowClick: PropTypes.func,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -41,7 +42,7 @@ export default class DataList extends React.PureComponent {
   };
 
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentUrl, history } = this.props;
+    const { getCurrentUrl } = this.props;
     const filterParams = {};
     Object.entries(filters).forEach(([key, values]) => {
       filterParams[key] = values && values.join(',');
@@ -53,7 +54,7 @@ export default class DataList extends React.PureComponent {
       ordering = `${prefix}${sorter.field}`;
     }
 
-    history.push(
+    this.props.push(
       getCurrentUrl({
         page: undefined, // Return to the first page
         ordering,
