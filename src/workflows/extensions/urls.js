@@ -5,11 +5,16 @@ import ExtensionListingPage from 'console/components/pages/extensions/ExtensionL
 export default {
   '/extension': {
     component: ExtensionListingPage,
-  },
-  '/extension/new': {
-    component: CreateExtensionPage,
-  },
-  '/extension/:extensionId': {
-    component: EditExtensionPage,
+    crumbText: 'Extensions',
+    routes: {
+      '/new': {
+        component: CreateExtensionPage,
+        crumbText: 'New',
+      },
+      '/:extensionId': {
+        component: EditExtensionPage,
+        crumbText: 'Edit',
+      },
+    },
   },
 };

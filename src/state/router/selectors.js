@@ -5,17 +5,60 @@ import { collapseUrlsToRoutesList } from 'console/utils/router';
 
 let applicationRoutes;
 
+function getApplicationRoutes() {
+  if (!applicationRoutes) {
+    applicationRoutes = collapseUrlsToRoutesList(consoleUrls);
+  }
+  return applicationRoutes;
+}
+
+function getRouteByPath(path) {
+  return getApplicationRoutes().find(route => route.path === path);
+}
+
+function getRouteMatchByPathname(pathname) {
+  const route = matchRoutes(getApplicationRoutes(), pathname)[0];
+  return route;
+}
+
+function makePathnameFromRoutePath(path, match) {
+  Object.entries(match.params).forEach(([key, value]) => {
+    path = path.replace(`/:${key}/`, `/${value}/`);
+  });
+  return path;
+}
+
 export function getCurrentPathname(state) {
   return state.router.location.pathname;
 }
 
+export function getCurrentRoute(state) {
+  const routeMatch = getRouteMatchByPathname(getCurrentPathname(state));
+  return routeMatch.route;
+}
+
+export function getCurrentRouteTree(state) {
+  let pathname = getCurrentPathname(state);
+  const routeMatch = getRouteMatchByPathname(pathname);
+  let route = {
+    ...routeMatch.route,
+    pathname,
+  };
+  const routes = [route];
+  while (route.parentPath) {
+    pathname = makePathnameFromRoutePath(route.parentPath, routeMatch.match);
+    route = {
+      ...getRouteByPath(route.parentPath),
+      pathname,
+    };
+    routes.push(route);
+  }
+  return routes;
+}
+
 export function getUrlParam(state, key, defaultsTo) {
   // Cache the application routes
-  if (!applicationRoutes) {
-    applicationRoutes = collapseUrlsToRoutesList(consoleUrls);
-  }
-
-  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
+  const route = matchRoutes(getApplicationRoutes(), getCurrentPathname(state))[0];
 
   if (route && route.match) {
     return route.match.params[key] || defaultsTo;

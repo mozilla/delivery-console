@@ -4,6 +4,7 @@ export function collapseUrlsToRoutesList(urls, basePath = '') {
   Object.keys(urls).forEach(k => {
     const { routes, ...thisRoute } = urls[k];
     thisRoute.path = `${basePath}${k}/`.replace(/\/+/g, '/');
+    thisRoute.parentPath = basePath ? `${basePath}/`.replace(/\/+/g, '/') : null;
     thisRoute.exact = thisRoute.exact || true;
     routesList.push(thisRoute);
     if (routes) {

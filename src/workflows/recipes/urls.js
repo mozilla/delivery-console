@@ -8,27 +8,35 @@ import RecipeDetailPage from 'console/components/pages/recipes/RecipeDetailPage'
 export default {
   '/recipe': {
     component: RecipeListingPage,
+    crumbText: 'Recipes',
     routes: {
       '/new': {
         component: CreateRecipePage,
+        crumbText: 'New',
       },
       '/:recipeId': {
         component: RecipeDetailPage,
+        crumbText: 'Details',
         routes: {
           '/edit': {
             component: EditRecipePage,
+            crumbText: 'Edit',
           },
           '/approval_history': {
             component: ApprovalHistoryPage,
+            crumbText: 'Approval History',
           },
           '/clone': {
             component: CloneRecipePage,
+            crumbText: 'Clone',
           },
           '/rev/:revisionId': {
             component: RecipeDetailPage,
+            crumbText: 'Revision Details',
             routes: {
               '/clone': {
                 component: CloneRecipePage,
+                crumbText: 'Clone',
               },
             },
           },

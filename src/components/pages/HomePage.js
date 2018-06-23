@@ -2,7 +2,7 @@ import { Button, Col, Row } from 'antd';
 import React from 'react';
 import NavigationCard from '../navigation/NavigationCard';
 
-export const items = [
+export const cards = [
   {
     title: 'Recipes',
     description: 'SHIELD recipes',
@@ -24,12 +24,12 @@ export default class HomePage extends React.PureComponent {
     ));
   }
 
-  renderRows(items) {
+  renderRows(cards) {
     const rows = [];
-    for (let i = 0; i < items.length; i += 3) {
+    for (let i = 0; i < cards.length; i += 3) {
       rows.push(
         <Row gutter={20} key={i}>
-          {this.renderCards(items.slice(i, i + 3))}
+          {this.renderCards(cards.slice(i, i + 3))}
         </Row>,
       );
     }
@@ -52,7 +52,7 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
 
-        <div className="content-wrapper">{this.renderRows(items)}</div>
+        <div className="content-wrapper">{this.renderRows(cards)}</div>
       </div>
     );
   }
