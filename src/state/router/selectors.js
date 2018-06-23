@@ -40,11 +40,18 @@ export function getCurrentRoute(state) {
 export function getCurrentRouteTree(state) {
   let pathname = getCurrentPathname(state);
   const routeMatch = getRouteMatchByPathname(pathname);
+
+  if (!routeMatch) {
+    return [];
+  }
+
   let route = {
     ...routeMatch.route,
     pathname,
   };
+
   const routes = [route];
+
   while (route.parentPath) {
     pathname = makePathnameFromRoutePath(route.parentPath, routeMatch.match);
     route = {
@@ -53,6 +60,7 @@ export function getCurrentRouteTree(state) {
     };
     routes.push(route);
   }
+
   return routes;
 }
 
