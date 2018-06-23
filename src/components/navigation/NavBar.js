@@ -24,7 +24,7 @@ const { Option } = Select;
 @autobind
 export default class NavBar extends React.PureComponent {
   static propTypes = {
-    props: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     routeTree: PropTypes.array.isRequired,
   };
 
@@ -38,7 +38,7 @@ export default class NavBar extends React.PureComponent {
     return crumbs.map((crumb, index, origCrumbs) => {
       if (index === 0 && cards.find(e => e.listingUrl === crumb.pathname)) {
         return (
-          <Item>
+          <Item key={index}>
             <Select defaultValue={crumb.pathname} onChange={handleChange}>
               {cards.map(card => (
                 <Option key={card.listingUrl} value={card.listingUrl}>
@@ -49,11 +49,11 @@ export default class NavBar extends React.PureComponent {
           </Item>
         );
       } else if (index === origCrumbs.length - 1) {
-        return <Item>{crumb.crumbText}</Item>;
+        return <Item key={index}>{crumb.crumbText}</Item>;
       }
 
       return (
-        <Item>
+        <Item key={index}>
           <Link to={crumb.pathname}>{crumb.crumbText}</Link>
         </Item>
       );
