@@ -44,7 +44,7 @@
     "babel-polyfill": "6.26.0",
     "enzyme": "3.3.0",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-prettier": "2.6.1",
     "faker": "4.1.0",
     "jest-immutable-matchers": "2.0.1",
     "prettier": "1.13.5",
