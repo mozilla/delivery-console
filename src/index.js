@@ -17,6 +17,9 @@ if (SENTRY_PUBLIC_DSN) {
   Raven.config(SENTRY_PUBLIC_DSN).install();
 }
 
+// Add support for Redux Devtools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const history = createBrowserHistory();
 
 const middleware = [routerMiddleware(history), thunk];
@@ -24,7 +27,7 @@ const middleware = [routerMiddleware(history), thunk];
 const store = createStore(
   connectRouter(history)(reducers),
   reducers(undefined, { type: 'initial' }),
-  compose(applyMiddleware(...middleware)),
+  composeEnhancers(applyMiddleware(...middleware)),
 );
 
 ReactDOM.render(
