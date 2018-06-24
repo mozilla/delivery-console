@@ -55,15 +55,16 @@ export default class ApprovalForm extends React.PureComponent {
 
   handleCloseButtonClick() {
     const { approvalRequest } = this.props;
+    const onOk = async () => {
+      try {
+        await this.props.closeApprovalRequest(approvalRequest.get('id'));
+      } catch (err) {
+        handleError('Unable to close request.', err);
+      }
+    };
     Modal.confirm({
       title: 'Are you sure you want to close this approval request?',
-      async onOk() {
-        try {
-          await this.props.closeApprovalRequest(approvalRequest.get('id'));
-        } catch (err) {
-          handleError('Unable to close request.', err);
-        }
-      },
+      onOk: onOk.bind(this),
     });
   }
 

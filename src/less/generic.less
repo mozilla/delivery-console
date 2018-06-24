@@ -1,12 +1,8 @@
 html,
 body {
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
   text-rendering: optimizeLegibility;
-}
-
-h1 {
-  font-size: 2em;
-  font-weight: normal;
-  line-height: 130%;
 }
 
 a {
@@ -34,4 +30,12 @@ a.text-colored,
 
 .righted {
   text-align: right;
+}
+
+/* Overwrite ants default generic styling: #root ensures higher specificity */
+#root {
+  b,
+  strong {
+    font-weight: 600;
+  }
 }

@@ -59,21 +59,19 @@ export default class DetailsActionBar extends React.PureComponent {
 
   handleDisableClick() {
     const { recipeId } = this.props;
+    const onOk = () => this.props.disableRecipe(recipeId);
     Modal.confirm({
       title: 'Are you sure you want to disable this recipe?',
-      onOk() {
-        this.props.disableRecipe(recipeId);
-      },
+      onOk: onOk.bind(this),
     });
   }
 
   handlePublishClick() {
     const { recipeId } = this.props;
+    const onOk = () => this.props.enableRecipe(recipeId);
     Modal.confirm({
       title: 'Are you sure you want to publish this recipe?',
-      onOk() {
-        this.props.enableRecipe(recipeId);
-      },
+      onOk: onOk.bind(this),
     });
   }
 

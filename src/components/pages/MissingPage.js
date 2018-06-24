@@ -21,7 +21,7 @@ export default class MissingPage extends React.PureComponent {
             <LostDino />
           </div>
           <div className="text-container">
-            <h1>Hmm. We're having trouble finding that page.</h1>
+            <h1 className="title">Hmm. We're having trouble finding that page.</h1>
             <p>
               We can't find the page you are looking for:
               <br /> {this.props.pathname}.
