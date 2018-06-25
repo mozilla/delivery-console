@@ -38,7 +38,7 @@ export default class RecipeForm extends React.PureComponent {
     isCreationForm: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     recipe: PropTypes.instanceOf(Map),
-    selectedActionName: PropTypes.string.isRequired,
+    selectedActionName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -69,7 +69,10 @@ export default class RecipeForm extends React.PureComponent {
   render() {
     const { isCreationForm, isLoading, onSubmit, recipe, selectedActionName } = this.props;
 
-    const ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
+    let ArgumentsFields = null;
+    if (selectedActionName) {
+      ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
+    }
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
     // to prevent the form from generating a new identicon on each render.
