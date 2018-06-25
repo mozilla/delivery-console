@@ -1,4 +1,4 @@
-import { message as AntMessage } from 'antd';
+import { notification } from 'antd';
 
 import { APIError } from 'console/utils/api';
 import { ValidationError } from 'console/utils/forms';
@@ -24,7 +24,7 @@ const msgDisplayTime = 8; // seconds
 
 const defaultMethods = {
   checkUserOnline: () => navigator.onLine,
-  notifyUser: errMsg => AntMessage.error(errMsg, msgDisplayTime),
+  notifyUser: errMsg => notification.error({ message: errMsg, duration: msgDisplayTime }),
 };
 
 const handleAPIError = error => {
