@@ -3,7 +3,6 @@ import IdenticonField from 'console/components/forms/IdenticonField';
 describe('<IdenticonField>', () => {
   const props = {
     disabled: false,
-    onChange: () => {},
     value: 'test',
   };
 
@@ -19,57 +18,39 @@ describe('<IdenticonField>', () => {
 
   describe('selection buttons', () => {
     it('should generate a new item if at the end of the history', () => {
-      let { value } = props;
-      const wrapper = mount(
-        <IdenticonField
-          {...props}
-          onChange={val => {
-            value = val;
-          }}
-        />,
-      );
+      const wrapper = mount(<IdenticonField {...props} />);
+      const { history, index } = wrapper.state();
       const next = wrapper.find('button.btn-next');
 
       next.simulate('click');
+      const { history: updatedHistory, index: updatedIndex } = wrapper.state();
 
-      expect(value).not.toBe(props.value);
+      expect(index).not.toBe(updatedIndex);
+      expect(history.get(index)).not.toBe(updatedHistory.get(updatedIndex));
     });
 
     it('should track a history of viewed icons', () => {
-      let { value } = props;
-      const wrapper = mount(
-        <IdenticonField
-          {...props}
-          onChange={val => {
-            value = val;
-          }}
-        />,
-      );
+      const wrapper = mount(<IdenticonField {...props} />);
+      let { history, index } = wrapper.state();
       const next = wrapper.find('button.btn-next');
 
       expect(wrapper.state().history.size).toBe(1);
-      expect(value).toBe(props.value);
+      expect(history.get(index)).toBe(props.value);
 
       next.simulate('click');
+      ({ history, index } = wrapper.state());
 
       expect(wrapper.state().history.size).toBe(2);
-      expect(value).not.toBe(props.value);
+      expect(history.get(index)).not.toBe(props.value);
     });
 
     it('should go back in history if possible', () => {
-      let { value } = props;
-      const wrapper = mount(
-        <IdenticonField
-          {...props}
-          onChange={val => {
-            value = val;
-          }}
-        />,
-      );
+      const wrapper = mount(<IdenticonField {...props} />);
+      let { history, index } = wrapper.state();
       let prev = wrapper.find('button.btn-prev');
       // Disabled at first until we move forward in history
       expect(prev.props().disabled).toBe(true);
-      const originalValue = value;
+      const originalValue = history.get(index);
 
       const next = wrapper.find('button.btn-next');
       next.simulate('click');
@@ -78,28 +59,25 @@ describe('<IdenticonField>', () => {
       expect(prev.props().disabled).toBe(false);
 
       prev.simulate('click');
-      expect(value).toBe(originalValue);
+      ({ history, index } = wrapper.state());
+      expect(history.get(index)).toBe(originalValue);
     });
 
     it('should recall icons from history if moving forward', () => {
-      let { value } = props;
-      const wrapper = mount(
-        <IdenticonField
-          {...props}
-          onChange={val => {
-            value = val;
-          }}
-        />,
-      );
+      const wrapper = mount(<IdenticonField {...props} />);
       const prev = wrapper.find('button.btn-prev');
       const next = wrapper.find('button.btn-next');
 
       next.simulate('click');
-      const originalValue = value;
+      let { history, index } = wrapper.state();
+      const originalValue = history.get(index);
       next.simulate('click');
+      ({ history, index } = wrapper.state());
+      expect(history.get(index)).not.toBe(originalValue);
 
       prev.simulate('click');
-      expect(value).toBe(originalValue);
+      ({ history, index } = wrapper.state());
+      expect(history.get(index)).toBe(originalValue);
     });
   });
 });

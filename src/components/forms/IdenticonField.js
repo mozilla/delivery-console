@@ -10,7 +10,6 @@ import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 export default class IdenticonField extends React.PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
     value: PropTypes.any,
   };
 
@@ -68,7 +67,6 @@ export default class IdenticonField extends React.PureComponent {
       index: newIndex,
       history: newHistory,
     });
-    this.props.onChange(next);
   }
 
   handlePrev() {
