@@ -1,4 +1,4 @@
-import { collapseUrlsToRoutesList } from 'console/utils/router';
+import { reduceUrlsToRoutesList } from 'console/utils/router';
 
 describe('Router utils', () => {
   it('should work', () => {
@@ -15,7 +15,7 @@ describe('Router utils', () => {
       },
     };
 
-    expect(collapseUrlsToRoutesList(urls)).toEqual([
+    expect(reduceUrlsToRoutesList(urls)).toEqual([
       {
         path: '/',
         component: 'Component',

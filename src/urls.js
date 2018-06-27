@@ -1,9 +1,9 @@
 import HomePage from 'console/components/pages/HomePage';
 import workflows from 'console/workflows/urls';
 
-import { collapseUrlsToRoutesList, replaceParamsInPath } from 'console/utils/router';
+import { reduceUrlsToRoutesList, replaceParamsInPath } from 'console/utils/router';
 
-const routesList = collapseUrlsToRoutesList({
+const routesList = reduceUrlsToRoutesList({
   '/': {
     name: 'home',
     component: HomePage,
