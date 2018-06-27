@@ -22,6 +22,7 @@ import {
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
 @connect(
   (state, props) => ({
@@ -80,8 +81,8 @@ export default class ExtensionListingPage extends React.PureComponent {
     },
   };
 
-  static renderLinkedText(text, record) {
-    return <NavLink to={`/extension/${record.id}/`}>{text}</NavLink>;
+  static renderLinkedText(text, { id: extensionId }) {
+    return <NavLink to={reverse('extensions.edit', { extensionId })}>{text}</NavLink>;
   }
 
   getFilters() {
@@ -105,8 +106,8 @@ export default class ExtensionListingPage extends React.PureComponent {
     this.props.push(getCurrentUrl({ page }));
   }
 
-  getUrlFromRecord(record) {
-    return `/extension/${record.id}/`;
+  getUrlFromRecord({ id: extensionId }) {
+    return reverse('extensions.edit', { extensionId });
   }
 
   render() {

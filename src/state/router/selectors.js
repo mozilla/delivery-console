@@ -1,31 +1,15 @@
 import { matchRoutes } from 'react-router-config';
 
-import consoleUrls from 'console/urls';
-import { collapseUrlsToRoutesList } from 'console/utils/router';
-
-let applicationRoutes;
-
-function getApplicationRoutes() {
-  if (!applicationRoutes) {
-    applicationRoutes = collapseUrlsToRoutesList(consoleUrls);
-  }
-  return applicationRoutes;
-}
+import applicationRoutes from 'console/urls';
+import { replaceParamsInPath } from 'console/utils/router';
 
 function getRouteByPath(path) {
-  return getApplicationRoutes().find(route => route.path === path);
+  return applicationRoutes.find(route => route.path === path);
 }
 
 function getRouteMatchByPathname(pathname) {
-  const route = matchRoutes(getApplicationRoutes(), pathname)[0];
+  const route = matchRoutes(applicationRoutes, pathname)[0];
   return route;
-}
-
-function makePathnameFromRoutePath(path, match) {
-  Object.entries(match.params).forEach(([key, value]) => {
-    path = path.replace(`/:${key}/`, `/${value}/`);
-  });
-  return path;
 }
 
 export function getCurrentPathname(state) {
@@ -53,7 +37,7 @@ export function getCurrentRouteTree(state) {
   const routes = [route];
 
   while (route.parentPath) {
-    pathname = makePathnameFromRoutePath(route.parentPath, routeMatch.match);
+    pathname = replaceParamsInPath(route.parentPath, routeMatch.match.params);
     route = {
       ...getRouteByPath(route.parentPath),
       pathname,
@@ -66,7 +50,7 @@ export function getCurrentRouteTree(state) {
 
 export function getUrlParam(state, key, defaultsTo) {
   // Cache the application routes
-  const route = matchRoutes(getApplicationRoutes(), getCurrentPathname(state))[0];
+  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
 
   if (route && route.match) {
     return route.match.params[key] || defaultsTo;

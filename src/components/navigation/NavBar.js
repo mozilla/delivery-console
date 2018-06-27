@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { LinkButton } from 'console/components/common/LinkButton';
-import { cards } from 'console/components/pages/HomePage';
 import { getCurrentRouteTree } from 'console/state/router/selectors';
+import applicationRoutes, { reverse } from 'console/urls';
 
 const { Header } = Layout;
 
@@ -22,6 +22,9 @@ export default class NavBar extends React.PureComponent {
 
   renderCrumbs() {
     const crumbs = this.props.routeTree.reverse().slice(1);
+    const cards = applicationRoutes
+      .filter(r => r.cardOnHomepage)
+      .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path }));
 
     return crumbs.map((crumb, index, origCrumbs) => {
       const selectedCard = cards.find(e => e.listingUrl === crumb.pathname);
@@ -71,7 +74,7 @@ export default class NavBar extends React.PureComponent {
           <div className="content-wrapper">
             <Breadcrumb separator={<Icon type="right" />}>
               <Breadcrumb.Item>
-                <Link to="/">
+                <Link to={reverse('home')}>
                   <Button icon="home" />
                 </Link>
               </Breadcrumb.Item>

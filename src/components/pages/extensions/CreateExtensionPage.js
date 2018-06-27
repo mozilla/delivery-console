@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import { reverse } from 'console/urls';
 import handleError from 'console/utils/handleError';
 import ExtensionForm from 'console/components/extensions/ExtensionForm';
 import { createExtension } from 'console/state/extensions/actions';
@@ -26,7 +27,7 @@ export default class CreateExtensionPage extends React.PureComponent {
 
   onFormSuccess(extensionId) {
     message.success('Extension saved');
-    this.props.push(`/extension/${extensionId}/`);
+    this.props.push(reverse('extensions.edit', { extensionId }));
   }
 
   onFormFailure(err) {

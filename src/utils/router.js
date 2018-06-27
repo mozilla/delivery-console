@@ -14,3 +14,10 @@ export function collapseUrlsToRoutesList(urls, basePath = '') {
 
   return routesList;
 }
+
+export function replaceParamsInPath(path, params) {
+  return Object.entries(params).reduce(
+    (reduced, [key, value]) => reduced.replace(`/:${key}/`, `/${value}/`),
+    path,
+  );
+}

@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import RecipeForm from 'console/components/recipes/RecipeForm';
-
 import { createRecipe } from 'console/state/recipes/actions';
+import { reverse } from 'console/urls';
 
 @connect(
   null,
@@ -29,9 +29,9 @@ export default class CreateRecipePage extends React.PureComponent {
     handleError('Recipe cannot be created.', err);
   }
 
-  onFormSuccess(newId) {
+  onFormSuccess(recipeId) {
     message.success('Recipe created');
-    this.props.push(`/recipe/${newId}/`);
+    this.props.push(reverse('recipes.details', { recipeId }));
   }
 
   async formAction(formValues) {

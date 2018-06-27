@@ -6,7 +6,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import BooleanIcon from 'console/components/common/BooleanIcon';
 import EnrollmentStatus from 'console/components/common/EnrollmentStatus';
@@ -16,6 +16,7 @@ import QueryRecipeListingColumns from 'console/components/data/QueryRecipeListin
 import ListingActionBar from 'console/components/recipes/ListingActionBar';
 import DataList from 'console/components/tables/DataList';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
+import { reverse } from 'console/urls';
 
 import {
   getRecipeListingColumns,
@@ -130,9 +131,12 @@ export default class RecipeListingPage extends React.PureComponent {
           render={(text, record) => {
             const lastUpdated = moment(record.last_updated);
             return (
-              <NavLink to={`/recipe/${record.id}/`} title={lastUpdated.format('LLLL')}>
+              <Link
+                to={reverse('recipes.details', { recipeId: record.id })}
+                title={lastUpdated.format('LLLL')}
+              >
                 {lastUpdated.fromNow()}
-              </NavLink>
+              </Link>
             );
           }}
           sortOrder={DataList.getSortOrder('last_updated', ordering)}
@@ -142,8 +146,8 @@ export default class RecipeListingPage extends React.PureComponent {
     },
   };
 
-  static renderLinkedText(text, record) {
-    return <NavLink to={`/recipe/${record.id}/`}>{text}</NavLink>;
+  static renderLinkedText(text, { id: recipeId }) {
+    return <Link to={reverse('recipes.details', { recipeId })}>{text}</Link>;
   }
 
   getFilters() {
@@ -169,8 +173,8 @@ export default class RecipeListingPage extends React.PureComponent {
     this.props.push(getCurrentUrl({ page }));
   }
 
-  getUrlFromRecord(record) {
-    return `/recipe/${record.id}/`;
+  getUrlFromRecord({ id: recipeId }) {
+    return reverse('recipes.details', { recipeId });
   }
 
   render() {

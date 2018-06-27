@@ -5,12 +5,13 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveExtensionListingColumns } from 'console/state/extensions/actions';
 import { getExtensionListingColumns } from 'console/state/extensions/selectors';
 import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
 @connect(
   state => ({
@@ -48,11 +49,11 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <NavLink to="/extension/new/">
+          <Link to={reverse('recipes.new')}>
             <Button type="primary" icon="plus">
               New Extension
             </Button>
-          </NavLink>
+          </Link>
         </Col>
       </Row>
     );

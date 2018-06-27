@@ -5,7 +5,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveRecipeListingColumns } from 'console/state/recipes/actions';
@@ -14,6 +14,7 @@ import {
   getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
 } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
 @connect(
   (state, props) => ({
@@ -72,11 +73,11 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <NavLink to="/recipe/new/" id="lab-recipe-link">
+          <Link to={reverse('recipes.new')} id="lab-recipe-link">
             <Button type="primary" icon="plus" id="lab-recipe-button">
               New Recipe
             </Button>
-          </NavLink>
+          </Link>
         </Col>
       </Row>
     );

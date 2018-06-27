@@ -12,6 +12,7 @@ import QueryAuth0 from 'console/components/data/QueryAuth0';
 import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { getError } from 'console/state/auth/selectors';
+import { reverse } from 'console/urls';
 
 const { Header } = Layout;
 
@@ -45,11 +46,11 @@ export default class App extends React.Component {
 
           <Header className="app-header">
             <div className="content-wrapper">
-              <Link to="/">
+              <Link to={reverse('home')}>
                 <CircleLogo width="40px" height="40px" fill="white" />
               </Link>
 
-              <Link to="/">
+              <Link to={reverse('home')}>
                 <h1>Delivery Console</h1>
               </Link>
 

@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
 import { requestRevisionApproval } from 'console/state/revisions/actions';
@@ -15,7 +15,8 @@ import {
   isLatestRevision,
   isRevisionPendingApproval,
 } from 'console/state/revisions/selectors';
-import { getCurrentPathname, getUrlParamAsInt } from 'console/state/router/selectors';
+import { getUrlParamAsInt } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
 @connect(
   (state, props) => {
@@ -29,7 +30,6 @@ import { getCurrentPathname, getUrlParamAsInt } from 'console/state/router/selec
       isLatestApproved: isLatestApprovedRevision(state, revisionId),
       isPendingApproval: isRevisionPendingApproval(state, revisionId),
       isApprovable: isApprovableRevision(state, revisionId),
-      routerPath: getCurrentPathname(state),
       recipe,
       recipeId,
       revisionId,
@@ -54,7 +54,6 @@ export default class DetailsActionBar extends React.PureComponent {
     recipeId: PropTypes.number.isRequired,
     requestRevisionApproval: PropTypes.func.isRequired,
     revisionId: PropTypes.number.isRequired,
-    routerPath: PropTypes.string.isRequired,
   };
 
   handleDisableClick() {
@@ -88,23 +87,27 @@ export default class DetailsActionBar extends React.PureComponent {
       isPendingApproval,
       recipe,
       recipeId,
-      routerPath,
+      revisionId,
     } = this.props;
+
+    const cloneUrl = isLatest
+      ? reverse('recipe.clone', { recipeId })
+      : reverse('recipe.revision.clone', { recipeId, revisionId });
 
     return (
       <div className="details-action-bar clearfix">
-        <NavLink to={`${routerPath}clone/`} id="dab-clone-link">
+        <Link to={cloneUrl} id="dab-clone-link">
           <Button icon="swap" type="primary" id="dab-clone-button">
             Clone
           </Button>
-        </NavLink>
+        </Link>
 
         {isLatest && (
-          <NavLink to={`/recipe/${recipeId}/edit/`} id="dab-edit-link">
+          <Link to={reverse('recipes.edit', { recipeId })} id="dab-edit-link">
             <Button icon="edit" type="primary" id="dab-edit-button">
               Edit
             </Button>
-          </NavLink>
+          </Link>
         )}
 
         {isApprovable && (
@@ -119,11 +122,11 @@ export default class DetailsActionBar extends React.PureComponent {
         )}
 
         {isPendingApproval && (
-          <NavLink to={`/recipe/${recipeId}/approval_history/`}>
+          <Link to={reverse('recipes.approval_history', { recipeId })}>
             <Button icon="message" type="primary" id="dab-approval-status">
               Approval Request
             </Button>
-          </NavLink>
+          </Link>
         )}
 
         {isLatestApproved &&

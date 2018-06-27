@@ -5,6 +5,7 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import handleError from 'console/utils/handleError';
@@ -19,7 +20,7 @@ import {
   isLatestRevision as isLatestRevisionSelector,
 } from 'console/state/revisions/selectors';
 import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
-import { NavLink } from 'react-router-dom';
+import { reverse } from 'console/urls';
 
 @connect(
   (state, props) => {
@@ -51,9 +52,9 @@ export default class CloneRecipePage extends React.PureComponent {
     revisionId: PropTypes.number.isRequired,
   };
 
-  onFormSuccess(newId) {
+  onFormSuccess(recipeId) {
     message.success('Recipe saved');
-    this.props.push(`/recipe/${newId}/`);
+    this.props.push(reverse('recipes.details', { recipeId }));
   }
 
   onFormFailure(err) {
@@ -79,7 +80,9 @@ export default class CloneRecipePage extends React.PureComponent {
   renderHeader() {
     const { isLatestRevision, recipe, recipeId, revisionId } = this.props;
 
-    const recipeDetailsURL = `/recipe/${recipeId}${isLatestRevision ? '' : `/rev/${revisionId}`}/`;
+    const recipeDetailsURL = isLatestRevision
+      ? reverse('recipes.details', { recipeId })
+      : reverse('receipes.revision', { recipeId, revisionId });
 
     const recipeName = recipe.get('name');
 
