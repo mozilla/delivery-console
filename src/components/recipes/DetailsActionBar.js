@@ -91,8 +91,8 @@ export default class DetailsActionBar extends React.PureComponent {
     } = this.props;
 
     const cloneUrl = isLatest
-      ? reverse('recipe.clone', { recipeId })
-      : reverse('recipe.revision.clone', { recipeId, revisionId });
+      ? reverse('recipes.clone', { recipeId })
+      : reverse('recipes.revision.clone', { recipeId, revisionId });
 
     return (
       <div className="details-action-bar clearfix">

@@ -82,7 +82,7 @@ export default class CloneRecipePage extends React.PureComponent {
 
     const recipeDetailsURL = isLatestRevision
       ? reverse('recipes.details', { recipeId })
-      : reverse('receipes.revision', { recipeId, revisionId });
+      : reverse('recipes.revision', { recipeId, revisionId });
 
     const recipeName = recipe.get('name');
 
