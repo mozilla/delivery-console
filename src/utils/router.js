@@ -5,7 +5,7 @@ export function collapseUrlsToRoutesList(urls, basePath = '') {
     const { routes, ...thisRoute } = urls[k];
     thisRoute.path = `${basePath}${k}/`.replace(/\/+/g, '/');
     thisRoute.parentPath = basePath ? `${basePath}/`.replace(/\/+/g, '/') : null;
-    thisRoute.exact = thisRoute.exact || true;
+    thisRoute.exact = thisRoute.exact === undefined ? true : !!thisRoute.exact;
     routesList.push(thisRoute);
     if (routes) {
       routesList = routesList.concat(collapseUrlsToRoutesList(routes, thisRoute.path));
