@@ -38,18 +38,41 @@ export default class QueryAuth0 extends React.PureComponent {
       loginFailed(err);
     }
 
+    // By default this is true if the window.location.hash parsing stuff worked.
+    // We might change our minds about this later.
+    let startAccessTokenRefreshLoop = !!authResult;
+
     if (!authResult) {
       // It if was null from finishAuthenticationFlow() it means it didn't pick anything
       // up from the window.location.hash so we can potentially use what was stored in
       // localStorage.
       authResult = JSON.parse(localStorage.getItem('authResult'));
+      if (authResult) {
+        // If you have previously logged in we'll want to start the accessToken refresh
+        // loop. Even if it has expired. Because, if it indeed as expired, the
+        // accessToken refresh loop can silently authenticate you again.
+        startAccessTokenRefreshLoop = true;
+      }
+      // But this is only good enough if it hasn't expired.
+      const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+      if (expiresAt) {
+        if (expiresAt - new Date().getTime() < 0) {
+          // Oh no! It has expired.
+          authResult = null;
+        }
+      }
     }
 
     if (authResult) {
+      // This is only true if you arrived on the site with a valid window.location.hash
+      // or the localStorage.authResult (and localStorage.expiresAt) wasn't out of date.
       this.postProcessAuthResult(authResult);
-
-      // Start a never-ending loop over periodically checking if the accessToken is about to
+    }
+    if (startAccessTokenRefreshLoop) {
+      // Start a never-ending loop of periodically checking if the accessToken is about to
       // or has expired.
+      // This only happens for users who have successfully logged in or have successfully
+      // logged in the *past* but expired.
       await this.accessTokenRefreshLoop();
     }
   }
