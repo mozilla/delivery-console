@@ -47,7 +47,7 @@
     "eslint-plugin-prettier": "2.6.1",
     "faker": "4.1.0",
     "jest-immutable-matchers": "2.0.1",
-    "prettier": "1.13.6",
+    "prettier": "1.13.7",
     "react-app-rewire-less": "2.1.2",
     "react-app-rewired": "1.5.2",
     "stylelint": "9.3.0",
