@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEqual } from 'underscore';
+import { isEqual } from 'lodash';
 
 import { fetchFilteredRecipesPage } from 'console/state/recipes/actions';
 

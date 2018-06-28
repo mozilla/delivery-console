@@ -1,4 +1,4 @@
-import { omit } from 'underscore';
+import { omit } from 'lodash';
 
 import {
   USER_LOGIN,
@@ -8,7 +8,6 @@ import {
   USER_AUTH_FINISH,
   USER_AUTH_START,
 } from 'console/state/action-types';
-import { fetchUserInfo } from 'console/utils/auth0';
 
 export function userProfileReceived(profile) {
   return dispatch =>
@@ -23,6 +22,14 @@ export function fetchUserProfile(accessToken) {
     const profile = await fetchUserInfo(accessToken);
     return dispatch(userProfileReceived(profile));
   };
+}
+
+export function loginFailed(error) {
+  return dispatch =>
+    dispatch({
+      type: USER_LOGIN_FAILURE,
+      error,
+    });
 }
 
 export function logUserIn(authResult) {

@@ -88,7 +88,7 @@ export default class ApprovalRequest extends React.PureComponent {
     let extra;
 
     if (isPendingApproval) {
-      extra = <Tag color="yellow">Pending</Tag>;
+      extra = <Tag color="gold">Pending Approval</Tag>;
     } else if (approvalRequest.get('approved')) {
       extra = <Tag color="green">Approved</Tag>;
     } else {
@@ -109,10 +109,10 @@ export default class ApprovalRequest extends React.PureComponent {
     return (
       <div className="approval-history-details">
         <Row gutter={24}>
-          <Col span={16}>
+          <Col span={14}>
             <RecipeDetails recipe={recipe} />
           </Col>
-          <Col span={8}>
+          <Col span={10}>
             <Card title="Approval Request" extra={extra}>
               <div className="request-metadata">
                 <dl className="details narrow">

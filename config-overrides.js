@@ -12,12 +12,11 @@ module.exports = function(config, env) {
   };
 
   // LESS support
-  config = rewireLess(config, env);
+  config = rewireLess.withLoaderOptions({
+    javascriptEnabled: true,
+  })(config, env);
   // Use Ant LESS imports
-  config = injectBabelPlugin(
-    ['import', { libraryName: 'antd', style: true }],
-    config,
-  );
+  config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);
   // Decorator support (Normandy)
   config = injectBabelPlugin('transform-decorators-legacy', config);
 

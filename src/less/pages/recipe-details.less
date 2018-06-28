@@ -1,6 +1,7 @@
 dl.details {
   display: grid;
   grid-template-columns: calc(~"75px + 5vw") calc(~"100% - calc(75px + 5vw)");
+  margin: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
 
@@ -11,14 +12,15 @@ dl.details {
   dt {
     color: #999;
     font-weight: bold;
-    padding-right: 16px;
+    padding-right: 24px;
     text-transform: uppercase;
   }
 
   dt,
   dd {
     border-bottom: 1px solid #EEE;
-    padding: 16px 0;
+    margin: 0;
+    padding: 24px 0;
 
     &:first-of-type {
       padding-top: 0;
@@ -58,7 +60,7 @@ dl.details {
     }
 
     .anticon {
-      font-size: 2em;
+      font-size: 1.5em;
     }
   }
 
@@ -67,6 +69,7 @@ dl.details {
   }
 
   pre {
+    margin: 0;
     white-space: inherit;
   }
 
