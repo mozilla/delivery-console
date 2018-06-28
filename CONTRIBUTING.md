@@ -9,7 +9,7 @@ When contributing code to the repository, here are a few things to know:
 - Every new developer feature should come with documentation. E.g. "How to run lint checking". New tools and tricks that comes in without documentation is a fail.
 - Avoid global CSS that isn't tied to a specific component.
 - Run lint check and all tests locally before making a pull request using `yarn run lint`. 
-  - This will be enforced by pre-commit hooks that run the linter before every commit. You can (but should not) skip the pre-commit hooks with `git commit --no-verify ...`.
+  - This will be enforced by pre-commit hooks that run the linter before every commit. You can (but should not) skip the pre-commit hooks with `git commit --no-verify ...`. See below how to set up the pre-commit hook.
 - Don't assume that network calls always work. Check for and deal with failing network calls beyond console.error.
 - camelCase all the things (except class names) and camelCase acronyms. I.e. myUrl instead of myURL.
 - Favor simple over complex.
@@ -21,6 +21,15 @@ When contributing code to the repository, here are a few things to know:
 
 - CircleCI builds will fail if there's any linting issues. You can check linting issues with `yarn run lint`, and auto-fix some of them using `yarn run lint:prettier-eslintfix`.
 - It's very convenient to [configure your editor](https://prettier.io/docs/en/editors.html) to "auto-format on save".
+
+
+## Setting up a pre-commit hook
+
+We're using [therapist](http://therapist.readthedocs.io/en/latest/overview.html) to run linting on the source code that's about to get committed.
+
+To set it up, you'll need to follow the [installation steps](http://therapist.readthedocs.io/en/latest/overview.html#installing-therapist).
+
+The [configuration](https://github.com/mozilla/delivery-console/blob/master/.therapist.yml) is already done for you, and will run eslint and stylelint on the staged files.
 
 
 ## SOCIAL
