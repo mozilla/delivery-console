@@ -17,17 +17,10 @@ export function userProfileReceived(profile) {
     });
 }
 
-export function fetchUserProfile(accessToken) {
-  return async dispatch => {
-    const profile = await fetchUserInfo(accessToken);
-    return dispatch(userProfileReceived(profile));
-  };
-}
-
-export function loginFailed(error) {
+export function authenticationFailed(error) {
   return dispatch =>
     dispatch({
-      type: USER_LOGIN_FAILURE,
+      type: USER_AUTH_FAILURE,
       error,
     });
 }
@@ -71,13 +64,5 @@ export function finishAuthenticationFlow() {
   return dispatch =>
     dispatch({
       type: USER_AUTH_FINISH,
-    });
-}
-
-export function authenticationFailed(error) {
-  return dispatch =>
-    dispatch({
-      type: USER_AUTH_FAILURE,
-      error,
     });
 }

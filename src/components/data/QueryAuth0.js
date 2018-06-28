@@ -13,7 +13,6 @@ import { getAccessToken } from 'console/state/auth/selectors';
   }),
   {
     authenticationFailed,
-    fetchUserProfile,
     logUserIn,
     userProfileReceived,
   },
