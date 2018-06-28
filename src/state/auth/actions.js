@@ -2,10 +2,11 @@ import { omit } from 'underscore';
 
 import {
   USER_LOGIN,
-  USER_LOGIN_FAILURE,
+  USER_AUTH_FAILURE,
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
-  AUTH_STARTED,
+  USER_AUTH_FINISH,
+  USER_AUTH_START,
 } from 'console/state/action-types';
 import { fetchUserInfo } from 'console/utils/auth0';
 
@@ -20,16 +21,8 @@ export function userProfileReceived(profile) {
 export function fetchUserProfile(accessToken) {
   return async dispatch => {
     const profile = await fetchUserInfo(accessToken);
-    dispatch(userProfileReceived(profile));
+    return dispatch(userProfileReceived(profile));
   };
-}
-
-export function loginFailed(error) {
-  return dispatch =>
-    dispatch({
-      type: USER_LOGIN_FAILURE,
-      error,
-    });
 }
 
 export function logUserIn(authResult) {
@@ -41,7 +34,7 @@ export function logUserIn(authResult) {
     localStorage.setItem('authResult', JSON.stringify(cleanAuthResult));
     localStorage.setItem('expiresAt', JSON.stringify(expiresAt));
 
-    dispatch({
+    return dispatch({
       type: USER_LOGIN,
       accessToken,
       expiresAt,
@@ -54,16 +47,30 @@ export function logUserOut() {
     localStorage.removeItem('authResult');
     localStorage.removeItem('expiresAt');
 
-    dispatch({
+    return dispatch({
       type: USER_LOGOUT,
     });
   };
 }
 
-export function setAuthStarted(started = true) {
+export function startAuthenticationFlow() {
   return dispatch =>
     dispatch({
-      type: AUTH_STARTED,
-      started,
+      type: USER_AUTH_START,
+    });
+}
+
+export function finishAuthenticationFlow() {
+  return dispatch =>
+    dispatch({
+      type: USER_AUTH_FINISH,
+    });
+}
+
+export function authenticationFailed(error) {
+  return dispatch =>
+    dispatch({
+      type: USER_AUTH_FAILURE,
+      error,
     });
 }

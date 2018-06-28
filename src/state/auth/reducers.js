@@ -3,10 +3,11 @@ import { combineReducers } from 'redux';
 
 import {
   USER_LOGIN,
-  USER_LOGIN_FAILURE,
+  USER_AUTH_FAILURE,
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
-  AUTH_STARTED,
+  USER_AUTH_FINISH,
+  USER_AUTH_START,
 } from 'console/state/action-types';
 
 function session(state = new Map(), action) {
@@ -14,7 +15,7 @@ function session(state = new Map(), action) {
     case USER_PROFILE_RECEIVE:
       return state.set('profile', fromJS(action.profile));
 
-    case USER_LOGIN_FAILURE:
+    case USER_AUTH_FAILURE:
       return state.set('error', fromJS(action.error));
 
     case USER_LOGOUT:
@@ -29,8 +30,11 @@ function session(state = new Map(), action) {
         .set('expiresAt', action.expiresAt)
         .remove('error');
 
-    case AUTH_STARTED:
-      return state.set('authStarted', action.started);
+    case USER_AUTH_START:
+      return state.set('inProgress', true);
+
+    case USER_AUTH_FINISH:
+      return state.set('inProgress', false);
 
     default:
       return state;

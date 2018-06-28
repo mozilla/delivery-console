@@ -3,17 +3,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchUserProfile, loginFailed, logUserIn } from 'console/state/auth/actions';
+import { authenticationFailed, fetchUserProfile, logUserIn } from 'console/state/auth/actions';
+import { parseHash } from '../../utils/auth0';
 import { getAccessToken } from 'console/state/auth/selectors';
-import { finishAuthenticationFlow } from 'console/utils/auth0';
 
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
   }),
   {
+    authenticationFailed,
     fetchUserProfile,
-    loginFailed,
     logUserIn,
   },
 )
@@ -21,20 +21,20 @@ import { finishAuthenticationFlow } from 'console/utils/auth0';
 export default class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
+    authenticationFailed: PropTypes.func.isRequired,
     fetchUserProfile: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-    loginFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
   };
 
   async componentWillMount() {
-    const { fetchUserProfile, history, loginFailed, logUserIn } = this.props;
+    const { authenticationFailed, fetchUserProfile, history, logUserIn } = this.props;
     let authResult;
 
     try {
-      authResult = await finishAuthenticationFlow();
+      authResult = await parseHash();
     } catch (err) {
-      loginFailed(err);
+      authenticationFailed(err);
     }
 
     if (!authResult) {
