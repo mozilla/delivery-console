@@ -21,3 +21,7 @@ export function isSessionExpired(state) {
   const expiresAt = state.session.get('expiresAt', 0);
   return new Date().getTime() >= expiresAt;
 }
+
+export function isAuthenticationInProgress(state, defaultsTo = false) {
+  return state.auth.session.get('inProgress', defaultsTo);
+}

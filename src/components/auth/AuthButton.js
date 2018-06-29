@@ -3,24 +3,34 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { logUserOut } from 'console/state/auth/actions';
-import { getUserProfile } from 'console/state/auth/selectors';
+import {
+  finishAuthenticationFlow,
+  logUserOut,
+  startAuthenticationFlow,
+} from 'console/state/auth/actions';
+import { isAuthenticationInProgress, getUserProfile } from 'console/state/auth/selectors';
 import { getCurrentPathname } from 'console/state/router/selectors';
-import { startAuthenticationFlow } from 'console/utils/auth0';
+import { authorize } from '../../utils/auth0';
 
 @connect(
   (state, props) => ({
+    authInProgress: isAuthenticationInProgress(state),
     pathname: getCurrentPathname(state),
     userProfile: getUserProfile(state),
   }),
   {
+    finishAuthenticationFlow,
     logUserOut,
+    startAuthenticationFlow,
   },
 )
 export default class AuthButton extends React.Component {
   static propTypes = {
+    authInProgress: PropTypes.bool.isRequired,
+    finishAuthenticationFlow: PropTypes.func.isRequired,
     logUserOut: PropTypes.func.isRequired,
     pathname: PropTypes.string.isRequired,
+    startAuthenticationFlow: PropTypes.func.isRequired,
     userProfile: PropTypes.object,
   };
 
@@ -62,9 +72,21 @@ export default class AuthButton extends React.Component {
         </Popover>
       );
     }
-
     return (
-      <Button type="primary" onClick={() => startAuthenticationFlow(this.props.pathname)}>
+      <Button
+        type="primary"
+        loading={this.props.authInProgress}
+        onClick={() => {
+          this.props.startAuthenticationFlow();
+          authorize(this.props.pathname);
+
+          // In case you have terrible network, the going to the auth0 page might be slow.
+          // Or, it might be stuck. Or, the user hits Esc to cancel the redirect.
+          window.setTimeout(() => {
+            finishAuthenticationFlow();
+          }, 3000);
+        }}
+      >
         Log In
       </Button>
     );

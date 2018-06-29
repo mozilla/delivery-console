@@ -11,13 +11,16 @@ export const webAuth = new auth0.WebAuth({
   scope: 'openid profile email',
 });
 
-export function startAuthenticationFlow(returnUrl) {
-  webAuth.authorize({
-    state: returnUrl,
+export function authorize(returnUrl) {
+  return new Promise(resolve => {
+    webAuth.authorize({
+      state: returnUrl,
+    });
+    resolve();
   });
 }
 
-export function finishAuthenticationFlow() {
+export function parseHash() {
   return new Promise((resolve, reject) => {
     webAuth.parseHash((err, authResult) => {
       if (err) {

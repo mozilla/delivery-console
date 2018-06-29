@@ -29,7 +29,7 @@ export default class App extends React.Component {
     const { authError } = this.props;
 
     if (authError) {
-      notification['error']({
+      notification.error({
         message: 'Authentication Error',
         description: `${authError.get('error')}: ${authError.get('errorDescription')}`,
         duration: 0,
