@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
 import NavigationCard from '../navigation/NavigationCard';
 
@@ -45,14 +45,14 @@ export default class HomePage extends React.PureComponent {
             <h3>This is your one stop shop for shipping things to the browser.</h3>
 
             {/* TODO: Unhide these buttons once we have appropriate content for them. */}
-            {false && (
+            {/*(
               <div className="cta">
                 <Button type="primary" size="large">
                   Let's Get Started
                 </Button>
                 <Button size="large">Another Button</Button>
               </div>
-            )}
+            )*/}
           </div>
         </div>
 
