@@ -68,25 +68,25 @@ export default class HistoryItem extends React.PureComponent {
 
     // Grab the status style from the static definition, alternatively fall back
     // to empty/'bland' display values.
-    const styles = HistoryItem.statusStyles[status] || {};
+    const statusInfo = HistoryItem.statusStyles[status] || {};
 
-    let { color = 'grey', iconType } = styles;
-    const { label } = styles;
+    let labelColor;
+    let { color: iconColor = 'grey', iconType } = statusInfo;
 
     // If the revision is the currently viewed revision, override the icon and color.
     if (revision.get('id') === this.props.selectedRevisionId) {
-      color = 'blue';
+      labelColor = 'blue';
+      iconColor = labelColor;
       iconType = 'circle-left';
     }
 
-    const icon = !iconType ? null : (
-      <Icon type={iconType} color={color} style={{ fontSize: '16px' }} />
-    );
+    const icon = !iconType ? null : <Icon type={iconType} style={{ fontSize: '16px' }} />;
 
     return {
       icon,
-      color,
-      label,
+      iconColor,
+      labelColor,
+      statusInfo,
     };
   }
 
@@ -102,22 +102,22 @@ export default class HistoryItem extends React.PureComponent {
     const { recipeId, revision, revisionNo } = this.props;
     const revisionUrl = this.getRevisionUrl();
 
-    const { icon, color, label } = this.getRevisionStyles();
+    const { icon, iconColor, labelColor, statusInfo } = this.getRevisionStyles();
 
     return (
-      <Timeline.Item color={color} dot={icon} key={revision.get('id')}>
+      <Timeline.Item color={iconColor} dot={icon} key={revision.get('id')}>
         <Popover
           overlayClassName="timeline-popover"
           content={<HistoryItemPopover revision={revision} />}
           placement="left"
         >
           <NavLink to={revisionUrl}>
-            <Tag color={icon && color}>{`Revision ${revisionNo}`}</Tag>
+            <Tag color={labelColor}>{`Revision ${revisionNo}`}</Tag>
           </NavLink>
 
-          {label && (
+          {statusInfo.label && (
             <NavLink to={reverse('recipes.approval_history', { recipeId })}>
-              <Tag color={color}>{label}</Tag>
+              <Tag color={statusInfo.color}>{statusInfo.label}</Tag>
             </NavLink>
           )}
         </Popover>
