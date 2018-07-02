@@ -27,3 +27,4 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const USER_PROFILE_RECEIVE = 'USER_PROFILE_RECEIVE';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_RECEIVE = 'USER_RECEIVE';
+export const WINDOW_OPEN = 'WINDOW_OPEN';

@@ -1,4 +1,6 @@
-import MissingPage from 'console/components/pages/MissingPage';
+import TestComponent from 'console/components/pages/MissingPage';
+
+const { WrappedComponent: MissingPage } = TestComponent;
 
 describe('<MissingPage>', () => {
   it('should work', () => {

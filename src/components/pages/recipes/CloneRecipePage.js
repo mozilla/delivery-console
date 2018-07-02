@@ -1,10 +1,11 @@
 import { Alert, message } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import handleError from 'console/utils/handleError';
@@ -12,21 +13,20 @@ import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
-import { createRecipe as createAction } from 'console/state/recipes/actions';
+import { createRecipe } from 'console/state/recipes/actions';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 import {
   getRecipeForRevision,
   isLatestRevision as isLatestRevisionSelector,
 } from 'console/state/revisions/selectors';
 import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
-import { NavLink } from 'react-router-dom';
+import { reverse } from 'console/urls';
 
-@withRouter
 @connect(
   (state, props) => {
-    const recipeId = getUrlParamAsInt(props, 'recipeId');
+    const recipeId = getUrlParamAsInt(state, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
+    const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
     const recipe = getRecipeForRevision(state, revisionId, new Map());
     const isLatestRevision = isLatestRevisionSelector(state, revisionId);
 
@@ -38,13 +38,13 @@ import { NavLink } from 'react-router-dom';
     };
   },
   {
-    createRecipe: createAction,
+    createRecipe,
+    push,
   },
 )
 @autobind
 export default class CloneRecipePage extends React.PureComponent {
   static propTypes = {
-    history: PropTypes.object.isRequired,
     createRecipe: PropTypes.func.isRequired,
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
@@ -52,9 +52,9 @@ export default class CloneRecipePage extends React.PureComponent {
     revisionId: PropTypes.number.isRequired,
   };
 
-  onFormSuccess(newId) {
+  onFormSuccess(recipeId) {
     message.success('Recipe saved');
-    this.props.history.push(`/recipe/${newId}/`);
+    this.props.push(reverse('recipes.details', { recipeId }));
   }
 
   onFormFailure(err) {
@@ -80,7 +80,9 @@ export default class CloneRecipePage extends React.PureComponent {
   renderHeader() {
     const { isLatestRevision, recipe, recipeId, revisionId } = this.props;
 
-    const recipeDetailsURL = `/recipe/${recipeId}${isLatestRevision ? '' : `/rev/${revisionId}`}/`;
+    const recipeDetailsURL = isLatestRevision
+      ? reverse('recipes.details', { recipeId })
+      : reverse('recipes.revision', { recipeId, revisionId });
 
     const recipeName = recipe.get('name');
 

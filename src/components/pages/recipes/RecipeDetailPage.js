@@ -17,9 +17,9 @@ import { getRevision } from 'console/state/revisions/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect((state, props) => {
-  const recipeId = getUrlParamAsInt(props, 'recipeId');
+  const recipeId = getUrlParamAsInt(state, 'recipeId');
   const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-  const revisionId = getUrlParamAsInt(props, 'revisionId', latestRevisionId);
+  const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
   const revision = getRevision(state, revisionId, new Map());
 
   return {

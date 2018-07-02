@@ -11,7 +11,7 @@ import { getRecipeApprovalHistory } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect((state, props) => {
-  const recipeId = getUrlParamAsInt(props, 'recipeId');
+  const recipeId = getUrlParamAsInt(state, 'recipeId');
 
   return {
     history: getRecipeApprovalHistory(state, recipeId),

@@ -1,0 +1,54 @@
+.navigator {
+  &.ant-layout-header {
+    background: @monochrome-1;
+    border-bottom: 1px solid @border-color-base;
+    margin-bottom: 24px;
+  }
+
+  .ant-breadcrumb {
+    display: inline-block;
+    font-weight: 600;
+
+    a {
+      color: @text-color;
+
+      &:hover {
+        color: @link-hover-color;
+      }
+    }
+
+    .card-selector {
+      display: inline-block;
+
+      .ant-btn {
+        font-weight: 500;
+        position: relative;
+        z-index: 0;
+
+        &[disabled] {
+          color: @text-color;
+          cursor: default;
+        }
+
+        &:hover {
+          z-index: 1;
+        }
+
+        &:not(.left-btn) {
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          margin-left: -1px;
+        }
+
+        &:not(.right-btn) {
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        &.right-btn {
+          line-height: 28px;
+        }
+      }
+    }
+  }
+}

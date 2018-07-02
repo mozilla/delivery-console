@@ -1,19 +1,8 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import NavigationCard from '../navigation/NavigationCard';
 
-export const items = [
-  {
-    title: 'Recipes',
-    description: 'SHIELD recipes',
-    listingUrl: '/recipe/',
-  },
-  {
-    title: 'Extensions',
-    description: 'Web-extensions',
-    listingUrl: '/extension/',
-  },
-];
+import NavigationCard from 'console/components/navigation/NavigationCard';
+import applicationRoutes from 'console/urls';
 
 export default class HomePage extends React.PureComponent {
   renderCards(items) {
@@ -24,12 +13,12 @@ export default class HomePage extends React.PureComponent {
     ));
   }
 
-  renderRows(items) {
+  renderRows(cards) {
     const rows = [];
-    for (let i = 0; i < items.length; i += 3) {
+    for (let i = 0; i < cards.length; i += 3) {
       rows.push(
         <Row gutter={20} key={i}>
-          {this.renderCards(items.slice(i, i + 3))}
+          {this.renderCards(cards.slice(i, i + 3))}
         </Row>,
       );
     }
@@ -37,6 +26,9 @@ export default class HomePage extends React.PureComponent {
   }
 
   render() {
+    const cards = applicationRoutes
+      .filter(r => r.cardOnHomepage)
+      .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path }));
     return (
       <div className="home-page">
         <div className="intro">
@@ -56,7 +48,7 @@ export default class HomePage extends React.PureComponent {
           </div>
         </div>
 
-        <div className="content-wrapper">{this.renderRows(items)}</div>
+        <div className="content-wrapper">{this.renderRows(cards)}</div>
       </div>
     );
   }

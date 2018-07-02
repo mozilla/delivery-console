@@ -1,10 +1,10 @@
 import { Pagination, Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
@@ -18,22 +18,24 @@ import {
   getExtensionListing,
 } from 'console/state/extensions/selectors';
 import {
-  getCurrentURL as getCurrentURLSelector,
+  getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getExtensionListingColumns(state),
     count: getExtensionListingCount(state),
     extensions: getExtensionListing(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(props, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(props, 'page', 1),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    ordering: getQueryParam(state, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(state, 'page', 1),
   }),
-  {},
+  {
+    push,
+  },
 )
 @autobind
 export default class ExtensionListingPage extends React.PureComponent {
@@ -41,10 +43,10 @@ export default class ExtensionListingPage extends React.PureComponent {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
     extensions: PropTypes.instanceOf(List).isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -79,8 +81,8 @@ export default class ExtensionListingPage extends React.PureComponent {
     },
   };
 
-  static renderLinkedText(text, record) {
-    return <NavLink to={`/extension/${record.id}/`}>{text}</NavLink>;
+  static renderLinkedText(text, { id: extensionId }) {
+    return <NavLink to={reverse('extensions.edit', { extensionId })}>{text}</NavLink>;
   }
 
   getFilters() {
@@ -100,12 +102,12 @@ export default class ExtensionListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ page }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ page }));
   }
 
-  handleRowClick(record) {
-    this.props.history.push(`/extension/${record.id}/`);
+  getUrlFromRecord({ id: extensionId }) {
+    return reverse('extensions.edit', { extensionId });
   }
 
   render() {
@@ -124,7 +126,7 @@ export default class ExtensionListingPage extends React.PureComponent {
             columnRenderers={ExtensionListingPage.columnRenderers}
             dataSource={extensions.toJS()}
             ordering={ordering}
-            onRowClick={this.handleRowClick}
+            getUrlFromRecord={this.getUrlFromRecord}
           />
         </LoadingOverlay>
 
