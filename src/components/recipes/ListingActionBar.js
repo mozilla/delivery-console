@@ -1,37 +1,38 @@
 import { Button, Col, Input, Row } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
-import { saveRecipeListingColumns as saveRecipeListingColumnsAction } from 'console/state/recipes/actions';
+import { saveRecipeListingColumns } from 'console/state/recipes/actions';
 import { getRecipeListingColumns } from 'console/state/recipes/selectors';
 import {
-  getCurrentURL as getCurrentURLSelector,
+  getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
 } from 'console/state/router/selectors';
+import { reverse } from 'console/urls';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    searchText: getQueryParam(props, 'searchText'),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    searchText: getQueryParam(state, 'searchText'),
   }),
   {
-    saveRecipeListingColumns: saveRecipeListingColumnsAction,
+    push,
+    saveRecipeListingColumns,
   },
 )
 @autobind
 export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
   };
@@ -41,8 +42,8 @@ export default class ListingActionBar extends React.PureComponent {
   };
 
   handleChangeSearch(value) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ searchText: value || undefined }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ searchText: value || undefined }));
   }
 
   render() {
@@ -72,11 +73,11 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <NavLink to="/recipe/new/" id="lab-recipe-link">
+          <Link to={reverse('recipes.new')} id="lab-recipe-link">
             <Button type="primary" icon="plus" id="lab-recipe-button">
               New Recipe
             </Button>
-          </NavLink>
+          </Link>
         </Col>
       </Row>
     );

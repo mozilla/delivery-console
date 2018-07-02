@@ -1,12 +1,12 @@
 import { Pagination, Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import BooleanIcon from 'console/components/common/BooleanIcon';
 import EnrollmentStatus from 'console/components/common/EnrollmentStatus';
@@ -16,34 +16,32 @@ import QueryRecipeListingColumns from 'console/components/data/QueryRecipeListin
 import ListingActionBar from 'console/components/recipes/ListingActionBar';
 import DataList from 'console/components/tables/DataList';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
+import { reverse } from 'console/urls';
 
-import { fetchFilteredRecipesPage as fetchFilteredRecipesPageAction } from 'console/state/recipes/actions';
 import {
   getRecipeListingColumns,
   getRecipeListingCount,
   getRecipeListingFlattenedAction,
 } from 'console/state/recipes/selectors';
 import {
-  getCurrentURL as getCurrentURLSelector,
+  getCurrentUrl as getCurrentUrlSelector,
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),
     count: getRecipeListingCount(state),
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
-    ordering: getQueryParam(props, 'ordering', '-last_updated'),
-    pageNumber: getQueryParamAsInt(props, 'page', 1),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    ordering: getQueryParam(state, 'ordering', '-last_updated'),
+    pageNumber: getQueryParamAsInt(state, 'page', 1),
     recipes: getRecipeListingFlattenedAction(state),
-    searchText: getQueryParam(props, 'searchText'),
-    status: getQueryParam(props, 'status'),
+    searchText: getQueryParam(state, 'searchText'),
+    status: getQueryParam(state, 'status'),
   }),
   {
-    fetchFilteredRecipesPage: fetchFilteredRecipesPageAction,
-    openNewWindow: window.open,
+    push,
   },
 )
 @autobind
@@ -51,12 +49,10 @@ export default class RecipeListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
-    fetchFilteredRecipesPage: PropTypes.func.isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
-    openNewWindow: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
-    history: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
     recipes: PropTypes.instanceOf(List).isRequired,
     searchText: PropTypes.string,
     status: PropTypes.string,
@@ -135,9 +131,12 @@ export default class RecipeListingPage extends React.PureComponent {
           render={(text, record) => {
             const lastUpdated = moment(record.last_updated);
             return (
-              <NavLink to={`/recipe/${record.id}/`} title={lastUpdated.format('LLLL')}>
+              <Link
+                to={reverse('recipes.details', { recipeId: record.id })}
+                title={lastUpdated.format('LLLL')}
+              >
                 {lastUpdated.fromNow()}
-              </NavLink>
+              </Link>
             );
           }}
           sortOrder={DataList.getSortOrder('last_updated', ordering)}
@@ -147,8 +146,8 @@ export default class RecipeListingPage extends React.PureComponent {
     },
   };
 
-  static renderLinkedText(text, record) {
-    return <NavLink to={`/recipe/${record.id}/`}>{text}</NavLink>;
+  static renderLinkedText(text, { id: recipeId }) {
+    return <Link to={reverse('recipes.details', { recipeId })}>{text}</Link>;
   }
 
   getFilters() {
@@ -170,28 +169,12 @@ export default class RecipeListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentURL, history } = this.props;
-    history.push(getCurrentURL({ page }));
+    const { getCurrentUrl } = this.props;
+    this.props.push(getCurrentUrl({ page }));
   }
 
-  handleRowClick(record, index, event) {
-    // If the user has clicked a link directly, just fall back to the native event.
-    if (event.target.tagName === 'A') {
-      return;
-    }
-
-    // If we're here, the user clicked the row itself, which now needs to behave
-    // as if it was a native link click. This includes opening a new tab if using
-    // a modifier key (like ctrl).
-
-    let navTo = this.props.history.push.bind(this.props.history);
-
-    // No link but the user requested a new window.
-    if (event.ctrlKey || event.metaKey || event.button === 1) {
-      navTo = this.props.openNewWindow;
-    }
-
-    navTo(`/recipe/${record.id}/`);
+  getUrlFromRecord({ id: recipeId }) {
+    return reverse('recipes.details', { recipeId });
   }
 
   render() {
@@ -214,7 +197,7 @@ export default class RecipeListingPage extends React.PureComponent {
             columnRenderers={RecipeListingPage.columnRenderers}
             dataSource={recipes.toJS()}
             ordering={ordering}
-            onRowClick={this.handleRowClick}
+            getUrlFromRecord={this.getUrlFromRecord}
             status={status}
           />
         </LoadingOverlay>

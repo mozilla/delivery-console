@@ -1,5 +1,12 @@
 import { Timeline } from 'antd';
 import { fromJS, Map } from 'immutable';
+import {
+  REVISION_APPROVED,
+  REVISION_DISABLED,
+  REVISION_LIVE,
+  REVISION_PENDING_APPROVAL,
+  REVISION_REJECTED,
+} from 'console/state/constants';
 import { wrapMockStore } from 'console/tests/mockStore';
 
 import TestComponent, {
@@ -8,6 +15,7 @@ import TestComponent, {
   RequestInfo,
   ApprovalComment,
 } from 'console/components/recipes/HistoryItem';
+import { NavLink } from 'react-router-dom';
 
 const { WrappedComponent: HistoryItem } = TestComponent;
 
@@ -16,7 +24,6 @@ describe('<HistoryItem>', () => {
     const props = {
       isLatestRevision: () => {},
       revision: new Map(),
-      status: new Map(),
       selectedRevisionId: 123,
       recipeId: 234,
       revisionNo: 6,
@@ -27,13 +34,70 @@ describe('<HistoryItem>', () => {
     expect(wrapper).not.toThrow();
   });
 
+  describe('should display the correct status', () => {
+    const props = {
+      isLatestRevision: () => {},
+      revision: new Map({
+        id: 123,
+      }),
+      recipeId: 234,
+      revisionNo: 6,
+    };
+
+    const testStatusStyle = (status, color, iconType, label) => {
+      const wrapper = mount(
+        wrapMockStore(<HistoryItem {...props} status={status} selectedRevisionId={0} />),
+      );
+
+      const el = wrapper.find(Timeline.Item);
+      expect(el.props().color).toBe(color);
+      expect(el.props().dot.props.type).toBe(iconType);
+      expect(el.props().dot.props.color).toBe(color);
+      expect(wrapper.find(NavLink).length).toBe(2);
+      expect(
+        wrapper
+          .find(NavLink)
+          .at(1)
+          .text(),
+      ).toBe(label);
+    };
+
+    it('should use a fallback "bland" style when no status was provided', () => {
+      const wrapper = mount(wrapMockStore(<HistoryItem {...props} selectedRevisionId={0} />));
+
+      const el = wrapper.find(Timeline.Item);
+      expect(el.props().color).toBe('grey');
+      expect(el.props().dot).toBe(null);
+      expect(wrapper.find(NavLink).length).toBe(1);
+    });
+
+    it('should use a "live" style when the status is REVISION_LIVE', () => {
+      testStatusStyle(REVISION_LIVE, 'green', 'check-circle', 'Live');
+    });
+
+    it('should use a "disabled" style when the status is REVISION_DISABLED', () => {
+      testStatusStyle(REVISION_DISABLED, 'red', 'close-circle', 'Disabled');
+    });
+
+    it('should use a "approved" style when the status is REVISION_APPROVED', () => {
+      testStatusStyle(REVISION_APPROVED, 'green', 'check-circle', 'Approved');
+    });
+
+    it('should use a "rejected" style when the status is REVISION_REJECTED', () => {
+      testStatusStyle(REVISION_REJECTED, 'red', 'close-circle', 'Rejected');
+    });
+
+    it('should use a "pending approval" style when the status is REVISION_PENDING_APPROVAL', () => {
+      testStatusStyle(REVISION_PENDING_APPROVAL, 'gold', 'clock-circle-o', 'Pending Approval');
+    });
+  });
+
   describe('selected revisions', () => {
     const props = {
       isLatestRevision: () => {},
       revision: new Map({
         id: 123,
       }),
-      status: new Map(),
       recipeId: 234,
       revisionNo: 6,
     };

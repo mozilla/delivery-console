@@ -1,20 +1,23 @@
 import { Table } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { isEmpty } from 'lodash';
 
-import { getCurrentURL as getCurrentURLSelector } from 'console/state/router/selectors';
+import { openNewWindow } from 'console/state/router/actions';
+import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
 
-@withRouter
 @connect(
   state => ({
-    getCurrentURL: queryParams => getCurrentURLSelector(state, queryParams),
+    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
   }),
-  {},
+  {
+    openNewWindow,
+    push,
+  },
 )
 @autobind
 export default class DataList extends React.PureComponent {
@@ -22,15 +25,15 @@ export default class DataList extends React.PureComponent {
     columnRenderers: PropTypes.object.isRequired,
     columns: PropTypes.instanceOf(List).isRequired,
     dataSource: PropTypes.array.isRequired,
-    getCurrentURL: PropTypes.func.isRequired,
+    getCurrentUrl: PropTypes.func.isRequired,
+    openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
-    onRowClick: PropTypes.func,
-    history: PropTypes.object.isRequired,
+    getUrlFromRecord: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     ordering: null,
-    onRowClick: null,
   };
 
   static getSortOrder = (field, ordering) => {
@@ -40,12 +43,34 @@ export default class DataList extends React.PureComponent {
     return false;
   };
 
+  handleRowClick(record, index, event) {
+    // If the user has clicked a link directly, just fall back to the native event.
+    if (event.target.tagName === 'A') {
+      return;
+    }
+
+    // If we're here, the user clicked the row itself, which now needs to behave
+    // as if it was a native link click. This includes opening a new tab if using
+    // a modifier key (like ctrl).
+    let navTo = this.props.push;
+
+    // No link but the user requested a new window.
+    if (event.ctrlKey || event.metaKey || event.button === 1) {
+      navTo = this.props.openNewWindow;
+    }
+
+    navTo(this.props.getUrlFromRecord(record));
+  }
+
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentURL, history } = this.props;
-    const filterParams = {};
-    Object.entries(filters).forEach(([key, values]) => {
-      filterParams[key] = values && values.join(',');
-    });
+    const { getCurrentUrl } = this.props;
+    const filterParams = Object.entries(filters)
+      .filter(([key, value]) => value)
+      .reduce((obj, [key, value]) => {
+        const normalized = value.join ? value.join(',') : value;
+        obj[key] = normalized || null;
+        return obj;
+      }, {});
 
     let ordering;
     if (!isEmpty(sorter)) {
@@ -53,9 +78,9 @@ export default class DataList extends React.PureComponent {
       ordering = `${prefix}${sorter.field}`;
     }
 
-    history.push(
-      getCurrentURL({
-        page: undefined, // Return to the first page
+    this.props.push(
+      getCurrentUrl({
+        page: null, // Return to the first page
         ordering,
         ...filterParams,
       }),
@@ -63,10 +88,10 @@ export default class DataList extends React.PureComponent {
   }
 
   render() {
-    const { columnRenderers, columns, dataSource, onRowClick } = this.props;
+    const { columnRenderers, columns, dataSource } = this.props;
 
     const onRow = (record, index) => ({
-      onClick: onRowClick.bind(null, record, index),
+      onClick: this.handleRowClick.bind(this, record, index),
     });
 
     return (

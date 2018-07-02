@@ -1,39 +1,20 @@
-export const searchRouteTree = (tree, name, currentUrl = '') => {
-  // If we have the slug, we have the complete route.
-  if (tree.slug === name) {
-    return currentUrl;
-  }
-
-  // If the slug doesn't match, iterate over the given route tree until
-  // we find one that matches what we need (if any exist).
-  for (const curPath of Object.keys(tree)) {
-    // A key beginning with '/' indicates it is a route tree, which should be searched.
-    if (curPath.charAt(0) === '/') {
-      const val = searchRouteTree(tree[curPath], name, currentUrl + curPath);
-
-      // Non-null `val` indicates the route was found.
-      if (val !== null) {
-        // The base route's slash sometimes leads to `//` showing up in the result URL.
-        return val.replace('//', '/');
-      }
+export function reduceUrlsToRoutesList(urls, basePath = '') {
+  return Object.entries(urls).reduce((routesList, [path, urlObj]) => {
+    const { routes, ...thisRoute } = urlObj;
+    thisRoute.path = `${basePath}${path}/`.replace(/\/+/g, '/');
+    thisRoute.parentPath = basePath ? `${basePath}/`.replace(/\/+/g, '/') : null;
+    thisRoute.exact = thisRoute.exact === undefined ? true : !!thisRoute.exact;
+    routesList.push(thisRoute);
+    if (routes) {
+      routesList = routesList.concat(reduceUrlsToRoutesList(routes, thisRoute.path));
     }
-  }
+    return routesList;
+  }, []);
+}
 
-  // If we've gotten this far, the route has not been found in this route tree.
-  return null;
-};
-
-// Given a route (e.g. `/hello/:id/there`), finds params that need to be
-// populated (e.g. `:id`) and returns a string with populated values.
-export const replaceUrlVariables = (url, params) => {
-  let newUrl = url;
-  const urlParams = url.match(/:[a-z]+/gi);
-
-  if (urlParams) {
-    urlParams.forEach(piece => {
-      newUrl = newUrl.replace(piece, params[piece.slice(1)] || piece);
-    });
-  }
-
-  return newUrl;
-};
+export function replaceParamsInPath(path, params) {
+  return Object.entries(params).reduce(
+    (reduced, [key, value]) => reduced.replace(`/:${key}/`, `/${value}/`),
+    path,
+  );
+}

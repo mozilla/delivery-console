@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 @autobind
 export default class ShieldIdenticon extends React.PureComponent {
   static propTypes = {
-    seed: PropTypes.string.isRequired,
+    seed: PropTypes.string,
     size: PropTypes.number,
     className: PropTypes.string,
   };

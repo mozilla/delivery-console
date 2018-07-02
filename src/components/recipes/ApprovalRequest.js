@@ -11,8 +11,8 @@ import ApprovalForm from 'console/components/recipes/ApprovalForm';
 import ApprovalDetails from 'console/components/recipes/ApprovalDetails';
 import RecipeDetails from 'console/components/recipes/RecipeDetails';
 import {
-  approveApprovalRequest as approveApprovalRequestAction,
-  rejectApprovalRequest as rejectApprovalRequestAction,
+  approveApprovalRequest,
+  rejectApprovalRequest,
 } from 'console/state/approvalRequests/actions';
 import {
   getRecipeForRevision,
@@ -26,8 +26,8 @@ import {
     isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
   }),
   {
-    approveApprovalRequest: approveApprovalRequestAction,
-    rejectApprovalRequest: rejectApprovalRequestAction,
+    approveApprovalRequest,
+    rejectApprovalRequest,
   },
 )
 @autobind
@@ -47,7 +47,7 @@ export default class ApprovalRequest extends React.PureComponent {
   };
 
   async handleSubmit(values, context) {
-    const { approvalRequest, approveApprovalRequest, rejectApprovalRequest } = this.props;
+    const { approvalRequest } = this.props;
 
     this.setState({
       isSubmitting: true,
@@ -57,10 +57,10 @@ export default class ApprovalRequest extends React.PureComponent {
     let successMessage;
 
     if (context.approved) {
-      action = approveApprovalRequest;
+      action = this.props.approveApprovalRequest;
       successMessage = 'Request approved';
     } else {
-      action = rejectApprovalRequest;
+      action = this.props.rejectApprovalRequest;
       successMessage = 'Request rejected';
     }
 

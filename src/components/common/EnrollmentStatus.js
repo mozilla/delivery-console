@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { reverse } from 'console/urls';
+
 // Ideally the prop.recipe would be an Immutable Map, but Ant's Table works with
 // plain JS objects, which means this component can not be Pure.
 export default class EnrollmentSatus extends React.Component {
@@ -50,7 +52,7 @@ export default class EnrollmentSatus extends React.Component {
 
     return (
       <NavLink
-        to={`/recipe/${recipe.id}/`}
+        to={reverse('recipes.details', { recipeId: recipe.id })}
         className={cx('status-link', !recipe.enabled && 'is-lowkey')}
       >
         <Icon className={cx('status-icon', this.getColor())} type={this.getIcon()} />
