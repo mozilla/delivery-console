@@ -1,51 +1,107 @@
-export function getUrlParam(props, name, defaultsTo) {
-  if (!props.match) {
-    throw new Error('getUrlParam: no match in props', props, name);
+import { matchRoutes } from 'react-router-config';
+
+import applicationRoutes from 'console/urls';
+import { replaceParamsInPath } from 'console/utils/router';
+
+function getRouteByPath(path) {
+  return applicationRoutes.find(route => route.path === path);
+}
+
+function getRouteMatchByPathname(pathname) {
+  const route = matchRoutes(applicationRoutes, pathname)[0];
+  return route;
+}
+
+export function getCurrentPathname(state) {
+  return state.router.location.pathname;
+}
+
+export function getCurrentRoute(state) {
+  const routeMatch = getRouteMatchByPathname(getCurrentPathname(state));
+  return routeMatch.route;
+}
+
+export function getCurrentRouteTree(state) {
+  let pathname = getCurrentPathname(state);
+  const routeMatch = getRouteMatchByPathname(pathname);
+
+  if (!routeMatch) {
+    return [];
   }
-  return props.match.params[name] || defaultsTo;
-}
-export function getUrlParamAsInt(props, name, defaultsTo) {
-  return parseInt(getUrlParam(props, name, defaultsTo), 10);
-}
 
-export function getAllQueryParams(props, defaultsTo) {
-  const location = props.location;
-  if (!props.location) {
-    throw new Error('getAllQueryParams: no location in props', props);
+  let route = {
+    ...routeMatch.route,
+    pathname,
+  };
+
+  const routes = [route];
+
+  while (route.parentPath) {
+    pathname = replaceParamsInPath(route.parentPath, routeMatch.match.params);
+    route = {
+      ...getRouteByPath(route.parentPath),
+      pathname,
+    };
+    routes.push(route);
   }
 
-  let strParams = (location ? location.search : '').replace('?', '');
-  strParams = strParams.split('&');
-  strParams = strParams.map(x => x.split('='));
-
-  const compiled = {};
-  strParams.forEach(set => {
-    compiled[set[0]] = set[1];
-  });
-
-  return compiled;
+  return routes;
 }
 
-export function getQueryParam(props, key, defaultsTo) {
-  const params = getAllQueryParams(props, {});
+export function getUrlParam(state, key, defaultsTo) {
+  // Cache the application routes
+  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
 
+  if (route && route.match) {
+    return route.match.params[key] || defaultsTo;
+  }
+
+  return defaultsTo;
+}
+
+export function getUrlParamAsInt(state, name, defaultsTo) {
+  return parseInt(getUrlParam(state, name, defaultsTo), 10);
+}
+
+export function getAllQueryParams(state, defaultsTo) {
+  const search = state.router.location.search;
+
+  if (!search) {
+    return defaultsTo;
+  }
+
+  return search
+    .slice(1)
+    .split('&')
+    .map(item => item.split('='))
+    .reduce((obj, [key, value]) => {
+      obj[key] = value === undefined ? true : value;
+      return obj;
+    }, {});
+}
+
+export function getQueryParam(state, key, defaultsTo) {
+  const params = getAllQueryParams(state, {});
   return params[key] || defaultsTo;
 }
 
-export function getQueryParamAsInt(props, key, defaultsTo) {
-  return parseInt(getQueryParam(props, key, defaultsTo), 10);
+export function getQueryParamAsInt(state, key, defaultsTo) {
+  return parseInt(getQueryParam(state, key, defaultsTo), 10);
 }
 
-export function getCurrentURL(props, queryParams) {
-  return {
-    pathname: props.location.pathname,
-    query: {
-      ...getAllQueryParams(props, {}),
-      ...queryParams,
-    },
+export function getCurrentUrl(state, applyQueryParams) {
+  const queryParams = {
+    ...getAllQueryParams(state, {}),
+    ...applyQueryParams,
   };
-}
 
-export function getRouterPath(props) {
-  return props.location.pathname;
+  const search = Object.entries(queryParams)
+    .filter(([key, value]) => value)
+    .map(([key, value]) => (value === true ? key : `${key}=${value}`))
+    .join('&');
+
+  return {
+    pathname: getCurrentPathname(state),
+    search: search ? `?${search}` : '',
+  };
 }

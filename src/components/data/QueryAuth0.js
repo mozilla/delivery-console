@@ -1,41 +1,41 @@
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
-import { loginFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
+import { authenticationFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
-import { finishAuthenticationFlow, refreshAuthentication } from 'console/utils/auth0';
 import { REFRESH_AUTH_PREEMPTIVE_SECONDS, REFRESH_AUTH_PERIOD_SECONDS } from 'console/settings';
+import { parseHash } from 'console/utils/auth0';
 
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
   }),
   {
-    loginFailed,
+    authenticationFailed,
     logUserIn,
     userProfileReceived,
+    push,
   },
 )
-@withRouter
 export default class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
-    history: PropTypes.object.isRequired,
-    loginFailed: PropTypes.func.isRequired,
+    authenticationFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     userProfileReceived: PropTypes.func.isRequired,
   };
 
   async componentDidMount() {
-    const { loginFailed } = this.props;
+    const { authenticationFailed, logUserIn, userProfileReceived } = this.props;
     let authResult;
 
     try {
-      authResult = await finishAuthenticationFlow();
+      authResult = await parseHash();
     } catch (err) {
-      loginFailed(err);
+      authenticationFailed(err);
     }
 
     // By default this is true if the window.location.hash parsing stuff worked.
@@ -114,7 +114,7 @@ export default class QueryAuth0 extends React.PureComponent {
       } catch (err) {
         window.clearTimeout(accessTokenRefreshLoopTimer);
         console.error(err);
-        this.props.loginFailed(err);
+        this.props.authenticationFailed(err);
       }
     }
   }

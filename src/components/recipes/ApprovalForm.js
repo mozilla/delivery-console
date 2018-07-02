@@ -9,13 +9,13 @@ import handleError from 'console/utils/handleError';
 import { SimpleLoadingOverlay } from 'console/components/common/LoadingOverlay';
 import FormActions from 'console/components/forms/FormActions';
 import FormItem from 'console/components/forms/FormItem';
-import { closeApprovalRequest as closeApprovalRequestAction } from 'console/state/approvalRequests/actions';
+import { closeApprovalRequest } from 'console/state/approvalRequests/actions';
 import { createForm, ValidationError } from 'console/utils/forms';
 
 @connect(
   null,
   {
-    closeApprovalRequest: closeApprovalRequestAction,
+    closeApprovalRequest,
   },
 )
 @createForm({})
@@ -54,16 +54,17 @@ export default class ApprovalForm extends React.PureComponent {
   }
 
   handleCloseButtonClick() {
-    const { approvalRequest, closeApprovalRequest } = this.props;
+    const { approvalRequest } = this.props;
+    const onOk = async () => {
+      try {
+        await this.props.closeApprovalRequest(approvalRequest.get('id'));
+      } catch (err) {
+        handleError('Unable to close request.', err);
+      }
+    };
     Modal.confirm({
       title: 'Are you sure you want to close this approval request?',
-      async onOk() {
-        try {
-          await closeApprovalRequest(approvalRequest.get('id'));
-        } catch (err) {
-          handleError('Unable to close request.', err);
-        }
-      },
+      onOk: onOk.bind(this),
     });
   }
 

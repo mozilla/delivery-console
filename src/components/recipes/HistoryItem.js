@@ -14,11 +14,11 @@ import {
   REVISION_PENDING_APPROVAL,
   REVISION_REJECTED,
 } from 'console/state/constants';
-
 import {
   getRevisionStatus,
   isLatestRevision as isLatestRevisionSelector,
 } from 'console/state/revisions/selectors';
+import { reverse } from 'console/urls';
 
 @connect((state, { revision }) => ({
   status: getRevisionStatus(state, revision.get('id')),
@@ -29,7 +29,7 @@ export default class HistoryItem extends React.PureComponent {
   static propTypes = {
     isLatestRevision: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
-    status: PropTypes.instanceOf(Map).isRequired,
+    status: PropTypes.string,
     selectedRevisionId: PropTypes.number.isRequired,
     recipeId: PropTypes.number.isRequired,
     revisionNo: PropTypes.number.isRequired,
@@ -92,18 +92,15 @@ export default class HistoryItem extends React.PureComponent {
 
   getRevisionUrl() {
     const { recipeId, revision, isLatestRevision } = this.props;
-    let url = `/recipe/${recipeId}/`;
-
-    if (!isLatestRevision(revision.get('id'))) {
-      url = `${url}rev/${revision.get('id')}/`;
-    }
-
-    return url;
+    const revisionId = revision.get('id');
+    return isLatestRevision(revisionId)
+      ? reverse('recipes.details', { recipeId })
+      : reverse('recipes.revision', { recipeId, revisionId });
   }
 
   render() {
     const { recipeId, revision, revisionNo } = this.props;
-    const url = this.getRevisionUrl();
+    const revisionUrl = this.getRevisionUrl();
 
     const { icon, color, label } = this.getRevisionStyles();
 
@@ -114,12 +111,12 @@ export default class HistoryItem extends React.PureComponent {
           content={<HistoryItemPopover revision={revision} />}
           placement="left"
         >
-          <NavLink to={url}>
+          <NavLink to={revisionUrl}>
             <Tag color={icon && color}>{`Revision ${revisionNo}`}</Tag>
           </NavLink>
 
           {label && (
-            <NavLink to={`/recipe/${recipeId}/approval_history/`}>
+            <NavLink to={reverse('recipes.approval_history', { recipeId })}>
               <Tag color={color}>{label}</Tag>
             </NavLink>
           )}

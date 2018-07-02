@@ -6,7 +6,7 @@ const { WrappedComponent: ListingActionBar } = TestComponent;
 describe('<ListingActionBar>', () => {
   const props = {
     columns: new List(),
-    getCurrentURL: () => {},
+    getCurrentUrl: () => {},
     history: {},
     push: () => {},
     saveExtensionListingColumns: () => {},

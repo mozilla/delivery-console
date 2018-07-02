@@ -18,7 +18,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => {
-    const recipeId = getUrlParamAsInt(props, 'recipeId');
+    const recipeId = getUrlParamAsInt(state, 'recipeId');
     const recipe = getRecipe(state, recipeId, new Map());
 
     return {

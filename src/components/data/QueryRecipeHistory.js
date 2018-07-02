@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchRecipeHistory as fetchRecipeHistoryAction } from 'console/state/recipes/actions';
+import { fetchRecipeHistory } from 'console/state/recipes/actions';
 
 @connect(
   null,
   {
-    fetchRecipeHistory: fetchRecipeHistoryAction,
+    fetchRecipeHistory,
   },
 )
 export default class QueryRecipeHistory extends React.PureComponent {
@@ -17,14 +17,14 @@ export default class QueryRecipeHistory extends React.PureComponent {
   };
 
   componentWillMount() {
-    const { fetchRecipeHistory, pk } = this.props;
-    fetchRecipeHistory(pk);
+    const { pk } = this.props;
+    this.props.fetchRecipeHistory(pk);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchRecipeHistory, pk } = this.props;
+    const { pk } = this.props;
     if (pk !== nextProps.pk) {
-      fetchRecipeHistory(nextProps.pk);
+      this.props.fetchRecipeHistory(nextProps.pk);
     }
   }
 
