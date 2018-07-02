@@ -78,7 +78,7 @@ export default class QueryAuth0 extends React.PureComponent {
   }
 
   postProcessAuthResult = authResult => {
-    const { history, logUserIn, userProfileReceived } = this.props;
+    const { logUserIn, userProfileReceived } = this.props;
     const { state } = authResult;
     logUserIn(authResult);
     // Since we include 'id_token' for the 'responseType' in auth0.WebAuth
@@ -88,7 +88,7 @@ export default class QueryAuth0 extends React.PureComponent {
     userProfileReceived(authResult.idTokenPayload);
 
     if (state) {
-      history.push(state);
+      this.props.push(state);
     }
   };
 
@@ -104,12 +104,11 @@ export default class QueryAuth0 extends React.PureComponent {
     const accessTokenRefreshLoopTimer = window.setTimeout(async () => {
       await this.accessTokenRefreshLoop();
     }, REFRESH_AUTH_PERIOD_SECONDS * 1000);
-
     if (left - preemptive < 0) {
       // Time to refresh!
       console.warn('Time to refresh auth session');
       try {
-        const authResult = await refreshAuthentication(this.props.location.pathname);
+        const authResult = await refreshAuthentication(window.location.pathname);
         this.postProcessAuthResult(authResult);
       } catch (err) {
         window.clearTimeout(accessTokenRefreshLoopTimer);
