@@ -12,3 +12,7 @@ export const OIDC_DOMAIN = process.env.REACT_APP_OIDC_DOMAIN || 'auth.mozilla.au
 export const OIDC_CALLBACK_URL = process.env.REACT_APP_OIDC_CALLBACK_URL || window.location.origin;
 export const OIDC_AUDIENCE =
   process.env.REACT_APP_OIDC_AUDIENCE || `https://${OIDC_DOMAIN}/userinfo`;
+export const CHECK_AUTH_EXPIRY_INTERVAL_SECONDS = parseInt(
+  process.env.REACT_APP_CHECK_AUTH_EXPIRY_INTERVAL_SECONDS || 60 * 5,
+  10,
+);
