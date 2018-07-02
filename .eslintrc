@@ -16,6 +16,7 @@
     "prettier"
   ],
   "rules": {
+    "dot-notation": "error",
     "prettier/prettier": "error"
   }
 }
