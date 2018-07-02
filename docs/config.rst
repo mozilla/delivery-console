@@ -49,12 +49,7 @@ An environment variable like ``REACT_APP_FOO`` controls the setting ``FOO``.
 
     How often to issue a silent authentication refresh. Technically, when you're logged in,
     an infinite loop is run that refreshes your access token forever. And this number is
-    number of seconds to sleep between each check.
-
-.. envvar:: REACT_APP_REFRESH_AUTH_PREEMPTIVE_SECONDS
-
-    :default: 900
-
-    How soon *before* the session expires do we perform a silent authentication to keep it fresh.
-    If you set this really low (or even to zero) the risk is that the access token has expired
-    by the time it's needed for an API endpoint call.
+    the number of seconds to sleep between each check.
+    This number is also used to preemptively trigger a refresh. Meaning, if the access token
+    hasn't yet expired but it will *in* ``REACT_APP_CHECK_AUTH_EXPIRY_INTERVAL_SECONDS``
+    seconds, that triggers a authentication refresh too.

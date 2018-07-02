@@ -5,15 +5,14 @@ import { connect } from 'react-redux';
 
 import { authenticationFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
-import {
-  REFRESH_AUTH_PREEMPTIVE_SECONDS,
-  CHECK_AUTH_EXPIRY_INTERVAL_SECONDS,
-} from 'console/settings';
-import { parseHash, refreshAuthentication } from 'console/utils/auth0';
+import { CHECK_AUTH_EXPIRY_INTERVAL_SECONDS } from 'console/settings';
+import { parseHash, checkSession } from 'console/utils/auth0';
+import { getCurrentPathname } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
+    pathname: getCurrentPathname(state),
   }),
   {
     authenticationFailed,
@@ -27,6 +26,7 @@ export default class QueryAuth0 extends React.PureComponent {
     accessToken: PropTypes.string,
     authenticationFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    pathname: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
     userProfileReceived: PropTypes.func.isRequired,
   };
@@ -58,11 +58,9 @@ export default class QueryAuth0 extends React.PureComponent {
       }
       // But this is only good enough if it hasn't expired.
       const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
-      if (expiresAt) {
-        if (expiresAt - new Date().getTime() < 0) {
-          // Oh no! It has expired.
-          authResult = null;
-        }
+      if (expiresAt && expiresAt - new Date().getTime() < 0) {
+        // Oh no! It has expired.
+        authResult = null;
       }
     }
 
@@ -101,21 +99,21 @@ export default class QueryAuth0 extends React.PureComponent {
       return;
     }
     const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
-    const left = expiresAt - new Date().getTime();
-    const preemptive = REFRESH_AUTH_PREEMPTIVE_SECONDS * 1000;
+    const expiresIn = expiresAt - new Date().getTime();
+    const shouldRefresh = expiresIn <= CHECK_AUTH_EXPIRY_INTERVAL_SECONDS;
 
     const accessTokenRefreshLoopTimer = window.setTimeout(async () => {
       await this.accessTokenRefreshLoop();
     }, CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000);
-    if (left - preemptive < 0) {
+
+    if (shouldRefresh) {
       // Time to refresh!
-      console.warn('Time to refresh auth session');
+      console.warn('Refreshing the auth0 access token');
       try {
-        const authResult = await refreshAuthentication(window.location.pathname);
+        const authResult = await checkSession(this.props.pathname);
         this.postProcessAuthResult(authResult);
       } catch (err) {
         window.clearTimeout(accessTokenRefreshLoopTimer);
-        console.error(err);
         this.props.authenticationFailed(err);
       }
     }

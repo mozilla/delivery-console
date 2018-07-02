@@ -31,7 +31,7 @@ export function parseHash() {
   });
 }
 
-export function refreshAuthentication(returnUrl) {
+export function checkSession(returnUrl) {
   return new Promise((resolve, reject) => {
     webAuth.checkSession({ state: returnUrl }, (err, authResult) => {
       if (err) {
