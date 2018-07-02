@@ -8,6 +8,7 @@ import {
   USER_AUTH_FINISH,
   USER_AUTH_START,
 } from 'console/state/action-types';
+import { authorize } from 'console/utils/auth0';
 
 export function userProfileReceived(profile) {
   return dispatch =>
@@ -53,11 +54,14 @@ export function logUserOut() {
   };
 }
 
-export function startAuthenticationFlow() {
-  return dispatch =>
-    dispatch({
+export function startAuthenticationFlow(returnUrl) {
+  return dispatch => {
+    authorize(returnUrl);
+
+    return dispatch({
       type: USER_AUTH_START,
     });
+  };
 }
 
 export function finishAuthenticationFlow() {
