@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 
 import { authenticationFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
-import { REFRESH_AUTH_PREEMPTIVE_SECONDS, REFRESH_AUTH_PERIOD_SECONDS } from 'console/settings';
+import {
+  REFRESH_AUTH_PREEMPTIVE_SECONDS,
+  CHECK_AUTH_EXPIRY_INTERVAL_SECONDS,
+} from 'console/settings';
 import { parseHash, refreshAuthentication } from 'console/utils/auth0';
 
 @connect(
@@ -103,7 +106,7 @@ export default class QueryAuth0 extends React.PureComponent {
 
     const accessTokenRefreshLoopTimer = window.setTimeout(async () => {
       await this.accessTokenRefreshLoop();
-    }, REFRESH_AUTH_PERIOD_SECONDS * 1000);
+    }, CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000);
     if (left - preemptive < 0) {
       // Time to refresh!
       console.warn('Time to refresh auth session');

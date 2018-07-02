@@ -114,11 +114,11 @@ The way the authentication works is that a never-ending loop checks if the acces
 expired, or is about to expire. Actually, it only uses ``localStorage.expiresAt`` to do this.
 To debug this you can either sit very patiently and wait till the check ticks again, or you
 can speed it up manually. First, to control how often the check ticks, you can override
-``REACT_APP_REFRESH_AUTH_PERIOD_SECONDS`` when starting the dev server:
+``REACT_APP_CHECK_AUTH_EXPIRY_INTERVAL_SECONDS`` when starting the dev server:
 
 .. code-block:: bash
 
-    ▶ REACT_APP_REFRESH_AUTH_PERIOD_SECONDS=10 yarn start
+    $ REACT_APP_CHECK_AUTH_EXPIRY_INTERVAL_SECONDS=10 yarn start
 
 That will cause the check to run every 10 seconds.
 
