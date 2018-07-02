@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { authenticationFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { REFRESH_AUTH_PREEMPTIVE_SECONDS, REFRESH_AUTH_PERIOD_SECONDS } from 'console/settings';
-import { parseHash } from 'console/utils/auth0';
+import { parseHash, refreshAuthentication } from 'console/utils/auth0';
 
 @connect(
   (state, props) => ({
@@ -29,7 +29,7 @@ export default class QueryAuth0 extends React.PureComponent {
   };
 
   async componentDidMount() {
-    const { authenticationFailed, logUserIn, userProfileReceived } = this.props;
+    const { authenticationFailed } = this.props;
     let authResult;
 
     try {
