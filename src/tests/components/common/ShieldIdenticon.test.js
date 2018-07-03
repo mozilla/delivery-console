@@ -1,5 +1,7 @@
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
+import { NORMANDY_API_ROOT_URL } from 'console/settings';
+
 describe('<ShieldIdenticon>', () => {
   const props = {
     seed: 'test',
@@ -18,6 +20,6 @@ describe('<ShieldIdenticon>', () => {
 
     const nestedImg = wrapper.find('img');
     expect(nestedImg.length).toBe(1);
-    expect(nestedImg.props().src).toBe(`/api/v2/identicon/${props.seed}.svg`);
+    expect(nestedImg.props().src).toBe(`${NORMANDY_API_ROOT_URL}v2/identicon/${props.seed}.svg`);
   });
 });
