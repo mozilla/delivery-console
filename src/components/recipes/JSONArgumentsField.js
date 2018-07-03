@@ -21,10 +21,13 @@ export default class JSONArgumentsField extends React.Component {
 
     return (
       <div>
-        <p className="action-info">Contextual UI is not available for this action.</p>
+        <p className="action-info">
+          Contextual UI is not available for this action. A generic JSON field has been provided
+          instead.
+        </p>
         <FormItem
           name="arguments"
-          label="JSON blob"
+          label="JSON Blob"
           initialValue={JSON.stringify(recipeArguments, null, 2)}
         >
           <Input.TextArea rows="10" disabled={disabled} />

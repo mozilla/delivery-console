@@ -71,15 +71,17 @@ export default class FormItem extends React.PureComponent {
     return (
       <ul className="error-list">
         {Object.entries(errors).map(([k, v]) => {
-          if (typeof v === 'string') {
-            return <li key={k}>{`${k}: ${v}`}</li>;
-          } else if (v instanceof Array) {
-            return <li key={k}>{`${k}: ${v.join(' ')}`}</li>;
+          let formattedValue = v;
+
+          if (v instanceof Array) {
+            formattedValue = v.join(' ');
+          } else if (typeof v === 'object') {
+            formattedValue = this.renderErrorList(v);
           }
 
           return (
             <li key={k}>
-              {k} {this.renderErrorList(v)}
+              <code>{k}</code> {formattedValue}
             </li>
           );
         })}
