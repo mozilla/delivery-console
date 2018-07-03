@@ -1,4 +1,4 @@
-import { Timeline } from 'antd';
+import { Tag, Timeline } from 'antd';
 import { fromJS, Map } from 'immutable';
 import {
   REVISION_APPROVED,
@@ -52,8 +52,8 @@ describe('<HistoryItem>', () => {
       const el = wrapper.find(Timeline.Item);
       expect(el.props().color).toBe(color);
       expect(el.props().dot.props.type).toBe(iconType);
-      expect(el.props().dot.props.color).toBe(color);
       expect(wrapper.find(NavLink).length).toBe(2);
+      expect(wrapper.find('.status-label').get(0).props.color).toBe(color);
       expect(
         wrapper
           .find(NavLink)
@@ -113,7 +113,7 @@ describe('<HistoryItem>', () => {
       // `dot` is an Icon which should be highlighted with the appropriate icon.
       expect(el.props().dot).toBeTruthy();
       expect(el.props().dot.props.type).toBe('circle-left');
-      expect(el.props().dot.props.color).toBe('blue');
+      expect(wrapper.find(Tag).get(0).props.color).toBe('blue');
     });
 
     it('should NOT highlight when it is NOT the selected revision', () => {
