@@ -31,7 +31,7 @@ export default class App extends React.Component {
     if (authError) {
       notification.error({
         message: 'Authentication Error',
-        description: `${authError.get('error')}: ${authError.get('errorDescription')}`,
+        description: `${authError.get('code')}: ${authError.get('description')}`,
         duration: 0,
       });
     }
