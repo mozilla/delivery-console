@@ -117,7 +117,9 @@ export default class HistoryItem extends React.PureComponent {
 
           {statusInfo.label && (
             <NavLink to={reverse('recipes.approval_history', { recipeId })}>
-              <Tag color={statusInfo.color}>{statusInfo.label}</Tag>
+              <Tag className="status-label" color={statusInfo.color}>
+                {statusInfo.label}
+              </Tag>
             </NavLink>
           )}
         </Popover>
