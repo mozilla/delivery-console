@@ -33,16 +33,16 @@ dl.details {
   }
 
   .arguments-value {
-    display: flex;
-
     .value {
-      flex: 1 1 100%;
+      float: left;
+      overflow: auto;
+      width: calc(100% - 32px);
     }
 
     .copy-icon {
       cursor: pointer;
-      flex: 0 0 32px;
       opacity: 0;
+      width: 32px;
 
       &:hover {
         color: @blue-6;
