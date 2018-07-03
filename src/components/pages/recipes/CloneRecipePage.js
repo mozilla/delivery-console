@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
-import RecipeForm from 'console/components/recipes/RecipeForm';
+import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
 import { createRecipe } from 'console/state/recipes/actions';
@@ -73,8 +73,9 @@ export default class CloneRecipePage extends React.PureComponent {
     };
   }
 
-  async formAction(values) {
-    return this.props.createRecipe(values);
+  async formAction(data) {
+    const cleanedData = cleanRecipeData(data);
+    return this.props.createRecipe(cleanedData);
   }
 
   renderHeader() {

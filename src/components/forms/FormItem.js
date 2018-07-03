@@ -67,6 +67,26 @@ export default class FormItem extends React.PureComponent {
     return value.trim();
   }
 
+  renderErrorList(errors) {
+    return (
+      <ul className="error-list">
+        {Object.entries(errors).map(([k, v]) => {
+          if (typeof v === 'string') {
+            return <li key={k}>{`${k}: ${v}`}</li>;
+          } else if (v instanceof Array) {
+            return <li key={k}>{`${k}: ${v.join(' ')}`}</li>;
+          }
+
+          return (
+            <li key={k}>
+              {k} {this.renderErrorList(v)}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
   render() {
     const {
       children,
@@ -93,9 +113,15 @@ export default class FormItem extends React.PureComponent {
     const error = get(formErrors, name);
 
     if (error) {
-      const errorString = error instanceof Array ? error.join(' ') : error;
+      let help = error;
 
-      defaultItemProps.help = errorString;
+      if (error instanceof Array) {
+        help = error.join(' ');
+      } else if (typeof error === 'object') {
+        help = this.renderErrorList(error);
+      }
+
+      defaultItemProps.help = help;
       defaultItemProps.validateStatus = 'error';
     }
     const itemProps = { ...defaultItemProps, ...customItemProps };

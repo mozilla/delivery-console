@@ -8,9 +8,8 @@ import { connect } from 'react-redux';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
-import RecipeForm from 'console/components/recipes/RecipeForm';
+import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
-
 import { updateRecipe } from 'console/state/recipes/actions';
 import { getRecipe } from 'console/state/recipes/selectors';
 import { getRecipeForRevision } from 'console/state/revisions/selectors';
@@ -50,9 +49,10 @@ export default class EditRecipePage extends React.PureComponent {
     handleError('Recipe cannot be updated.', error);
   }
 
-  async formAction(formValues) {
+  async formAction(data) {
     const { recipeId } = this.props;
-    return this.props.updateRecipe(recipeId, formValues);
+    const cleanedData = cleanRecipeData(data);
+    return this.props.updateRecipe(recipeId, cleanedData);
   }
 
   render() {
