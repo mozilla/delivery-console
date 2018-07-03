@@ -1,4 +1,4 @@
-import { Row, Col, Alert, Button, Form, Input, Select } from 'antd';
+import { Row, Col, Button, Form, Input, Select } from 'antd';
 import autobind from 'autobind-decorator';
 import { is, Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -8,15 +8,36 @@ import { connect } from 'react-redux';
 import FormItem from 'console/components/forms/FormItem';
 import FormActions from 'console/components/forms/FormActions';
 import ConsoleLogFields from 'console/components/recipes/ConsoleLogFields';
+import JSONArgumentsField from 'console/components/recipes/JSONArgumentsField';
 import PreferenceExperimentFields from 'console/components/recipes/PreferenceExperimentFields';
 import ShowHeartbeatFields from 'console/components/recipes/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/components/recipes/OptOutStudyFields';
 import { getAction, getAllActions } from 'console/state/actions/selectors';
 import { areAnyRequestsInProgress } from 'console/state/requests/selectors';
-import { getGithubUrl } from 'console/state/serviceInfo/selectors';
 import { createForm } from 'console/utils/forms';
-import QueryServiceInfo from 'console/components/data/QueryServiceInfo';
 import IdenticonField from 'console/components/forms/IdenticonField';
+
+export function cleanRecipeData(data) {
+  // Handle generic JSON textfield arguments
+  if (typeof data.arguments === 'string') {
+    try {
+      data.arguments = JSON.parse(data.arguments);
+    } catch (error) {
+      error.data = { arguments: 'Invalid JSON.' };
+      throw error;
+    }
+  }
+
+  // Make sure the action ID is an integer
+  try {
+    data.action_id = parseInt(data.action_id, 10);
+  } catch (error) {
+    error.data = { action_id: 'Invalid Action ID.' };
+    throw error;
+  }
+
+  return data;
+}
 
 /**
  * Form for editing recipes.
@@ -54,25 +75,40 @@ export default class RecipeForm extends React.PureComponent {
     'opt-out-study': OptOutStudyFields,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.defaultIdenticonSeed = IdenticonField.generateSeed();
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
     // Initial values are mostly handled via props, but if the recipe
     // changes, we need to reset the values stored in the state.
-    if (!is(newProps.recipe, this.props.recipe)) {
+    if (!is(prevProps.recipe, this.props.recipe)) {
       this.props.form.resetFields();
     }
   }
 
-  render() {
-    const { isCreationForm, isLoading, onSubmit, recipe, selectedActionName } = this.props;
+  renderArgumentsFields() {
+    const { isLoading, recipe, selectedActionName } = this.props;
+    let ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
 
-    let ArgumentsFields = null;
-    if (selectedActionName) {
-      ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
+    if (selectedActionName && !ArgumentsFields) {
+      ArgumentsFields = JSONArgumentsField;
     }
+
+    if (!ArgumentsFields) {
+      return null;
+    }
+
+    return (
+      <fieldset>
+        <legend>Action Arguments</legend>
+        <ArgumentsFields recipeArguments={recipe.get('arguments')} disabled={isLoading} />
+      </fieldset>
+    );
+  }
+
+  render() {
+    const { isCreationForm, isLoading, onSubmit, recipe } = this.props;
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
     // to prevent the form from generating a new identicon on each render.
@@ -107,14 +143,9 @@ export default class RecipeForm extends React.PureComponent {
         <FormItem name="action_id" label="Action" initialValue={recipe.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />
         </FormItem>
-        {ArgumentsFields && (
-          <fieldset>
-            <legend>Action Arguments</legend>
-            <ArgumentsFields recipeArguments={recipe.get('arguments')} disabled={isLoading} />
-          </fieldset>
-        )}
-        {selectedActionName &&
-          !ArgumentsFields && <ArgumentEditorMissingError name={selectedActionName} />}
+
+        {this.renderArgumentsFields()}
+
         <FormActions>
           <FormActions.Primary>
             <Button type="primary" htmlType="submit" disabled={isLoading} id="rf-save-button">
@@ -161,47 +192,6 @@ export class ActionSelect extends React.PureComponent {
             );
           })}
         </Select>
-      </div>
-    );
-  }
-}
-
-@connect(state => ({
-  githubUrl: getGithubUrl(state),
-}))
-class ArgumentEditorMissingError extends React.PureComponent {
-  static propTypes = {
-    githubUrl: PropTypes.string,
-    name: PropTypes.string.isRequired,
-  };
-
-  static defaultProps = {
-    githubUrl: null,
-  };
-
-  render() {
-    const { githubUrl, name } = this.props;
-    let fileIssueUrl;
-    if (githubUrl) {
-      const url = new URL(githubUrl);
-      url.pathname += '/issues/new';
-      url.searchParams.set('title', `Argument fields missing for action "${name}"`);
-      fileIssueUrl = url.toString();
-    }
-
-    return (
-      <div>
-        <QueryServiceInfo />
-        <Alert
-          message="Error - Argument editor not available"
-          description={
-            <span>
-              This is a bug. Please <a href={fileIssueUrl}>file an issue on GitHub for it.</a>
-            </span>
-          }
-          type="error"
-          showIcon
-        />
       </div>
     );
   }

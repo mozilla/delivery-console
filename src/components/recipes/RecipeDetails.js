@@ -57,7 +57,7 @@ export class ArgumentsValue extends React.PureComponent {
   };
 
   static stringifyImmutable(value) {
-    return JSON.stringify(value);
+    return JSON.stringify(value, null, 2);
   }
 
   // Determine if an object is an instance of any of the given classes
@@ -107,7 +107,7 @@ export class ArgumentsValue extends React.PureComponent {
   render() {
     const { name, value } = this.props;
 
-    let valueRender = x => x;
+    let valueRender = x => (typeof x === 'object' ? JSON.stringify(x, null, 2) : x);
 
     if (name === 'branches') {
       valueRender = this.renderBranchTable;

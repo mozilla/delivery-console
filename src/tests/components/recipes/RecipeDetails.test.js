@@ -62,11 +62,11 @@ describe('<ArgumentsValue>', () => {
       const testData = { slug: 'one', value: { test: 'fake-value' }, ratio: 1 };
       // Test against Maps
       let value = Immutable.fromJS(testData);
-      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify(testData));
+      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify(testData, null, 2));
 
       // Test against Lists
       value = Immutable.fromJS([testData]);
-      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify([testData]));
+      expect(ArgumentsValue.stringifyImmutable(value)).toBe(JSON.stringify([testData], null, 2));
     });
 
     it('should use a JSON string for copy/pasting Immutable fields', () => {

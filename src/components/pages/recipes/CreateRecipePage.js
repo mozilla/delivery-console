@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
-import RecipeForm from 'console/components/recipes/RecipeForm';
+import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
 import { createRecipe } from 'console/state/recipes/actions';
 import { reverse } from 'console/urls';
 
@@ -34,8 +34,9 @@ export default class CreateRecipePage extends React.PureComponent {
     this.props.push(reverse('recipes.details', { recipeId }));
   }
 
-  async formAction(formValues) {
-    return this.props.createRecipe(formValues);
+  async formAction(data) {
+    const cleanedData = cleanRecipeData(data);
+    return this.props.createRecipe(cleanedData);
   }
 
   render() {
