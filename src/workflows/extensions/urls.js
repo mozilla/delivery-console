@@ -7,6 +7,7 @@ export default {
     name: 'extensions',
     component: ExtensionListingPage,
     crumbText: 'Extensions',
+    documentTitle: 'Extensions',
     cardOnHomepage: {
       title: 'Extensions',
       description: 'Web-extensions',
@@ -16,11 +17,13 @@ export default {
         name: 'extensions.new',
         component: CreateExtensionPage,
         crumbText: 'New',
+        documentTitle: 'New Extension',
       },
       '/:extensionId': {
         name: 'extensions.edit',
         component: EditExtensionPage,
         crumbText: 'Edit',
+        documentTitle: 'Edit Extension',
       },
     },
   },

@@ -12,21 +12,42 @@ import QueryAuth0 from 'console/components/data/QueryAuth0';
 import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { getError } from 'console/state/auth/selectors';
+import { getCurrentRouteTree } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
 const { Header } = Layout;
 
 @connect((state, props) => ({
   authError: getError(state),
+  routeTree: getCurrentRouteTree(state),
 }))
 export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
     history: PropTypes.object.isRequired,
+    routeTree: PropTypes.array.isRequired,
   };
 
-  componentDidUpdate() {
-    const { authError } = this.props;
+  updateDocumentTitle() {
+    const { routeTree } = this.props;
+    const { documentTitle } = routeTree[0];
+    let title = 'Delivery Console';
+    if (documentTitle) {
+      title = `${documentTitle} • ${title}`;
+    }
+    document.title = title;
+  }
+
+  componentDidMount() {
+    this.updateDocumentTitle();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { authError, routeTree } = this.props;
+
+    if (routeTree[0].pathname !== prevProps.routeTree[0].pathname) {
+      this.updateDocumentTitle();
+    }
 
     if (authError) {
       notification.error({

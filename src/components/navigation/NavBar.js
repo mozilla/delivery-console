@@ -21,7 +21,7 @@ export default class NavBar extends React.PureComponent {
   };
 
   renderCrumbs() {
-    const crumbs = this.props.routeTree.reverse().slice(1);
+    const crumbs = [...this.props.routeTree].reverse().slice(1);
     const cards = applicationRoutes
       .filter(r => r.cardOnHomepage)
       .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path }));
@@ -34,7 +34,7 @@ export default class NavBar extends React.PureComponent {
         const menu = (
           <Menu>
             {cards.map(card => (
-              <Menu.Item>
+              <Menu.Item key={card.listingUrl}>
                 <Link to={card.listingUrl}>{card.title}</Link>
               </Menu.Item>
             ))}
@@ -50,7 +50,7 @@ export default class NavBar extends React.PureComponent {
             >
               {selectedCard.title}
             </LinkButton>
-            <Dropdown overlay={menu} placement="bottomRight" trigger="click">
+            <Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
               <Button className="right-btn" icon="ellipsis" />
             </Dropdown>
           </div>
