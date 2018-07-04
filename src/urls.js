@@ -1,6 +1,7 @@
 import HomePage from 'console/components/pages/HomePage';
 import workflows from 'console/workflows/urls';
 
+import MissingPage from 'console/components/pages/MissingPage';
 import { reduceUrlsToRoutesList, replaceParamsInPath } from 'console/utils/router';
 
 const routesList = reduceUrlsToRoutesList({
@@ -18,4 +19,12 @@ export function reverse(name, params = {}) {
   return replaceParamsInPath(path, params);
 }
 
-export default routesList;
+export default [
+  ...routesList,
+
+  // 404 page
+  {
+    component: MissingPage,
+    documentTitle: 'Page not found',
+  },
+];
