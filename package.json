@@ -1,5 +1,5 @@
 {
-  "name": "dev-console",
+  "name": "delivery-console",
   "version": "0.1.0",
   "private": true,
   "homepage": "/",
@@ -27,10 +27,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start:normandy": "react-app-rewired start --app=normandy",
     "build": "react-app-rewired build",
-    "build-stage": "REACT_APP_SENTRY_PUBLIC_DSN='https://7f037ccfad184848848bd5077d9ecf07@sentry.prod.mozaws.net/362' build",
-    "build-prod": "REACT_APP_SENTRY_PUBLIC_DSN='https://4dac38d672e842a88233e9293caf2d09@sentry.prod.mozaws.net/363' build",
     "test": "CI=true yarn run test:jest",
     "test:jest": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
@@ -58,7 +55,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      ".*\\.less$": "<rootDir>/StubModule.js",
+      ".*\\.less$": "<rootDir>/etc/StubModule.js",
       "^console/(.*)$": "<rootDir>/src/$1"
     }
   }
