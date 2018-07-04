@@ -138,7 +138,7 @@ export default class RecipeForm extends React.PureComponent {
           label="Filter Expression"
           initialValue={recipe.get('extra_filter_expression')}
         >
-          <Input disabled={isLoading} type="textarea" rows="4" />
+          <Input.TextArea disabled={isLoading} autosize={{ minRows: 4, maxRows: 16 }} />
         </FormItem>
         <FormItem name="action_id" label="Action" initialValue={recipe.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />
