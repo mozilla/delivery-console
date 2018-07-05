@@ -4,9 +4,9 @@ import { Map } from 'immutable';
 import { AutoIncrementField, DateField, Factory, SubFactory } from 'console/tests/factory';
 import { UserFactory } from 'console/tests/state/users';
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE = new Map({
   items: new Map(),
-};
+});
 
 export class ApprovalRequestFactory extends Factory {
   getFields() {
