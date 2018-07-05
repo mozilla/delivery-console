@@ -16,7 +16,13 @@ function session(state = new Map(), action) {
       return state.set('profile', fromJS(action.profile));
 
     case USER_AUTH_FAILURE:
-      return state.set('error', fromJS(action.error));
+      return state.set(
+        'error',
+        fromJS({
+          ...action.error,
+          time: Date.now(),
+        }),
+      );
 
     case USER_LOGOUT:
       return state

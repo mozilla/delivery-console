@@ -49,7 +49,9 @@ export default class App extends React.Component {
       this.updateDocumentTitle();
     }
 
-    if (authError) {
+    const prevErrorTime = prevProps.authError && prevProps.authError.time;
+
+    if (authError && authError.time !== prevErrorTime) {
       notification.error({
         message: 'Authentication Error',
         description: `${authError.get('code')}: ${authError.get('description')}`,
