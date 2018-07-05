@@ -121,13 +121,9 @@ export default class QueryAuth0 extends React.PureComponent {
         this.postProcessAuthResult(authResult);
       } catch (err) {
         window.clearTimeout(accessTokenRefreshLoopTimer);
-        if (
-          typeof err === 'object' &&
-          (err.error === 'timeout' || err.error === 'login_required')
-        ) {
+        if (err && ['timeout', 'login_required'].includes(err.error)) {
           // Plain and simple, the silent authentication could not be done because the
           // single-sign-in wants to revisit.
-          console.warn("checkSession didn't work.", err);
           // If this check was done after the user successfully logged in thanks to
           // a still valid localStorage.expiresAt (and localStorage.accessToken) delete
           // those. If we don't do this, the user might think she's still logged in and
