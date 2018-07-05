@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
   updateDocumentTitle() {
     const { routeTree } = this.props;
-    const { documentTitle } = routeTree.get(0);
+    const documentTitle = routeTree.getIn([0, 'documentTitle']);
     let title = 'Delivery Console';
     if (documentTitle) {
       title = `${documentTitle} • ${title}`;
