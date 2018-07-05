@@ -18,34 +18,26 @@ import { FILTERS, RecipeFactory } from 'console/tests/state/recipes';
 describe('getRecipe', () => {
   const recipe = RecipeFactory.build();
 
-  const STATE = INITIAL_STATE.set(
-    'actions',
-    actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: recipe.action,
-    }),
-  )
-    .set(
-      'recipes',
-      recipesReducer(undefined, {
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: recipe.action,
+      }),
+      recipes: recipesReducer(undefined, {
         type: RECIPE_RECEIVE,
         recipe,
       }),
-    )
-    .set(
-      'revisions',
-      revisionsReducer(undefined, {
+      revisions: revisionsReducer(undefined, {
         type: REVISION_RECEIVE,
         revision: recipe.latest_revision,
       }),
-    )
-    .set(
-      'users',
-      usersReducer(undefined, {
+      users: usersReducer(undefined, {
         type: USER_RECEIVE,
         user: recipe.latest_revision.user,
       }),
-    );
+    }),
+  );
 
   beforeEach(() => {
     jest.addMatchers(matchers);
@@ -79,28 +71,22 @@ describe('getRecipeFilters', () => {
 describe('getRecipeHistory', () => {
   const recipe = RecipeFactory.build();
 
-  const STATE = INITIAL_STATE.set(
-    'actions',
-    actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: recipe.action,
-    }),
-  )
-    .setIn(['recipes', 'history', recipe.id], fromJS([recipe.latest_revision.id]))
-    .set(
-      'revisions',
-      revisionsReducer(undefined, {
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: recipe.action,
+      }),
+      revisions: revisionsReducer(undefined, {
         type: REVISION_RECEIVE,
         revision: recipe.latest_revision,
       }),
-    )
-    .set(
-      'users',
-      usersReducer(undefined, {
+      users: usersReducer(undefined, {
         type: USER_RECEIVE,
         user: recipe.latest_revision.user,
       }),
-    );
+    }),
+  ).setIn(['recipes', 'history', recipe.id], fromJS([recipe.latest_revision.id]));
 
   beforeEach(() => {
     jest.addMatchers(matchers);

@@ -12,27 +12,22 @@ import { RevisionFactory } from 'console/tests/state/revisions';
 describe('getRevision', () => {
   const revision = RevisionFactory.build();
 
-  const STATE = INITIAL_STATE.set(
-    'actions',
-    actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: revision.recipe.action,
-    }),
-  )
-    .set(
-      'revisions',
-      revisionsReducer(undefined, {
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: revision.recipe.action,
+      }),
+      revisions: revisionsReducer(undefined, {
         type: REVISION_RECEIVE,
         revision,
       }),
-    )
-    .set(
-      'users',
-      usersReducer(undefined, {
+      users: usersReducer(undefined, {
         type: USER_RECEIVE,
         user: revision.user,
       }),
-    );
+    }),
+  );
 
   beforeEach(() => {
     jest.addMatchers(matchers);

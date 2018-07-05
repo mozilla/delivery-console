@@ -13,17 +13,16 @@ import { ServiceInfoFactory } from 'console/tests/state/serviceInfo';
 
 const serviceInfo = ServiceInfoFactory.build();
 
-const STATE = INITIAL_STATE.set(
-  'serviceInfo',
-  serviceInfoReducer(undefined, {
-    type: SERVICE_INFO_RECEIVE,
-    serviceInfo,
-  }),
-).set(
-  'users',
-  usersReducer(undefined, {
-    type: USER_RECEIVE,
-    user: serviceInfo.user,
+const STATE = INITIAL_STATE.merge(
+  fromJS({
+    serviceInfo: serviceInfoReducer(undefined, {
+      type: SERVICE_INFO_RECEIVE,
+      serviceInfo,
+    }),
+    users: usersReducer(undefined, {
+      type: USER_RECEIVE,
+      user: serviceInfo.user,
+    }),
   }),
 );
 
