@@ -77,13 +77,10 @@ export default class RecipeForm extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {};
-  }
 
-  componentDidMount() {
-    this.setState((prevState, props) => ({
+    this.state = {
       defaultIdenticonSeed: IdenticonField.generateSeed(),
-    }));
+    };
   }
 
   componentDidUpdate(prevProps) {

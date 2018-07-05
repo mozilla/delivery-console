@@ -37,16 +37,8 @@ export default class IdenticonField extends React.PureComponent {
     const { value } = this.props;
     if (value && value !== prevProps.value) {
       this.setState(({ history, index }) => {
-        let newIndex;
-        let newHistory;
-
-        if (history.includes(value)) {
-          newIndex = history.indexOf(value);
-          newHistory = history;
-        } else {
-          newIndex = history.size;
-          newHistory = history.push(value);
-        }
+        const newIndex = history.includes(value) ? history.indexOf(value) : history.size;
+        const newHistory = newIndex === history.size ? history.push(value) : history;
 
         return {
           index: newIndex,
@@ -56,24 +48,18 @@ export default class IdenticonField extends React.PureComponent {
     }
   }
 
-  navigateHistory(direction) {
+  navigateHistory(step) {
     const { onChange } = this.props;
     const { index, history } = this.state;
-    const newIndex = index + direction;
+    const newIndex = index + step;
     let next;
 
-    if (newIndex < 0) {
-      return;
-    }
+    if (newIndex >= 0) {
+      next = history.get(newIndex, IdenticonField.generateSeed());
 
-    next = history.get(newIndex);
-
-    if (!next) {
-      next = IdenticonField.generateSeed();
-    }
-
-    if (onChange) {
-      onChange(next);
+      if (onChange) {
+        onChange(next);
+      }
     }
   }
 

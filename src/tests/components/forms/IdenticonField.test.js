@@ -61,6 +61,10 @@ describe('<IdenticonField>', () => {
 
       prev.simulate('click');
       expect(wrapper.prop('value')).toBe(defaultProps.value);
+
+      prev.simulate('click');
+      expect(prev.prop('disabled')).toBe(false);
+      expect(wrapper.prop('value')).toBe(defaultProps.value);
     });
 
     it('should recall icons from history if moving forward', () => {
