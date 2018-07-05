@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { authenticationFailed, logUserIn, userProfileReceived } from 'console/state/auth/actions';
+import {
+  authenticationFailed,
+  logUserIn,
+  logUserOut,
+  userProfileReceived,
+} from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
 import { CHECK_AUTH_EXPIRY_INTERVAL_SECONDS } from 'console/settings';
 import { parseHash, checkSession } from 'console/utils/auth0';
@@ -17,6 +22,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
   {
     authenticationFailed,
     logUserIn,
+    logUserOut,
     userProfileReceived,
     push,
   },
@@ -26,6 +32,7 @@ export default class QueryAuth0 extends React.PureComponent {
     accessToken: PropTypes.string,
     authenticationFailed: PropTypes.func.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    logUserOut: PropTypes.func.isRequired,
     pathname: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
     userProfileReceived: PropTypes.func.isRequired,
@@ -114,7 +121,21 @@ export default class QueryAuth0 extends React.PureComponent {
         this.postProcessAuthResult(authResult);
       } catch (err) {
         window.clearTimeout(accessTokenRefreshLoopTimer);
-        this.props.authenticationFailed(err);
+        if (
+          typeof err === 'object' &&
+          (err.error === 'timeout' || err.error === 'login_required')
+        ) {
+          // Plain and simple, the silent authentication could not be done because the
+          // single-sign-in wants to revisit.
+          console.warn("checkSession didn't work.", err);
+          // If this check was done after the user successfully logged in thanks to
+          // a still valid localStorage.expiresAt (and localStorage.accessToken) delete
+          // those. If we don't do this, the user might think she's still logged in and
+          // very soon will get a 401 on the next XHR request.
+          this.props.logUserOut();
+        } else {
+          this.props.authenticationFailed(err);
+        }
       }
     }
   }
