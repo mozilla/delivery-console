@@ -22,7 +22,7 @@ import { reverse } from 'console/urls';
 export default class CreateRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
-    push: PropTypes.object.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   onFormFailure(err) {

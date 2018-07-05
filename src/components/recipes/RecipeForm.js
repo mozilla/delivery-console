@@ -75,8 +75,15 @@ export default class RecipeForm extends React.PureComponent {
     'opt-out-study': OptOutStudyFields,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   componentDidMount() {
-    this.defaultIdenticonSeed = IdenticonField.generateSeed();
+    this.setState((prevState, props) => ({
+      defaultIdenticonSeed: IdenticonField.generateSeed(),
+    }));
   }
 
   componentDidUpdate(prevProps) {
@@ -109,10 +116,11 @@ export default class RecipeForm extends React.PureComponent {
 
   render() {
     const { isCreationForm, isLoading, onSubmit, recipe } = this.props;
+    const { defaultIdenticonSeed } = this.state;
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
     // to prevent the form from generating a new identicon on each render.
-    const identiconSeed = isCreationForm ? this.defaultIdenticonSeed : null;
+    const identiconSeed = isCreationForm ? defaultIdenticonSeed : null;
 
     return (
       <Form onSubmit={onSubmit} className="recipe-form">
