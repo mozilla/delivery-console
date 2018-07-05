@@ -1,5 +1,5 @@
 import { Layout, notification } from 'antd';
-import { ConnectedRouter } from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router/immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
   updateDocumentTitle() {
     const { routeTree } = this.props;
-    const { documentTitle } = routeTree[0];
+    const { documentTitle } = routeTree.get(0);
     let title = 'Delivery Console';
     if (documentTitle) {
       title = `${documentTitle} • ${title}`;
@@ -45,7 +45,7 @@ export default class App extends React.Component {
   componentDidUpdate(prevProps) {
     const { authError, routeTree } = this.props;
 
-    if (routeTree[0].pathname !== prevProps.routeTree[0].pathname) {
+    if (routeTree.getIn([0, 'pathname']) !== prevProps.routeTree.getIn([0, 'pathname'])) {
       this.updateDocumentTitle();
     }
 
