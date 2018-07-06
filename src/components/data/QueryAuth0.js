@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -27,6 +28,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
     push,
   },
 )
+@autobind
 export default class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
@@ -38,100 +40,109 @@ export default class QueryAuth0 extends React.PureComponent {
     userProfileReceived: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   async componentDidMount() {
     const { authenticationFailed } = this.props;
     let authResult;
+    let expiresAt;
 
+    // Check whether we are currently in an auth flow
     try {
       authResult = await parseHash();
     } catch (err) {
       authenticationFailed(err);
     }
 
-    // By default this is true if the window.location.hash parsing stuff worked.
-    // We might change our minds about this later.
-    let startAccessTokenRefreshLoop = !!authResult;
-
+    // If not check if the user has a locally stored authResult
     if (!authResult) {
-      // It if was null from finishAuthenticationFlow() it means it didn't pick anything
-      // up from the window.location.hash so we can potentially use what was stored in
-      // localStorage.
-      authResult = JSON.parse(localStorage.getItem('authResult'));
-      if (authResult) {
-        // If you have previously logged in we'll want to start the accessToken refresh
-        // loop. Even if it has expired. Because, if it indeed as expired, the
-        // accessToken refresh loop can silently authenticate you again.
-        startAccessTokenRefreshLoop = true;
-      }
-      // But this is only good enough if it hasn't expired.
-      const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
-      if (expiresAt && expiresAt - new Date().getTime() < 0) {
-        // Oh no! It has expired.
-        authResult = null;
+      expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+      if (expiresAt && expiresAt - new Date().getTime() > 0) {
+        authResult = JSON.parse(localStorage.getItem('authResult'));
       }
     }
 
     if (authResult) {
-      // This is only true if you arrived on the site with a valid window.location.hash
-      // or the localStorage.authResult (and localStorage.expiresAt) wasn't out of date.
-      this.postProcessAuthResult(authResult);
-    }
-    if (startAccessTokenRefreshLoop) {
-      // Start a never-ending loop of periodically checking if the accessToken is about to
-      // or has expired.
-      // This only happens for users who have successfully logged in or have successfully
-      // logged in the *past* but expired.
-      await this.accessTokenRefreshLoop();
+      // If we have a valid authResult log the user in
+      this.processAuthResult(authResult);
+    } else if (expiresAt && expiresAt - new Date().getTime() < 0) {
+      // If we do not have an expired authResult attempt to refresh it
+      this.refreshAccessToken();
     }
   }
 
-  postProcessAuthResult = authResult => {
+  componentDidUpdate(prevProps) {
+    const { accessToken } = this.props;
+
+    if (accessToken && accessToken !== prevProps.accessToken) {
+      // Check the access token now
+      this.checkAccessToken();
+
+      // Set up periodic checks of the access token
+      this.setState(() => ({
+        checkAccessTokenInterval: window.setInterval(
+          this.checkAccessToken,
+          CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000,
+        ),
+      }));
+    } else if (!accessToken) {
+      // There is no access token so stop periodic checks
+      this.clearAccessTokenInterval();
+    }
+  }
+
+  componentWillUnmount() {
+    this.clearAccessTokenInterval();
+  }
+
+  processAuthResult(authResult) {
     const { logUserIn, userProfileReceived } = this.props;
-    const { state } = authResult;
+    const { state: redirectUrl } = authResult;
+
     logUserIn(authResult);
-    // Since we include 'id_token' for the 'responseType' in auth0.WebAuth
-    // the authresult will contain the user profile as .idTokenPayload
-    // included with the accessToken. Use this now to update the state so that we
-    // can display the name and avatar you logged in as.
     userProfileReceived(authResult.idTokenPayload);
 
-    if (state) {
-      this.props.push(state);
+    if (redirectUrl) {
+      this.props.push(redirectUrl);
     }
-  };
+  }
 
-  async accessTokenRefreshLoop() {
-    if (!localStorage.getItem('expiresAt')) {
-      // The user has logged out probably. Either way, no point bothering to refresh.
-      return;
+  checkAccessToken() {
+    const { accessToken } = this.props;
+    if (accessToken) {
+      const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+      const expiresIn = expiresAt - new Date().getTime();
+
+      if (expiresIn / 1000 <= CHECK_AUTH_EXPIRY_INTERVAL_SECONDS) {
+        // The token will expire before we check again so attempt a refresh now
+        this.refreshAccessToken();
+      }
     }
-    const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
-    const expiresIn = expiresAt - new Date().getTime();
-    const shouldRefresh = expiresIn <= CHECK_AUTH_EXPIRY_INTERVAL_SECONDS;
+  }
 
-    const accessTokenRefreshLoopTimer = window.setTimeout(async () => {
-      await this.accessTokenRefreshLoop();
-    }, CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000);
+  clearAccessTokenInterval() {
+    const { checkAccessTokenInterval } = this.state;
+    if (checkAccessTokenInterval) {
+      window.clearInterval(checkAccessTokenInterval);
+    }
+  }
 
-    if (shouldRefresh) {
-      // Time to refresh!
-      console.warn('Refreshing the auth0 access token');
-      try {
-        const authResult = await checkSession(this.props.pathname);
-        this.postProcessAuthResult(authResult);
-      } catch (err) {
-        window.clearTimeout(accessTokenRefreshLoopTimer);
-        if (err && ['timeout', 'login_required'].includes(err.error)) {
-          // Plain and simple, the silent authentication could not be done because the
-          // single-sign-in wants to revisit.
-          // If this check was done after the user successfully logged in thanks to
-          // a still valid localStorage.expiresAt (and localStorage.accessToken) delete
-          // those. If we don't do this, the user might think she's still logged in and
-          // very soon will get a 401 on the next XHR request.
-          this.props.logUserOut();
-        } else {
-          this.props.authenticationFailed(err);
-        }
+  async refreshAccessToken() {
+    console.info('Refreshing the auth0 access token');
+
+    try {
+      const authResult = await checkSession(this.props.pathname);
+      this.processAuthResult(authResult);
+    } catch (err) {
+      if (err && err.code === 'login_required') {
+        // Refreshing the token failed and a fresh login is required so log the user out
+        this.clearAccessTokenInterval();
+        this.props.logUserOut();
+      } else {
+        this.props.authenticationFailed(err);
       }
     }
   }
