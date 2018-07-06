@@ -46,7 +46,37 @@ export default class QueryAuth0 extends React.PureComponent {
   }
 
   async componentDidMount() {
-    const { authenticationFailed } = this.props;
+    this.checkForAuthentication();
+
+    window.addEventListener('focus', this.checkForAuthentication);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { accessToken } = this.props;
+
+    if (accessToken && accessToken !== prevProps.accessToken) {
+      // Check the access token now
+      this.validateAccessToken();
+
+      // Set up periodic checks of the access token
+      this.setState(() => ({
+        valideAccessTokenInterval: window.setInterval(
+          this.validateAccessToken,
+          CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000,
+        ),
+      }));
+    } else if (!accessToken) {
+      // There is no access token so stop periodic checks
+      this.clearValidateAccessTokenInterval();
+    }
+  }
+
+  componentWillUnmount() {
+    this.clearValidateAccessTokenInterval();
+  }
+
+  async checkForAuthentication() {
+    const { accessToken, authenticationFailed } = this.props;
     let authResult;
     let expiresAt;
 
@@ -71,31 +101,9 @@ export default class QueryAuth0 extends React.PureComponent {
     } else if (expiresAt && expiresAt - new Date().getTime() < 0) {
       // If we do not have an expired authResult attempt to refresh it
       this.refreshAccessToken();
+    } else if (!authResult && accessToken) {
+      this.props.logUserOut();
     }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { accessToken } = this.props;
-
-    if (accessToken && accessToken !== prevProps.accessToken) {
-      // Check the access token now
-      this.checkAccessToken();
-
-      // Set up periodic checks of the access token
-      this.setState(() => ({
-        checkAccessTokenInterval: window.setInterval(
-          this.checkAccessToken,
-          CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000,
-        ),
-      }));
-    } else if (!accessToken) {
-      // There is no access token so stop periodic checks
-      this.clearAccessTokenInterval();
-    }
-  }
-
-  componentWillUnmount() {
-    this.clearAccessTokenInterval();
   }
 
   processAuthResult(authResult) {
@@ -110,7 +118,7 @@ export default class QueryAuth0 extends React.PureComponent {
     }
   }
 
-  checkAccessToken() {
+  validateAccessToken() {
     const { accessToken } = this.props;
     if (accessToken) {
       const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
@@ -123,10 +131,10 @@ export default class QueryAuth0 extends React.PureComponent {
     }
   }
 
-  clearAccessTokenInterval() {
-    const { checkAccessTokenInterval } = this.state;
-    if (checkAccessTokenInterval) {
-      window.clearInterval(checkAccessTokenInterval);
+  clearValidateAccessTokenInterval() {
+    const { validateAccessTokenInterval } = this.state;
+    if (validateAccessTokenInterval) {
+      window.clearInterval(validateAccessTokenInterval);
     }
   }
 
@@ -139,7 +147,7 @@ export default class QueryAuth0 extends React.PureComponent {
     } catch (err) {
       if (err && err.code === 'login_required') {
         // Refreshing the token failed and a fresh login is required so log the user out
-        this.clearAccessTokenInterval();
+        this.clearValidateAccessTokenInterval();
         this.props.logUserOut();
       } else {
         this.props.authenticationFailed(err);
