@@ -11,7 +11,7 @@ import {
   userProfileReceived,
 } from 'console/state/auth/actions';
 import { getAccessToken } from 'console/state/auth/selectors';
-import { CHECK_AUTH_EXPIRY_INTERVAL_SECONDS } from 'console/settings';
+import { CHECK_AUTH_EXPIRY_INTERVAL_MS } from 'console/settings';
 import { parseHash, checkSession } from 'console/utils/auth0';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
@@ -62,7 +62,7 @@ export default class QueryAuth0 extends React.PureComponent {
       this.setState(() => ({
         valideAccessTokenInterval: window.setInterval(
           this.validateAccessToken,
-          CHECK_AUTH_EXPIRY_INTERVAL_SECONDS * 1000,
+          CHECK_AUTH_EXPIRY_INTERVAL_MS,
         ),
       }));
     } else if (!accessToken) {
@@ -124,7 +124,7 @@ export default class QueryAuth0 extends React.PureComponent {
       const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
       const expiresIn = expiresAt - new Date().getTime();
 
-      if (expiresIn / 1000 <= CHECK_AUTH_EXPIRY_INTERVAL_SECONDS) {
+      if (expiresIn <= CHECK_AUTH_EXPIRY_INTERVAL_MS) {
         // The token will expire before we check again so attempt a refresh now
         this.refreshAccessToken();
       }
