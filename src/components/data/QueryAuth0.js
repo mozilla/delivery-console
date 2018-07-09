@@ -115,7 +115,7 @@ export default class QueryAuth0 extends React.PureComponent {
 
     if (shouldRefresh) {
       // Time to refresh!
-      console.warn('Refreshing the auth0 access token');
+      console.info('Refreshing the auth0 access token.');
       try {
         const authResult = await checkSession(this.props.pathname);
         this.postProcessAuthResult(authResult);

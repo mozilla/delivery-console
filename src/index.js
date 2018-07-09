@@ -3,6 +3,7 @@ import 'console/less/index.less';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import Raven from 'raven-js';
+import consolePlugin from 'raven-js/dist/plugins/console';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,7 +15,9 @@ import { SENTRY_PUBLIC_DSN } from 'console/settings';
 import reducers from 'console/state/reducer';
 
 if (SENTRY_PUBLIC_DSN) {
-  Raven.config(SENTRY_PUBLIC_DSN).install();
+  Raven.config(SENTRY_PUBLIC_DSN)
+    .addPlugin(consolePlugin, window.console, { levels: ['warn', 'error'] })
+    .install();
 }
 
 // Add support for Redux Devtools
