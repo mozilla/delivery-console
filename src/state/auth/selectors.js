@@ -1,9 +1,9 @@
 export function getUserProfile(state, defaultsTo = null) {
-  return state.auth.session.get('profile', defaultsTo);
+  return state.getIn(['auth', 'session', 'profile'], defaultsTo);
 }
 
 export function getAccessToken(state, defaultsTo = null) {
-  return state.auth.session.get('accessToken', defaultsTo);
+  return state.getIn(['auth', 'session', 'accessToken'], defaultsTo);
 }
 
 /**
@@ -14,14 +14,14 @@ export function getAccessToken(state, defaultsTo = null) {
  * @returns {Immutable.Map({code: String, description: String, time: Integer})}
  */
 export function getError(state, defaultsTo = null) {
-  return state.auth.session.get('error', defaultsTo);
+  return state.getIn(['auth', 'session', 'error'], defaultsTo);
 }
 
 export function isSessionExpired(state) {
-  const expiresAt = state.session.get('expiresAt', 0);
+  const expiresAt = state.getIn(['session', 'expiresAt'], 0);
   return new Date().getTime() >= expiresAt;
 }
 
 export function isAuthenticationInProgress(state, defaultsTo = false) {
-  return state.auth.session.get('inProgress', defaultsTo);
+  return state.getIn(['auth', 'session', 'inProgress'], defaultsTo);
 }

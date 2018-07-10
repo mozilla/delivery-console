@@ -49,7 +49,7 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <Link to={reverse('recipes.new')}>
+          <Link to={reverse('extensions.new')}>
             <Button type="primary" icon="plus">
               New Extension
             </Button>

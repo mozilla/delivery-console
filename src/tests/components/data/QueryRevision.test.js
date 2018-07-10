@@ -6,7 +6,7 @@ const { WrappedComponent: QueryRevision } = TestComponent;
 describe('<QueryRevision>', () => {
   const props = {
     fetchRevision: () => {},
-    pk: '1',
+    pk: 1,
   };
 
   it('should work', () => {
@@ -41,16 +41,16 @@ describe('<QueryRevision>', () => {
     );
     expect(callCount).toBe(1);
 
-    wrapper.setProps({ pk: '2' });
+    wrapper.setProps({ pk: 2 });
     expect(callCount).toBe(2);
 
     wrapper.setProps({ irrelevant: true });
     expect(callCount).toBe(2);
 
-    wrapper.setProps({ pk: '2' });
+    wrapper.setProps({ pk: 2 });
     expect(callCount).toBe(2);
 
-    wrapper.setProps({ pk: '3' });
+    wrapper.setProps({ pk: 3 });
     expect(callCount).toBe(3);
   });
 

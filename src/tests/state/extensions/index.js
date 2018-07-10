@@ -3,10 +3,10 @@ import { Map } from 'immutable';
 
 import { AutoIncrementField, Factory, Field } from 'console/tests/factory';
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE = new Map({
   items: new Map(),
   listing: new Map(),
-};
+});
 
 export class ExtensionFactory extends Factory {
   getFields() {

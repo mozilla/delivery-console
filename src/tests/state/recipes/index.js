@@ -5,12 +5,12 @@ import { AutoIncrementField, DateField, Factory, Field, SubFactory } from 'conso
 import { ActionFactory } from 'console/tests/state/actions';
 import { RevisionFactory } from 'console/tests/state/revisions';
 
-export const INITIAL_STATE = {
+export const INITIAL_STATE = new Map({
   filters: new Map(),
   history: new Map(),
   items: new Map(),
   listing: new Map(),
-};
+});
 
 export const FILTERS = {
   status: [

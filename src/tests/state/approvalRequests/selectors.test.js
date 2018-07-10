@@ -11,17 +11,18 @@ import { ApprovalRequestFactory } from 'console/tests/state/approvalRequests';
 describe('getApprovalRequest', () => {
   const approvalRequest = ApprovalRequestFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    approvalRequests: approvalRequestsReducer(undefined, {
-      type: APPROVAL_REQUEST_RECEIVE,
-      approvalRequest,
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      approvalRequests: approvalRequestsReducer(undefined, {
+        type: APPROVAL_REQUEST_RECEIVE,
+        approvalRequest,
+      }),
+      users: usersReducer(undefined, {
+        type: USER_RECEIVE,
+        user: approvalRequest.creator,
+      }),
     }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: approvalRequest.creator,
-    }),
-  };
+  );
 
   beforeEach(() => {
     jest.addMatchers(matchers);

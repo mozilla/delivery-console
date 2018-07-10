@@ -1,5 +1,5 @@
 import { fromJS, Map } from 'immutable';
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 
 import {
   RECIPE_DELETE,

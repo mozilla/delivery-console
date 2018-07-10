@@ -5,9 +5,9 @@ export function getAction(state, id, defaultsTo = null) {
     intId = Number.parseInt(id, 10);
   }
 
-  return state.actions.items.get(intId, defaultsTo);
+  return state.getIn(['actions', 'items', intId], defaultsTo);
 }
 
 export function getAllActions(state) {
-  return state.actions.items;
+  return state.getIn(['actions', 'items']);
 }

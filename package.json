@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla/delivery-console"
+  },
   "dependencies": {
-    "antd": "3.6.5",
+    "antd": "3.6.6",
     "auth0-js": "9.6.1",
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.3.0",
@@ -22,6 +26,7 @@
     "react-router-dom": "4.3.1",
     "react-scripts": "1.1.4",
     "redux": "4.0.0",
+    "redux-immutable": "4.0.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0"
   },
@@ -43,8 +48,9 @@
     "babel-polyfill": "6.26.0",
     "enzyme": "3.3.0",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-prettier": "2.6.1",
+    "eslint-plugin-prettier": "2.6.2",
     "faker": "4.1.0",
+    "generate-json-webpack-plugin": "0.3.1",
     "jest-immutable-matchers": "2.0.1",
     "prettier": "1.13.7",
     "react-app-rewire-less": "2.1.2",
