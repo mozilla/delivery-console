@@ -1,2 +1,4 @@
 /* eslint import/prefer-default-export: "off" */
-export const INITIAL_STATE = {};
+import { Map } from 'immutable';
+
+export const INITIAL_STATE = new Map();

@@ -11,15 +11,10 @@ describe('Actions reducer', () => {
 
   it('should handle ACTION_RECEIVE', () => {
     const action = ActionFactory.build();
-
-    expect(
-      actionsReducer(undefined, {
-        type: ACTION_RECEIVE,
-        action,
-      }),
-    ).toEqual({
-      ...INITIAL_STATE,
-      items: INITIAL_STATE.items.set(action.id, fromJS(action)),
+    const updatedState = actionsReducer(undefined, {
+      type: ACTION_RECEIVE,
+      action,
     });
+    expect(updatedState).toEqual(INITIAL_STATE.setIn(['items', action.id], fromJS(action)));
   });
 });

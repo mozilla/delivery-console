@@ -1,7 +1,7 @@
 import { DEFAULT_REQUEST } from 'console/state/constants';
 
 export function getRequest(state, id, defaultsTo = DEFAULT_REQUEST) {
-  return state.requests.get(id, defaultsTo);
+  return state.getIn(['requests', id], defaultsTo);
 }
 
 export function isRequestInProgress(state, id) {
@@ -10,7 +10,7 @@ export function isRequestInProgress(state, id) {
 }
 
 export function areAnyRequestsInProgress(state) {
-  const { requests } = state;
+  const requests = state.get('requests');
 
   if (requests.size === 0) {
     return false;

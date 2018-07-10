@@ -12,14 +12,11 @@ describe('Extensions reducer', () => {
   });
 
   it('should handle EXTENSION_RECEIVE', () => {
-    expect(
-      extensionsReducer(undefined, {
-        type: EXTENSION_RECEIVE,
-        extension,
-      }),
-    ).toEqual({
-      ...INITIAL_STATE,
-      items: INITIAL_STATE.items.set(extension.id, fromJS(extension)),
+    const updatedState = extensionsReducer(undefined, {
+      type: EXTENSION_RECEIVE,
+      extension,
     });
+
+    expect(updatedState).toEqual(INITIAL_STATE.setIn(['items', extension.id], fromJS(extension)));
   });
 });

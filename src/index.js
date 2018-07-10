@@ -1,6 +1,6 @@
 import 'console/less/index.less';
 
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { connectRouter, routerMiddleware } from 'connected-react-router/immutable';
 import { createBrowserHistory } from 'history';
 import Raven from 'raven-js';
 import consolePlugin from 'raven-js/dist/plugins/console';

@@ -7,13 +7,7 @@ import { ActionFactory } from 'console/tests/state/actions';
 describe('getAction', () => {
   const action = ActionFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    actions: {
-      ...INITIAL_STATE.actions,
-      items: INITIAL_STATE.actions.items.set(action.id, fromJS(action)),
-    },
-  };
+  const STATE = INITIAL_STATE.setIn(['actions', 'items', action.id], fromJS(action));
 
   it('should return the action', () => {
     expect(getAction(STATE, action.id)).toEqual(fromJS(action));
