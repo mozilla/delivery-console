@@ -13,7 +13,7 @@ import { fetchRevision } from 'console/state/revisions/actions';
 export default class QueryRevision extends React.PureComponent {
   static propTypes = {
     fetchRevision: PropTypes.func.isRequired,
-    pk: PropTypes.string.isRequired,
+    pk: PropTypes.number.isRequired,
   };
 
   componentWillMount() {

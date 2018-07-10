@@ -6,10 +6,7 @@ import { INITIAL_STATE } from 'console/tests/state';
 
 describe('getRequest', () => {
   const REQUEST = DEFAULT_REQUEST.set('inProgress', true);
-  const STATE = {
-    ...INITIAL_STATE,
-    requests: INITIAL_STATE.requests.set('test', REQUEST),
-  };
+  const STATE = INITIAL_STATE.setIn(['requests', 'test'], REQUEST);
 
   beforeEach(() => {
     jest.addMatchers(matchers);

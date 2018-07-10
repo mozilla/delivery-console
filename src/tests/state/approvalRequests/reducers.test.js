@@ -36,8 +36,8 @@ describe('Approval requests reducer', () => {
       approvalRequest,
     });
 
-    expect(updatedState.items).toEqualImmutable(
-      INITIAL_STATE.items.set(approvalRequest.id, fromJS(reducedApprovalRequest)),
+    expect(updatedState).toEqualImmutable(
+      INITIAL_STATE.setIn(['items', approvalRequest.id], fromJS(reducedApprovalRequest)),
     );
   });
 
@@ -71,8 +71,8 @@ describe('Approval requests reducer', () => {
       revisions: [revision],
     });
 
-    expect(updatedState.items).toEqualImmutable(
-      INITIAL_STATE.items.set(approvalRequest.id, fromJS(reducedApprovalRequest)),
+    expect(updatedState.getIn(['items', approvalRequest.id])).toEqualImmutable(
+      fromJS(reducedApprovalRequest),
     );
   });
 });

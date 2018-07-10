@@ -37,8 +37,8 @@ describe('Revisions reducer', () => {
       revision,
     });
 
-    expect(updatedState.items).toEqualImmutable(
-      INITIAL_STATE.items.set(revision.id, fromJS(reducedRevision)),
+    expect(updatedState).toEqualImmutable(
+      INITIAL_STATE.setIn(['items', revision.id], fromJS(reducedRevision)),
     );
   });
 
