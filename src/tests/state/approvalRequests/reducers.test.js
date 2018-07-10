@@ -24,7 +24,7 @@ describe('Approval requests reducer', () => {
   it('should handle APPROVAL_REQUEST_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
-      approver_id: approvalRequest.approver ? approvalRequest.approver.id : null,
+      approver_id: null,
       creator_id: approvalRequest.creator.id,
     };
 
@@ -58,7 +58,7 @@ describe('Approval requests reducer', () => {
   it('should handle RECIPE_HISTORY_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
-      approver_id: approvalRequest.approver ? approvalRequest.approver.id : null,
+      approver_id: null,
       creator_id: approvalRequest.creator.id,
     };
 
