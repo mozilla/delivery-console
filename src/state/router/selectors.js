@@ -71,6 +71,7 @@ export function getAllQueryParams(state, defaultsTo = null) {
     return defaultsTo;
   }
 
+  // `search` is a string which we convert to an object so we need `fromJS` to make it immutable
   return fromJS(
     search
       .slice(1)
