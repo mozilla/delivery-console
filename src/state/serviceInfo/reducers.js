@@ -2,7 +2,7 @@ import { fromJS, Map } from 'immutable';
 
 import { SERVICE_INFO_RECEIVE } from 'console/state/action-types';
 
-export default function ser(state = new Map(), action) {
+export default function serviceInfo(state = new Map(), action) {
   let serviceInfo;
 
   switch (action.type) {

@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AuthButton from 'console/components/auth/AuthButton';
-import NavBar from 'console/components/navigation/NavBar';
+import VPNStatus from 'console/components/common/VPNStatus';
 import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
+import NavBar from 'console/components/navigation/NavBar';
 import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { notifyAuthenticationError } from 'console/state/auth/actions';
@@ -78,6 +79,7 @@ export default class App extends React.Component {
               </Link>
 
               <div className="user-meta">
+                <VPNStatus />
                 <AuthButton />
               </div>
             </div>

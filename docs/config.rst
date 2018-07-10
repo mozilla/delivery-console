@@ -12,11 +12,20 @@ An environment variable like ``REACT_APP_FOO`` controls the setting ``FOO``.
 
     Optional. The DSN for Raven to report errors to Sentry.
 
-.. envvar:: REACT_APP_NORMANDY_API_ROOT_URL
+.. envvar:: REACT_APP_NORMANDY_ADMIN_API_ROOT_URL
 
     :default: ``https://localhost:8000/api/``
 
-    The root url for the Normandy API that should be used.
+    The root url for the Normandy API that should be used for users with
+    access to the Normandy admin.
+
+.. envvar:: REACT_APP_NORMANDY_READ_ONLY_API_ROOT_URL
+
+    :default: ``null``
+
+    The root url for the Normandy API that should be used for users with out
+    access to the Normandy admin. It will be used as a fallback in case the
+    admin server is inaccesible.
 
 .. envvar:: REACT_APP_OIDC_CLIENT_ID
 

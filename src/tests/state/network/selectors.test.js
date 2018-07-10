@@ -1,12 +1,12 @@
 import * as matchers from 'jest-immutable-matchers';
 
 import { DEFAULT_REQUEST } from 'console/state/constants';
-import { getRequest } from 'console/state/requests/selectors';
+import { getRequest, isNormandyAdminAvailable } from 'console/state/network/selectors';
 import { INITIAL_STATE } from 'console/tests/state';
 
 describe('getRequest', () => {
   const REQUEST = DEFAULT_REQUEST.set('inProgress', true);
-  const STATE = INITIAL_STATE.setIn(['requests', 'test'], REQUEST);
+  const STATE = INITIAL_STATE.setIn(['network', 'requests', 'test'], REQUEST);
 
   beforeEach(() => {
     jest.addMatchers(matchers);
@@ -22,5 +22,20 @@ describe('getRequest', () => {
 
   it('should return default value for invalid ID with default provided', () => {
     expect(getRequest(STATE, 'invalid', 'default')).toEqual('default');
+  });
+});
+
+describe('isNormandyAdminAvailable', () => {
+  it('should return the availability', () => {
+    expect(
+      isNormandyAdminAvailable(
+        INITIAL_STATE.setIn(['network', 'availability', 'normandyAdmin'], false),
+      ),
+    ).toEqual(false);
+    expect(
+      isNormandyAdminAvailable(
+        INITIAL_STATE.setIn(['network', 'availability', 'normandyAdmin'], true),
+      ),
+    ).toEqual(true);
   });
 });

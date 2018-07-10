@@ -4,7 +4,7 @@ import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { NORMANDY_API_ROOT_URL } from 'console/settings';
+import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
 
 @autobind
 export default class ShieldIdenticon extends React.PureComponent {
@@ -118,7 +118,7 @@ export default class ShieldIdenticon extends React.PureComponent {
           height={size}
           key={seed}
           ref={this.onImageMount}
-          src={`${NORMANDY_API_ROOT_URL}v2/identicon/${seed}.svg`}
+          src={`${NORMANDY_ADMIN_API_ROOT_URL}v2/identicon/${seed}.svg`}
           style={isLoading ? imgStyle : {}}
           width={size}
         />

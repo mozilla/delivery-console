@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import QueryMultipleExtensions from 'console/components/data/QueryMultipleExtensions';
 import { getExtensionListing } from 'console/state/extensions/selectors';
-import { isRequestInProgress } from 'console/state/requests/selectors';
+import { isRequestInProgress } from 'console/state/network/selectors';
 
 const { OptGroup, Option } = Select;
 

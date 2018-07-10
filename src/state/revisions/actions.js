@@ -5,7 +5,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 import { approvalRequestReceived } from 'console/state/approvalRequests/actions';
-import { makeNormandyApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function revisionReceived(revision) {
   return dispatch => {
