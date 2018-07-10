@@ -17,7 +17,7 @@ const { Header } = Layout;
 @autobind
 export default class NavBar extends React.PureComponent {
   static propTypes = {
-    routeTree: PropTypes.array.isRequired,
+    routeTree: PropTypes.object.isRequired,
   };
 
   renderCrumbs() {

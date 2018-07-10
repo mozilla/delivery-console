@@ -25,7 +25,7 @@ export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
     history: PropTypes.object.isRequired,
-    routeTree: PropTypes.array.isRequired,
+    routeTree: PropTypes.object.isRequired,
   };
 
   updateDocumentTitle() {
