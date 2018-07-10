@@ -1,12 +1,14 @@
+import { notification } from 'antd';
 import { omit } from 'lodash';
 
 import {
-  USER_LOGIN,
-  USER_AUTH_FAILURE,
-  USER_LOGOUT,
-  USER_PROFILE_RECEIVE,
+  USER_AUTH_ERROR,
+  USER_AUTH_ERROR_NOTIFY,
   USER_AUTH_FINISH,
   USER_AUTH_START,
+  USER_LOGIN,
+  USER_LOGOUT,
+  USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
 import { authorize } from 'console/utils/auth0';
 
@@ -21,9 +23,23 @@ export function userProfileReceived(profile) {
 export function authenticationFailed(error) {
   return dispatch =>
     dispatch({
-      type: USER_AUTH_FAILURE,
+      type: USER_AUTH_ERROR,
       error,
     });
+}
+
+export function notifyAuthenticationError(error) {
+  return dispatch => {
+    notification.error({
+      message: 'Authentication Error',
+      description: `${error.get('code')}: ${error.get('description')}`,
+      duration: 0,
+    });
+
+    return dispatch({
+      type: USER_AUTH_ERROR_NOTIFY,
+    });
+  };
 }
 
 export function logUserIn(authResult) {
