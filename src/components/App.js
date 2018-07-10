@@ -56,7 +56,7 @@ export default class App extends React.Component {
     }
 
     if (authError) {
-      this.props.notifyAuthenticationError();
+      this.props.notifyAuthenticationError(authError);
     }
   }
 
