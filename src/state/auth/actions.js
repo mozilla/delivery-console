@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import {
   USER_AUTH_ERROR,

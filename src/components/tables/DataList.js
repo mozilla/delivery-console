@@ -5,7 +5,7 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 import { openNewWindow } from 'console/state/router/actions';
 import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
