@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import * as matchers from 'jest-immutable-matchers';
 
 import {
@@ -8,6 +8,7 @@ import {
 } from 'console/state/action-types';
 import approvalRequestsReducer from 'console/state/approvalRequests/reducers';
 import { INITIAL_STATE, ApprovalRequestFactory } from 'console/tests/state/approvalRequests';
+import { RevisionFactory } from 'console/tests/state/revisions';
 
 describe('Approval requests reducer', () => {
   const approvalRequest = ApprovalRequestFactory.build();
@@ -23,7 +24,7 @@ describe('Approval requests reducer', () => {
   it('should handle APPROVAL_REQUEST_RECEIVE', () => {
     const reducedApprovalRequest = {
       ...approvalRequest,
-      approver_id: approvalRequest.approver ? approvalRequest.approver.id : null,
+      approver_id: null,
       creator_id: approvalRequest.creator.id,
     };
 
@@ -55,20 +56,23 @@ describe('Approval requests reducer', () => {
   });
 
   it('should handle RECIPE_HISTORY_RECEIVE', () => {
-    const appRequest = {
-      id: 'test',
-      arbitrary_data: 123,
+    const reducedApprovalRequest = {
+      ...approvalRequest,
+      approver_id: null,
+      creator_id: approvalRequest.creator.id,
     };
 
-    const state = approvalRequestsReducer(undefined, {
+    delete reducedApprovalRequest.approver;
+    delete reducedApprovalRequest.creator;
+
+    const revision = RevisionFactory.build({ approval_request: approvalRequest });
+    const updatedState = approvalRequestsReducer(undefined, {
       type: RECIPE_HISTORY_RECEIVE,
-      revisions: [
-        {
-          approval_request: appRequest,
-        },
-      ],
+      revisions: [revision],
     });
 
-    expect(state.getIn(['items', appRequest.id])).toEqual(new Map(appRequest));
+    expect(updatedState.getIn(['items', approvalRequest.id])).toEqualImmutable(
+      fromJS(reducedApprovalRequest),
+    );
   });
 });
