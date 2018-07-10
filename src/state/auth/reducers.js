@@ -2,12 +2,13 @@ import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
-  USER_LOGIN,
-  USER_AUTH_FAILURE,
-  USER_LOGOUT,
-  USER_PROFILE_RECEIVE,
+  USER_AUTH_ERROR,
+  USER_AUTH_ERROR_NOTIFY,
   USER_AUTH_FINISH,
   USER_AUTH_START,
+  USER_LOGIN,
+  USER_LOGOUT,
+  USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
 
 function session(state = new Map(), action) {
@@ -15,14 +16,11 @@ function session(state = new Map(), action) {
     case USER_PROFILE_RECEIVE:
       return state.set('profile', fromJS(action.profile));
 
-    case USER_AUTH_FAILURE:
-      return state.set(
-        'error',
-        fromJS({
-          ...action.error,
-          time: Date.now(),
-        }),
-      );
+    case USER_AUTH_ERROR:
+      return state.set('error', fromJS(action.error));
+
+    case USER_AUTH_ERROR_NOTIFY:
+      return state.set('error', null);
 
     case USER_LOGOUT:
       return state
