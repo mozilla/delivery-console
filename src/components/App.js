@@ -1,4 +1,4 @@
-import { Layout, notification } from 'antd';
+import { Layout } from 'antd';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -11,16 +11,22 @@ import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
 import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
+import { notifyAuthenticationError } from 'console/state/auth/actions';
 import { getError } from 'console/state/auth/selectors';
 import { getCurrentRouteTree } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
 const { Header } = Layout;
 
-@connect((state, props) => ({
-  authError: getError(state),
-  routeTree: getCurrentRouteTree(state),
-}))
+@connect(
+  (state, props) => ({
+    authError: getError(state),
+    routeTree: getCurrentRouteTree(state),
+  }),
+  {
+    notifyAuthenticationError,
+  },
+)
 export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
@@ -50,11 +56,7 @@ export default class App extends React.Component {
     }
 
     if (authError) {
-      notification.error({
-        message: 'Authentication Error',
-        description: `${authError.get('code')}: ${authError.get('description')}`,
-        duration: 0,
-      });
+      this.props.notifyAuthenticationError(authError);
     }
   }
 
