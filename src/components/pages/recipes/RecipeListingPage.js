@@ -24,7 +24,7 @@ import {
   getRecipeListingFlattenedAction,
 } from 'console/state/recipes/selectors';
 import {
-  getCurrentUrl as getCurrentUrlSelector,
+  getCurrentUrlAsObject as getCurrentUrlAsObjectSelector,
   getQueryParam,
   getQueryParamAsInt,
 } from 'console/state/router/selectors';
@@ -33,7 +33,7 @@ import {
   (state, props) => ({
     columns: getRecipeListingColumns(state),
     count: getRecipeListingCount(state),
-    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
     ordering: getQueryParam(state, 'ordering', '-last_updated'),
     pageNumber: getQueryParamAsInt(state, 'page', 1),
     recipes: getRecipeListingFlattenedAction(state),
@@ -49,7 +49,7 @@ export default class RecipeListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
-    getCurrentUrl: PropTypes.func.isRequired,
+    getCurrentUrlAsObject: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     pageNumber: PropTypes.number,
     push: PropTypes.func.isRequired,
@@ -169,8 +169,8 @@ export default class RecipeListingPage extends React.PureComponent {
   }
 
   handleChangePage(page) {
-    const { getCurrentUrl } = this.props;
-    this.props.push(getCurrentUrl({ page }));
+    const { getCurrentUrlAsObject } = this.props;
+    this.props.push(getCurrentUrlAsObject({ page }));
   }
 
   getUrlFromRecord({ id: recipeId }) {
