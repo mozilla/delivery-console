@@ -16,7 +16,7 @@ function generateVersionObject() {
 
   // Look for a tag
   try {
-    version = execSync('git describe --exact-match --tags')
+    version = execSync('git describe --exact-match --tags 2>/dev/null')
       .toString('utf-8')
       .trim();
   } catch (err) {
