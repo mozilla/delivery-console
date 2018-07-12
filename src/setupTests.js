@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import * as immutableMatchers from 'jest-immutable-matchers';
 
 // Configure Enzyme adapter
 configure({ adapter: new Adapter() });
+
+// Add matchers for ImmutableJS
+jest.addMatchers(immutableMatchers);
 
 // localStorage mock for tests
 const mockLocalStorage = () => {

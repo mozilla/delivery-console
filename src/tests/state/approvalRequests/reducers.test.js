@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   APPROVAL_REQUEST_DELETE,
@@ -12,10 +11,6 @@ import { RevisionFactory } from 'console/tests/state/revisions';
 
 describe('Approval requests reducer', () => {
   const approvalRequest = ApprovalRequestFactory.build();
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return initial state by default', () => {
     expect(approvalRequestsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);

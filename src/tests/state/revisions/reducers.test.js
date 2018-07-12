@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import { RECIPE_DELETE, REVISION_RECEIVE } from 'console/state/action-types';
 import revisionsReducer from 'console/state/revisions/reducers';
@@ -8,10 +7,6 @@ import { INITIAL_STATE, RevisionFactory } from '.';
 
 describe('Revisions reducer', () => {
   const revision = RevisionFactory.build();
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return initial state by default', () => {
     expect(revisionsReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);

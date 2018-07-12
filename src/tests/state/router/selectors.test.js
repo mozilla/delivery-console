@@ -1,6 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router/lib/actions';
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   getCurrentPathname,
@@ -78,10 +77,6 @@ describe('getCurrentRoute', () => {
 });
 
 describe('getCurrentRouteTree', () => {
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
-
   it('should return the current route tree', () => {
     const routeTree = getCurrentRouteTree(STATE);
     expect(routeTree).toEqualImmutable(
