@@ -19,7 +19,7 @@ export function getCurrentPathname(state, defaultsTo = null) {
 
 export function getCurrentRoute(state, defaultsTo = null) {
   const routeMatch = getRouteMatchByPathname(getCurrentPathname(state));
-  return routeMatch.get('route', defaultsTo);
+  return routeMatch.route || defaultsTo;
 }
 
 export function getCurrentRouteTree(state) {
@@ -50,8 +50,7 @@ export function getCurrentRouteTree(state) {
 }
 
 export function getUrlParam(state, key, defaultsTo = null) {
-  // Cache the application routes
-  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
+  const route = getRouteMatchByPathname(getCurrentPathname(state));
 
   if (route && route.match) {
     return route.match.params[key] || defaultsTo;
