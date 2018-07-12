@@ -8,7 +8,7 @@ describe('<RecipeListingPage>', () => {
     columns: new List(),
     count: null,
     fetchFilteredRecipesPage: () => {},
-    getCurrentUrl: () => {},
+    getCurrentUrlAsObject: () => {},
     history: {},
     ordering: null,
     pageNumber: null,

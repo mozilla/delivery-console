@@ -1,5 +1,4 @@
 import { fromJS, List } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   RECIPE_DELETE,
@@ -12,10 +11,6 @@ import { FILTERS, INITIAL_STATE, RecipeFactory } from 'console/tests/state/recip
 
 describe('Recipes reducer', () => {
   const recipe = RecipeFactory.build();
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return initial state by default', () => {
     expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);

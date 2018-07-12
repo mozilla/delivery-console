@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import { APPROVAL_REQUEST_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import approvalRequestsReducer from 'console/state/approvalRequests/reducers';
@@ -23,10 +22,6 @@ describe('getApprovalRequest', () => {
       }),
     }),
   );
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return the approval request', () => {
     expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(
