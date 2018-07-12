@@ -46,8 +46,8 @@ module.exports = function(config, env) {
   config = rewireLess.withLoaderOptions({
     javascriptEnabled: true,
   })(config, env);
-  // Use Ant LESS imports
-  config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);
+  // Modular imports of Ant without LESS imports
+  config = injectBabelPlugin(['import', { libraryName: 'antd' }], config);
   // Decorator support (Normandy)
   config = injectBabelPlugin('transform-decorators-legacy', config);
 
