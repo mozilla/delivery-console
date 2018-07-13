@@ -32,14 +32,11 @@ describe('<ExtensionSelect>', () => {
   });
 
   it('should display the placeholder element appropriately', () => {
-    fetchMock.get(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
-      response: {
-        count: 0,
-        next: null,
-        previous: null,
-        results: [],
-      },
-      repeat: 2, // TODO why are two requests made?
+    fetchMock.getOnce(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
+      count: 0,
+      next: null,
+      previous: null,
+      results: [],
     });
 
     const wrapper = mount(wrapMockStore(<ExtensionSelect {...props} />));
