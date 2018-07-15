@@ -8,7 +8,7 @@
     "url": "https://github.com/mozilla/delivery-console"
   },
   "dependencies": {
-    "antd": "3.6.6",
+    "antd": "3.7.0",
     "auth0-js": "9.6.1",
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.3.0",
