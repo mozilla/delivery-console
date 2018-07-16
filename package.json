@@ -13,7 +13,7 @@
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.3.0",
     "enzyme-adapter-react-16": "1.1.1",
-    "fetch-mock": "^6.5.0",
+    "fetch-mock": "6.5.0",
     "immutable": "3.8.2",
     "lodash": "4.17.10",
     "raven-js": "3.26.3",
