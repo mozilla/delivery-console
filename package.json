@@ -32,7 +32,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "CI=true yarn run test:jest",
-    "test:jest": "react-app-rewired test --env=jsdom",
+    "test:jest": "node scripts/test.js test --env=jsdom",
     "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
     "lint:eslint": "eslint --max-warnings 0 'src/**/*.js'",
     "lint:eslintfix": "eslint --max-warnings 0 --fix 'src/**/*.js'",
@@ -136,6 +136,10 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "transform-decorators-legacy",
+      ["import", { "libraryName": "antd" }]
     ]
   },
   "eslintConfig": {

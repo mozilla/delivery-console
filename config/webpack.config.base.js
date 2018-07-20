@@ -78,7 +78,6 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
               compact: true,
-              plugins: [['import', { libraryName: 'antd' }], 'transform-decorators-legacy'],
             },
           },
           // The notation here is somewhat confusing.
