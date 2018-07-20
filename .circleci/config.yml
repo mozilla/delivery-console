@@ -39,7 +39,7 @@ jobs:
       - run: yarn run lint:security
 
       # run tests!
-      - run: yarn run test
+      - run: yarn run test:ci
 
       # build all the things!
       - run: yarn run build
