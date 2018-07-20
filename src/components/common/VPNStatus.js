@@ -1,4 +1,5 @@
 import { Icon } from 'antd';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -17,14 +18,15 @@ export default class VPNStatus extends React.PureComponent {
   };
 
   render() {
-    const { vpnAvailable, loading } = this.props;
-    if (vpnAvailable || loading) {
-      return null;
-    }
+    const { loading, vpnAvailable } = this.props;
     return (
-      <span className="vpn-availability">
+      <span className={cx('vpn-availability', { loading })}>
         <QueryNormandyAdmin />
-        <Icon type="exclamation-circle-o" title="VPN not connected. Data may be missing." />
+        {loading && <Icon type="question-circle-o" title="Checking VPN status..." />}
+        {!loading &&
+          !vpnAvailable && (
+            <Icon type="exclamation-circle-o" title="VPN not connected. Data may be missing." />
+          )}
       </span>
     );
   }

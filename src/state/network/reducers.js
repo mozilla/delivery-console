@@ -10,7 +10,7 @@ import {
 
 const defaultState = fromJS({
   availability: {
-    normandyAdmin: false,
+    normandyAdmin: null,
   },
   requests: {},
 });

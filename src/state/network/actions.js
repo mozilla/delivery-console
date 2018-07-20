@@ -59,7 +59,7 @@ export function detectNormandyAdmin() {
     const state = getState();
     let url = NORMANDY_ADMIN_API_ROOT_URL + 'v2/';
     const requestId = 'detect-normandy-admin';
-    const ADMIN_TIMEOUT = 10 * SECONDS;
+    const ADMIN_TIMEOUT = 3 * SECONDS;
 
     const request = getRequest(state, requestId);
     if (request.inProgress) {
@@ -76,14 +76,14 @@ export function detectNormandyAdmin() {
     try {
       // if this succeeds, then the normandy admin is available
       await Promise.race([adminPromise, timeoutPromise]);
-      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: true });
       dispatch({ type: REQUEST_SUCCESS, requestId });
+      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: true });
     } catch (error) {
       // If it fails, it could be a network failure, or the timeout. Either way,
       // the admin is not available
       console.debug('Normandy admin not available', error);
-      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: false });
       dispatch({ type: REQUEST_FAILURE, requestId, error });
+      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: false });
     }
   };
 }
