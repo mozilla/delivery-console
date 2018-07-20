@@ -12,6 +12,7 @@
     "auth0-js": "9.6.1",
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.3.0",
+    "date-fns": "1.29.0",
     "immutable": "3.8.2",
     "lodash": "4.17.10",
     "raven-js": "3.26.3",
@@ -120,8 +121,7 @@
     ],
     "moduleNameMapper": {
       ".*\\.less$": "<rootDir>/etc/StubModule.js",
-      "^console/(.*)$": "<rootDir>/src/$1",
-      "^react-native$": "react-native-web"
+      "^console/(.*)$": "<rootDir>/src/$1"
     },
     "moduleFileExtensions": [
       "web.js",
