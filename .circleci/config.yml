@@ -36,6 +36,7 @@ jobs:
 
       # run linting check!
       - run: yarn run lint
+      - run: yarn run lint:security
 
       # run tests!
       - run: yarn run test
