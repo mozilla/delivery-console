@@ -7,6 +7,7 @@ const path = require('path');
 const paths = require('./paths');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
+const cssFilename = `static/css/[name]${isDevelopment ? '' : '[contenthash:8]'}.css`;
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap =
@@ -162,7 +163,7 @@ module.exports = {
   plugins: [
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractCssChunksPlugin({
-      filename: 'static/css/[name].[contenthash:8].css',
+      filename: cssFilename,
       hot: isDevelopment,
     }),
   ],
