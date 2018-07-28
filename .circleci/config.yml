@@ -7,8 +7,8 @@ jobs:
   build:
 
     docker:
-      # Based on https://nodejs.org/en/
-      - image: circleci/node:8-browsers
+      # Image with python 3.6 and node 8
+      - image: circleci/python:3.6-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -20,29 +20,55 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
+      # Download and cache python dependencies
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          key: v1-python
 
-      - run: yarn install
+      - run:
+          name: Create virtualenv
+          command: |
+            python3 -m venv ~/venv
+            echo "source ~/venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: Install therapist
+          command: pip install therapist
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - "~/venv"
+          key: v1-python
+
+      # Download and cache node dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Install node dependencies
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - "node_modules"
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       # run linting check!
-      - run: yarn run lint
-      - run: yarn run lint:security
+      - run:
+          name: Lint
+          command: therapist run --use-tracked-files
 
       # run tests!
-      - run: yarn run test
+      - run:
+          name: Test
+          command: yarn run test
 
       # build all the things!
-      - run: yarn run build
+      - run:
+          name: Build
+          command: yarn run build
 
   docs:
     docker:
@@ -55,17 +81,20 @@ jobs:
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
       - run:
+          name: Create virtualenv
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r docs/requirements.txt
+            python3 -m venv ~/venv
+            echo "source ~/venv/bin/activate" >> $BASH_ENV
+      - run:
+          name: Install requirements
+          command: pip install -r docs/requirements.txt
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
           paths:
-            - "venv"
+            - "~/venv"
       - run:
+          name: Build docs
           command: |
-            . venv/bin/activate
             cd docs
             make html
 
