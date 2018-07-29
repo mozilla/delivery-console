@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Install therapist
-          command: pip install therapist
+          command: pip install -U therapist
 
       - save_cache:
           paths:
@@ -55,17 +55,17 @@ jobs:
             - "node_modules"
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      # run linting check!
+      # Run lint suite using therapist
       - run:
           name: Lint
           command: therapist run --use-tracked-files
 
-      # run tests!
+      # Run tests!
       - run:
           name: Test
           command: yarn run test
 
-      # build all the things!
+      # Build all the things!
       - run:
           name: Build
           command: yarn run build
@@ -78,20 +78,27 @@ jobs:
 
     steps:
       - checkout
+
+      # Download and cache python dependencies
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
+
       - run:
           name: Create virtualenv
           command: |
             python3 -m venv ~/venv
             echo "source ~/venv/bin/activate" >> $BASH_ENV
+
       - run:
           name: Install requirements
           command: pip install -r docs/requirements.txt
+
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "docs/requirements.txt" }}
           paths:
             - "~/venv"
+
+      # Build the docs!
       - run:
           name: Build docs
           command: |

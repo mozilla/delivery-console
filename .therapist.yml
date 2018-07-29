@@ -1,6 +1,7 @@
 actions:
   eslint:
     run: yarn eslint --max-warnings 0 {files}
+    fix: yarn eslint --max-warnings 0 --fix {files}
     include:
       - "*.js"
       - "*.jsx"

@@ -35,13 +35,7 @@
     "build": "react-app-rewired build",
     "test": "CI=true yarn run test:jest",
     "test:jest": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
-    "lint:eslint": "eslint --max-warnings 0 'src/**/*.js'",
-    "lint:eslintfix": "eslint --max-warnings 0 --fix 'src/**/*.js'",
-    "lint": "yarn run lint:eslint && yarn run lint:less",
-    "lint:fix": "yarn run lint:eslintfix && yarn run lint:less",
-    "lint:security": "nsp check"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "1.8.0",
