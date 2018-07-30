@@ -35,7 +35,9 @@
     "build": "react-app-rewired build",
     "test": "CI=true yarn run test:jest",
     "test:jest": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "therapist run --use-tracked-files --include-untracked",
+    "lint:fix": "yarn run lint --fix"
   },
   "devDependencies": {
     "babel-plugin-import": "1.8.0",
