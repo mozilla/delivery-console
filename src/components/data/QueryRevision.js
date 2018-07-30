@@ -16,15 +16,15 @@ export default class QueryRevision extends React.PureComponent {
     pk: PropTypes.number.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { pk } = this.props;
     this.props.fetchRevision(pk);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { pk } = this.props;
-    if (pk !== nextProps.pk) {
-      this.props.fetchRevision(nextProps.pk);
+    if (pk !== prevProps.pk) {
+      this.props.fetchRevision(pk);
     }
   }
 

@@ -1,5 +1,5 @@
+import dateFns from 'date-fns';
 import { Map } from 'immutable';
-import moment from 'moment';
 
 import { getAction } from 'console/state/actions/selectors';
 import { getApprovalRequest } from 'console/state/approvalRequests/selectors';
@@ -120,9 +120,9 @@ export function getRevisionDraftStatus(state, id) {
   const revision = getRevision(state, id);
 
   if (approvedRevision) {
-    const revisionDate = moment(revision.get('date_created'));
-    const approvedRevisionDate = moment(approvedRevision.get('date_created'));
-    const delta = approvedRevisionDate.diff(revisionDate);
+    const revisionDate = dateFns.parse(revision.get('date_created'));
+    const approvedRevisionDate = dateFns.parse(approvedRevision.get('date_created'));
+    const delta = dateFns.diff(approvedRevisionDate, revisionDate);
 
     if (delta < 0) {
       return REVISION_DRAFT;

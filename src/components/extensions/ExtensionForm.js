@@ -46,17 +46,18 @@ export default class ExtensionForm extends React.PureComponent {
     xpiFile: null,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { extension } = this.props;
     if (extension) {
       this.setInitialValues(extension);
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
+    const { extension } = this.props;
     // Reset form if the extension changed
-    if (!is(newProps.extension, this.props.extension)) {
-      this.setInitialValues(newProps.extension);
+    if (!is(prevProps.extension, extension)) {
+      this.setInitialValues(extension);
     }
   }
 

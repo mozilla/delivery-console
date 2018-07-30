@@ -15,7 +15,7 @@ export default class QueryActions extends React.PureComponent {
     fetchAllActions: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchAllActions();
   }
 

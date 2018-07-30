@@ -15,22 +15,6 @@ right away run:
 Now you should be able to open ``http://localhost:3000`` and behold the
 aweomeness.
 
-
-Running Apps Separately
-=======================
-
-By default, ``yarn start`` will spin up the entire Delivery Console, including all of the nested apps such as Normandy. In order to stand up only one of the apps, simply pass an `--app` parameter pointing to the app's directory. Here are some examples:
-
-.. code-block:: shell
-
-    $ yarn start --app=normandy
-    $ yarn start --app=delivery-dashboard
-    $ yarn start --app=some-other-app
-
-
-This works via altering the Webpack ``entry`` configuration via ``config-overrides.js`` to point to the ``[app-dir]/src/index.js`` file. An index.js file is required for each app in order to be served on its own - see below.
-
-
 Standalone App Configuration
 ============================
 

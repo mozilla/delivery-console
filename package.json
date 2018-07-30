@@ -8,12 +8,11 @@
     "url": "https://github.com/mozilla/delivery-console"
   },
   "dependencies": {
-    "antd": "3.7.2",
+    "antd": "3.7.3",
     "auth0-js": "9.7.3",
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.3.0",
-    "enzyme-adapter-react-16": "1.1.1",
-    "fetch-mock": "6.5.2",
+    "date-fns": "1.29.0",
     "immutable": "3.8.2",
     "lodash": "4.17.10",
     "raven-js": "3.26.4",
@@ -24,43 +23,132 @@
     "react-router": "4.3.1",
     "react-router-config": "1.0.0-beta.4",
     "react-router-dom": "4.3.1",
-    "react-scripts": "1.1.4",
     "redux": "4.0.0",
     "redux-immutable": "4.0.0",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "CI=true yarn run test:jest",
-    "test:jest": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js test --env=jsdom",
+    "test:ci": "CI=true yarn test",
+    "test:watch": "yarn test --watch",
     "lint": "therapist run --use-tracked-files --include-untracked",
     "lint:fix": "yarn run lint --fix"
   },
   "devDependencies": {
+    "autoprefixer": "9.0.1",
+    "babel-core": "6.26.3",
+    "babel-eslint": "8.2.6",
+    "babel-jest": "23.4.0",
+    "babel-loader": "7.1.5",
     "babel-plugin-import": "1.8.0",
     "babel-plugin-transform-decorators-legacy": "1.3.5",
     "babel-polyfill": "6.26.0",
+    "babel-preset-react-app": "3.1.2",
+    "babel-runtime": "6.26.0",
+    "case-sensitive-paths-webpack-plugin": "2.1.2",
+    "chalk": "2.4.1",
+    "css-loader": "1.0.0",
+    "cssnano": "4.0.4",
+    "dotenv": "6.0.0",
+    "dotenv-expand": "4.2.0",
     "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "eslint": "5.2.0",
     "eslint-config-prettier": "2.9.0",
+    "eslint-config-react-app": "3.0.0-next.3e165448",
+    "eslint-loader": "2.1.0",
+    "eslint-plugin-flowtype": "2.50.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-prettier": "2.6.2",
+    "eslint-plugin-react": "7.10.0",
+    "extract-css-chunks-webpack-plugin": "3.0.11",
     "faker": "4.1.0",
+    "fetch-mock": "6.5.2",
+    "file-loader": "1.1.11",
+    "fs-extra": "7.0.0",
     "generate-json-webpack-plugin": "0.3.1",
+    "html-webpack-plugin": "3.2.0",
+    "jest": "23.4.1",
     "jest-immutable-matchers": "2.0.1",
+    "less": "3.8.0",
+    "less-loader": "4.1.0",
     "nsp": "3.2.1",
+    "object-assign": "4.1.1",
+    "postcss-flexbugs-fixes": "4.0.0",
+    "postcss-loader": "2.1.6",
     "prettier": "1.13.7",
-    "react-app-rewire-less": "2.1.2",
-    "react-app-rewired": "1.5.2",
+    "promise": "8.0.1",
+    "raf": "3.4.0",
+    "react-dev-utils": "6.0.0-next.3e165448",
+    "resolve": "1.8.1",
+    "style-loader": "0.21.0",
     "stylelint": "9.4.0",
     "stylelint-config-standard": "18.2.0",
-    "stylelint-order": "0.8.1"
+    "stylelint-order": "0.8.1",
+    "sw-precache-webpack-plugin": "0.11.5",
+    "uglifyjs-webpack-plugin": "1.2.7",
+    "url-loader": "1.0.1",
+    "webpack": "4.16.2",
+    "webpack-dev-server": "3.1.5",
+    "webpack-manifest-plugin": "2.0.3",
+    "webpack-merge": "4.1.3",
+    "whatwg-fetch": "2.0.4"
   },
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ],
     "moduleNameMapper": {
       ".*\\.less$": "<rootDir>/etc/StubModule.js",
       "^console/(.*)$": "<rootDir>/src/$1"
-    }
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node",
+      "mjs"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "transform-decorators-legacy",
+      [
+        "import",
+        {
+          "libraryName": "antd"
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
