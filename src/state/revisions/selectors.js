@@ -122,7 +122,7 @@ export function getRevisionDraftStatus(state, id) {
   if (approvedRevision) {
     const revisionDate = dateFns.parse(revision.get('date_created'));
     const approvedRevisionDate = dateFns.parse(approvedRevision.get('date_created'));
-    const delta = dateFns.diff(approvedRevisionDate, revisionDate);
+    const delta = dateFns.differenceInMilliseconds(approvedRevisionDate, revisionDate);
 
     if (delta < 0) {
       return REVISION_DRAFT;

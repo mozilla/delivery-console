@@ -133,7 +133,7 @@ export default class RecipeListingPage extends React.PureComponent {
             return (
               <Link
                 to={reverse('recipes.details', { recipeId: record.id })}
-                title={dateFns.format(lastUpdated, 'LLLL')}
+                title={dateFns.format(lastUpdated, 'dddd, MMMM M, YYYY h:mm A')}
               >
                 {dateFns.distanceInWordsToNow(lastUpdated)}
               </Link>
