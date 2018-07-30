@@ -100,7 +100,8 @@ export default class PreferenceExperimentFields extends React.Component {
                   message="User Preference Branch"
                   description={
                     <span>
-                      Setting user preferences instead of default ones is not recommended.<br />
+                      Setting user preferences instead of default ones is not recommended.
+                      <br />
                       Do not choose this unless you know what you are doing.
                     </span>
                   }

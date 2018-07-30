@@ -163,8 +163,7 @@ export class RevisionInfo extends React.PureComponent {
     return (
       <div>
         Revision added:
-        <b title={fullTime}>{` ${simpleTime} `}</b>
-        ({timeAgo})
+        <b title={fullTime}>{` ${simpleTime} `}</b>({timeAgo})
       </div>
     );
   }
@@ -197,8 +196,7 @@ export class RequestInfo extends React.PureComponent {
         Approval requested by: <b>{requestCreator}</b>
         <br />
         Date requested:
-        <b title={fullTime}>{` ${simpleTime} `}</b>
-        ({timeAgo})
+        <b title={fullTime}>{` ${simpleTime} `}</b>({timeAgo})
       </span>
     );
   }
