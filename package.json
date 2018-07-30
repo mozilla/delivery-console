@@ -34,12 +34,8 @@
     "test": "node scripts/test.js test --env=jsdom",
     "test:ci": "CI=true yarn test",
     "test:watch": "yarn test --watch",
-    "lint:less": "stylelint 'src/**/*.less' --config .stylelintrc",
-    "lint:eslint": "eslint --max-warnings 0 'src/**/*.js'",
-    "lint:eslintfix": "eslint --max-warnings 0 --fix 'src/**/*.js'",
-    "lint": "yarn run lint:eslint && yarn run lint:less",
-    "lint:fix": "yarn run lint:eslintfix && yarn run lint:less",
-    "lint:security": "nsp check"
+    "lint": "therapist run --use-tracked-files --include-untracked",
+    "lint:fix": "yarn run lint --fix"
   },
   "devDependencies": {
     "autoprefixer": "9.0.1",
