@@ -1,16 +1,22 @@
 const autoprefixer = require('autoprefixer');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const path = require('path');
 
 const paths = require('./paths');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+const cssFilename = `static/css/[name]${isDevelopment ? '' : '[contenthash:8]'}.css`;
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap =
   process.env.NODE_ENV === 'production' && process.env.GENERATE_SOURCEMAP !== 'false';
 
 module.exports = {
+  performance: {
+    hints: false,
+  },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -94,49 +100,44 @@ module.exports = {
           // in the main CSS file.
           {
             test: /\.(less|css)$/,
-            loader: ExtractTextPlugin.extract({
-              fallback: {
-                loader: require.resolve('style-loader'),
+            use: [
+              ExtractCssChunksPlugin.loader,
+              {
+                loader: require.resolve('css-loader'),
                 options: {
-                  hmr: false,
+                  importLoaders: 1,
+                  sourceMap: shouldUseSourceMap,
                 },
               },
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                    sourceMap: shouldUseSourceMap,
-                  },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                    require('cssnano')(),
+                  ],
                 },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: {
-                    // Necessary for external CSS imports to work
-                    // https://github.com/facebookincubator/create-react-app/issues/2677
-                    ident: 'postcss',
-                    plugins: () => [
-                      require('postcss-flexbugs-fixes'),
-                      autoprefixer({
-                        browsers: [
-                          '>1%',
-                          'last 4 versions',
-                          'Firefox ESR',
-                          'not ie < 9', // React doesn't support IE8 anyway
-                        ],
-                        flexbox: 'no-2009',
-                      }),
-                    ],
-                  },
+              },
+              {
+                loader: 'less-loader',
+                options: {
+                  javascriptEnabled: true,
+                  sourceMap: shouldUseSourceMap,
                 },
-                {
-                  loader: 'less-loader',
-                  options: { javascriptEnabled: true },
-                },
-              ],
-            }),
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+              },
+            ],
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -161,8 +162,9 @@ module.exports = {
   },
   plugins: [
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin({
-      filename: 'static/css/[name].[contenthash:8].css',
+    new ExtractCssChunksPlugin({
+      filename: cssFilename,
+      hot: isDevelopment,
     }),
   ],
   // Some libraries import Node modules but don't use them in the browser.

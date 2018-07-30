@@ -15,7 +15,7 @@ export default class QueryRecipeListingColumns extends React.PureComponent {
     loadRecipeListingColumns: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadRecipeListingColumns();
   }
 
