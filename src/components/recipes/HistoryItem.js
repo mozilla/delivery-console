@@ -156,7 +156,7 @@ export class RevisionInfo extends React.PureComponent {
     const revisionCreationTime = dateFns.parse(revision.get('date_created'));
 
     const fullTime = dateFns.format(revisionCreationTime, 'MMMM Do YYYY, h:mm a');
-    const simpleTime = dateFns.format(revisionCreationTime, 'L');
+    const simpleTime = dateFns.format(revisionCreationTime, 'MM/DD/YYYY');
     const timeAgo = dateFns.distanceInWordsToNow(revisionCreationTime);
 
     // Creator info is on every tooltip, contains basic metadata.
@@ -187,7 +187,7 @@ export class RequestInfo extends React.PureComponent {
     const requestCreationTime = dateFns.parse(revision.getIn(['approval_request', 'created']));
 
     const fullTime = dateFns.format(requestCreationTime, 'MMMM Do YYYY, h:mm a');
-    const simpleTime = dateFns.format(requestCreationTime, 'L');
+    const simpleTime = dateFns.format(requestCreationTime, 'MM/DD/YYYY');
     const timeAgo = dateFns.distanceInWordsToNow(requestCreationTime);
 
     return (
