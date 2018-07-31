@@ -34,7 +34,7 @@ export default class MissingPage extends React.PureComponent {
               <li>Go back to the previous page.</li>
               <li>
                 Report&nbsp;
-                <a href={issueUrl} target="_blank">
+                <a href={issueUrl} target="_blank" rel="noopener noreferrer">
                   an issue
                 </a>
                 &nbsp;with Delivery Console.

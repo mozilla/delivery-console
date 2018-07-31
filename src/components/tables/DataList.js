@@ -8,11 +8,11 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import { openNewWindow } from 'console/state/router/actions';
-import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
+import { getCurrentUrlAsObject as getCurrentUrlAsObjectSelector } from 'console/state/router/selectors';
 
 @connect(
   state => ({
-    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
   }),
   {
     openNewWindow,
@@ -25,7 +25,7 @@ export default class DataList extends React.PureComponent {
     columnRenderers: PropTypes.object.isRequired,
     columns: PropTypes.instanceOf(List).isRequired,
     dataSource: PropTypes.array.isRequired,
-    getCurrentUrl: PropTypes.func.isRequired,
+    getCurrentUrlAsObject: PropTypes.func.isRequired,
     openNewWindow: PropTypes.func.isRequired,
     ordering: PropTypes.string,
     getUrlFromRecord: PropTypes.func.isRequired,
@@ -63,7 +63,7 @@ export default class DataList extends React.PureComponent {
   }
 
   handleChangeSortFilters(pagination, filters, sorter) {
-    const { getCurrentUrl } = this.props;
+    const { getCurrentUrlAsObject } = this.props;
     const filterParams = Object.entries(filters)
       .filter(([key, value]) => value)
       .reduce((obj, [key, value]) => {
@@ -79,7 +79,7 @@ export default class DataList extends React.PureComponent {
     }
 
     this.props.push(
-      getCurrentUrl({
+      getCurrentUrlAsObject({
         page: null, // Return to the first page
         ordering,
         ...filterParams,

@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 import { matchRoutes } from 'react-router-config';
 
 import applicationRoutes from 'console/urls';
@@ -19,7 +19,7 @@ export function getCurrentPathname(state, defaultsTo = null) {
 
 export function getCurrentRoute(state, defaultsTo = null) {
   const routeMatch = getRouteMatchByPathname(getCurrentPathname(state));
-  return routeMatch.get('route', defaultsTo);
+  return routeMatch.route || defaultsTo;
 }
 
 export function getCurrentRouteTree(state) {
@@ -40,7 +40,7 @@ export function getCurrentRouteTree(state) {
   while (route.get('parentPath')) {
     pathname = replaceParamsInPath(route.get('parentPath'), routeMatch.match.params);
     route = fromJS({
-      ...getRouteByPath(route.parentPath),
+      ...getRouteByPath(route.get('parentPath')),
       pathname,
     });
     routes = routes.push(route);
@@ -50,8 +50,7 @@ export function getCurrentRouteTree(state) {
 }
 
 export function getUrlParam(state, key, defaultsTo = null) {
-  // Cache the application routes
-  const route = matchRoutes(applicationRoutes, getCurrentPathname(state))[0];
+  const route = getRouteMatchByPathname(getCurrentPathname(state));
 
   if (route && route.match) {
     return route.match.params[key] || defaultsTo;
@@ -85,17 +84,17 @@ export function getAllQueryParams(state, defaultsTo = null) {
 }
 
 export function getQueryParam(state, key, defaultsTo = null) {
-  const params = getAllQueryParams(state, {});
-  return params[key] || defaultsTo;
+  const params = getAllQueryParams(state, new Map());
+  return params.get(key, defaultsTo);
 }
 
 export function getQueryParamAsInt(state, key, defaultsTo = null) {
   return parseInt(getQueryParam(state, key, defaultsTo), 10);
 }
 
-export function getCurrentUrl(state, applyQueryParams) {
+export function getCurrentUrlAsObject(state, applyQueryParams) {
   const queryParams = {
-    ...getAllQueryParams(state, {}).toJS(),
+    ...getAllQueryParams(state, new Map()).toJS(),
     ...applyQueryParams,
   };
 
@@ -104,8 +103,8 @@ export function getCurrentUrl(state, applyQueryParams) {
     .map(([key, value]) => (value === true ? key : `${key}=${value}`))
     .join('&');
 
-  return fromJS({
+  return {
     pathname: getCurrentPathname(state),
     search: search ? `?${search}` : '',
-  });
+  };
 }

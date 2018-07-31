@@ -1,7 +1,7 @@
 import { Alert, Icon, Popover, Tag, Timeline } from 'antd';
 import autobind from 'autobind-decorator';
+import dateFns from 'date-fns';
 import { Map } from 'immutable';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -153,18 +153,17 @@ export class RevisionInfo extends React.PureComponent {
 
   render() {
     const { revision } = this.props;
-    const revisionCreationTime = moment(revision.get('date_created'));
+    const revisionCreationTime = dateFns.parse(revision.get('date_created'));
 
-    const fullTime = revisionCreationTime.format('MMMM Do YYYY, h:mm a');
-    const simpleTime = revisionCreationTime.format('L');
-    const timeAgo = revisionCreationTime.fromNow();
+    const fullTime = dateFns.format(revisionCreationTime, 'MMMM Do YYYY, h:mm a');
+    const simpleTime = dateFns.format(revisionCreationTime, 'MM/DD/YYYY');
+    const timeAgo = dateFns.distanceInWordsToNow(revisionCreationTime);
 
     // Creator info is on every tooltip, contains basic metadata.
     return (
       <div>
         Revision added:
-        <b title={fullTime}>{` ${simpleTime} `}</b>
-        ({timeAgo})
+        <b title={fullTime}>{` ${simpleTime} `}</b>({timeAgo})
       </div>
     );
   }
@@ -185,11 +184,11 @@ export class RequestInfo extends React.PureComponent {
     }
 
     const requestCreator = revision.getIn(['approval_request', 'creator', 'email']);
-    const requestCreationTime = moment(revision.getIn(['approval_request', 'created']));
+    const requestCreationTime = dateFns.parse(revision.getIn(['approval_request', 'created']));
 
-    const fullTime = requestCreationTime.format('MMMM Do YYYY, h:mm a');
-    const simpleTime = requestCreationTime.format('L');
-    const timeAgo = requestCreationTime.fromNow();
+    const fullTime = dateFns.format(requestCreationTime, 'MMMM Do YYYY, h:mm a');
+    const simpleTime = dateFns.format(requestCreationTime, 'MM/DD/YYYY');
+    const timeAgo = dateFns.distanceInWordsToNow(requestCreationTime);
 
     return (
       <span>
@@ -197,8 +196,7 @@ export class RequestInfo extends React.PureComponent {
         Approval requested by: <b>{requestCreator}</b>
         <br />
         Date requested:
-        <b title={fullTime}>{` ${simpleTime} `}</b>
-        ({timeAgo})
+        <b title={fullTime}>{` ${simpleTime} `}</b>({timeAgo})
       </span>
     );
   }

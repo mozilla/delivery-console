@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   ACTION_RECEIVE,
@@ -39,10 +38,6 @@ describe('getRecipe', () => {
     }),
   );
 
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
-
   it('should return the recipe', () => {
     expect(getRecipe(STATE, recipe.id)).toEqualImmutable(fromJS(recipe));
   });
@@ -58,10 +53,6 @@ describe('getRecipe', () => {
 
 describe('getRecipeFilters', () => {
   const STATE = INITIAL_STATE.setIn(['recipes', 'filters'], fromJS(FILTERS));
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return the list of filters', () => {
     expect(getRecipeFilters(STATE)).toEqualImmutable(fromJS(FILTERS));
@@ -87,10 +78,6 @@ describe('getRecipeHistory', () => {
       }),
     }),
   ).setIn(['recipes', 'history', recipe.id], fromJS([recipe.latest_revision.id]));
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return the list of revisions', () => {
     expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(fromJS([recipe.latest_revision]));

@@ -1,4 +1,13 @@
 /* eslint import/prefer-default-export: "off" */
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
-export const INITIAL_STATE = new Map();
+// This was stubbed by looking at the initial state in redux devtools
+export const INITIAL_STATE = fromJS({
+  location: {
+    pathname: '/',
+    search: '',
+    hash: '',
+    key: '',
+  },
+  action: 'POP',
+});

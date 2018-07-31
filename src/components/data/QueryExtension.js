@@ -16,15 +16,15 @@ export default class QueryExtension extends React.PureComponent {
     pk: PropTypes.number.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { pk } = this.props;
     this.props.fetchExtension(pk);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { pk } = this.props;
-    if (pk !== nextProps.pk) {
-      this.props.fetchExtension(nextProps.pk);
+    if (pk !== prevProps.pk) {
+      this.props.fetchExtension(pk);
     }
   }
 

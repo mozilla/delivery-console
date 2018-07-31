@@ -1,6 +1,9 @@
 import { List } from 'immutable';
+import fetchMock from 'fetch-mock';
+
 import { wrapMockStore } from 'console/tests/mockStore';
 import TestComponent from 'console/components/extensions/ExtensionSelect';
+import { NORMANDY_API_ROOT_URL } from 'console/settings';
 
 const { WrappedComponent: ExtensionSelect } = TestComponent;
 
@@ -14,6 +17,13 @@ describe('<ExtensionSelect>', () => {
   };
 
   it('should work', () => {
+    fetchMock.getOnce(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
+      count: 0,
+      next: null,
+      previous: null,
+      results: [],
+    });
+
     // Need to wrap the components with a mock store in order to mount the nested
     // (but connected) query component.
     const wrapper = () => mount(wrapMockStore(<ExtensionSelect {...props} />));
@@ -22,6 +32,13 @@ describe('<ExtensionSelect>', () => {
   });
 
   it('should display the placeholder element appropriately', () => {
+    fetchMock.getOnce(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
+      count: 0,
+      next: null,
+      previous: null,
+      results: [],
+    });
+
     const wrapper = mount(wrapMockStore(<ExtensionSelect {...props} />));
 
     // Determine if the ant placeholder is present on the page.

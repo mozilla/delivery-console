@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import { ACTION_RECEIVE, REVISION_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import actionsReducer from 'console/state/actions/reducers';
@@ -28,10 +27,6 @@ describe('getRevision', () => {
       }),
     }),
   );
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return the revision', () => {
     expect(getRevision(STATE, revision.id)).toEqualImmutable(fromJS(revision));

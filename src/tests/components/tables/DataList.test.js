@@ -8,7 +8,7 @@ describe('<DataList>', () => {
     columnRenderers: {},
     columns: new List(),
     dataSource: [],
-    getCurrentUrl: () => {},
+    getCurrentUrlAsObject: () => {},
     getUrlFromRecord: () => {},
     history: {},
     openNewWindow: () => {},

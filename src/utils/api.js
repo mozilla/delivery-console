@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 export function APIError(message, data = {}) {
   this.data = data;
   this.message = message;

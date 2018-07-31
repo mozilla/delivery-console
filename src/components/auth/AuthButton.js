@@ -50,7 +50,9 @@ export default class AuthButton extends React.Component {
     return (
       <div>
         <div className="text-colored-links">
-          <a onClick={this.props.logUserOut}>Log Out</a>
+          <a href="#logout" onClick={this.props.logUserOut}>
+            Log Out
+          </a>
         </div>
       </div>
     );
@@ -78,10 +80,10 @@ export default class AuthButton extends React.Component {
           trigger="click"
           placement="bottomRight"
         >
-          <a className="ant-dropdown-link">
+          <span className="user-button">
             <Avatar src={picture} icon="user" />
             <Icon type="caret-down" />
-          </a>
+          </span>
         </Popover>
       );
     }
