@@ -4,6 +4,8 @@ import CloneRecipePage from 'console/components/pages/recipes/CloneRecipePage';
 import EditRecipePage from 'console/components/pages/recipes/EditRecipePage';
 import RecipeListingPage from 'console/components/pages/recipes/RecipeListingPage';
 import RecipeDetailPage from 'console/components/pages/recipes/RecipeDetailPage';
+import { getRevisionFromUrl } from 'console/state/router/selectors';
+import { Map } from 'immutable';
 
 export default {
   '/recipe': {
@@ -26,19 +28,31 @@ export default {
         name: 'recipes.details',
         component: RecipeDetailPage,
         crumbText: 'Details',
-        documentTitle: 'Recipe Details',
+        documentTitle: state => {
+          const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
+          return ['Recipe Details', recipe && `#${recipe.get('id')} ${recipe.get('name')}`];
+        },
         routes: {
           '/edit': {
             name: 'recipes.edit',
             component: EditRecipePage,
             crumbText: 'Edit',
-            documentTitle: 'Edit Recipe',
+            documentTitle: state => {
+              const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
+              return ['Edit Recipe', recipe && `#${recipe.get('id')} ${recipe.get('name')}`];
+            },
           },
           '/approval_history': {
             name: 'recipes.approval_history',
             component: ApprovalHistoryPage,
             crumbText: 'Approval History',
-            documentTitle: 'Recipe Approval History',
+            documentTitle: state => {
+              const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
+              return [
+                'Recipe Approval History',
+                recipe && `#${recipe.get('id')} ${recipe.get('name')}`,
+              ];
+            },
           },
           '/clone': {
             name: 'recipes.clone',
@@ -50,7 +64,14 @@ export default {
             name: 'recipes.revision',
             component: RecipeDetailPage,
             crumbText: 'Revision Details',
-            documentTitle: 'Recipe Revision Details',
+            documentTitle: state => {
+              const revision = getRevisionFromUrl(state);
+              return [
+                'Recipe Revision',
+                revision && `#${revision.getIn(['recipe', 'id'])} rev ${revision.get('id')}`,
+                revision && `${revision.getIn(['recipe', 'name'])}`,
+              ];
+            },
             routes: {
               '/clone': {
                 name: 'recipes.revision.clone',

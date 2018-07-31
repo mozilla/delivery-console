@@ -3,6 +3,8 @@ import { matchRoutes } from 'react-router-config';
 
 import applicationRoutes from 'console/urls';
 import { replaceParamsInPath } from 'console/utils/router';
+import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
+import { getRevision } from 'console/state/revisions/selectors';
 
 function getRouteByPath(path) {
   return applicationRoutes.find(route => route.path === path);
@@ -107,4 +109,38 @@ export function getCurrentUrlAsObject(state, applyQueryParams) {
     pathname: getCurrentPathname(state),
     search: search ? `?${search}` : '',
   };
+}
+
+export function getCurrentDocumentTitle(state, defaultsTo) {
+  if (!defaultsTo) {
+    throw new Error('defaultsTo is required for document title');
+  }
+  const routeTree = getCurrentRouteTree(state);
+  let documentTitle = routeTree.getIn([0, 'documentTitle']);
+
+  if (typeof documentTitle === 'function') {
+    documentTitle = documentTitle(state);
+  }
+
+  let parts;
+  if (Array.isArray(documentTitle)) {
+    parts = [...documentTitle, defaultsTo];
+  } else {
+    parts = [documentTitle, defaultsTo];
+  }
+
+  return parts.filter(p => !!p).join(' • ');
+}
+
+export function getRevisionFromUrl(state, defaultsTo = null) {
+  const recipeId = getUrlParamAsInt(state, 'recipeId');
+  if (!recipeId) {
+    return defaultsTo;
+  }
+  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
+  if (!latestRevisionId) {
+    return defaultsTo;
+  }
+  const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
+  return getRevision(state, revisionId, defaultsTo);
 }
