@@ -81,7 +81,6 @@ export function detectNormandyAdmin() {
     } catch (error) {
       // If it fails, it could be a network failure, or the timeout. Either way,
       // the admin is not available
-      console.debug('Normandy admin not available', error);
       dispatch({ type: REQUEST_FAILURE, requestId, error });
       dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: false });
     }

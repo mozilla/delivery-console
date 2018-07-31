@@ -15,7 +15,7 @@ export default class QueryNormandyAdmin extends React.PureComponent {
     detectNormandyAdmin: PropTypes.func.isRequired,
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     this.props.detectNormandyAdmin();
   }
 
