@@ -3,7 +3,7 @@ import fetchMock from 'fetch-mock';
 
 import { wrapMockStore } from 'console/tests/mockStore';
 import TestComponent from 'console/components/extensions/ExtensionSelect';
-import { NORMANDY_API_ROOT_URL } from 'console/settings';
+import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
 
 const { WrappedComponent: ExtensionSelect } = TestComponent;
 
@@ -17,7 +17,7 @@ describe('<ExtensionSelect>', () => {
   };
 
   it('should work', () => {
-    fetchMock.getOnce(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
+    fetchMock.getOnce(`${NORMANDY_ADMIN_API_ROOT_URL}v2/extension/?page=1`, {
       count: 0,
       next: null,
       previous: null,
@@ -32,7 +32,7 @@ describe('<ExtensionSelect>', () => {
   });
 
   it('should display the placeholder element appropriately', () => {
-    fetchMock.getOnce(`${NORMANDY_API_ROOT_URL}v2/extension/?page=1`, {
+    fetchMock.get(`${NORMANDY_ADMIN_API_ROOT_URL}v2/extension/?page=1`, {
       count: 0,
       next: null,
       previous: null,
