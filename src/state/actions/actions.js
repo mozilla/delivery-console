@@ -1,5 +1,5 @@
 import { ACTION_RECEIVE } from 'console/state/action-types';
-import { makeNormandyApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function fetchAction(pk) {
   return async dispatch => {

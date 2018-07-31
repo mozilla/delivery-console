@@ -13,7 +13,7 @@ import PreferenceExperimentFields from 'console/components/recipes/PreferenceExp
 import ShowHeartbeatFields from 'console/components/recipes/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/components/recipes/OptOutStudyFields';
 import { getAction, getAllActions } from 'console/state/actions/selectors';
-import { areAnyRequestsInProgress } from 'console/state/requests/selectors';
+import { areAnyRequestsInProgress } from 'console/state/network/selectors';
 import { createForm } from 'console/utils/forms';
 import IdenticonField from 'console/components/forms/IdenticonField';
 

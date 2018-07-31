@@ -7,7 +7,7 @@ import {
   RECIPE_FILTERS_RECEIVE,
   RECIPE_HISTORY_RECEIVE,
 } from 'console/state/action-types';
-import { makeNormandyApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 import { revisionReceived } from 'console/state/revisions/actions';
 
 export function recipeReceived(recipe) {

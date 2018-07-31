@@ -55,7 +55,9 @@ beforeEach(() => {
 afterEach(() => {
   // Fail if any unmatched requests were made
   const unmatchedCalls = fetchMock.calls(false);
-  expect(unmatchedCalls).toEqual([]);
-
-  fetchMock.restore();
+  try {
+    expect(unmatchedCalls).toEqual([]);
+  } finally {
+    fetchMock.restore();
+  }
 });

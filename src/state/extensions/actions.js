@@ -3,7 +3,7 @@ import {
   EXTENSION_PAGE_RECEIVE,
   EXTENSION_RECEIVE,
 } from 'console/state/action-types';
-import { makeNormandyApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function fetchExtension(pk) {
   return async dispatch => {
