@@ -10,7 +10,7 @@ This guide assumes you have already installed and set up the following:
 
 1. Git_
 2. `Node.js 8`_ and `Yarn`_.
-3. `Python 2.7`_ or higher and`pip 8`_ or higher
+3. `Python 2.7`_ or higher
 
 These docs assume a Unix-like operating system, although the site should, in
 theory, run on Windows as well. All the example commands given below are
@@ -53,11 +53,14 @@ The site should be available at http://localhost:3000/.
 Therapist
 ---------
 If you want to automatically enforce Delivery Console's code style guidelines,
-you can use the `Therapist`_ pre-commit hook. To install Therapist, simply run:
+you can use the `Therapist`_ pre-commit hook.
+
+You could install Therapist in a `virtualenv`_ using `pip` but if you are
+installing it globally we recommend using `pipsi`_:
 
 .. code-block:: bash
 
-   pip install therapist
+   pipsi install therapist
 
 After that, you should be able to run the following to set up the git
 pre-commit hook:
@@ -79,4 +82,6 @@ install the hook using:
 If you ever need to bypass Therapist, you can do so by passing
 ``--no-verify`` to your ``git commit`` command.
 
+.. _virtualenv: https://virtualenv.pypa.io/en/stable/
+.. _pipsi: https://github.com/mitsuhiko/pipsi#how-do-i-get-it
 .. _Therapist: http://therapist.readthedocs.io/en/latest/overview.html
