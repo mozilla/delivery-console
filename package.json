@@ -34,8 +34,8 @@
     "test": "node scripts/test.js test --env=jsdom",
     "test:ci": "CI=true yarn test",
     "test:watch": "yarn test --watch",
-    "lint": "therapist run --use-tracked-files --include-untracked",
-    "lint:fix": "yarn run lint --fix"
+    "lint": "therapist use lint:all",
+    "lint:fix": "therapist use fix:all"
   },
   "devDependencies": {
     "autoprefixer": "9.0.2",
