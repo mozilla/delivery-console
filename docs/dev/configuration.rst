@@ -14,7 +14,7 @@ starting the development server:
 However, it is recommended that you create a ``.env`` file in the root of the
 project instead. For example:
 
-.. code-block::
+.. code-block:: shell
 
    REACT_APP_OIDC_DOMAIN=my.oidc.domain.example.com
    REACT_APP_OIDC_CLIENT_ID=6YRYpJyS5DnDyxLTRVGCQGCWGo2KNQLX

@@ -52,8 +52,8 @@ If you'd prefer that the tests watch for changes and re-run automatically:
 Linting
 -------
 You will need to :ref:`install Therapist <therapist-install>` for linting. If
-you have installed pre-commit hook linting will take place with every commit,
-however there may be times you want to run the linters manually.
+you have installed the pre-commit hook linting will take place with every
+commit, however there may be times you want to run the linters manually.
 
 To run the linters on all files that you have changed or added:
 

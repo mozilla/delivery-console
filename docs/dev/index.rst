@@ -12,4 +12,3 @@ development environment for it.
    code-style
    documentation
    authentication
-   troubleshooting

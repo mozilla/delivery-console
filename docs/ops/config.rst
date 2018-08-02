@@ -23,7 +23,7 @@ An environment variable like ``REACT_APP_FOO`` controls the setting ``FOO``.
 
    :default: ``null``
 
-   The root url for the Normandy API that should be used for users with out
+   The root url for the Normandy API that should be used for users without
    access to the Normandy admin. It will be used as a fallback in case the
    admin server is inaccesible.
 

@@ -1,17 +1,16 @@
 Authentication
 ==============
 
-By default, the authentication will be done against the
-``auth.mozilla.auth0.com`` instance hosted by Auth0.com.
+By default, authentication takes place on ``auth.mozilla.auth0.com`` which is
+hosted by Auth0.com.
 
-To override how the OpenID Connection authentication should be done set
-``REACT_APP_OIDC_CLIENT_ID`` and ``REACT_APP_OIDC_DOMAIN`` either by typing it
-into a file called ``.env`` or you can do it on the command line when starting
-the development server.
+While you must use Auth0 for authentication you can
+:doc:`override the configuration </dev/configuration>` of
+``REACT_APP_OIDC_CLIENT_ID`` and ``REACT_APP_OIDC_DOMAIN`` to use another
+instance.
 
-.. code-block:: shell
-
-   $ REACT_APP_OIDC_DOMAIN=my.oidc.domain.example.com REACT_APP_OIDC_CLIENT_ID=6YRYpJyS5DnDyxLTRVGCQGCWGo2KNQLX yarn start
+You will need to update the backend services (such as Normandy) to use the
+same domain as well.
 
 Debugging Silent Authentication
 -------------------------------
