@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   ACTION_RECEIVE,
@@ -18,29 +17,26 @@ import { FILTERS, RecipeFactory } from 'console/tests/state/recipes';
 describe('getRecipe', () => {
   const recipe = RecipeFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    actions: actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: recipe.action,
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: recipe.action,
+      }),
+      recipes: recipesReducer(undefined, {
+        type: RECIPE_RECEIVE,
+        recipe,
+      }),
+      revisions: revisionsReducer(undefined, {
+        type: REVISION_RECEIVE,
+        revision: recipe.latest_revision,
+      }),
+      users: usersReducer(undefined, {
+        type: USER_RECEIVE,
+        user: recipe.latest_revision.user,
+      }),
     }),
-    recipes: recipesReducer(undefined, {
-      type: RECIPE_RECEIVE,
-      recipe,
-    }),
-    revisions: revisionsReducer(undefined, {
-      type: REVISION_RECEIVE,
-      revision: recipe.latest_revision,
-    }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: recipe.latest_revision.user,
-    }),
-  };
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
+  );
 
   it('should return the recipe', () => {
     expect(getRecipe(STATE, recipe.id)).toEqualImmutable(fromJS(recipe));
@@ -56,17 +52,7 @@ describe('getRecipe', () => {
 });
 
 describe('getRecipeFilters', () => {
-  const STATE = {
-    ...INITIAL_STATE,
-    recipes: {
-      ...INITIAL_STATE.recipes,
-      filters: fromJS(FILTERS),
-    },
-  };
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
+  const STATE = INITIAL_STATE.setIn(['recipes', 'filters'], fromJS(FILTERS));
 
   it('should return the list of filters', () => {
     expect(getRecipeFilters(STATE)).toEqualImmutable(fromJS(FILTERS));
@@ -76,29 +62,22 @@ describe('getRecipeFilters', () => {
 describe('getRecipeHistory', () => {
   const recipe = RecipeFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    actions: actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: recipe.action,
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: recipe.action,
+      }),
+      revisions: revisionsReducer(undefined, {
+        type: REVISION_RECEIVE,
+        revision: recipe.latest_revision,
+      }),
+      users: usersReducer(undefined, {
+        type: USER_RECEIVE,
+        user: recipe.latest_revision.user,
+      }),
     }),
-    recipes: {
-      ...INITIAL_STATE.recipes,
-      history: INITIAL_STATE.recipes.history.set(recipe.id, fromJS([recipe.latest_revision.id])),
-    },
-    revisions: revisionsReducer(undefined, {
-      type: REVISION_RECEIVE,
-      revision: recipe.latest_revision,
-    }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: recipe.latest_revision.user,
-    }),
-  };
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
+  ).setIn(['recipes', 'history', recipe.id], fromJS([recipe.latest_revision.id]));
 
   it('should return the list of revisions', () => {
     expect(getRecipeHistory(STATE, recipe.id)).toEqualImmutable(fromJS([recipe.latest_revision]));

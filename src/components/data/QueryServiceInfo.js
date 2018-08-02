@@ -15,7 +15,7 @@ export default class QueryServiceInfo extends React.PureComponent {
     fetchServiceInfo: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchServiceInfo();
   }
 

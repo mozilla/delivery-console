@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import { fetchFilteredRecipesPage } from 'console/state/recipes/actions';
 
@@ -24,15 +24,15 @@ export default class QueryFilteredRecipes extends React.PureComponent {
     pageNumber: 1,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { filters, pageNumber } = this.props;
     this.props.fetchFilteredRecipesPage(pageNumber, filters);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { filters, pageNumber } = this.props;
-    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
-      this.props.fetchFilteredRecipesPage(nextProps.pageNumber, nextProps.filters);
+    if (pageNumber !== prevProps.pageNumber || !isEqual(filters, prevProps.filters)) {
+      this.props.fetchFilteredRecipesPage(pageNumber, filters);
     }
   }
 

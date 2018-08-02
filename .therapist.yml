@@ -1,6 +1,7 @@
 actions:
   eslint:
     run: yarn eslint --max-warnings 0 {files}
+    fix: yarn eslint --max-warnings 0 --fix {files}
     include:
       - "*.js"
       - "*.jsx"
@@ -9,3 +10,19 @@ actions:
     include:
       - "*.css"
       - "*.less"
+  nsp:
+    run: yarn nsp check
+shortcuts:
+  lint:
+    flags:
+      - include-unstaged
+      - include-untracked
+  "lint:all":
+    extends: lint
+    flags: use-tracked-files
+  fix:
+    extends: lint
+    flags: fix
+  "fix:all":
+    extends: fix
+    flags: use-tracked-files

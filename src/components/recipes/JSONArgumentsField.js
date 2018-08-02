@@ -30,7 +30,7 @@ export default class JSONArgumentsField extends React.Component {
           label="JSON Blob"
           initialValue={JSON.stringify(recipeArguments, null, 2)}
         >
-          <Input.TextArea autosize={{ minRows: 4, maxRows: 16 }} disabled={disabled} />
+          <Input.TextArea rows={4} disabled={disabled} />
         </FormItem>
       </div>
     );

@@ -42,7 +42,7 @@ export default class OptOutStudyFields extends React.Component {
               name="arguments.description"
               initialValue={recipeArguments.get('description', '')}
             >
-              <Input.TextArea autosize={{ minRows: 3, maxRows: 10 }} disabled={disabled} />
+              <Input.TextArea row={3} disabled={disabled} />
             </FormItem>
           </Col>
 

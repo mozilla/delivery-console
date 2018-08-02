@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import { APPROVAL_REQUEST_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import approvalRequestsReducer from 'console/state/approvalRequests/reducers';
@@ -11,21 +10,18 @@ import { ApprovalRequestFactory } from 'console/tests/state/approvalRequests';
 describe('getApprovalRequest', () => {
   const approvalRequest = ApprovalRequestFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    approvalRequests: approvalRequestsReducer(undefined, {
-      type: APPROVAL_REQUEST_RECEIVE,
-      approvalRequest,
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      approvalRequests: approvalRequestsReducer(undefined, {
+        type: APPROVAL_REQUEST_RECEIVE,
+        approvalRequest,
+      }),
+      users: usersReducer(undefined, {
+        type: USER_RECEIVE,
+        user: approvalRequest.creator,
+      }),
     }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: approvalRequest.creator,
-    }),
-  };
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
+  );
 
   it('should return the approval request', () => {
     expect(getApprovalRequest(STATE, approvalRequest.id)).toEqualImmutable(

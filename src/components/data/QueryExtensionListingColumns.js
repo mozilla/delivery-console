@@ -15,7 +15,7 @@ export default class QueryExtensionListingColumns extends React.PureComponent {
     loadExtensionListingColumns: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadExtensionListingColumns();
   }
 

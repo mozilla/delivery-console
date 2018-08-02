@@ -1,7 +1,19 @@
 import { DEFAULT_REQUEST } from 'console/state/constants';
 
+export function getNetworkState(state) {
+  return state.get('network');
+}
+
+export function getRequestsState(state) {
+  return getNetworkState(state).get('requests');
+}
+
+export function getAvailabilityState(state) {
+  return getNetworkState(state).get('availability');
+}
+
 export function getRequest(state, id, defaultsTo = DEFAULT_REQUEST) {
-  return state.requests.get(id, defaultsTo);
+  return getRequestsState(state).get(id, defaultsTo);
 }
 
 export function isRequestInProgress(state, id) {
@@ -10,7 +22,7 @@ export function isRequestInProgress(state, id) {
 }
 
 export function areAnyRequestsInProgress(state) {
-  const { requests } = state;
+  const requests = getRequestsState(state);
 
   if (requests.size === 0) {
     return false;
@@ -23,4 +35,8 @@ export function areAnyRequestsInProgress(state) {
       reduced.set('inProgress', reduced.get('inProgress') || value.get('inProgress')),
     )
     .get('inProgress', false);
+}
+
+export function isNormandyAdminAvailable(state) {
+  return getAvailabilityState(state).getIn(['normandyAdmin']);
 }

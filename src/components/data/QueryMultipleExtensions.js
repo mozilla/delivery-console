@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import { fetchExtensionsPage } from 'console/state/extensions/actions';
 
@@ -23,15 +23,15 @@ export default class QueryMultipleExtensions extends React.PureComponent {
     pageNumber: null,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { filters, pageNumber } = this.props;
     this.props.fetchExtensionsPage(pageNumber, filters);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { filters, pageNumber } = this.props;
-    if (pageNumber !== nextProps.pageNumber || !isEqual(filters, nextProps.filters)) {
-      this.props.fetchExtensionsPage(nextProps.pageNumber, nextProps.filters);
+    if (pageNumber !== prevProps.pageNumber || !isEqual(filters, prevProps.filters)) {
+      this.props.fetchExtensionsPage(pageNumber, filters);
     }
   }
 

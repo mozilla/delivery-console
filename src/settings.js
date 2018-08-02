@@ -5,8 +5,10 @@ const MINUTE = 60 * SECOND;
 export const SENTRY_PUBLIC_DSN = process.env.REACT_APP_SENTRY_PUBLIC_DSN;
 
 // Normandy API
-export const NORMANDY_API_ROOT_URL =
-  process.env.REACT_APP_NORMANDY_API_ROOT_URL || 'https://localhost:8000/api/';
+export const NORMANDY_ADMIN_API_ROOT_URL =
+  process.env.REACT_APP_NORMANDY_ADMIN_API_ROOT_URL || 'https://localhost:8000/api/';
+export const NORMANDY_READONLY_API_ROOT_URL =
+  process.env.REACT_APP_NORMANDY_READ_ONLY_API_ROOT_URL || null;
 
 // Auth0 / OIDC
 export const OIDC_CLIENT_ID =

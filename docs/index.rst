@@ -2,35 +2,11 @@
 Mozilla Delivery Console
 ========================
 
-
-One admin interface to rule them all.
-
-Contents
-========
-
-User docs:
+Delivery Console is a unified admin UI for the many delivery pipelines to the
+browser.
 
 .. toctree::
    :maxdepth: 2
 
-   console
-   normandy
-
-
-Project docs:
-
-.. toctree::
-
-   dev
-   config
-   contributing
-   auth
-   ci
-   docs
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   dev/index
+   ops/index

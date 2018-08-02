@@ -10,13 +10,12 @@ import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 export default class IdenticonField extends React.PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     value: PropTypes.any,
   };
 
   static defaultProps = {
     disabled: false,
-    value: null,
   };
 
   static generateSeed() {
@@ -34,54 +33,65 @@ export default class IdenticonField extends React.PureComponent {
     };
   }
 
-  componentWillReceiveProps({ value }) {
-    if (this.state.index === -1 && value) {
-      this.setState({
-        index: 0,
-        history: fromJS([value]),
+  componentDidUpdate(prevProps) {
+    const { value } = this.props;
+    if (value && value !== prevProps.value) {
+      this.setState(({ history, index }) => {
+        const newIndex = history.includes(value) ? history.indexOf(value) : history.size;
+        const newHistory = newIndex === history.size ? history.push(value) : history;
+
+        return {
+          index: newIndex,
+          history: newHistory,
+        };
       });
     }
   }
 
-  handleChange(direction) {
-    let next;
+  navigateHistory(step) {
+    const { onChange } = this.props;
     const { index, history } = this.state;
-    const newIndex = index + direction;
+    const newIndex = index + step;
+    let next;
 
-    if (newIndex < 0) {
-      return;
-    }
+    if (newIndex >= 0) {
+      next = history.get(newIndex, IdenticonField.generateSeed());
 
-    next = history.get(newIndex);
-
-    let newHistory = history;
-    if (!next) {
-      next = IdenticonField.generateSeed();
-
-      // Ensure duplicate entries are not saved in history.
-      if (newHistory.indexOf(next) === -1) {
-        newHistory = newHistory.push(next);
+      if (onChange) {
+        onChange(next);
       }
     }
-
-    this.setState({
-      index: newIndex,
-      history: newHistory,
-    });
-    this.props.onChange(next);
   }
 
   handlePrev() {
-    this.handleChange(-1);
+    this.navigateHistory(-1);
   }
 
   handleNext() {
-    this.handleChange(1);
+    this.navigateHistory(1);
+  }
+
+  renderIdenticon() {
+    const { value } = this.props;
+
+    if (!value) {
+      return null;
+    }
+
+    return (
+      <Popover
+        mouseEnterDelay={0.75}
+        content={<ShieldIdenticon seed={value} size={256} />}
+        placement="right"
+      >
+        <div className="shield-container">
+          <ShieldIdenticon seed={value} />
+        </div>
+      </Popover>
+    );
   }
 
   render() {
-    const { value } = this.props;
-
     return (
       <div className="identicon-field">
         <Button
@@ -94,15 +104,7 @@ export default class IdenticonField extends React.PureComponent {
           <Icon type="left" />
         </Button>
 
-        <Popover
-          mouseEnterDelay={0.75}
-          content={<ShieldIdenticon seed={value} size={256} />}
-          placement="right"
-        >
-          <div className="shield-container">
-            <ShieldIdenticon seed={value} />
-          </div>
-        </Popover>
+        {this.renderIdenticon()}
 
         <Button
           className="btn-next"

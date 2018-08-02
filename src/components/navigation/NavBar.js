@@ -17,18 +17,18 @@ const { Header } = Layout;
 @autobind
 export default class NavBar extends React.PureComponent {
   static propTypes = {
-    routeTree: PropTypes.array.isRequired,
+    routeTree: PropTypes.object.isRequired,
   };
 
   renderCrumbs() {
-    const crumbs = [...this.props.routeTree].reverse().slice(1);
+    const crumbs = this.props.routeTree.reverse().slice(1);
     const cards = applicationRoutes
       .filter(r => r.cardOnHomepage)
       .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path }));
 
     return crumbs.map((crumb, index, origCrumbs) => {
-      const selectedCard = cards.find(e => e.listingUrl === crumb.pathname);
-      let crumbItem = crumb.crumbText;
+      const selectedCard = cards.find(e => e.listingUrl === crumb.get('pathname'));
+      let crumbItem = crumb.get('crumbText');
 
       if (index === 0 && selectedCard) {
         const menu = (
@@ -46,7 +46,7 @@ export default class NavBar extends React.PureComponent {
             <LinkButton
               className="left-btn"
               to={selectedCard.listingUrl}
-              disabled={index === origCrumbs.length - 1}
+              disabled={index === origCrumbs.size - 1}
             >
               {selectedCard.title}
             </LinkButton>
@@ -55,8 +55,8 @@ export default class NavBar extends React.PureComponent {
             </Dropdown>
           </div>
         );
-      } else if (index !== origCrumbs.length - 1) {
-        crumbItem = <Link to={crumb.pathname}>{crumbItem}</Link>;
+      } else if (index !== origCrumbs.size - 1) {
+        crumbItem = <Link to={crumb.get('pathname')}>{crumbItem}</Link>;
       }
 
       return <Breadcrumb.Item key={index}>{crumbItem}</Breadcrumb.Item>;
@@ -64,7 +64,7 @@ export default class NavBar extends React.PureComponent {
   }
 
   render() {
-    if (this.props.routeTree.length < 2) {
+    if (this.props.routeTree.size < 2) {
       return null;
     }
 

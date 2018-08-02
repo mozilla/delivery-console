@@ -4,7 +4,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 
-import { makeNormandyApiRequest } from 'console/state/requests/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {

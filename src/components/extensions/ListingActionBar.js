@@ -10,13 +10,13 @@ import { Link } from 'react-router-dom';
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveExtensionListingColumns } from 'console/state/extensions/actions';
 import { getExtensionListingColumns } from 'console/state/extensions/selectors';
-import { getCurrentUrl as getCurrentUrlSelector } from 'console/state/router/selectors';
+import { getCurrentUrlAsObject as getCurrentUrlAsObjectSelector } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
 @connect(
   state => ({
     columns: getExtensionListingColumns(state),
-    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
   }),
   {
     push,
@@ -27,13 +27,13 @@ import { reverse } from 'console/urls';
 export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
-    getCurrentUrl: PropTypes.func.isRequired,
+    getCurrentUrlAsObject: PropTypes.func.isRequired,
     saveExtensionListingColumns: PropTypes.func.isRequired,
   };
 
   handleChangeSearch(value) {
-    const { getCurrentUrl } = this.props;
-    this.props.push(getCurrentUrl({ searchText: value || undefined }));
+    const { getCurrentUrlAsObject } = this.props;
+    this.props.push(getCurrentUrlAsObject({ searchText: value || undefined }));
   }
 
   render() {
@@ -49,7 +49,7 @@ export default class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <Link to={reverse('recipes.new')}>
+          <Link to={reverse('extensions.new')}>
             <Button type="primary" icon="plus">
               New Extension
             </Button>

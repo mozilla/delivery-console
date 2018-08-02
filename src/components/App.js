@@ -1,36 +1,43 @@
-import { Layout, notification } from 'antd';
-import { ConnectedRouter } from 'connected-react-router';
+import { Layout } from 'antd';
+import { ConnectedRouter } from 'connected-react-router/immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AuthButton from 'console/components/auth/AuthButton';
-import NavBar from 'console/components/navigation/NavBar';
+import VPNStatus from 'console/components/common/VPNStatus';
 import QueryActions from 'console/components/data/QueryActions';
 import QueryAuth0 from 'console/components/data/QueryAuth0';
+import NavBar from 'console/components/navigation/NavBar';
 import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
+import { notifyAuthenticationError } from 'console/state/auth/actions';
 import { getError } from 'console/state/auth/selectors';
 import { getCurrentRouteTree } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
 const { Header } = Layout;
 
-@connect((state, props) => ({
-  authError: getError(state),
-  routeTree: getCurrentRouteTree(state),
-}))
+@connect(
+  (state, props) => ({
+    authError: getError(state),
+    routeTree: getCurrentRouteTree(state),
+  }),
+  {
+    notifyAuthenticationError,
+  },
+)
 export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
     history: PropTypes.object.isRequired,
-    routeTree: PropTypes.array.isRequired,
+    routeTree: PropTypes.object.isRequired,
   };
 
   updateDocumentTitle() {
     const { routeTree } = this.props;
-    const { documentTitle } = routeTree[0];
+    const documentTitle = routeTree.getIn([0, 'documentTitle']);
     let title = 'Delivery Console';
     if (documentTitle) {
       title = `${documentTitle} • ${title}`;
@@ -45,16 +52,12 @@ export default class App extends React.Component {
   componentDidUpdate(prevProps) {
     const { authError, routeTree } = this.props;
 
-    if (routeTree[0].pathname !== prevProps.routeTree[0].pathname) {
+    if (routeTree.getIn([0, 'pathname']) !== prevProps.routeTree.getIn([0, 'pathname'])) {
       this.updateDocumentTitle();
     }
 
     if (authError) {
-      notification.error({
-        message: 'Authentication Error',
-        description: `${authError.get('code')}: ${authError.get('description')}`,
-        duration: 0,
-      });
+      this.props.notifyAuthenticationError(authError);
     }
   }
 
@@ -76,6 +79,7 @@ export default class App extends React.Component {
               </Link>
 
               <div className="user-meta">
+                <VPNStatus />
                 <AuthButton />
               </div>
             </div>

@@ -8,7 +8,7 @@ describe('<ExtensionListingPage>', () => {
     columns: new List(),
     count: 10,
     extensions: new List(),
-    getCurrentUrl: () => {},
+    getCurrentUrlAsObject: () => {},
     history: {},
     ordering: null,
     pageNumber: 1,

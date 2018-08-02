@@ -1,7 +1,7 @@
 import { Card, Col, message, Row, Tag } from 'antd';
 import autobind from 'autobind-decorator';
+import dateFns from 'date-fns';
 import { Map } from 'immutable';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -106,6 +106,8 @@ export default class ApprovalRequest extends React.PureComponent {
       <ApprovalDetails request={approvalRequest} />
     );
 
+    const dateCreated = dateFns.parse(approvalRequest.get('created'));
+
     return (
       <div className="approval-history-details">
         <Row gutter={24}>
@@ -120,10 +122,8 @@ export default class ApprovalRequest extends React.PureComponent {
                   <dd>{approvalRequest.getIn(['creator', 'email'])}</dd>
 
                   <dt>Requested</dt>
-                  <dd
-                    title={moment(approvalRequest.get('created')).format('MMMM Do YYYY, h:mm a')}
-                  >
-                    {moment(approvalRequest.get('created')).fromNow()}
+                  <dd title={dateFns.format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
+                    {dateFns.distanceInWordsToNow(dateCreated)}
                   </dd>
                 </dl>
               </div>

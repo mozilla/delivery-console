@@ -1,5 +1,5 @@
+import dateFns from 'date-fns';
 import { Map } from 'immutable';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -10,6 +10,7 @@ export default class ApprovalDetails extends React.PureComponent {
 
   render() {
     const { request } = this.props;
+    const dateCreated = dateFns.parse(request.get('created'));
 
     return (
       <dl className="details narrow">
@@ -17,8 +18,8 @@ export default class ApprovalDetails extends React.PureComponent {
         <dd>{request.getIn(['approver', 'email'])}</dd>
 
         <dt>Responsed</dt>
-        <dd title={moment(request.get('created')).format('MMMM Do YYYY, h:mm a')}>
-          {moment(request.get('created')).fromNow()}
+        <dd title={dateFns.format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
+          {dateFns.distanceInWordsToNow(dateCreated)}
         </dd>
 
         <dt>Comment</dt>

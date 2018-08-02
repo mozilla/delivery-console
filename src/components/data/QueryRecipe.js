@@ -16,15 +16,15 @@ export default class QueryRecipe extends React.PureComponent {
     pk: PropTypes.number.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { pk } = this.props;
     this.props.fetchRecipe(pk);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { pk } = this.props;
-    if (pk !== nextProps.pk) {
-      this.props.fetchRecipe(nextProps.pk);
+    if (pk !== prevProps.pk) {
+      this.props.fetchRecipe(pk);
     }
   }
 

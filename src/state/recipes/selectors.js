@@ -5,7 +5,7 @@ import { DEFAULT_RECIPE_LISTING_COLUMNS } from 'console/state/constants';
 import { getRevision } from 'console/state/revisions/selectors';
 
 export function getRecipe(state, id, defaultsTo = null) {
-  const recipe = state.recipes.items.get(id);
+  const recipe = state.getIn(['recipes', 'items', id]);
 
   if (recipe) {
     const action = getAction(state, recipe.get('action_id'));
@@ -25,11 +25,11 @@ export function getRecipe(state, id, defaultsTo = null) {
 }
 
 export function getRecipeListingCount(state) {
-  return state.recipes.listing.get('count');
+  return state.getIn(['recipes', 'listing', 'count']);
 }
 
 export function getRecipeListing(state) {
-  const recipes = state.recipes.listing.get('results', new List([]));
+  const recipes = state.getIn(['recipes', 'listing', 'results'], new List());
   return recipes.map(id => getRecipe(state, id));
 }
 
@@ -39,20 +39,20 @@ export function getRecipeListingFlattenedAction(state) {
 }
 
 export function getRecipeListingPageNumber(state) {
-  return state.recipes.listing.get('pageNumber');
+  return state.getIn(['recipes', 'listing', 'pageNumber']);
 }
 
 export function getRecipeListingColumns(state, defaultsTo = DEFAULT_RECIPE_LISTING_COLUMNS) {
-  return state.recipes.listing.get('columns', defaultsTo);
+  return state.getIn(['recipes', 'listing', 'columns'], defaultsTo);
 }
 
 export function getRecipeHistory(state, id) {
-  const history = state.recipes.history.get(id, new List([]));
+  const history = state.getIn(['recipes', 'history', id], new List());
   return history.map(revisionId => getRevision(state, revisionId));
 }
 
 export function getRecipeFilters(state) {
-  return state.recipes.filters;
+  return state.getIn(['recipes', 'filters']);
 }
 
 export function isRecipeEnabled(state, id, defaultsTo = false) {

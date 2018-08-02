@@ -13,7 +13,7 @@ import PreferenceExperimentFields from 'console/components/recipes/PreferenceExp
 import ShowHeartbeatFields from 'console/components/recipes/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/components/recipes/OptOutStudyFields';
 import { getAction, getAllActions } from 'console/state/actions/selectors';
-import { areAnyRequestsInProgress } from 'console/state/requests/selectors';
+import { areAnyRequestsInProgress } from 'console/state/network/selectors';
 import { createForm } from 'console/utils/forms';
 import IdenticonField from 'console/components/forms/IdenticonField';
 
@@ -75,8 +75,12 @@ export default class RecipeForm extends React.PureComponent {
     'opt-out-study': OptOutStudyFields,
   };
 
-  componentDidMount() {
-    this.defaultIdenticonSeed = IdenticonField.generateSeed();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      defaultIdenticonSeed: IdenticonField.generateSeed(),
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -109,10 +113,11 @@ export default class RecipeForm extends React.PureComponent {
 
   render() {
     const { isCreationForm, isLoading, onSubmit, recipe } = this.props;
+    const { defaultIdenticonSeed } = this.state;
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
     // to prevent the form from generating a new identicon on each render.
-    const identiconSeed = isCreationForm ? this.defaultIdenticonSeed : null;
+    const identiconSeed = isCreationForm ? defaultIdenticonSeed : null;
 
     return (
       <Form onSubmit={onSubmit} className="recipe-form">
@@ -138,7 +143,7 @@ export default class RecipeForm extends React.PureComponent {
           label="Filter Expression"
           initialValue={recipe.get('extra_filter_expression')}
         >
-          <Input.TextArea disabled={isLoading} autosize={{ minRows: 4, maxRows: 16 }} />
+          <Input.TextArea disabled={isLoading} rows={4} />
         </FormItem>
         <FormItem name="action_id" label="Action" initialValue={recipe.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />

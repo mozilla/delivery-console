@@ -11,7 +11,7 @@ import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveRecipeListingColumns } from 'console/state/recipes/actions';
 import { getRecipeListingColumns } from 'console/state/recipes/selectors';
 import {
-  getCurrentUrl as getCurrentUrlSelector,
+  getCurrentUrlAsObject as getCurrentUrlAsObjectSelector,
   getQueryParam,
 } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
@@ -19,7 +19,7 @@ import { reverse } from 'console/urls';
 @connect(
   (state, props) => ({
     columns: getRecipeListingColumns(state),
-    getCurrentUrl: queryParams => getCurrentUrlSelector(state, queryParams),
+    getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
     searchText: getQueryParam(state, 'searchText'),
   }),
   {
@@ -31,7 +31,7 @@ import { reverse } from 'console/urls';
 export default class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
-    getCurrentUrl: PropTypes.func.isRequired,
+    getCurrentUrlAsObject: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
@@ -42,8 +42,8 @@ export default class ListingActionBar extends React.PureComponent {
   };
 
   handleChangeSearch(value) {
-    const { getCurrentUrl } = this.props;
-    this.props.push(getCurrentUrl({ searchText: value || undefined }));
+    const { getCurrentUrlAsObject } = this.props;
+    this.props.push(getCurrentUrlAsObject({ searchText: value || undefined }));
   }
 
   render() {

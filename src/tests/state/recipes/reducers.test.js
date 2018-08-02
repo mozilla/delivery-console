@@ -1,5 +1,4 @@
 import { fromJS, List } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import {
   RECIPE_DELETE,
@@ -12,10 +11,6 @@ import { FILTERS, INITIAL_STATE, RecipeFactory } from 'console/tests/state/recip
 
 describe('Recipes reducer', () => {
   const recipe = RecipeFactory.build();
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
 
   it('should return initial state by default', () => {
     expect(recipesReducer(undefined, { type: 'INITIAL' })).toEqual(INITIAL_STATE);
@@ -38,8 +33,8 @@ describe('Recipes reducer', () => {
       recipe,
     });
 
-    expect(updatedState.items).toEqualImmutable(
-      INITIAL_STATE.items.set(recipe.id, fromJS(reducedRecipe)),
+    expect(updatedState).toEqualImmutable(
+      INITIAL_STATE.setIn(['items', recipe.id], fromJS(reducedRecipe)),
     );
   });
 
@@ -58,27 +53,23 @@ describe('Recipes reducer', () => {
   });
 
   it('should handle RECIPE_FILTERS_RECEIVE', () => {
-    expect(
-      recipesReducer(undefined, {
-        type: RECIPE_FILTERS_RECEIVE,
-        filters: FILTERS,
-      }),
-    ).toEqual({
-      ...INITIAL_STATE,
-      filters: INITIAL_STATE.filters.merge(fromJS(FILTERS)),
+    const updatedState = recipesReducer(undefined, {
+      type: RECIPE_FILTERS_RECEIVE,
+      filters: FILTERS,
     });
+    expect(updatedState).toEqual(
+      INITIAL_STATE.set('filters', INITIAL_STATE.get('filters').merge(fromJS(FILTERS))),
+    );
   });
 
   it('should handle RECIPE_HISTORY_RECEIVE', () => {
-    expect(
-      recipesReducer(undefined, {
-        type: RECIPE_HISTORY_RECEIVE,
-        recipeId: recipe.id,
-        revisions: [recipe.latest_revision],
-      }),
-    ).toEqual({
-      ...INITIAL_STATE,
-      history: INITIAL_STATE.history.set(recipe.id, new List([recipe.latest_revision.id])),
+    const updatedState = recipesReducer(undefined, {
+      type: RECIPE_HISTORY_RECEIVE,
+      recipeId: recipe.id,
+      revisions: [recipe.latest_revision],
     });
+    expect(updatedState).toEqual(
+      INITIAL_STATE.setIn(['history', recipe.id], new List([recipe.latest_revision.id])),
+    );
   });
 });

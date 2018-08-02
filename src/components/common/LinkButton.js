@@ -15,6 +15,7 @@ import { openNewWindow } from 'console/state/router/actions';
 )
 export class LinkButton extends React.PureComponent {
   static propTypes = {
+    /* eslint-disable react/forbid-foreign-prop-types */
     ...Button.propTypes,
     push: PropTypes.func.isRequired,
     to: PropTypes.string,

@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import autobind from 'autobind-decorator';
-import get from 'lodash.get';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 

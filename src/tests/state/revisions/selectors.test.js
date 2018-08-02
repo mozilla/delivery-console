@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as matchers from 'jest-immutable-matchers';
 
 import { ACTION_RECEIVE, REVISION_RECEIVE, USER_RECEIVE } from 'console/state/action-types';
 import actionsReducer from 'console/state/actions/reducers';
@@ -12,25 +11,22 @@ import { RevisionFactory } from 'console/tests/state/revisions';
 describe('getRevision', () => {
   const revision = RevisionFactory.build();
 
-  const STATE = {
-    ...INITIAL_STATE,
-    actions: actionsReducer(undefined, {
-      type: ACTION_RECEIVE,
-      action: revision.recipe.action,
+  const STATE = INITIAL_STATE.merge(
+    fromJS({
+      actions: actionsReducer(undefined, {
+        type: ACTION_RECEIVE,
+        action: revision.recipe.action,
+      }),
+      revisions: revisionsReducer(undefined, {
+        type: REVISION_RECEIVE,
+        revision,
+      }),
+      users: usersReducer(undefined, {
+        type: USER_RECEIVE,
+        user: revision.user,
+      }),
     }),
-    revisions: revisionsReducer(undefined, {
-      type: REVISION_RECEIVE,
-      revision,
-    }),
-    users: usersReducer(undefined, {
-      type: USER_RECEIVE,
-      user: revision.user,
-    }),
-  };
-
-  beforeEach(() => {
-    jest.addMatchers(matchers);
-  });
+  );
 
   it('should return the revision', () => {
     expect(getRevision(STATE, revision.id)).toEqualImmutable(fromJS(revision));
