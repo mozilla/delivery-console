@@ -55,7 +55,7 @@ An environment variable like ``REACT_APP_FOO`` controls the setting ``FOO``.
 
 .. envvar:: REACT_APP_CHECK_AUTH_EXPIRY_INTERVAL_MS
 
-   :default: 300
+   :default: 300000
 
    How often to issue a silent authentication refresh. Technically, when you're
    logged in, an infinite loop is run that refreshes your access token forever.

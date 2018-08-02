@@ -49,7 +49,7 @@ export function logUserIn(authResult) {
 
     const cleanAuthResult = omit(authResult, 'state');
     localStorage.setItem('authResult', JSON.stringify(cleanAuthResult));
-    localStorage.setItem('expiresAt', JSON.stringify(expiresAt));
+    localStorage.setItem('authExpiresAt', JSON.stringify(expiresAt));
 
     return dispatch({
       type: USER_LOGIN,
@@ -62,7 +62,7 @@ export function logUserIn(authResult) {
 export function logUserOut() {
   return dispatch => {
     localStorage.removeItem('authResult');
-    localStorage.removeItem('expiresAt');
+    localStorage.removeItem('authExpiresAt');
 
     return dispatch({
       type: USER_LOGOUT,

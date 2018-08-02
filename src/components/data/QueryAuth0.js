@@ -15,6 +15,8 @@ import { CHECK_AUTH_EXPIRY_INTERVAL_MS } from 'console/settings';
 import { parseHash, checkSession } from 'console/utils/auth0';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
+let validateAccessTokenInterval;
+
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
@@ -40,11 +42,6 @@ export default class QueryAuth0 extends React.PureComponent {
     userProfileReceived: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   async componentDidMount() {
     this.checkForAuthentication();
 
@@ -59,12 +56,10 @@ export default class QueryAuth0 extends React.PureComponent {
       this.validateAccessToken();
 
       // Set up periodic checks of the access token
-      this.setState(() => ({
-        valideAccessTokenInterval: window.setInterval(
-          this.validateAccessToken,
-          CHECK_AUTH_EXPIRY_INTERVAL_MS,
-        ),
-      }));
+      validateAccessTokenInterval = window.setInterval(
+        this.validateAccessToken,
+        CHECK_AUTH_EXPIRY_INTERVAL_MS,
+      );
     } else if (!accessToken) {
       // There is no access token so stop periodic checks
       this.clearValidateAccessTokenInterval();
@@ -73,6 +68,8 @@ export default class QueryAuth0 extends React.PureComponent {
 
   componentWillUnmount() {
     this.clearValidateAccessTokenInterval();
+
+    window.removeEventListener('focus', this.checkForAuthentication);
   }
 
   async checkForAuthentication() {
@@ -89,7 +86,7 @@ export default class QueryAuth0 extends React.PureComponent {
 
     // If not check if the user has a locally stored authResult
     if (!authResult) {
-      expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+      expiresAt = JSON.parse(localStorage.getItem('authExpiresAt'));
       if (expiresAt && expiresAt - new Date().getTime() > 0) {
         authResult = JSON.parse(localStorage.getItem('authResult'));
       }
@@ -121,7 +118,7 @@ export default class QueryAuth0 extends React.PureComponent {
   validateAccessToken() {
     const { accessToken } = this.props;
     if (accessToken) {
-      const expiresAt = JSON.parse(localStorage.getItem('expiresAt'));
+      const expiresAt = JSON.parse(localStorage.getItem('authExpiresAt'));
       const expiresIn = expiresAt - new Date().getTime();
 
       if (expiresIn <= CHECK_AUTH_EXPIRY_INTERVAL_MS) {
@@ -132,7 +129,6 @@ export default class QueryAuth0 extends React.PureComponent {
   }
 
   clearValidateAccessTokenInterval() {
-    const { validateAccessTokenInterval } = this.state;
     if (validateAccessTokenInterval) {
       window.clearInterval(validateAccessTokenInterval);
     }
