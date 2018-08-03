@@ -15,8 +15,6 @@ import { CHECK_AUTH_EXPIRY_INTERVAL_MS } from 'console/settings';
 import { parseHash, checkSession } from 'console/utils/auth0';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
-let validateAccessTokenInterval;
-
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
@@ -56,7 +54,7 @@ export default class QueryAuth0 extends React.PureComponent {
       this.validateAccessToken();
 
       // Set up periodic checks of the access token
-      validateAccessTokenInterval = window.setInterval(
+      this.validateAccessTokenInterval = window.setInterval(
         this.validateAccessToken,
         CHECK_AUTH_EXPIRY_INTERVAL_MS,
       );
@@ -67,8 +65,8 @@ export default class QueryAuth0 extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    // Depending on where this component is mounted this may never get called
     this.clearValidateAccessTokenInterval();
-
     window.removeEventListener('focus', this.checkForAuthentication);
   }
 
@@ -129,8 +127,8 @@ export default class QueryAuth0 extends React.PureComponent {
   }
 
   clearValidateAccessTokenInterval() {
-    if (validateAccessTokenInterval) {
-      window.clearInterval(validateAccessTokenInterval);
+    if (this.validateAccessTokenInterval) {
+      window.clearInterval(this.validateAccessTokenInterval);
     }
   }
 
