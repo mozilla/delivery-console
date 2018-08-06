@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryExtension from 'console/components/data/QueryExtension';
-import ExtensionForm from 'console/components/extensions/ExtensionForm';
+import ExtensionForm from 'console/workflows/extensions/components/ExtensionForm';
 import { updateExtension } from 'console/state/extensions/actions';
 import { getExtension } from 'console/state/extensions/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';

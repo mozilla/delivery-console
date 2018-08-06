@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import ConsoleLogFields from 'console/components/recipes/ConsoleLogFields';
+import ConsoleLogFields from 'console/workflows/recipes/components/ConsoleLogFields';
 
 describe('<ConsoleLogFields>', () => {
   const props = {

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import { reverse } from 'console/urls';
 import handleError from 'console/utils/handleError';
-import ExtensionForm from 'console/components/extensions/ExtensionForm';
+import ExtensionForm from 'console/workflows/extensions/components/ExtensionForm';
 import { createExtension } from 'console/state/extensions/actions';
 
 @connect(

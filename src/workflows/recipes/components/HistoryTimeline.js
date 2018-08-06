@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import HistoryItem from 'console/components/recipes/HistoryItem';
+import HistoryItem from 'console/workflows/recipes/components/HistoryItem';
 
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryRecipeHistory from 'console/components/data/QueryRecipeHistory';

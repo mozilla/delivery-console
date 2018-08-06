@@ -2,7 +2,7 @@ import { List } from 'immutable';
 import fetchMock from 'fetch-mock';
 
 import { wrapMockStore } from 'console/tests/mockStore';
-import TestComponent from 'console/components/extensions/ExtensionSelect';
+import TestComponent from 'console/workflows/extensions/components/ExtensionSelect';
 import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
 
 const { WrappedComponent: ExtensionSelect } = TestComponent;

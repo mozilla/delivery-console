@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryRecipe from 'console/components/data/QueryRecipe';
-import DetailsActionBar from 'console/components/recipes/DetailsActionBar';
-import RecipeDetails from 'console/components/recipes/RecipeDetails';
-import HistoryTimeline from 'console/components/recipes/HistoryTimeline';
-import RevisionNotice from 'console/components/recipes/RevisionNotice';
+import DetailsActionBar from 'console/workflows/recipes/components/DetailsActionBar';
+import RecipeDetails from 'console/workflows/recipes/components/RecipeDetails';
+import HistoryTimeline from 'console/workflows/recipes/components/HistoryTimeline';
+import RevisionNotice from 'console/workflows/recipes/components/RevisionNotice';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
 import { getLatestRevisionIdForRecipe, getRecipeHistory } from 'console/state/recipes/selectors';

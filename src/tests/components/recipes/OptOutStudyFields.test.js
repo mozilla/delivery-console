@@ -1,5 +1,5 @@
 import { List, Map } from 'immutable';
-import OptOutStudyFields from 'console/components/recipes/OptOutStudyFields';
+import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
 
 describe('<OptOutStudyFields>', () => {
   const props = {

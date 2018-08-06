@@ -1,5 +1,5 @@
 import Immutable, { Map } from 'immutable';
-import RecipeDetails, { ArgumentsValue } from 'console/components/recipes/RecipeDetails';
+import RecipeDetails, { ArgumentsValue } from 'console/workflows/recipes/components/RecipeDetails';
 
 describe('<RecipeDetails>', () => {
   const props = {

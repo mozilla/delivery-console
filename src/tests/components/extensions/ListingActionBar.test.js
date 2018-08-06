@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import TestComponent from 'console/components/extensions/ListingActionBar';
+import TestComponent from 'console/workflows/extensions/components/ListingActionBar';
 
 const { WrappedComponent: ListingActionBar } = TestComponent;
 

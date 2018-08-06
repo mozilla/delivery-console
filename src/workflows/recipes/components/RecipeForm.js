@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 
 import FormItem from 'console/components/forms/FormItem';
 import FormActions from 'console/components/forms/FormActions';
-import ConsoleLogFields from 'console/components/recipes/ConsoleLogFields';
-import JSONArgumentsField from 'console/components/recipes/JSONArgumentsField';
-import PreferenceExperimentFields from 'console/components/recipes/PreferenceExperimentFields';
-import ShowHeartbeatFields from 'console/components/recipes/ShowHeartbeatFields';
-import OptOutStudyFields from 'console/components/recipes/OptOutStudyFields';
+import ConsoleLogFields from 'console/workflows/recipes/components/ConsoleLogFields';
+import JSONArgumentsField from 'console/workflows/recipes/components/JSONArgumentsField';
+import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
+import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
+import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
 import { getAction, getAllActions } from 'console/state/actions/selectors';
 import { areAnyRequestsInProgress } from 'console/state/network/selectors';
 import { createForm } from 'console/utils/forms';

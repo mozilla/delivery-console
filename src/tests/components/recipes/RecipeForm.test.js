@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import RecipeForm from 'console/components/recipes/RecipeForm';
+import RecipeForm from 'console/workflows/recipes/components/RecipeForm';
 
 describe('<RecipeForm>', () => {
   const props = {

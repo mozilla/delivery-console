@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import TestComponent from 'console/components/pages/extensions/ExtensionListingPage';
+import TestComponent from 'console/workflows/extensions/pages/ExtensionListingPage';
 
 const { WrappedComponent: ExtensionListingPage } = TestComponent;
 

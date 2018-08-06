@@ -1,4 +1,4 @@
-import TestComponent from 'console/components/pages/recipes/CreateRecipePage';
+import TestComponent from 'console/workflows/recipes/pages/CreateRecipePage';
 
 const { WrappedComponent: CreateRecipePage } = TestComponent;
 

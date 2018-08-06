@@ -7,9 +7,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import handleError from 'console/utils/handleError';
-import ApprovalForm from 'console/components/recipes/ApprovalForm';
-import ApprovalDetails from 'console/components/recipes/ApprovalDetails';
-import RecipeDetails from 'console/components/recipes/RecipeDetails';
+import ApprovalForm from 'console/workflows/recipes/components/ApprovalForm';
+import ApprovalDetails from 'console/workflows/recipes/components/ApprovalDetails';
+import RecipeDetails from 'console/workflows/recipes/components/RecipeDetails';
 import {
   approveApprovalRequest,
   rejectApprovalRequest,

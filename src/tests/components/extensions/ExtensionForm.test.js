@@ -1,4 +1,4 @@
-import TestComponent from 'console/components/extensions/ExtensionForm';
+import TestComponent from 'console/workflows/extensions/components/ExtensionForm';
 import { Map } from 'immutable';
 
 const { WrappedComponent: ExtensionForm } = TestComponent;

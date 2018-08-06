@@ -1,5 +1,5 @@
 import { Map, fromJS } from 'immutable';
-import { ActionSelect as TestComponent } from 'console/components/recipes/RecipeForm';
+import { ActionSelect as TestComponent } from 'console/workflows/recipes/components/RecipeForm';
 
 const { WrappedComponent: ActionSelect } = TestComponent;
 

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRecipeHistory from 'console/components/data/QueryRecipeHistory';
-import ApprovalRequest from 'console/components/recipes/ApprovalRequest';
+import ApprovalRequest from 'console/workflows/recipes/components/ApprovalRequest';
 import { getRecipeApprovalHistory } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 

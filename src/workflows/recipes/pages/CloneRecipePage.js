@@ -7,10 +7,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
-import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
+import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
 import { createRecipe } from 'console/state/recipes/actions';

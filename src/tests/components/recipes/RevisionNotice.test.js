@@ -1,4 +1,4 @@
-import TestComponent from 'console/components/recipes/RevisionNotice';
+import TestComponent from 'console/workflows/recipes/components/RevisionNotice';
 
 const { WrappedComponent: RevisionNotice } = TestComponent;
 

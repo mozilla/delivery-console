@@ -6,8 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import handleError from 'console/utils/handleError';
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
-import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
+import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import { createRecipe } from 'console/state/recipes/actions';
 import { reverse } from 'console/urls';
 

@@ -14,7 +14,7 @@ import TestComponent, {
   RevisionInfo,
   RequestInfo,
   ApprovalComment,
-} from 'console/components/recipes/HistoryItem';
+} from 'console/workflows/recipes/components/HistoryItem';
 import { NavLink } from 'react-router-dom';
 
 const { WrappedComponent: HistoryItem } = TestComponent;

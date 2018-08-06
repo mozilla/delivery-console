@@ -6,9 +6,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import handleError from 'console/utils/handleError';
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
-import RecipeForm, { cleanRecipeData } from 'console/components/recipes/RecipeForm';
+import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import { updateRecipe } from 'console/state/recipes/actions';
 import { getRecipe } from 'console/state/recipes/selectors';

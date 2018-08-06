@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryExtensionListingColumns from 'console/components/data/QueryExtensionListingColumns';
 import QueryMultipleExtensions from 'console/components/data/QueryMultipleExtensions';
-import ListingActionBar from 'console/components/extensions/ListingActionBar';
+import ListingActionBar from 'console/workflows/extensions/components/ListingActionBar';
 import DataList from 'console/components/tables/DataList';
 import {
   getExtensionListingColumns,

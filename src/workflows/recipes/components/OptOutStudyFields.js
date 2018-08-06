@@ -5,7 +5,7 @@ import React from 'react';
 
 import SwitchBox from 'console/components/forms/SwitchBox';
 import FormItem from 'console/components/forms/FormItem';
-import ExtensionSelect from 'console/components/extensions/ExtensionSelect';
+import ExtensionSelect from 'console/workflows/extensions/components/ExtensionSelect';
 
 import { connectFormProps } from 'console/utils/forms';
 

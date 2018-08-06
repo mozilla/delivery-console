@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import TestComponent from 'console/components/recipes/ApprovalRequest';
+import TestComponent from 'console/workflows/recipes/components/ApprovalRequest';
 
 const { WrappedComponent: ApprovalRequest } = TestComponent;
 

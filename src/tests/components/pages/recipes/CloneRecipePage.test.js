@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import TestComponent from 'console/components/pages/recipes/CloneRecipePage';
+import TestComponent from 'console/workflows/recipes/pages/CloneRecipePage';
 
 const { WrappedComponent: CloneRecipePage } = TestComponent;
 

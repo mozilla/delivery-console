@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types, react/display-name, jsx-a11y/no-static-element-interactions */
-import GenericFormContainer from 'console/components/recipes/GenericFormContainer';
+import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 
 describe('<GenericFormContainer>', () => {
   const props = {

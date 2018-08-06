@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import ShowHeartbeatFields from 'console/components/recipes/ShowHeartbeatFields';
+import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
 
 describe('<ShowHeartbeatFields>', () => {
   const props = {

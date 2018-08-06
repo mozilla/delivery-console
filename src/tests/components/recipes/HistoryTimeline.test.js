@@ -1,5 +1,5 @@
 import { List } from 'immutable';
-import TestComponent from 'console/components/recipes/HistoryTimeline';
+import TestComponent from 'console/workflows/recipes/components/HistoryTimeline';
 
 const { WrappedComponent: HistoryTimeline } = TestComponent;
 

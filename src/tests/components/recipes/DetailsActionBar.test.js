@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import TestComponent from 'console/components/recipes/DetailsActionBar';
+import TestComponent from 'console/workflows/recipes/components/DetailsActionBar';
 
 const { WrappedComponent: DetailsActionBar } = TestComponent;
 

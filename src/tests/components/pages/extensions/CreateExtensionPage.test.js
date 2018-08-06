@@ -1,4 +1,4 @@
-import TestComponent from 'console/components/pages/extensions/CreateExtensionPage';
+import TestComponent from 'console/workflows/extensions/pages/CreateExtensionPage';
 
 const { WrappedComponent: CreateExtensionPage } = TestComponent;
 

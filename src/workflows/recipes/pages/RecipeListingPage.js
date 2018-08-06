@@ -13,7 +13,7 @@ import EnrollmentStatus from 'console/components/common/EnrollmentStatus';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import QueryFilteredRecipes from 'console/components/data/QueryFilteredRecipes';
 import QueryRecipeListingColumns from 'console/components/data/QueryRecipeListingColumns';
-import ListingActionBar from 'console/components/recipes/ListingActionBar';
+import ListingActionBar from 'console/workflows/recipes/components/ListingActionBar';
 import DataList from 'console/components/tables/DataList';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 import { reverse } from 'console/urls';
