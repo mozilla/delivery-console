@@ -38,7 +38,7 @@ export default class VPNStatus extends React.PureComponent {
     return (
       <span className="vpn-status">
         <QueryNormandyAdmin />
-        <Tag color={color} className="not-clickable">
+        <Tag color={color} className="unset-cursor">
           {icon} {message}
         </Tag>
       </span>
