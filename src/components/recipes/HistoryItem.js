@@ -1,6 +1,8 @@
 import { Alert, Icon, Popover, Tag, Timeline } from 'antd';
 import autobind from 'autobind-decorator';
-import dateFns from 'date-fns';
+import { toDate } from 'date-fns/esm';
+import { format } from 'date-fns/esm';
+import { formatDistance } from 'date-fns/esm';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -153,11 +155,11 @@ export class RevisionInfo extends React.PureComponent {
 
   render() {
     const { revision } = this.props;
-    const revisionCreationTime = dateFns.parse(revision.get('date_created'));
+    const revisionCreationTime = toDate(revision.get('date_created'));
 
-    const fullTime = dateFns.format(revisionCreationTime, 'MMMM Do YYYY, h:mm a');
-    const simpleTime = dateFns.format(revisionCreationTime, 'MM/DD/YYYY');
-    const timeAgo = dateFns.distanceInWordsToNow(revisionCreationTime);
+    const fullTime = format(revisionCreationTime, 'MMMM Do YYYY, h:mm a');
+    const simpleTime = format(revisionCreationTime, 'MM/DD/YYYY');
+    const timeAgo = formatDistance(revisionCreationTime, new Date());
 
     // Creator info is on every tooltip, contains basic metadata.
     return (
@@ -184,11 +186,11 @@ export class RequestInfo extends React.PureComponent {
     }
 
     const requestCreator = revision.getIn(['approval_request', 'creator', 'email']);
-    const requestCreationTime = dateFns.parse(revision.getIn(['approval_request', 'created']));
+    const requestCreationTime = toDate(revision.getIn(['approval_request', 'created']));
 
-    const fullTime = dateFns.format(requestCreationTime, 'MMMM Do YYYY, h:mm a');
-    const simpleTime = dateFns.format(requestCreationTime, 'MM/DD/YYYY');
-    const timeAgo = dateFns.distanceInWordsToNow(requestCreationTime);
+    const fullTime = format(requestCreationTime, 'MMMM Do YYYY, h:mm a');
+    const simpleTime = format(requestCreationTime, 'MM/DD/YYYY');
+    const timeAgo = formatDistance(requestCreationTime, new Date());
 
     return (
       <span>

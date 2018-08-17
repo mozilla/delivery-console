@@ -1,7 +1,9 @@
 import { Pagination, Table } from 'antd';
 import autobind from 'autobind-decorator';
 import { push } from 'connected-react-router';
-import dateFns from 'date-fns';
+import { toDate } from 'date-fns/esm';
+import { format } from 'date-fns/esm';
+import { formatDistance } from 'date-fns/esm';
 import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -129,13 +131,13 @@ export default class RecipeListingPage extends React.PureComponent {
           key="last_updated"
           dataIndex="last_updated"
           render={(text, record) => {
-            const lastUpdated = dateFns.parse(record.last_updated);
+            const lastUpdated = toDate(record.last_updated);
             return (
               <Link
                 to={reverse('recipes.details', { recipeId: record.id })}
-                title={dateFns.format(lastUpdated, 'dddd, MMMM M, YYYY h:mm A')}
+                title={format(lastUpdated, 'dddd, MMMM M, YYYY h:mm A')}
               >
-                {dateFns.distanceInWordsToNow(lastUpdated)}
+                {formatDistance(lastUpdated, new Date())}
               </Link>
             );
           }}

@@ -1,4 +1,5 @@
-import dateFns from 'date-fns';
+import { toDate } from 'date-fns/esm';
+import { differenceInMilliseconds } from 'date-fns/esm';
 import { Map } from 'immutable';
 
 import { getAction } from 'console/state/actions/selectors';
@@ -120,9 +121,9 @@ export function getRevisionDraftStatus(state, id) {
   const revision = getRevision(state, id);
 
   if (approvedRevision) {
-    const revisionDate = dateFns.parse(revision.get('date_created'));
-    const approvedRevisionDate = dateFns.parse(approvedRevision.get('date_created'));
-    const delta = dateFns.differenceInMilliseconds(approvedRevisionDate, revisionDate);
+    const revisionDate = toDate(revision.get('date_created'));
+    const approvedRevisionDate = toDate(approvedRevision.get('date_created'));
+    const delta = differenceInMilliseconds(approvedRevisionDate, revisionDate);
 
     if (delta < 0) {
       return REVISION_DRAFT;

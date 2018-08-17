@@ -12,7 +12,7 @@
     "auth0-js": "9.7.3",
     "autobind-decorator": "2.1.0",
     "connected-react-router": "4.4.1",
-    "date-fns": "1.29.0",
+    "date-fns": "2.0.0-alpha.16",
     "immutable": "3.8.2",
     "lodash": "4.17.10",
     "raven-js": "3.26.4",

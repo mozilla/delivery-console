@@ -1,6 +1,8 @@
 import { Card, Col, message, Row, Tag } from 'antd';
 import autobind from 'autobind-decorator';
-import dateFns from 'date-fns';
+import { format } from 'date-fns/esm';
+import { formatDistance } from 'date-fns/esm';
+import { toDate } from 'date-fns/esm';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -106,7 +108,7 @@ export default class ApprovalRequest extends React.PureComponent {
       <ApprovalDetails request={approvalRequest} />
     );
 
-    const dateCreated = dateFns.parse(approvalRequest.get('created'));
+    const dateCreated = toDate(approvalRequest.get('created'));
 
     return (
       <div className="approval-history-details">
@@ -122,8 +124,8 @@ export default class ApprovalRequest extends React.PureComponent {
                   <dd>{approvalRequest.getIn(['creator', 'email'])}</dd>
 
                   <dt>Requested</dt>
-                  <dd title={dateFns.format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
-                    {dateFns.distanceInWordsToNow(dateCreated)}
+                  <dd title={format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
+                    {formatDistance(dateCreated, new Date())}
                   </dd>
                 </dl>
               </div>

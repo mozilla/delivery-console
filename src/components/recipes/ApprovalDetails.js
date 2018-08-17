@@ -1,4 +1,6 @@
-import dateFns from 'date-fns';
+import { format } from 'date-fns/esm';
+import { formatDistance } from 'date-fns/esm';
+import { toDate } from 'date-fns/esm';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,7 +12,7 @@ export default class ApprovalDetails extends React.PureComponent {
 
   render() {
     const { request } = this.props;
-    const dateCreated = dateFns.parse(request.get('created'));
+    const dateCreated = toDate(request.get('created'));
 
     return (
       <dl className="details narrow">
@@ -18,8 +20,8 @@ export default class ApprovalDetails extends React.PureComponent {
         <dd>{request.getIn(['approver', 'email'])}</dd>
 
         <dt>Responsed</dt>
-        <dd title={dateFns.format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
-          {dateFns.distanceInWordsToNow(dateCreated)}
+        <dd title={format(dateCreated, 'MMMM Do YYYY, h:mm a')}>
+          {formatDistance(dateCreated, new Date())}
         </dd>
 
         <dt>Comment</dt>
