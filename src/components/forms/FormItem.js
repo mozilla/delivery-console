@@ -38,7 +38,7 @@ class FormItem extends React.PureComponent {
     initialValue: PropTypes.any,
 
     // The field name where data for this field is stored (passed to
-    // form.getfieldDecorator).
+    // form.getFieldDecorator).
     name: PropTypes.string,
 
     // List of validation rules (passed to form.getFieldDecorator).
