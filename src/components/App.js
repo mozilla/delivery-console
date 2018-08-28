@@ -14,7 +14,7 @@ import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { notifyAuthenticationError } from 'console/state/auth/actions';
 import { getError } from 'console/state/auth/selectors';
-import { getCurrentRouteTree } from 'console/state/router/selectors';
+import { getCurrentDocumentTitle } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
 const { Header } = Layout;
@@ -22,7 +22,7 @@ const { Header } = Layout;
 @connect(
   (state, props) => ({
     authError: getError(state),
-    routeTree: getCurrentRouteTree(state),
+    documentTitle: getCurrentDocumentTitle(state, 'Delivery Console'),
   }),
   {
     notifyAuthenticationError,
@@ -32,29 +32,11 @@ export default class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
     history: PropTypes.object.isRequired,
-    routeTree: PropTypes.object.isRequired,
+    documentTitle: PropTypes.string.isRequired,
   };
 
-  updateDocumentTitle() {
-    const { routeTree } = this.props;
-    const documentTitle = routeTree.getIn([0, 'documentTitle']);
-    let title = 'Delivery Console';
-    if (documentTitle) {
-      title = `${documentTitle} • ${title}`;
-    }
-    document.title = title;
-  }
-
-  componentDidMount() {
-    this.updateDocumentTitle();
-  }
-
   componentDidUpdate(prevProps) {
-    const { authError, routeTree } = this.props;
-
-    if (routeTree.getIn([0, 'pathname']) !== prevProps.routeTree.getIn([0, 'pathname'])) {
-      this.updateDocumentTitle();
-    }
+    const { authError } = this.props;
 
     if (authError) {
       this.props.notifyAuthenticationError(authError);
@@ -62,8 +44,12 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { documentTitle, history } = this.props;
+
+    document.title = documentTitle;
+
     return (
-      <ConnectedRouter history={this.props.history}>
+      <ConnectedRouter history={history}>
         <Layout>
           <QueryAuth0 />
           <QueryActions />

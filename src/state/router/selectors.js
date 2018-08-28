@@ -1,8 +1,10 @@
-import { fromJS, List, Map } from 'immutable';
+import { fromJS, List, Map, Iterable } from 'immutable';
 import { matchRoutes } from 'react-router-config';
 
 import applicationRoutes from 'console/urls';
 import { replaceParamsInPath } from 'console/utils/router';
+import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
+import { getRevision } from 'console/state/revisions/selectors';
 
 function getRouteByPath(path) {
   return applicationRoutes.find(route => route.path === path);
@@ -51,7 +53,6 @@ export function getCurrentRouteTree(state) {
 
 export function getUrlParam(state, key, defaultsTo = null) {
   const route = getRouteMatchByPathname(getCurrentPathname(state));
-
   if (route && route.match) {
     return route.match.params[key] || defaultsTo;
   }
@@ -60,7 +61,12 @@ export function getUrlParam(state, key, defaultsTo = null) {
 }
 
 export function getUrlParamAsInt(state, name, defaultsTo = null) {
-  return parseInt(getUrlParam(state, name, defaultsTo), 10);
+  let rv = parseInt(getUrlParam(state, name, NaN), 10);
+  if (isNaN(rv)) {
+    return defaultsTo;
+  } else {
+    return rv;
+  }
 }
 
 export function getAllQueryParams(state, defaultsTo = null) {
@@ -89,7 +95,12 @@ export function getQueryParam(state, key, defaultsTo = null) {
 }
 
 export function getQueryParamAsInt(state, key, defaultsTo = null) {
-  return parseInt(getQueryParam(state, key, defaultsTo), 10);
+  let rv = parseInt(getQueryParam(state, key, NaN), 10);
+  if (isNaN(rv)) {
+    return defaultsTo;
+  } else {
+    return rv;
+  }
 }
 
 export function getCurrentUrlAsObject(state, applyQueryParams) {
@@ -107,4 +118,44 @@ export function getCurrentUrlAsObject(state, applyQueryParams) {
     pathname: getCurrentPathname(state),
     search: search ? `?${search}` : '',
   };
+}
+
+export function getCurrentDocumentTitle(state, defaultsTo) {
+  if (!defaultsTo) {
+    throw new Error('defaultsTo is required for document title');
+  }
+  const routeTree = getCurrentRouteTree(state);
+  let documentTitle = routeTree.getIn([0, 'documentTitle']);
+
+  if (typeof documentTitle === 'function') {
+    documentTitle = documentTitle(state);
+  }
+
+  if (Iterable.isIterable(documentTitle)) {
+    documentTitle = documentTitle.toList().toJS();
+  }
+
+  let parts;
+  if (Array.isArray(documentTitle)) {
+    parts = [...documentTitle, defaultsTo];
+  } else {
+    parts = [documentTitle, defaultsTo];
+  }
+
+  return parts.filter(p => !!p).join(' • ');
+}
+
+export function getRevisionFromUrl(state, defaultsTo = null) {
+  let revisionId = getUrlParamAsInt(state, 'revisionId', null);
+  if (revisionId === null) {
+    const recipeId = getUrlParamAsInt(state, 'recipeId', null);
+    if (recipeId === null) {
+      return defaultsTo;
+    }
+    revisionId = getLatestRevisionIdForRecipe(state, recipeId, null);
+  }
+  if (revisionId === null) {
+    return defaultsTo;
+  }
+  return getRevision(state, revisionId, defaultsTo);
 }
