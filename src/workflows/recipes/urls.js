@@ -1,9 +1,9 @@
-import ApprovalHistoryPage from 'console/components/pages/recipes/ApprovalHistoryPage';
-import CreateRecipePage from 'console/components/pages/recipes/CreateRecipePage';
-import CloneRecipePage from 'console/components/pages/recipes/CloneRecipePage';
-import EditRecipePage from 'console/components/pages/recipes/EditRecipePage';
-import RecipeListingPage from 'console/components/pages/recipes/RecipeListingPage';
-import RecipeDetailPage from 'console/components/pages/recipes/RecipeDetailPage';
+import ApprovalHistoryPage from 'console/workflows/recipes/pages/ApprovalHistoryPage';
+import CreateRecipePage from 'console/workflows/recipes/pages/CreateRecipePage';
+import CloneRecipePage from 'console/workflows/recipes/pages/CloneRecipePage';
+import EditRecipePage from 'console/workflows/recipes/pages/EditRecipePage';
+import RecipeListingPage from 'console/workflows/recipes/pages/RecipeListingPage';
+import RecipeDetailPage from 'console/workflows/recipes/pages/RecipeDetailPage';
 import { getRevisionFromUrl } from 'console/state/router/selectors';
 import { Map } from 'immutable';
 

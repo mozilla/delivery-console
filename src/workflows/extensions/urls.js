@@ -1,6 +1,6 @@
-import CreateExtensionPage from 'console/components/pages/extensions/CreateExtensionPage';
-import EditExtensionPage from 'console/components/pages/extensions/EditExtensionPage';
-import ExtensionListingPage from 'console/components/pages/extensions/ExtensionListingPage';
+import CreateExtensionPage from 'console/workflows/extensions/pages/CreateExtensionPage';
+import EditExtensionPage from 'console/workflows/extensions/pages/EditExtensionPage';
+import ExtensionListingPage from 'console/workflows/extensions/pages/ExtensionListingPage';
 
 export default {
   '/extension': {
