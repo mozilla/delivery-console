@@ -29,7 +29,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
     revisionId,
   };
 })
-export default class RecipeDetailPage extends React.PureComponent {
+class RecipeDetailPage extends React.PureComponent {
   static propTypes = {
     history: PropTypes.instanceOf(List).isRequired,
     recipeId: PropTypes.number.isRequired,
@@ -73,3 +73,5 @@ export default class RecipeDetailPage extends React.PureComponent {
     );
   }
 }
+
+export default RecipeDetailPage;

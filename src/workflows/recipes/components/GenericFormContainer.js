@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 @autobind
-export default class GenericFormContainer extends React.PureComponent {
+class GenericFormContainer extends React.PureComponent {
   static propTypes = {
     form: PropTypes.func.isRequired, // This is a React component which is decorated with `createForm` from src/utils/forms.js
     formAction: PropTypes.func.isRequired,
@@ -59,3 +59,5 @@ export default class GenericFormContainer extends React.PureComponent {
     );
   }
 }
+
+export default GenericFormContainer;

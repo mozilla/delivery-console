@@ -25,7 +25,7 @@ import { reverse } from 'console/urls';
   isLatestRevision: id => isLatestRevisionSelector(state, id),
 }))
 @autobind
-export default class HistoryItem extends React.PureComponent {
+class HistoryItem extends React.PureComponent {
   static propTypes = {
     isLatestRevision: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
@@ -237,3 +237,5 @@ export class ApprovalComment extends React.PureComponent {
     );
   }
 }
+
+export default HistoryItem;

@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import LabeledInput from './LabeledInput';
 
 @autobind
-export default class SwitchBox extends LabeledInput {
+class SwitchBox extends LabeledInput {
   handleLabelClick() {
     const newValue = !this.props.value;
 
@@ -34,3 +34,5 @@ export default class SwitchBox extends LabeledInput {
     };
   }
 }
+
+export default SwitchBox;

@@ -29,7 +29,7 @@ import { createForm } from 'console/utils/forms';
   },
 })
 @autobind
-export default class ExtensionForm extends React.PureComponent {
+class ExtensionForm extends React.PureComponent {
   static propTypes = {
     extension: PropTypes.instanceOf(Map),
     form: PropTypes.object.isRequired,
@@ -145,3 +145,5 @@ export default class ExtensionForm extends React.PureComponent {
     );
   }
 }
+
+export default ExtensionForm;

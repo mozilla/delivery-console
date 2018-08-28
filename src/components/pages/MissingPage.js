@@ -7,7 +7,7 @@ import LostDino from 'console/components/svg/LostDino';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
 @connect(state => ({ pathname: getCurrentPathname(state) }))
-export default class MissingPage extends React.PureComponent {
+class MissingPage extends React.PureComponent {
   static propTypes = {
     pathname: PropTypes.string.isRequired,
   };
@@ -51,3 +51,5 @@ export default class MissingPage extends React.PureComponent {
     );
   }
 }
+
+export default MissingPage;

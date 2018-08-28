@@ -29,7 +29,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
   },
 )
 @autobind
-export default class QueryAuth0 extends React.PureComponent {
+class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
     authenticationFailed: PropTypes.func.isRequired,
@@ -153,3 +153,5 @@ export default class QueryAuth0 extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryAuth0;

@@ -10,7 +10,7 @@ import { fetchExtension } from 'console/state/extensions/actions';
     fetchExtension,
   },
 )
-export default class QueryExtension extends React.PureComponent {
+class QueryExtension extends React.PureComponent {
   static propTypes = {
     fetchExtension: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
@@ -32,3 +32,5 @@ export default class QueryExtension extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryExtension;

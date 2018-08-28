@@ -10,7 +10,7 @@ import { loadRecipeListingColumns } from 'console/state/recipes/actions';
     loadRecipeListingColumns,
   },
 )
-export default class QueryRecipeListingColumns extends React.PureComponent {
+class QueryRecipeListingColumns extends React.PureComponent {
   static propTypes = {
     loadRecipeListingColumns: PropTypes.func.isRequired,
   };
@@ -23,3 +23,5 @@ export default class QueryRecipeListingColumns extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryRecipeListingColumns;

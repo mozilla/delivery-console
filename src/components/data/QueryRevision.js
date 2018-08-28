@@ -10,7 +10,7 @@ import { fetchRevision } from 'console/state/revisions/actions';
     fetchRevision,
   },
 )
-export default class QueryRevision extends React.PureComponent {
+class QueryRevision extends React.PureComponent {
   static propTypes = {
     fetchRevision: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
@@ -32,3 +32,5 @@ export default class QueryRevision extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryRevision;

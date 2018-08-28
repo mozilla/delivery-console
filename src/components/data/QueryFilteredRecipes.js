@@ -11,7 +11,7 @@ import { fetchFilteredRecipesPage } from 'console/state/recipes/actions';
     fetchFilteredRecipesPage,
   },
 )
-export default class QueryFilteredRecipes extends React.PureComponent {
+class QueryFilteredRecipes extends React.PureComponent {
   static propTypes = {
     fetchFilteredRecipesPage: PropTypes.func,
     filters: PropTypes.object,
@@ -40,3 +40,5 @@ export default class QueryFilteredRecipes extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryFilteredRecipes;

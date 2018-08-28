@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import ShieldIdenticon from 'console/components/common/ShieldIdenticon';
 
 @autobind
-export default class IdenticonField extends React.PureComponent {
+class IdenticonField extends React.PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
@@ -119,3 +119,5 @@ export default class IdenticonField extends React.PureComponent {
     );
   }
 }
+
+export default IdenticonField;

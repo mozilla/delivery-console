@@ -19,7 +19,7 @@ import { reverse } from 'console/urls';
   },
 )
 @autobind
-export default class CreateRecipePage extends React.PureComponent {
+class CreateRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -54,3 +54,5 @@ export default class CreateRecipePage extends React.PureComponent {
     );
   }
 }
+
+export default CreateRecipePage;

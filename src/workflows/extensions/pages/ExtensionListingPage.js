@@ -38,7 +38,7 @@ import { reverse } from 'console/urls';
   },
 )
 @autobind
-export default class ExtensionListingPage extends React.PureComponent {
+class ExtensionListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
@@ -140,3 +140,5 @@ export default class ExtensionListingPage extends React.PureComponent {
     );
   }
 }
+
+export default ExtensionListingPage;

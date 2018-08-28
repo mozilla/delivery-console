@@ -10,7 +10,7 @@ import { fetchServiceInfo } from 'console/state/serviceInfo/actions';
     fetchServiceInfo,
   },
 )
-export default class QueryServiceInfo extends React.PureComponent {
+class QueryServiceInfo extends React.PureComponent {
   static propTypes = {
     fetchServiceInfo: PropTypes.func.isRequired,
   };
@@ -23,3 +23,5 @@ export default class QueryServiceInfo extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryServiceInfo;

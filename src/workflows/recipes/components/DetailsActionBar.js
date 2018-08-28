@@ -42,7 +42,7 @@ import { reverse } from 'console/urls';
   },
 )
 @autobind
-export default class DetailsActionBar extends React.PureComponent {
+class DetailsActionBar extends React.PureComponent {
   static propTypes = {
     disableRecipe: PropTypes.func.isRequired,
     enableRecipe: PropTypes.func.isRequired,
@@ -156,3 +156,5 @@ export default class DetailsActionBar extends React.PureComponent {
     );
   }
 }
+
+export default DetailsActionBar;

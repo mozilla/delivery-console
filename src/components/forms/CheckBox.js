@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import LabeledInput from './LabeledInput';
 
 @autobind
-export default class LabeledCheckbox extends LabeledInput {
+class LabeledCheckbox extends LabeledInput {
   getElement() {
     // TODO: Remove this hack-y fix for webpack build issue (#195)
     const Element = Checkbox;
@@ -22,3 +22,5 @@ export default class LabeledCheckbox extends LabeledInput {
     };
   }
 }
+
+export default LabeledCheckbox;

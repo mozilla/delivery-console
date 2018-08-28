@@ -20,7 +20,7 @@ import { createForm, ValidationError } from 'console/utils/forms';
 )
 @createForm({})
 @autobind
-export default class ApprovalForm extends React.PureComponent {
+class ApprovalForm extends React.PureComponent {
   static propTypes = {
     approvalRequest: PropTypes.instanceOf(Map).isRequired,
     closeApprovalRequest: PropTypes.func.isRequired,
@@ -97,3 +97,5 @@ export default class ApprovalForm extends React.PureComponent {
     );
   }
 }
+
+export default ApprovalForm;

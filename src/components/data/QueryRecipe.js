@@ -10,7 +10,7 @@ import { fetchRecipe } from 'console/state/recipes/actions';
     fetchRecipe,
   },
 )
-export default class QueryRecipe extends React.PureComponent {
+class QueryRecipe extends React.PureComponent {
   static propTypes = {
     fetchRecipe: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
@@ -32,3 +32,5 @@ export default class QueryRecipe extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryRecipe;

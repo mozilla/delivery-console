@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
 
 @autobind
-export default class ShieldIdenticon extends React.PureComponent {
+class ShieldIdenticon extends React.PureComponent {
   static propTypes = {
     seed: PropTypes.string,
     size: PropTypes.number,
@@ -126,3 +126,5 @@ export default class ShieldIdenticon extends React.PureComponent {
     );
   }
 }
+
+export default ShieldIdenticon;

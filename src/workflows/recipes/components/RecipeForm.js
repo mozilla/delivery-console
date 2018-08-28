@@ -1,4 +1,4 @@
-import { Row, Col, Button, Form, Input, Select } from 'antd';
+import { Row, Col, Button, Form, Input } from 'antd';
 import autobind from 'autobind-decorator';
 import { is, Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 
 import FormItem from 'console/components/forms/FormItem';
 import FormActions from 'console/components/forms/FormActions';
+import ActionSelect from 'console/workflows/recipes/components/ActionSelect';
 import ConsoleLogFields from 'console/workflows/recipes/components/ConsoleLogFields';
 import JSONArgumentsField from 'console/workflows/recipes/components/JSONArgumentsField';
 import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
 import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
-import { getAction, getAllActions } from 'console/state/actions/selectors';
+import { getAction } from 'console/state/actions/selectors';
 import { areAnyRequestsInProgress } from 'console/state/network/selectors';
 import { createForm } from 'console/utils/forms';
 import IdenticonField from 'console/components/forms/IdenticonField';
@@ -52,7 +53,7 @@ export function cleanRecipeData(data) {
   };
 })
 @autobind
-export default class RecipeForm extends React.PureComponent {
+class RecipeForm extends React.PureComponent {
   static propTypes = {
     form: PropTypes.object.isRequired,
     isLoading: PropTypes.bool,
@@ -163,41 +164,4 @@ export default class RecipeForm extends React.PureComponent {
   }
 }
 
-@connect(state => ({
-  actions: getAllActions(state, new Map()),
-}))
-export class ActionSelect extends React.PureComponent {
-  static propTypes = {
-    actions: PropTypes.instanceOf(Map).isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  };
-
-  static defaultProps = {
-    value: null,
-  };
-
-  render() {
-    const { actions, value, ...props } = this.props;
-
-    // Select values have to be strings or else we get propType errors.
-    const stringValue = value ? value.toString(10) : undefined;
-
-    return (
-      <div id="rf-action-select">
-        <Select placeholder="Select an action..." value={stringValue} {...props}>
-          {actions.toList().map((action, index) => {
-            const actionId = action.get('id') || index;
-            const actionName = action.get('name');
-            const actionValue = (actionId || '').toString(10);
-
-            return (
-              <Select.Option key={actionId} value={actionValue} className={`rf-${actionName}`}>
-                {actionName}
-              </Select.Option>
-            );
-          })}
-        </Select>
-      </div>
-    );
-  }
-}
+export default RecipeForm;

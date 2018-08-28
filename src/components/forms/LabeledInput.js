@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 @autobind
-export default class LabeledInput extends React.Component {
+class LabeledInput extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     onChange: PropTypes.func,
@@ -50,3 +50,5 @@ export default class LabeledInput extends React.Component {
     );
   }
 }
+
+export default LabeledInput;

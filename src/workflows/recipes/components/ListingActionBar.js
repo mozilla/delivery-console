@@ -28,7 +28,7 @@ import { reverse } from 'console/urls';
   },
 )
 @autobind
-export default class ListingActionBar extends React.PureComponent {
+class ListingActionBar extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentUrlAsObject: PropTypes.func.isRequired,
@@ -83,3 +83,5 @@ export default class ListingActionBar extends React.PureComponent {
     );
   }
 }
+
+export default ListingActionBar;

@@ -28,7 +28,7 @@ const { Header } = Layout;
     notifyAuthenticationError,
   },
 )
-export default class App extends React.Component {
+class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
     history: PropTypes.object.isRequired,
@@ -79,3 +79,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default App;

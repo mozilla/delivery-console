@@ -45,7 +45,7 @@ import {
   },
 )
 @autobind
-export default class RecipeListingPage extends React.PureComponent {
+class RecipeListingPage extends React.PureComponent {
   static propTypes = {
     columns: PropTypes.instanceOf(List).isRequired,
     count: PropTypes.number,
@@ -212,3 +212,5 @@ export default class RecipeListingPage extends React.PureComponent {
     );
   }
 }
+
+export default RecipeListingPage;

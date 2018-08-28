@@ -20,7 +20,7 @@ import { getCurrentUrlAsObject as getCurrentUrlAsObjectSelector } from 'console/
   },
 )
 @autobind
-export default class DataList extends React.PureComponent {
+class DataList extends React.PureComponent {
   static propTypes = {
     columnRenderers: PropTypes.object.isRequired,
     columns: PropTypes.instanceOf(List).isRequired,
@@ -109,3 +109,5 @@ export default class DataList extends React.PureComponent {
     );
   }
 }
+
+export default DataList;
