@@ -13,7 +13,7 @@ import { openNewWindow } from 'console/state/router/actions';
     push,
   },
 )
-export class LinkButton extends React.PureComponent {
+class LinkButton extends React.PureComponent {
   static propTypes = {
     /* eslint-disable react/forbid-foreign-prop-types */
     ...Button.propTypes,
@@ -45,3 +45,5 @@ export class LinkButton extends React.PureComponent {
     return <Button {...buttonProps}>{this.props.children}</Button>;
   }
 }
+
+export default LinkButton;

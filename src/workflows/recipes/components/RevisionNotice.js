@@ -14,7 +14,7 @@ import {
   isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
   status: getRevisionDraftStatus(state, revision.get('id')),
 }))
-export default class RevisionNotice extends React.PureComponent {
+class RevisionNotice extends React.PureComponent {
   static propTypes = {
     enabled: PropTypes.bool.isRequired,
     isPendingApproval: PropTypes.bool.isRequired,
@@ -50,3 +50,5 @@ export default class RevisionNotice extends React.PureComponent {
     return <Alert className="revision-notice" type={type} message={message} showIcon />;
   }
 }
+
+export default RevisionNotice;

@@ -10,7 +10,7 @@ import { detectNormandyAdmin } from 'console/state/network/actions';
     detectNormandyAdmin,
   },
 )
-export default class QueryNormandyAdmin extends React.PureComponent {
+class QueryNormandyAdmin extends React.PureComponent {
   static propTypes = {
     detectNormandyAdmin: PropTypes.func.isRequired,
   };
@@ -23,3 +23,5 @@ export default class QueryNormandyAdmin extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryNormandyAdmin;

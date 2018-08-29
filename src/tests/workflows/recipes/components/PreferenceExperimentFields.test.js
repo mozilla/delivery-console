@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
-import PreferenceExperimentFields, {
-  StringPreferenceField,
-} from 'console/workflows/recipes/components/PreferenceExperimentFields';
+import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
+import StringPreferenceField from 'console/workflows/recipes/components/StringPreferenceField';
 
 function createFakeEvent(string) {
   return { target: { value: string } };

@@ -43,7 +43,7 @@ import { reverse } from 'console/urls';
   },
 )
 @autobind
-export default class CloneRecipePage extends React.PureComponent {
+class CloneRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
     isLatestRevision: PropTypes.bool.isRequired,
@@ -126,3 +126,5 @@ export default class CloneRecipePage extends React.PureComponent {
     );
   }
 }
+
+export default CloneRecipePage;

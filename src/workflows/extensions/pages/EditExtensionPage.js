@@ -28,7 +28,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
   },
 )
 @autobind
-export default class EditExtensionPage extends React.PureComponent {
+class EditExtensionPage extends React.PureComponent {
   static propTypes = {
     extension: PropTypes.instanceOf(Map).isRequired,
     extensionId: PropTypes.number.isRequired,
@@ -68,3 +68,5 @@ export default class EditExtensionPage extends React.PureComponent {
     );
   }
 }
+
+export default EditExtensionPage;

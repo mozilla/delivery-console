@@ -15,7 +15,7 @@ import { getRecipeIdForRevision as getRecipeIdForRevisionSelector } from 'consol
   getRecipeIdForRevision: id => getRecipeIdForRevisionSelector(state, id),
 }))
 @autobind
-export default class HistoryTimeline extends React.PureComponent {
+class HistoryTimeline extends React.PureComponent {
   static propTypes = {
     history: PropTypes.instanceOf(List).isRequired,
     recipeId: PropTypes.number.isRequired,
@@ -45,3 +45,5 @@ export default class HistoryTimeline extends React.PureComponent {
     );
   }
 }
+
+export default HistoryTimeline;

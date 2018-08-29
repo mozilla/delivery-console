@@ -18,7 +18,7 @@ const { OptGroup, Option } = Select;
   isLoadingSearch: isRequestInProgress(state, 'fetch-extensions-page-1'),
 }))
 @autobind
-export default class ExtensionSelect extends React.Component {
+class ExtensionSelect extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     extensions: PropTypes.instanceOf(List).isRequired,
@@ -105,3 +105,5 @@ export default class ExtensionSelect extends React.Component {
     );
   }
 }
+
+export default ExtensionSelect;

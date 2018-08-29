@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { LinkButton } from 'console/components/common/LinkButton';
+import LinkButton from 'console/components/common/LinkButton';
 import { getCurrentRouteTree } from 'console/state/router/selectors';
 import applicationRoutes, { reverse } from 'console/urls';
 
@@ -15,7 +15,7 @@ const { Header } = Layout;
   routeTree: getCurrentRouteTree(state),
 }))
 @autobind
-export default class NavBar extends React.PureComponent {
+class NavBar extends React.PureComponent {
   static propTypes = {
     routeTree: PropTypes.object.isRequired,
   };
@@ -86,3 +86,5 @@ export default class NavBar extends React.PureComponent {
     );
   }
 }
+
+export default NavBar;

@@ -10,7 +10,7 @@ import { fetchRecipeHistory } from 'console/state/recipes/actions';
     fetchRecipeHistory,
   },
 )
-export default class QueryRecipeHistory extends React.PureComponent {
+class QueryRecipeHistory extends React.PureComponent {
   static propTypes = {
     fetchRecipeHistory: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
@@ -32,3 +32,5 @@ export default class QueryRecipeHistory extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryRecipeHistory;

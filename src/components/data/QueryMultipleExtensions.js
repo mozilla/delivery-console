@@ -11,7 +11,7 @@ import { fetchExtensionsPage } from 'console/state/extensions/actions';
     fetchExtensionsPage,
   },
 )
-export default class QueryMultipleExtensions extends React.PureComponent {
+class QueryMultipleExtensions extends React.PureComponent {
   static propTypes = {
     fetchExtensionsPage: PropTypes.func.isRequired,
     filters: PropTypes.object,
@@ -39,3 +39,5 @@ export default class QueryMultipleExtensions extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryMultipleExtensions;

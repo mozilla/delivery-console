@@ -25,7 +25,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
   },
 )
 @autobind
-export default class AuthButton extends React.Component {
+class AuthButton extends React.Component {
   static propTypes = {
     authInProgress: PropTypes.bool.isRequired,
     finishAuthenticationFlow: PropTypes.func.isRequired,
@@ -94,3 +94,5 @@ export default class AuthButton extends React.Component {
     );
   }
 }
+
+export default AuthButton;

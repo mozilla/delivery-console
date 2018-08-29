@@ -47,7 +47,7 @@ export class SimpleLoadingOverlay extends React.PureComponent {
     isLoading,
   };
 })
-export default class LoadingOverlay extends React.PureComponent {
+class LoadingOverlay extends React.PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     requestIds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string])
@@ -62,3 +62,5 @@ export default class LoadingOverlay extends React.PureComponent {
     return <SimpleLoadingOverlay isVisible={this.props.isLoading} {...this.props} />;
   }
 }
+
+export default LoadingOverlay;

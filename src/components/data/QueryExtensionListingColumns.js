@@ -10,7 +10,7 @@ import { loadExtensionListingColumns } from 'console/state/extensions/actions';
     loadExtensionListingColumns,
   },
 )
-export default class QueryExtensionListingColumns extends React.PureComponent {
+class QueryExtensionListingColumns extends React.PureComponent {
   static propTypes = {
     loadExtensionListingColumns: PropTypes.func.isRequired,
   };
@@ -23,3 +23,5 @@ export default class QueryExtensionListingColumns extends React.PureComponent {
     return null;
   }
 }
+
+export default QueryExtensionListingColumns;

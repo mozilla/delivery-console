@@ -10,7 +10,7 @@ import { isNormandyAdminAvailable, isRequestInProgress } from 'console/state/net
   vpnAvailable: isNormandyAdminAvailable(state),
   loading: isRequestInProgress(state, 'detect-normandy-admin'),
 }))
-export default class VPNStatus extends React.PureComponent {
+class VPNStatus extends React.PureComponent {
   static propTypes = {
     vpnAvailable: PropTypes.bool,
     loading: PropTypes.bool.isRequired,
@@ -45,3 +45,5 @@ export default class VPNStatus extends React.PureComponent {
     );
   }
 }
+
+export default VPNStatus;

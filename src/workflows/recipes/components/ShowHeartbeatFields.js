@@ -10,7 +10,7 @@ import FormItem from 'console/components/forms/FormItem';
 import { connectFormProps } from 'console/utils/forms';
 
 @connectFormProps
-export default class ShowHeartbeatFields extends React.Component {
+class ShowHeartbeatFields extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     form: PropTypes.object.isRequired,
@@ -180,3 +180,5 @@ class RepeatSelect extends React.PureComponent {
     );
   }
 }
+
+export default ShowHeartbeatFields;
