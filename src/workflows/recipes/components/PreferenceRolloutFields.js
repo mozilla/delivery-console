@@ -52,7 +52,7 @@ export const deserializePreferenceRows = prefsList => {
 };
 
 @connectFormProps
-export default class PreferenceRolloutFields extends React.Component {
+class PreferenceRolloutFields extends React.Component {
   state = {
     rows: serializePreferenceRows(this.props.recipeArguments.get('preferences')),
   };
@@ -167,6 +167,8 @@ export default class PreferenceRolloutFields extends React.Component {
     );
   }
 }
+
+export default PreferenceRolloutFields;
 
 class RowField extends React.PureComponent {
   state = {
