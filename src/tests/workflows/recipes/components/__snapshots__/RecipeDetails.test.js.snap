@@ -1,0 +1,1531 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ArgumentsValue> should render preferences as a table 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ArgumentsValue
+    actionName="preference-rollout"
+    name="preferences"
+    value={
+      Immutable.List [
+        Immutable.Map {
+          "preferenceName": "name",
+          "value": "Peter",
+        },
+        Immutable.Map {
+          "preferenceName": "kids",
+          "value": 2,
+        },
+        Immutable.Map {
+          "preferenceName": "wrong",
+          "value": false,
+        },
+      ]
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="value"
+        >
+          <table
+            className="pref-rollout-preferences"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              Immutable.List [
+                <tr>
+                  <td>
+                    name
+                  </td>
+                  <td>
+                    <code>
+                      Peter
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      string
+                    </Tag>
+                  </td>
+                </tr>,
+                <tr>
+                  <td>
+                    kids
+                  </td>
+                  <td>
+                    <code>
+                      2
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      integer
+                    </Tag>
+                  </td>
+                </tr>,
+                <tr>
+                  <td>
+                    wrong
+                  </td>
+                  <td>
+                    <code>
+                      false
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      boolean
+                    </Tag>
+                  </td>
+                </tr>,
+              ]
+            </tbody>
+          </table>
+        </div>,
+        <Tooltip
+          arrowPointAtCenter={false}
+          autoAdjustOverflow={true}
+          mouseEnterDelay={1}
+          mouseLeaveDelay={0.1}
+          placement="top"
+          prefixCls="ant-tooltip"
+          title="Copy to Clipboard"
+          transitionName="zoom-big-fast"
+        >
+          <CopyToClipboard
+            className="copy-icon"
+            text="[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]"
+          >
+            <Icon
+              type="copy"
+            />
+          </CopyToClipboard>
+        </Tooltip>,
+      ],
+      "className": "arguments-value",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <table
+            className="pref-rollout-preferences"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              Immutable.List [
+                <tr>
+                  <td>
+                    name
+                  </td>
+                  <td>
+                    <code>
+                      Peter
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      string
+                    </Tag>
+                  </td>
+                </tr>,
+                <tr>
+                  <td>
+                    kids
+                  </td>
+                  <td>
+                    <code>
+                      2
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      integer
+                    </Tag>
+                  </td>
+                </tr>,
+                <tr>
+                  <td>
+                    wrong
+                  </td>
+                  <td>
+                    <code>
+                      false
+                    </code>
+                     
+                    <Tag
+                      closable={false}
+                      prefixCls="ant-tag"
+                    >
+                      boolean
+                    </Tag>
+                  </td>
+                </tr>,
+              ]
+            </tbody>
+          </table>,
+          "className": "value",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Value
+                  </th>
+                </tr>
+              </thead>,
+              <tbody>
+                Immutable.List [
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <code>
+                        Peter
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        string
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      kids
+                    </td>
+                    <td>
+                      <code>
+                        2
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        integer
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      wrong
+                    </td>
+                    <td>
+                      <code>
+                        false
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        boolean
+                      </Tag>
+                    </td>
+                  </tr>,
+                ]
+              </tbody>,
+            ],
+            "className": "pref-rollout-preferences",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Value
+                  </th>
+                </tr>,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <th>
+                      Name
+                    </th>,
+                    <th>
+                      Value
+                    </th>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Name",
+                    },
+                    "ref": null,
+                    "rendered": "Name",
+                    "type": "th",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Value",
+                    },
+                    "ref": null,
+                    "rendered": "Value",
+                    "type": "th",
+                  },
+                ],
+                "type": "tr",
+              },
+              "type": "thead",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Immutable.List [
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <code>
+                        Peter
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        string
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      kids
+                    </td>
+                    <td>
+                      <code>
+                        2
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        integer
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      wrong
+                    </td>
+                    <td>
+                      <code>
+                        false
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        boolean
+                      </Tag>
+                    </td>
+                  </tr>,
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": "name.0",
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <td>
+                        name
+                      </td>,
+                      <td>
+                        <code>
+                          Peter
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          string
+                        </Tag>
+                      </td>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "name",
+                      },
+                      "ref": null,
+                      "rendered": "name",
+                      "type": "td",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": Array [
+                          <code>
+                            Peter
+                          </code>,
+                          " ",
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            string
+                          </Tag>,
+                        ],
+                      },
+                      "ref": null,
+                      "rendered": Array [
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "children": "Peter",
+                          },
+                          "ref": null,
+                          "rendered": "Peter",
+                          "type": "code",
+                        },
+                        " ",
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "class",
+                          "props": Object {
+                            "children": "string",
+                            "closable": false,
+                            "prefixCls": "ant-tag",
+                          },
+                          "ref": null,
+                          "rendered": "string",
+                          "type": [Function],
+                        },
+                      ],
+                      "type": "td",
+                    },
+                  ],
+                  "type": "tr",
+                },
+                Object {
+                  "instance": null,
+                  "key": "kids.1",
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <td>
+                        kids
+                      </td>,
+                      <td>
+                        <code>
+                          2
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          integer
+                        </Tag>
+                      </td>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "kids",
+                      },
+                      "ref": null,
+                      "rendered": "kids",
+                      "type": "td",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": Array [
+                          <code>
+                            2
+                          </code>,
+                          " ",
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            integer
+                          </Tag>,
+                        ],
+                      },
+                      "ref": null,
+                      "rendered": Array [
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "children": "2",
+                          },
+                          "ref": null,
+                          "rendered": "2",
+                          "type": "code",
+                        },
+                        " ",
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "class",
+                          "props": Object {
+                            "children": "integer",
+                            "closable": false,
+                            "prefixCls": "ant-tag",
+                          },
+                          "ref": null,
+                          "rendered": "integer",
+                          "type": [Function],
+                        },
+                      ],
+                      "type": "td",
+                    },
+                  ],
+                  "type": "tr",
+                },
+                Object {
+                  "instance": null,
+                  "key": "wrong.2",
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <td>
+                        wrong
+                      </td>,
+                      <td>
+                        <code>
+                          false
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          boolean
+                        </Tag>
+                      </td>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "wrong",
+                      },
+                      "ref": null,
+                      "rendered": "wrong",
+                      "type": "td",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": Array [
+                          <code>
+                            false
+                          </code>,
+                          " ",
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            boolean
+                          </Tag>,
+                        ],
+                      },
+                      "ref": null,
+                      "rendered": Array [
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "children": "false",
+                          },
+                          "ref": null,
+                          "rendered": "false",
+                          "type": "code",
+                        },
+                        " ",
+                        Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "class",
+                          "props": Object {
+                            "children": "boolean",
+                            "closable": false,
+                            "prefixCls": "ant-tag",
+                          },
+                          "ref": null,
+                          "rendered": "boolean",
+                          "type": [Function],
+                        },
+                      ],
+                      "type": "td",
+                    },
+                  ],
+                  "type": "tr",
+                },
+              ],
+              "type": "tbody",
+            },
+          ],
+          "type": "table",
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "arrowPointAtCenter": false,
+          "autoAdjustOverflow": true,
+          "children": <CopyToClipboard
+            className="copy-icon"
+            text="[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]"
+          >
+            <Icon
+              type="copy"
+            />
+          </CopyToClipboard>,
+          "mouseEnterDelay": 1,
+          "mouseLeaveDelay": 0.1,
+          "placement": "top",
+          "prefixCls": "ant-tooltip",
+          "title": "Copy to Clipboard",
+          "transitionName": "zoom-big-fast",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <Icon
+              type="copy"
+            />,
+            "className": "copy-icon",
+            "onCopy": undefined,
+            "options": undefined,
+            "text": "[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "type": "copy",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+    ],
+    "type": "dd",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="value"
+          >
+            <table
+              className="pref-rollout-preferences"
+            >
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Value
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                Immutable.List [
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <code>
+                        Peter
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        string
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      kids
+                    </td>
+                    <td>
+                      <code>
+                        2
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        integer
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      wrong
+                    </td>
+                    <td>
+                      <code>
+                        false
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        boolean
+                      </Tag>
+                    </td>
+                  </tr>,
+                ]
+              </tbody>
+            </table>
+          </div>,
+          <Tooltip
+            arrowPointAtCenter={false}
+            autoAdjustOverflow={true}
+            mouseEnterDelay={1}
+            mouseLeaveDelay={0.1}
+            placement="top"
+            prefixCls="ant-tooltip"
+            title="Copy to Clipboard"
+            transitionName="zoom-big-fast"
+          >
+            <CopyToClipboard
+              className="copy-icon"
+              text="[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]"
+            >
+              <Icon
+                type="copy"
+              />
+            </CopyToClipboard>
+          </Tooltip>,
+        ],
+        "className": "arguments-value",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <table
+              className="pref-rollout-preferences"
+            >
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Value
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                Immutable.List [
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <code>
+                        Peter
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        string
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      kids
+                    </td>
+                    <td>
+                      <code>
+                        2
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        integer
+                      </Tag>
+                    </td>
+                  </tr>,
+                  <tr>
+                    <td>
+                      wrong
+                    </td>
+                    <td>
+                      <code>
+                        false
+                      </code>
+                       
+                      <Tag
+                        closable={false}
+                        prefixCls="ant-tag"
+                      >
+                        boolean
+                      </Tag>
+                    </td>
+                  </tr>,
+                ]
+              </tbody>
+            </table>,
+            "className": "value",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <thead>
+                  <tr>
+                    <th>
+                      Name
+                    </th>
+                    <th>
+                      Value
+                    </th>
+                  </tr>
+                </thead>,
+                <tbody>
+                  Immutable.List [
+                    <tr>
+                      <td>
+                        name
+                      </td>
+                      <td>
+                        <code>
+                          Peter
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          string
+                        </Tag>
+                      </td>
+                    </tr>,
+                    <tr>
+                      <td>
+                        kids
+                      </td>
+                      <td>
+                        <code>
+                          2
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          integer
+                        </Tag>
+                      </td>
+                    </tr>,
+                    <tr>
+                      <td>
+                        wrong
+                      </td>
+                      <td>
+                        <code>
+                          false
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          boolean
+                        </Tag>
+                      </td>
+                    </tr>,
+                  ]
+                </tbody>,
+              ],
+              "className": "pref-rollout-preferences",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <tr>
+                    <th>
+                      Name
+                    </th>
+                    <th>
+                      Value
+                    </th>
+                  </tr>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <th>
+                        Name
+                      </th>,
+                      <th>
+                        Value
+                      </th>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "Name",
+                      },
+                      "ref": null,
+                      "rendered": "Name",
+                      "type": "th",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "Value",
+                      },
+                      "ref": null,
+                      "rendered": "Value",
+                      "type": "th",
+                    },
+                  ],
+                  "type": "tr",
+                },
+                "type": "thead",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Immutable.List [
+                    <tr>
+                      <td>
+                        name
+                      </td>
+                      <td>
+                        <code>
+                          Peter
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          string
+                        </Tag>
+                      </td>
+                    </tr>,
+                    <tr>
+                      <td>
+                        kids
+                      </td>
+                      <td>
+                        <code>
+                          2
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          integer
+                        </Tag>
+                      </td>
+                    </tr>,
+                    <tr>
+                      <td>
+                        wrong
+                      </td>
+                      <td>
+                        <code>
+                          false
+                        </code>
+                         
+                        <Tag
+                          closable={false}
+                          prefixCls="ant-tag"
+                        >
+                          boolean
+                        </Tag>
+                      </td>
+                    </tr>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": "name.0",
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        <td>
+                          name
+                        </td>,
+                        <td>
+                          <code>
+                            Peter
+                          </code>
+                           
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            string
+                          </Tag>
+                        </td>,
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "name",
+                        },
+                        "ref": null,
+                        "rendered": "name",
+                        "type": "td",
+                      },
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": Array [
+                            <code>
+                              Peter
+                            </code>,
+                            " ",
+                            <Tag
+                              closable={false}
+                              prefixCls="ant-tag"
+                            >
+                              string
+                            </Tag>,
+                          ],
+                        },
+                        "ref": null,
+                        "rendered": Array [
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "host",
+                            "props": Object {
+                              "children": "Peter",
+                            },
+                            "ref": null,
+                            "rendered": "Peter",
+                            "type": "code",
+                          },
+                          " ",
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "class",
+                            "props": Object {
+                              "children": "string",
+                              "closable": false,
+                              "prefixCls": "ant-tag",
+                            },
+                            "ref": null,
+                            "rendered": "string",
+                            "type": [Function],
+                          },
+                        ],
+                        "type": "td",
+                      },
+                    ],
+                    "type": "tr",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": "kids.1",
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        <td>
+                          kids
+                        </td>,
+                        <td>
+                          <code>
+                            2
+                          </code>
+                           
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            integer
+                          </Tag>
+                        </td>,
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "kids",
+                        },
+                        "ref": null,
+                        "rendered": "kids",
+                        "type": "td",
+                      },
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": Array [
+                            <code>
+                              2
+                            </code>,
+                            " ",
+                            <Tag
+                              closable={false}
+                              prefixCls="ant-tag"
+                            >
+                              integer
+                            </Tag>,
+                          ],
+                        },
+                        "ref": null,
+                        "rendered": Array [
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "host",
+                            "props": Object {
+                              "children": "2",
+                            },
+                            "ref": null,
+                            "rendered": "2",
+                            "type": "code",
+                          },
+                          " ",
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "class",
+                            "props": Object {
+                              "children": "integer",
+                              "closable": false,
+                              "prefixCls": "ant-tag",
+                            },
+                            "ref": null,
+                            "rendered": "integer",
+                            "type": [Function],
+                          },
+                        ],
+                        "type": "td",
+                      },
+                    ],
+                    "type": "tr",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": "wrong.2",
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        <td>
+                          wrong
+                        </td>,
+                        <td>
+                          <code>
+                            false
+                          </code>
+                           
+                          <Tag
+                            closable={false}
+                            prefixCls="ant-tag"
+                          >
+                            boolean
+                          </Tag>
+                        </td>,
+                      ],
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "wrong",
+                        },
+                        "ref": null,
+                        "rendered": "wrong",
+                        "type": "td",
+                      },
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": Array [
+                            <code>
+                              false
+                            </code>,
+                            " ",
+                            <Tag
+                              closable={false}
+                              prefixCls="ant-tag"
+                            >
+                              boolean
+                            </Tag>,
+                          ],
+                        },
+                        "ref": null,
+                        "rendered": Array [
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "host",
+                            "props": Object {
+                              "children": "false",
+                            },
+                            "ref": null,
+                            "rendered": "false",
+                            "type": "code",
+                          },
+                          " ",
+                          Object {
+                            "instance": null,
+                            "key": undefined,
+                            "nodeType": "class",
+                            "props": Object {
+                              "children": "boolean",
+                              "closable": false,
+                              "prefixCls": "ant-tag",
+                            },
+                            "ref": null,
+                            "rendered": "boolean",
+                            "type": [Function],
+                          },
+                        ],
+                        "type": "td",
+                      },
+                    ],
+                    "type": "tr",
+                  },
+                ],
+                "type": "tbody",
+              },
+            ],
+            "type": "table",
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "arrowPointAtCenter": false,
+            "autoAdjustOverflow": true,
+            "children": <CopyToClipboard
+              className="copy-icon"
+              text="[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]"
+            >
+              <Icon
+                type="copy"
+              />
+            </CopyToClipboard>,
+            "mouseEnterDelay": 1,
+            "mouseLeaveDelay": 0.1,
+            "placement": "top",
+            "prefixCls": "ant-tooltip",
+            "title": "Copy to Clipboard",
+            "transitionName": "zoom-big-fast",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": <Icon
+                type="copy"
+              />,
+              "className": "copy-icon",
+              "onCopy": undefined,
+              "options": undefined,
+              "text": "[
+  {
+    \\"preferenceName\\": \\"name\\",
+    \\"value\\": \\"Peter\\"
+  },
+  {
+    \\"preferenceName\\": \\"kids\\",
+    \\"value\\": 2
+  },
+  {
+    \\"preferenceName\\": \\"wrong\\",
+    \\"value\\": false
+  }
+]",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "type": "copy",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+      ],
+      "type": "dd",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+    "attachTo": undefined,
+    "hydrateIn": undefined,
+  },
+}
+`;

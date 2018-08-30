@@ -56,10 +56,12 @@ export class ArgumentsValue extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string,
     value: PropTypes.any,
+    actionName: PropTypes.string,
   };
 
   static defaultProps = {
     name: null,
+    actionName: null,
   };
 
   static stringifyImmutable(value) {

@@ -42,7 +42,9 @@ export const serializePreferenceRows = prefsList => {
 
 export const deserializePreferenceRows = prefsList => {
   return List(
-    prefsList.map(row => {
+    // The reason for the filter is to remove any form argument items that are null
+    // or undefined which can happen when deleting a <FormItem> object.
+    prefsList.filter(row => !!row).map(row => {
       return {
         preferenceName: row.name,
         value: row.value,
@@ -170,11 +172,24 @@ class PreferenceRolloutFields extends React.Component {
 
 export default PreferenceRolloutFields;
 
-class RowField extends React.PureComponent {
+export class RowField extends React.PureComponent {
   state = {
     name: this.props.row.name,
     type: this.props.row.type,
     value: this.props.row.value,
+  };
+
+  static propTypes = {
+    row: PropTypes.object.isRequired,
+    defaultValues: PropTypes.object,
+    disabled: PropTypes.bool,
+    disableRemove: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    defaultValues: DEFAULT_VALUES,
+    disabled: false,
+    disableRemove: false,
   };
 
   // XXX Not a great name.
@@ -197,12 +212,13 @@ class RowField extends React.PureComponent {
     if (!defaultValues.hasOwnProperty(type)) {
       throw new Error(`Unrecognized value type for '${type}'`);
     }
-    this.setState(state => {
-      return {
+    this.setState(
+      {
         type,
         value: defaultValues[type],
-      };
-    }, this._reportRow);
+      },
+      this._reportRow,
+    );
   };
 
   handleValueChange = value => {
@@ -214,7 +230,7 @@ class RowField extends React.PureComponent {
     // makes the `name` on each <FormItem> different and unique.
     const { disabled, row, disableRemove } = this.props;
     const { id } = row;
-    const { type } = this.state;
+    const { name, type, value } = this.state;
 
     let valueInput;
     if (type === 'string') {
@@ -235,7 +251,7 @@ class RowField extends React.PureComponent {
     return (
       <Row gutter={8} align="bottom">
         <Col span={6}>
-          <FormItem label="Name" name={`arguments.preferences.${id}.name`} initialValue={row.name}>
+          <FormItem label="Name" name={`arguments.preferences.${id}.name`} initialValue={name}>
             <Input
               disabled={disabled}
               onChange={event => this.handleNameChange(event.target.value)}
@@ -252,11 +268,7 @@ class RowField extends React.PureComponent {
           </FormItem>
         </Col>
         <Col span={10}>
-          <FormItem
-            label="Value"
-            name={`arguments.preferences.${id}.value`}
-            initialValue={row.value}
-          >
+          <FormItem label="Value" name={`arguments.preferences.${id}.value`} initialValue={value}>
             {valueInput}
           </FormItem>
         </Col>
