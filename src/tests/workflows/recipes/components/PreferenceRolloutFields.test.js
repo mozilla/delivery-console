@@ -26,7 +26,6 @@ describe('<PreferenceRolloutFields>', () => {
         value: 'Peter',
       },
     };
-    const factory = (customProps = {}) => mount(<RowField {...props} {...customProps} />);
 
     it('should work', () => {
       const wrapper = () => shallow(<RowField {...props} />);
