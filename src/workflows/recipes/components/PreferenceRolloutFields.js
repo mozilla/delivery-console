@@ -81,7 +81,6 @@ class PreferenceRolloutFields extends React.Component {
       const type = state.rows.length ? state.rows[state.rows.length - 1].type : 'string';
 
       // The nextId needs never be a number we've used before.
-      // XXX This is getting complicated. Maybe just use Math.random()/
       const ids = [...state.rows.values()].map(r => r.id);
       const nextId = 1 + (ids.length ? Math.max(...ids) : 0) + this._nextId++;
 
@@ -126,7 +125,7 @@ class PreferenceRolloutFields extends React.Component {
     return (
       <div>
         <Row>
-          <p className="action-info">XXX - Come up with a better line here.</p>
+          <p className="action-info">Roll out a permanent preference change.</p>
           <Col sm={24} md={11}>
             <FormItem
               label="Slug"
@@ -192,8 +191,7 @@ export class RowField extends React.PureComponent {
     disableRemove: false,
   };
 
-  // XXX Not a great name.
-  _reportRow = () => {
+  _bubbleUpRow = () => {
     this.props.onRowChange({
       name: this.state.name,
       type: this.state.type,
@@ -204,7 +202,7 @@ export class RowField extends React.PureComponent {
   handleNameChange = name => {
     this.setState(() => {
       return { name: name.trim() };
-    }, this._reportRow);
+    }, this._bubbleUpRow);
   };
 
   handleTypeChange = type => {
@@ -217,12 +215,12 @@ export class RowField extends React.PureComponent {
         type,
         value: defaultValues[type],
       },
-      this._reportRow,
+      this._bubbleUpRow,
     );
   };
 
   handleValueChange = value => {
-    this.setState({ value }, this._reportRow);
+    this.setState({ value }, this._bubbleUpRow);
   };
 
   render() {
