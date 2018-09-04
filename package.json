@@ -15,7 +15,7 @@
     "date-fns": "1.29.0",
     "immutable": "3.8.2",
     "lodash": "4.17.10",
-    "raven-js": "3.26.4",
+    "raven-js": "3.27.0",
     "react": "16.4.2",
     "react-copy-to-clipboard": "5.0.1",
     "react-dom": "16.4.2",
