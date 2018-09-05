@@ -31,7 +31,6 @@ export function cleanRecipeData(data) {
       throw error;
     }
   } else if (data.arguments.preferences) {
-    // XXX How is this going to work when it's PreferenceRollback??
     // If the form submission has a data.arguments.preferences it's a PreferenceRolloutFields
     // field. In that case, rewrite the list of rows into an expected list of preferences.
     data.arguments.preferences = deserializePreferenceRows(data.arguments.preferences);
