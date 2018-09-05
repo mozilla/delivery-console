@@ -16,13 +16,14 @@ describe('<PreferenceRolloutFields>', () => {
     expect(wrapper).not.toThrow();
   });
 
+  // Hopefully we can remove this test and not have to test this deep implementation detail.
+  // Ideally we should just be talking directly to the parent component (PreferenceRolloutFields).
   describe('<RowField>', () => {
     const props = {
-      row: {
-        name: 'name',
-        type: 'string',
-        value: 'Peter',
-      },
+      id: 0,
+      name: 'name',
+      type: 'string',
+      value: 'Peter',
     };
 
     it('should work', () => {

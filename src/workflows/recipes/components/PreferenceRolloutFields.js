@@ -18,7 +18,7 @@ export const serializePreferenceRows = prefsList => {
   if (!prefsList) {
     return List([]);
   }
-  let _nextId = 0;
+  let nextId = 0;
   return prefsList.map(pref => {
     const value = pref.get('value');
     let type;
@@ -35,7 +35,7 @@ export const serializePreferenceRows = prefsList => {
       name: pref.get('preferenceName'),
       type,
       value,
-      id: _nextId++,
+      id: nextId++,
     };
   });
 };
@@ -72,7 +72,7 @@ class PreferenceRolloutFields extends React.Component {
 
   // Use a locally increasing number too to avoid the case were a new ID is one that
   // it's already been.
-  _nextId = 0;
+  nextId = 0;
 
   handleClickAddNewRow = () => {
     this.setState(state => {
@@ -82,7 +82,7 @@ class PreferenceRolloutFields extends React.Component {
 
       // The nextId needs never be a number we've used before.
       const ids = [...state.rows.values()].map(r => r.id);
-      const nextId = 1 + (ids.length ? Math.max(...ids) : 0) + this._nextId++;
+      const nextId = 1 + (ids.length ? Math.max(...ids) : 0) + this.nextId++;
 
       return {
         rows: state.rows.push({
@@ -96,17 +96,19 @@ class PreferenceRolloutFields extends React.Component {
   };
 
   changeRow = row => {
-    this.setState(state =>
-      state.rows.map(r => {
-        if (r.id === row.id) {
-          return row;
-        }
-        return r;
-      }),
-    );
+    this.setState(state => {
+      return {
+        rows: state.rows.map(r => {
+          if (r.id === row.id) {
+            return row;
+          }
+          return r;
+        }),
+      };
+    });
   };
 
-  removeRow = row => {
+  removeRow = id => {
     // Don't allow this if there are currently only 1 rows.
     if (this.state.rows.size <= 1) {
       throw new Error('There must be at least one row left.');
@@ -114,7 +116,7 @@ class PreferenceRolloutFields extends React.Component {
 
     this.setState(state => {
       return {
-        rows: state.rows.filter(r => r.id !== row.id),
+        rows: state.rows.filter(r => r.id !== id),
       };
     });
   };
@@ -141,17 +143,16 @@ class PreferenceRolloutFields extends React.Component {
 
         {this.state.rows.map(row => (
           <RowField
-            row={row}
+            id={row.id}
+            name={row.name}
+            type={row.type}
+            value={row.value}
             defaultValues={DEFAULT_VALUES}
             disabled={disabled}
             key={row.id}
             disableRemove={this.state.rows.size <= 1}
-            onRowChange={row => {
-              this.changeRow(row);
-            }}
-            onRowRemove={row => {
-              this.removeRow(row);
-            }}
+            onRowChange={this.changeRow}
+            onRowRemove={this.removeRow}
           />
         ))}
 
@@ -172,14 +173,11 @@ class PreferenceRolloutFields extends React.Component {
 export default PreferenceRolloutFields;
 
 export class RowField extends React.PureComponent {
-  state = {
-    name: this.props.row.name,
-    type: this.props.row.type,
-    value: this.props.row.value,
-  };
-
   static propTypes = {
-    row: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
     defaultValues: PropTypes.object,
     disabled: PropTypes.bool,
     disableRemove: PropTypes.bool,
@@ -191,18 +189,14 @@ export class RowField extends React.PureComponent {
     disableRemove: false,
   };
 
-  _bubbleUpRow = () => {
-    this.props.onRowChange({
-      name: this.state.name,
-      type: this.state.type,
-      value: this.state.value,
-    });
-  };
-
   handleNameChange = name => {
-    this.setState(() => {
-      return { name: name.trim() };
-    }, this._bubbleUpRow);
+    const { id, type, value } = this.props;
+    this.props.onRowChange({
+      id,
+      name,
+      type,
+      value,
+    });
   };
 
   handleTypeChange = type => {
@@ -210,25 +204,30 @@ export class RowField extends React.PureComponent {
     if (!defaultValues.hasOwnProperty(type)) {
       throw new Error(`Unrecognized value type for '${type}'`);
     }
-    this.setState(
-      {
-        type,
-        value: defaultValues[type],
-      },
-      this._bubbleUpRow,
-    );
+    const { id, name } = this.props;
+    const value = defaultValues[type];
+    this.props.onRowChange({
+      id,
+      name,
+      type,
+      value,
+    });
   };
 
   handleValueChange = value => {
-    this.setState({ value }, this._bubbleUpRow);
+    const { id, name, type } = this.props;
+    this.props.onRowChange({
+      id,
+      name,
+      type,
+      value,
+    });
   };
 
   render() {
-    // The reason for passing the `i` is so that we can have a unique thing that
+    // The reason for passing the `id` is so that we can have a unique thing that
     // makes the `name` on each <FormItem> different and unique.
-    const { disabled, row, disableRemove } = this.props;
-    const { id } = row;
-    const { name, type, value } = this.state;
+    const { disabled, disableRemove, id, name, type, value } = this.props;
 
     let valueInput;
     if (type === 'string') {
@@ -281,7 +280,7 @@ export class RowField extends React.PureComponent {
                 type="default"
                 title={disableRemove ? 'There must be at least 1 preference' : null}
                 icon="close"
-                onClick={() => this.props.onRowRemove(row)}
+                onClick={() => this.props.onRowRemove(id)}
                 id={`${id}.remove-row`}
               >
                 Remove Row
