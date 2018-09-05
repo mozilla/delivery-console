@@ -14,8 +14,6 @@ describe('<PreferenceRolloutFields>', () => {
     };
     const wrapper = () => shallow(<PreferenceRolloutFields {...props} />);
     expect(wrapper).not.toThrow();
-    const rendered = wrapper();
-    expect(rendered).toMatchSnapshot();
   });
 
   describe('<RowField>', () => {
@@ -30,30 +28,13 @@ describe('<PreferenceRolloutFields>', () => {
     it('should work', () => {
       const wrapper = () => shallow(<RowField {...props} />);
       expect(wrapper).not.toThrow();
-      const rendered = wrapper();
-      expect(rendered).toMatchSnapshot();
     });
-
-    // it('should be possible to remove a row', () => {
-    //   const props = {
-    //     row: {
-    //       name: 'name',
-    //       type: 'string',
-    //       value: 'Peter',
-    //     },
-    //   };
-
-    //   // const wrapper = mount(<RowField {...props} />);
-    //   const wrapper = factory();
-    //   console.log(wrapper);
-
-    //   throw 'try harder';
-    //   // expect(wrapper).not.toThrow();
-    //   // const rendered = wrapper();
-    //   // expect(rendered).toMatchSnapshot();
-    // });
   });
 
+  // Hopefully, when we have better test coverage we shouldn't need these specific
+  // tests but instead we render the whole component with or without a list of
+  // default preferences. Then, ideally a more encompassing test should test all of
+  // these specifics "automatically".
   describe('serializing and deserializing preferences', () => {
     it('serialize a prefsList to a list of objects', () => {
       const list = [

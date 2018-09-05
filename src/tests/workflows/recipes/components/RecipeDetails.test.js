@@ -66,7 +66,6 @@ describe('<ArgumentsValue>', () => {
     const wrapper = shallow(
       <ArgumentsValue name="preferences" actionName="preference-rollout" value={value} />,
     );
-    expect(wrapper).toMatchSnapshot();
     const children = wrapper.find('.value').children();
     expect(children.length).toBe(1);
     expect(children.type()).toBe('table');
