@@ -189,7 +189,8 @@ export class RowField extends React.PureComponent {
     disableRemove: false,
   };
 
-  handleNameChange = name => {
+  handleNameChange = event => {
+    const name = event.target.value;
     const { id, type, value } = this.props;
     this.props.onRowChange({
       id,
@@ -248,10 +249,7 @@ export class RowField extends React.PureComponent {
       <Row gutter={8} align="bottom">
         <Col span={6}>
           <FormItem label="Name" name={`arguments.preferences.${id}.name`} initialValue={name}>
-            <Input
-              disabled={disabled}
-              onChange={event => this.handleNameChange(event.target.value)}
-            />
+            <Input disabled={disabled} onChange={this.handleNameChange} />
           </FormItem>
         </Col>
         <Col span={4}>
