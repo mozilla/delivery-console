@@ -224,6 +224,10 @@ export class RowField extends React.PureComponent {
     });
   };
 
+  handleInputValueChange = event => {
+    this.handleValueChange(event.target.value);
+  };
+
   render() {
     // The reason for passing the `id` is so that we can have a unique thing that
     // makes the `name` on each <FormItem> different and unique.
@@ -231,12 +235,7 @@ export class RowField extends React.PureComponent {
 
     let valueInput;
     if (type === 'string') {
-      valueInput = (
-        <Input
-          disabled={disabled}
-          onChange={event => this.handleValueChange(event.target.value)}
-        />
-      );
+      valueInput = <Input disabled={disabled} onChange={this.handleInputValueChange} />;
     } else if (type === 'boolean') {
       valueInput = <SwitchBox disabled={disabled} onChange={this.handleValueChange} />;
     } else if (type === 'integer') {
