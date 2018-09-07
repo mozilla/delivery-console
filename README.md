@@ -2,6 +2,7 @@
 
 [![CircleCI](https://img.shields.io/circleci/project/github/mozilla/delivery-console.svg)](https://circleci.com/gh/mozilla/delivery-console)
 [![Read the Docs](https://img.shields.io/readthedocs/delivery-console.svg)](http://delivery-console.readthedocs.io/en/latest/?badge=latest)
+[![What's Deployed](https://img.shields.io/badge/whatsdeployed-dev,stage,prod-green.svg)](https://whatsdeployed.io/s-Jxr)
 
 One admin to rule them all.
 
