@@ -11,6 +11,9 @@ import ActionSelect from 'console/workflows/recipes/components/ActionSelect';
 import ConsoleLogFields from 'console/workflows/recipes/components/ConsoleLogFields';
 import JSONArgumentsField from 'console/workflows/recipes/components/JSONArgumentsField';
 import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
+import PreferenceRolloutFields, {
+  deserializePreferenceRows,
+} from 'console/workflows/recipes/components/PreferenceRolloutFields';
 import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
 import { getAction } from 'console/state/actions/selectors';
@@ -27,6 +30,10 @@ export function cleanRecipeData(data) {
       error.data = { arguments: 'Invalid JSON.' };
       throw error;
     }
+  } else if (data.arguments.preferences) {
+    // If the form submission has a data.arguments.preferences it's a PreferenceRolloutFields
+    // field. In that case, rewrite the list of rows into an expected list of preferences.
+    data.arguments.preferences = deserializePreferenceRows(data.arguments.preferences);
   }
 
   // Make sure the action ID is an integer
@@ -73,6 +80,7 @@ class RecipeForm extends React.PureComponent {
     'console-log': ConsoleLogFields,
     'show-heartbeat': ShowHeartbeatFields,
     'preference-experiment': PreferenceExperimentFields,
+    'preference-rollout': PreferenceRolloutFields,
     'opt-out-study': OptOutStudyFields,
   };
 

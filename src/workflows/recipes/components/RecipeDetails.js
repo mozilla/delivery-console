@@ -1,4 +1,4 @@
-import { Card, Icon, Tooltip } from 'antd';
+import { Card, Icon, Tag, Tooltip } from 'antd';
 import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -11,6 +11,7 @@ export default class RecipeDetails extends React.PureComponent {
 
   render() {
     const { recipe } = this.props;
+    const actionName = recipe.getIn(['action', 'name']);
 
     return (
       <div className="recipe-details">
@@ -30,13 +31,18 @@ export default class RecipeDetails extends React.PureComponent {
         <Card className="noHovering" key="action-details" title="Action">
           <dl className="details">
             <dt>Name</dt>
-            <ArgumentsValue name="name" value={recipe.getIn(['action', 'name'])} />
+            <ArgumentsValue name="name" value={actionName} />
 
             {recipe
               .get('arguments', new Map())
               .map((value, key) => [
                 <dt key={`dt-${key}`}>{key.replace(/([A-Z]+)/g, ' $1')}</dt>,
-                <ArgumentsValue key={`dd-${key}`} name={key} value={value} />,
+                <ArgumentsValue
+                  key={`dd-${key}`}
+                  name={key}
+                  value={value}
+                  actionName={actionName}
+                />,
               ])
               .toArray()}
           </dl>
@@ -50,10 +56,12 @@ export class ArgumentsValue extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string,
     value: PropTypes.any,
+    actionName: PropTypes.string,
   };
 
   static defaultProps = {
     name: null,
+    actionName: null,
   };
 
   static stringifyImmutable(value) {
@@ -92,6 +100,37 @@ export class ArgumentsValue extends React.PureComponent {
     );
   }
 
+  renderPreferencesTable(preferences) {
+    return (
+      <table className="pref-rollout-preferences">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {preferences.map((pref, i) => {
+            const name = pref.get('preferenceName');
+            const value = pref.get('value');
+            let type = typeof value;
+            if (type === 'number') {
+              type = 'integer';
+            }
+            return (
+              <tr key={`${name}.${i}`}>
+                <td>{name}</td>
+                <td>
+                  <code>{value.toString()}</code> <Tag>{type}</Tag>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  }
+
   renderCode(code) {
     return (
       <pre>
@@ -105,7 +144,7 @@ export class ArgumentsValue extends React.PureComponent {
   }
 
   render() {
-    const { name, value } = this.props;
+    const { name, actionName, value } = this.props;
 
     let valueRender = x => (typeof x === 'object' ? JSON.stringify(x, null, 2) : x);
 
@@ -115,6 +154,8 @@ export class ArgumentsValue extends React.PureComponent {
       valueRender = this.renderCode;
     } else if (typeof value === 'boolean') {
       valueRender = this.renderBoolean;
+    } else if (actionName === 'preference-rollout' && name === 'preferences') {
+      valueRender = this.renderPreferencesTable;
     }
 
     let textToCopy = value === undefined ? '' : value.toString();

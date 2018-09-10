@@ -57,6 +57,24 @@ describe('<ArgumentsValue>', () => {
     expect(content).toContain('75%');
   });
 
+  it('should render preferences as a table', () => {
+    const value = Immutable.fromJS([
+      { preferenceName: 'name', value: 'Peter' },
+      { preferenceName: 'kids', value: 2 },
+      { preferenceName: 'wrong', value: false },
+    ]);
+    const wrapper = shallow(
+      <ArgumentsValue name="preferences" actionName="preference-rollout" value={value} />,
+    );
+    const children = wrapper.find('.value').children();
+    expect(children.length).toBe(1);
+    expect(children.type()).toBe('table');
+    const content = children.html();
+    expect(content).toContain('<code>Peter</code>');
+    expect(content).toContain('<code>2</code>');
+    expect(content).toContain('<code>false</code>');
+  });
+
   describe('immutable objects', () => {
     it('should convert Immutable objects into JSON strings', () => {
       const testData = { slug: 'one', value: { test: 'fake-value' }, ratio: 1 };
