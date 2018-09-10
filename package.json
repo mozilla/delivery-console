@@ -95,8 +95,7 @@
     "webpack": "4.17.2",
     "webpack-dev-server": "3.1.8",
     "webpack-manifest-plugin": "2.0.3",
-    "webpack-merge": "4.1.4",
-    "whatwg-fetch": "3.0.0"
+    "webpack-merge": "4.1.4"
   },
   "jest": {
     "collectCoverageFrom": [
