@@ -38,7 +38,7 @@ export function makeApiRequest(requestId, root, endpoint, options = {}) {
         error,
       });
 
-      throw error;
+      throw new Error(error);
     }
 
     dispatch({

@@ -145,13 +145,30 @@ export function fetchRecipeHistory(pk) {
 
 export function fetchRecipeFilters() {
   return async dispatch => {
+    const localStorageKey = 'recipe_filters';
+    const localFilters = window.localStorage.getItem(localStorageKey);
+    if (localFilters) {
+      // If the filters *were* in localStorage, it's a JSON *string*.
+      dispatch({
+        type: RECIPE_FILTERS_RECEIVE,
+        filters: JSON.parse(localFilters),
+      });
+    }
+    // XXX If we already had the filters in localStorage, can we avoid using this
+    // makeNormandyApiRequest() with an ID so that it doesn't cause any spinners to appear
+    // when the localStorage version almost definitely is good enough.
     const requestId = 'fetch-recipe-filters';
-    const filters = await dispatch(makeNormandyApiRequest(requestId, 'v2/filters/'));
-
-    dispatch({
-      type: RECIPE_FILTERS_RECEIVE,
-      filters,
-    });
+    const filters = await dispatch(makeNormandyApiRequest(requestId, 'v3/filters/'));
+    // After it has been retrieved remotely, it's very possible that the lists
+    // haven't changed. If it hasn't changed compared to what we had in local Storage, then
+    // don't bother dispatching again.
+    if (!localFilters || JSON.stringify(filters) !== localFilters) {
+      dispatch({
+        type: RECIPE_FILTERS_RECEIVE,
+        filters,
+      });
+      window.localStorage.setItem(localStorageKey, JSON.stringify(filters));
+    }
   };
 }
 
