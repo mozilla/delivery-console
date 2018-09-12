@@ -14,7 +14,7 @@
     "connected-react-router": "4.4.1",
     "date-fns": "1.29.0",
     "immutable": "3.8.2",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "raven-js": "3.27.0",
     "react": "16.5.0",
     "react-copy-to-clipboard": "5.0.1",
