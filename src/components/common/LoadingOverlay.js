@@ -20,10 +20,11 @@ export class SimpleLoadingOverlay extends React.PureComponent {
 
   render() {
     const { children, className, isVisible } = this.props;
-
-    const Wrapper = isVisible ? Spin : 'div';
-
-    return <Wrapper className={className}>{children}</Wrapper>;
+    return (
+      <Spin className={className} spinning={isVisible}>
+        {children}
+      </Spin>
+    );
   }
 }
 
