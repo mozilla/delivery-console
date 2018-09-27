@@ -77,10 +77,12 @@ class HistoryItem extends React.PureComponent {
     if (revision.get('id') === this.props.selectedRevisionId) {
       labelColor = 'blue';
       iconColor = labelColor;
-      iconType = 'circle-left';
+      iconType = 'left-circle';
     }
 
-    const icon = !iconType ? null : <Icon type={iconType} style={{ fontSize: '16px' }} />;
+    const icon = !iconType ? null : (
+      <Icon type={iconType} theme="filled" style={{ fontSize: '18px' }} />
+    );
 
     return {
       icon,
