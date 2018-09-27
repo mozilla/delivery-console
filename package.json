@@ -86,7 +86,7 @@
     "react-dev-utils": "6.0.0-next.3e165448",
     "resolve": "1.8.1",
     "style-loader": "0.23.0",
-    "stylelint": "9.5.0",
+    "stylelint": "9.6.0",
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "1.0.0",
     "sw-precache-webpack-plugin": "0.11.5",
