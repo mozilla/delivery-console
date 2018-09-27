@@ -18,7 +18,7 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect((state, props) => {
   const recipeId = getUrlParamAsInt(state, 'recipeId');
-  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
+  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, null);
   const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
   const revision = getRevision(state, revisionId, new Map());
 
@@ -34,7 +34,7 @@ class RecipeDetailPage extends React.PureComponent {
     history: PropTypes.instanceOf(List).isRequired,
     recipeId: PropTypes.number.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
-    revisionId: PropTypes.number.isRequired,
+    revisionId: PropTypes.number,
   };
 
   render() {
@@ -49,9 +49,7 @@ class RecipeDetailPage extends React.PureComponent {
               <Col span={4}>
                 <ShieldIdenticon className="detail-icon" seed={revision.get('identicon_seed')} />
               </Col>
-              <Col span={20}>
-                <DetailsActionBar />
-              </Col>
+              <Col span={20}>{revisionId && <DetailsActionBar />}</Col>
             </Row>
             <LoadingOverlay
               requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}
@@ -61,11 +59,13 @@ class RecipeDetailPage extends React.PureComponent {
           </Col>
           <Col span={8} className="recipe-history">
             <Card className="noHovering" title="History">
-              <HistoryTimeline
-                history={history}
-                recipeId={recipeId}
-                selectedRevisionId={revisionId}
-              />
+              {revisionId && (
+                <HistoryTimeline
+                  history={history}
+                  recipeId={recipeId}
+                  selectedRevisionId={revisionId}
+                />
+              )}
             </Card>
           </Col>
         </Row>
