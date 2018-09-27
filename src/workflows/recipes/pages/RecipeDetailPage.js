@@ -18,8 +18,8 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect((state, props) => {
   const recipeId = getUrlParamAsInt(state, 'recipeId');
-  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-  const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId) || null;
+  const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, null);
+  const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
   const revision = getRevision(state, revisionId, new Map());
 
   return {
@@ -49,7 +49,7 @@ class RecipeDetailPage extends React.PureComponent {
               <Col span={4}>
                 <ShieldIdenticon className="detail-icon" seed={revision.get('identicon_seed')} />
               </Col>
-              <Col span={20}>{revisionId ? <DetailsActionBar /> : null}</Col>
+              <Col span={20}>{revisionId && <DetailsActionBar />}</Col>
             </Row>
             <LoadingOverlay
               requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}
@@ -59,13 +59,13 @@ class RecipeDetailPage extends React.PureComponent {
           </Col>
           <Col span={8} className="recipe-history">
             <Card className="noHovering" title="History">
-              {revisionId ? (
+              {revisionId && (
                 <HistoryTimeline
                   history={history}
                   recipeId={recipeId}
                   selectedRevisionId={revisionId}
                 />
-              ) : null}
+              )}
             </Card>
           </Col>
         </Row>
