@@ -112,7 +112,7 @@ describe('<HistoryItem>', () => {
 
       // `dot` is an Icon which should be highlighted with the appropriate icon.
       expect(el.props().dot).toBeTruthy();
-      expect(el.props().dot.props.type).toBe('circle-left');
+      expect(el.props().dot.props.type).toBe('left-circle');
       expect(wrapper.find(Tag).get(0).props.color).toBe('blue');
     });
 
