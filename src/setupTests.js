@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import * as immutableMatchers from 'jest-immutable-matchers';
 import fetchMock from 'fetch-mock';
 import { Headers } from 'whatwg-fetch';
+
 // Configure Enzyme adapter
 configure({ adapter: new Adapter() });
 

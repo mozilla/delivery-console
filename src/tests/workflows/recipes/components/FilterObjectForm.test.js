@@ -1,4 +1,4 @@
-import { List, fromJS } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import { render, fireEvent } from 'react-testing-library';
 import fetchMock from 'fetch-mock';
 import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
@@ -15,7 +15,7 @@ import { createForm } from 'console/utils/forms';
 import { wrapMockStore } from 'console/tests/mockStore';
 
 describe('<FilterObjectForm>', () => {
-  it('render editing form with an empty existing filter object', () => {
+  it('should render the form with an empty existing filter object', () => {
     fetchMock.getOnce(`${NORMANDY_ADMIN_API_ROOT_URL}v3/filters/`, {
       channels: [
         {
@@ -56,7 +56,7 @@ describe('<FilterObjectForm>', () => {
     expect(fetchMock.called()).toBeTruthy();
   });
 
-  it('render editing form with a full existing filter object', () => {
+  it('should render the form with a full existing filter object', () => {
     fetchMock.getOnce(`${NORMANDY_ADMIN_API_ROOT_URL}v3/filters/`, {
       channels: [
         {
@@ -114,14 +114,13 @@ describe('<FilterObjectForm>', () => {
     expect(fetchMock.called()).toBeTruthy();
   });
 
-  describe('<serializeFilterObjectToMap>', () => {
-    it('serialize an empty List to an empty Map', () => {
+  describe('serializeFilterObjectToMap function', () => {
+    it('should serialize an empty List to an empty Map', () => {
       const map = serializeFilterObjectToMap(List());
-      expect(map).toBeImmutableMap();
-      expect(map.size).toEqual(0);
+      expect(map).toEqualImmutable(Map());
     });
 
-    it('serialize an non-empty List to a Map', () => {
+    it('should serialize an non-empty List to a Map', () => {
       const list = fromJS([
         { type: 'channel', channels: ['beta'] },
         {
@@ -147,18 +146,19 @@ describe('<FilterObjectForm>', () => {
       );
     });
 
-    it('serialize an undefined List to an empty Map', () => {
+    it('should serialize an undefined List to an empty Map', () => {
       const map = serializeFilterObjectToMap(undefined);
       expect(map).toBeImmutableMap();
       expect(map.size).toEqual(0);
     });
 
-    it('throw error on something truthy that is not a List', () => {
+    it('should throw error on something truthy that is not a List', () => {
       expect(() => {
         serializeFilterObjectToMap([]);
       }).toThrow("'' (object) is not a List");
     });
-    it('throw error on an unrecognized key', () => {
+
+    it('should throw error on an unrecognized key', () => {
       const list = fromJS([{ type: 'color', colors: ['red'] }]);
       expect(() => {
         serializeFilterObjectToMap(list);
@@ -166,14 +166,14 @@ describe('<FilterObjectForm>', () => {
     });
   });
 
-  describe('<deserializeFilterObjectToList>', () => {
-    it('deserialize an undefined Map to an empty List', () => {
+  describe('deserializeFilterObjectToList function', () => {
+    it('should deserialize an undefined Map to an empty List', () => {
       const map = deserializeFilterObjectToList(undefined);
       expect(map).toBeImmutableList();
       expect(map.size).toEqual(0);
     });
 
-    it('serialize an non-empty Map to a List', () => {
+    it('should serialize an non-empty Map to a List', () => {
       const obj = {
         channels: ['beta'],
       };
@@ -183,7 +183,7 @@ describe('<FilterObjectForm>', () => {
       expect(list.first()).toEqual(fromJS({ type: 'channel', channels: ['beta'] }));
     });
 
-    it('throw an error on unrecognized names', () => {
+    it('should throw an error on unrecognized names', () => {
       const obj = {
         colors: ['red'],
       };
@@ -192,7 +192,7 @@ describe('<FilterObjectForm>', () => {
       }).toThrow("Key 'colors' no in known mapping.");
     });
 
-    it('serialize a map with exception _sampling', () => {
+    it('should serialize a map with the exceptional _sampling', () => {
       const obj = {
         _sampling: {
           type: 'bucketSample',
@@ -218,7 +218,7 @@ describe('<FilterObjectForm>', () => {
   });
 
   describe('utility functions', () => {
-    it('should parse inputs to either integer or null', () => {
+    it('should should parse inputs to either integer or null', () => {
       expect(parseIntOrNull(1)).toEqual(1);
       expect(parseIntOrNull('2')).toEqual(2);
       expect(parseIntOrNull('2.0')).toBeNull();
@@ -239,7 +239,7 @@ describe('<FilterObjectForm>', () => {
   });
 
   describe('<InputsWidget>', () => {
-    it('happy path adding more different inputs', () => {
+    it('should be possible to add more inputs', () => {
       const props = {
         disabled: false,
         bubbleUp: jest.fn(),
@@ -297,7 +297,7 @@ describe('<FilterObjectForm>', () => {
       });
     });
 
-    it('autocomplete suggestions', () => {
+    it('should suggest good matches in autocomplete suggestions', () => {
       const props = {
         disabled: false,
         bubbleUp: jest.fn(),
@@ -318,7 +318,7 @@ describe('<FilterObjectForm>', () => {
       expect(queryByText('normandy.foo')).toBeNull();
     });
 
-    it('editing by removing an existing input', () => {
+    it('should be possible to remove an existing input', () => {
       const props = {
         disabled: false,
         bubbleUp: jest.fn(),
@@ -369,7 +369,7 @@ describe('<FilterObjectForm>', () => {
     //   // fireEvent.keyDown(dropdown);
     // });
 
-    it('editing bucket sampling', () => {
+    it('should be possible to edit bucket sampling', () => {
       const props = {
         disabled: false,
         onChange: jest.fn(),
@@ -395,7 +395,7 @@ describe('<FilterObjectForm>', () => {
       });
     });
 
-    it('editing stable sampling', () => {
+    it('should be possible to edit stable sampling', () => {
       const props = {
         disabled: false,
         onChange: jest.fn(),
@@ -419,7 +419,7 @@ describe('<FilterObjectForm>', () => {
   });
 
   describe('<VersionsInput>', () => {
-    it('edit by adding 1 version', () => {
+    it('should be possible to add a version', () => {
       const props = {
         disabled: false,
         onChange: jest.fn(),
@@ -450,7 +450,7 @@ describe('<FilterObjectForm>', () => {
       expect(props.onChange).toBeCalledWith([75]);
     });
 
-    it('edit by adding a range of versions', () => {
+    it('should be possible to add a range of versions', () => {
       const props = {
         disabled: false,
         onChange: jest.fn(),
@@ -491,7 +491,7 @@ describe('<FilterObjectForm>', () => {
       expect(props.onChange).toBeCalledWith([75, 76, 77]);
     });
 
-    it('edit by removing a version', () => {
+    it('should be possible to remove a version', () => {
       const props = {
         disabled: false,
         onChange: jest.fn(),

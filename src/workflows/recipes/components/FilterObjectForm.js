@@ -784,9 +784,6 @@ export class InputsWidget extends React.PureComponent {
           disabled={disabled || !this.state.probablyValid}
           icon="plus"
           onClick={this.onSubmitSamplingInput}
-          // Needed to be able to find button DOM in testing.
-          // https://github.com/kentcdodds/dom-testing-library/issues/108
-          // data-testid="add-button"
         />
 
         <br />

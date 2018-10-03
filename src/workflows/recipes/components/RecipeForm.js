@@ -49,7 +49,6 @@ export function cleanRecipeData(data) {
     // Error thrown here will be automatically turned into a notification message in the UI.
     throw new Error('Have you have at least one filter object or a filter expression.');
   }
-  // console.log('DATA.filter_object', JSON.stringify(data.filter_object));
 
   // Make sure the action ID is an integer
   try {
