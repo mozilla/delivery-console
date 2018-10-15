@@ -147,7 +147,7 @@ class FilterObjectForm extends React.PureComponent {
     window.sessionStorage.setItem('filterObjectActiveTabKey', key);
   };
 
-  getDefaultActiveTabKey = (default_ = 'geo') => {
+  getDefaultActiveTabKey = default_ => {
     return window.sessionStorage.getItem('filterObjectActiveTabKey') || default_;
   };
 
@@ -221,10 +221,38 @@ class FilterObjectForm extends React.PureComponent {
         <QueryRecipeFilters />
 
         <Tabs
-          defaultActiveKey={this.getDefaultActiveTabKey()}
+          defaultActiveKey={this.getDefaultActiveTabKey('browser')}
           onChange={this.rememberActiveTabKey}
         >
-          <TabsPane tab={countSettings.geo ? `Geo (${countSettings.geo})` : 'Geo'} key="geo">
+          <TabsPane tab={`Browser (${countSettings.browser})`} key="browser">
+            <Row gutter={16}>
+              <Col span={12}>
+                <FormItem
+                  label="Channel"
+                  name="filter_object.channels"
+                  required={false}
+                  rules={[{ required: false }]}
+                  initialValue={initialChannels}
+                >
+                  <CheckboxGroup disabled={disabled} options={this.allChannelOptions()} />
+                </FormItem>
+              </Col>
+              <Col span={12}>
+                <FormItem
+                  label="Version"
+                  name="filter_object.versions"
+                  required={false}
+                  connectToForm={false}
+                >
+                  {getFieldDecorator('filter_object.versions', {
+                    initialValue: initialVersions,
+                    rules: [{ validator: this.checkVersions }],
+                  })(<VersionsInput disabled={disabled} />)}
+                </FormItem>
+              </Col>
+            </Row>
+          </TabsPane>
+          <TabsPane tab={`Geo (${countSettings.geo})`} key="geo">
             <Row gutter={16} type="flex">
               <Col span={12}>
                 <FormItem
@@ -288,41 +316,7 @@ class FilterObjectForm extends React.PureComponent {
               </Col>
             </Row>
           </TabsPane>
-          <TabsPane
-            tab={countSettings.browser ? `Browser (${countSettings.browser})` : 'Browser'}
-            key="browser"
-          >
-            <Row gutter={16}>
-              <Col span={12}>
-                <FormItem
-                  label="Channel"
-                  name="filter_object.channels"
-                  required={false}
-                  rules={[{ required: false }]}
-                  initialValue={initialChannels}
-                >
-                  <CheckboxGroup disabled={disabled} options={this.allChannelOptions()} />
-                </FormItem>
-              </Col>
-              <Col span={12}>
-                <FormItem
-                  label="Version"
-                  name="filter_object.versions"
-                  required={false}
-                  connectToForm={false}
-                >
-                  {getFieldDecorator('filter_object.versions', {
-                    initialValue: initialVersions,
-                    rules: [{ validator: this.checkVersions }],
-                  })(<VersionsInput disabled={disabled} />)}
-                </FormItem>
-              </Col>
-            </Row>
-          </TabsPane>
-          <TabsPane
-            tab={countSettings.sampling ? `Sampling (${countSettings.sampling})` : 'Sampling'}
-            key="sampling"
-          >
+          <TabsPane tab={`Sampling (${countSettings.sampling})`} key="sampling">
             <FormItem
               label=""
               name="filter_object._sampling"
