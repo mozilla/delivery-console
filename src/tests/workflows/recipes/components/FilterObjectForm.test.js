@@ -50,9 +50,9 @@ describe('<FilterObjectForm>', () => {
 
     const FakeForm = createForm({})(FilterObjectForm);
     const { getByText } = render(wrapMockStore(<FakeForm {...props} />));
-    expect(getByText('Geo')).toBeTruthy();
-    expect(getByText('Browser')).toBeTruthy();
-    expect(getByText('Sampling')).toBeTruthy();
+    expect(getByText('Geo (0)')).toBeTruthy();
+    expect(getByText('Browser (0)')).toBeTruthy();
+    expect(getByText('Sampling (0)')).toBeTruthy();
     expect(fetchMock.called()).toBeTruthy();
   });
 
