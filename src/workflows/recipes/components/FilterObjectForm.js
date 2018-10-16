@@ -124,7 +124,6 @@ class FilterObjectForm extends React.PureComponent {
   };
 
   allChannelOptions = () => {
-    console.log('this.props.allChannels:', this.props.allChannels);
     return this.props.allChannels
       .map(channel => {
         return { label: channel.get('value'), value: channel.get('key') };
