@@ -1,16 +1,5 @@
 /* eslint-disable react/jsx-boolean-value */
-import {
-  AutoComplete,
-  Button,
-  Checkbox,
-  Col,
-  InputNumber,
-  Radio,
-  Row,
-  Select,
-  Tabs,
-  Tag,
-} from 'antd';
+import { AutoComplete, Button, Checkbox, Col, InputNumber, Row, Select, Tabs, Tag } from 'antd';
 import { fromJS, List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -21,7 +10,6 @@ import FormItem from 'console/components/forms/FormItem';
 // XXX Why is this needed?!?
 const TabsPane = Tabs.TabPane;
 const CheckboxGroup = Checkbox.Group;
-const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
 // Every filter object is an Map (in an List) that looks something like this:
@@ -237,7 +225,6 @@ class FilterObjectForm extends React.PureComponent {
               })(<SamplingInput disabled={disabled} />)}
             </FormItem>
           </TabsPane>
-
           <TabsPane tab={`Browser (${countSettings.browser})`} key="browser">
             <Row gutter={16}>
               <Col span={12}>
@@ -356,8 +343,6 @@ export function parseIntOrNull(number) {
 
 export class VersionsInput extends React.PureComponent {
   MIN_VERSION = 45;
-  INPUT_TYPE_SPECIFIC = 'specific';
-  INPUT_TYPE_RANGE = 'range';
 
   static propTypes = {
     disabled: PropTypes.bool,
@@ -367,56 +352,31 @@ export class VersionsInput extends React.PureComponent {
 
   state = {
     newVersions: [],
-    number1: null,
-    number2: null,
+    number: null,
     probablyValid: false,
     versionInputType: this.INPUT_TYPE_SPECIFIC,
   };
 
-  onChangeVersionInputType = event => {
-    this.setState({ versionInputType: event.target.value });
-  };
-
-  onChangeNumber1 = value => {
-    this.setState({ number1: parseIntOrNull(value) }, this.toggleProbablyValid);
-  };
-  onChangeNumber2 = value => {
-    this.setState({ number2: parseIntOrNull(value) }, this.toggleProbablyValid);
+  onChangeNumber = value => {
+    this.setState({ number: parseIntOrNull(value) }, this.toggleProbablyValid);
   };
 
   toggleProbablyValid = () => {
-    // Remember, these two numbers are definitely integers or null.
-    const { number1, number2 } = this.state;
+    // Remember, this 'number' is definitely either an integer or null.
+    const { number } = this.state;
     const existingVersions = this.props.value;
-    const isSaneNumber = number => {
-      return number !== null && number >= this.MIN_VERSION;
-    };
-    let probablyValid = false; // assume the worst
-    if (this.state.versionInputType === this.INPUT_TYPE_RANGE) {
-      // The second number must be greater than the first number.
-      probablyValid =
-        isSaneNumber(number1) &&
-        isSaneNumber(number2) &&
-        number2 > number1 &&
-        (number1 < Math.min(...existingVersions) || number2 > Math.max(...existingVersions));
-    } else {
-      // The first number just needs to be sane.
-      // But it can't be one of the existing ones.
-      probablyValid = isSaneNumber(number1) && !existingVersions.includes(number1);
-    }
+    const probablyValid =
+      number !== null && number >= this.MIN_VERSION && !existingVersions.includes(number);
     this.setState({ probablyValid });
   };
 
   addInputVersions = event => {
-    let lastNumber = this.state.number1;
+    const { number } = this.state;
     const existingVersions = this.props.value;
-    const range = [lastNumber];
-    while (this.state.number2 !== null && lastNumber++ < this.state.number2) {
-      range.push(lastNumber);
-    }
+    const range = [number];
     // Merge the range being asked to add with the existing versions.
     const merged = [...new Set([...existingVersions, ...range])].sort();
-    this.setState({ number1: '', number2: '', probablyValid: false }, () => {
+    this.setState({ number: '', probablyValid: false }, () => {
       this.props.onChange(merged);
     });
   };
@@ -431,43 +391,14 @@ export class VersionsInput extends React.PureComponent {
 
     return (
       <div>
-        <RadioGroup
-          disabled={disabled}
-          onChange={this.onChangeVersionInputType}
-          value={this.state.versionInputType}
-        >
-          <Radio value={this.INPUT_TYPE_SPECIFIC}>Specific</Radio>
-          <Radio value={this.INPUT_TYPE_RANGE}>Range</Radio>
-        </RadioGroup>
         <div>
           <InputNumber
             min={this.MIN_VERSION}
             disabled={disabled}
-            onChange={this.onChangeNumber1}
-            value={this.state.number1 || ''}
+            onChange={this.onChangeNumber}
+            value={this.state.number || ''}
             title={`Must be an integer number of at least ${this.MIN_VERSION}`}
-            onBlur={() => {
-              if (
-                this.state.number1 &&
-                this.state.versionInputType === this.INPUT_TYPE_RANGE &&
-                !this.state.number2
-              ) {
-                // Suggest a number of the second input right away.
-                this.setState({ number2: this.state.number1 + 1 }, this.toggleProbablyValid);
-              }
-            }}
           />
-          {this.state.versionInputType === this.INPUT_TYPE_RANGE ? (
-            <InputNumber
-              min={this.MIN_VERSION}
-              disabled={disabled}
-              value={this.state.number2 || ''}
-              onChange={this.onChangeNumber2}
-              title={`Must be an integer number of at least ${
-                this.MIN_VERSION
-              } and greater than the other number`}
-            />
-          ) : null}{' '}
           <Button
             type="primary"
             shape="circle"

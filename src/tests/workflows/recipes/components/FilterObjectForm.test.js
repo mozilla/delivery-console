@@ -450,47 +450,6 @@ describe('<FilterObjectForm>', () => {
       expect(props.onChange).toBeCalledWith([75]);
     });
 
-    it('should be possible to add a range of versions', () => {
-      const props = {
-        disabled: false,
-        onChange: jest.fn(),
-        value: [],
-        onSubmit: jest.fn(), // otherwise set by createForm()
-      };
-
-      const FakeForm = createForm({})(VersionsInput);
-      const { getByValue, container } = render(<FakeForm {...props} />);
-
-      const changeRadioButton = getByValue('range');
-      fireEvent.click(changeRadioButton);
-
-      const firstInput = getByValue('');
-      fireEvent.change(firstInput, {
-        target: { value: '75' },
-      });
-      fireEvent.blur(firstInput);
-      const button = container.querySelector('button[type="button"]');
-      // The submit button is now *not* disabled, because typing something into the
-      // first number will automatically suggest something in the second input.
-      const secondInput = getByValue('76'); // getting this proves it was populated
-      expect(button.disabled).toBeFalsy();
-
-      // Let's put in something that is not right. A number *less* than the first one.
-      fireEvent.change(secondInput, {
-        target: { value: '70' },
-      });
-      expect(button.disabled).toBeTruthy();
-
-      // Be more sensible.
-      fireEvent.change(secondInput, {
-        target: { value: '77' },
-      });
-      expect(button.disabled).toBeFalsy();
-
-      fireEvent.click(button);
-      expect(props.onChange).toBeCalledWith([75, 76, 77]);
-    });
-
     it('should be possible to remove a version', () => {
       const props = {
         disabled: false,
