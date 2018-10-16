@@ -221,9 +221,23 @@ class FilterObjectForm extends React.PureComponent {
         <QueryRecipeFilters />
 
         <Tabs
-          defaultActiveKey={this.getDefaultActiveTabKey('browser')}
+          defaultActiveKey={this.getDefaultActiveTabKey('sampling')}
           onChange={this.rememberActiveTabKey}
         >
+          <TabsPane tab={`Sampling (${countSettings.sampling})`} key="sampling">
+            <FormItem
+              label=""
+              name="filter_object._sampling"
+              required={false}
+              connectToForm={false}
+            >
+              {getFieldDecorator('filter_object._sampling', {
+                initialValue: initialSampling,
+                rules: [{ validator: this.checkSampling }],
+              })(<SamplingInput disabled={disabled} />)}
+            </FormItem>
+          </TabsPane>
+
           <TabsPane tab={`Browser (${countSettings.browser})`} key="browser">
             <Row gutter={16}>
               <Col span={12}>
@@ -315,19 +329,6 @@ class FilterObjectForm extends React.PureComponent {
                 </FormItem>
               </Col>
             </Row>
-          </TabsPane>
-          <TabsPane tab={`Sampling (${countSettings.sampling})`} key="sampling">
-            <FormItem
-              label=""
-              name="filter_object._sampling"
-              required={false}
-              connectToForm={false}
-            >
-              {getFieldDecorator('filter_object._sampling', {
-                initialValue: initialSampling,
-                rules: [{ validator: this.checkSampling }],
-              })(<SamplingInput disabled={disabled} />)}
-            </FormItem>
           </TabsPane>
         </Tabs>
       </div>
