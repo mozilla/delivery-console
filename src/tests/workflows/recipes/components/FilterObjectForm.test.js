@@ -234,7 +234,7 @@ describe('<FilterObjectForm>', () => {
         'normandy.request_time',
       );
       expect(rewriteSamplingInput('string', options)).toEqual('"string"');
-      expect(rewriteSamplingInput('123', options)).toEqual('123');
+      expect(rewriteSamplingInput('123', options)).toEqual(123);
     });
   });
 
@@ -295,6 +295,44 @@ describe('<FilterObjectForm>', () => {
       expect(props.bubbleUp).toBeCalledWith({
         input: ['"freetext"', 123, 'normandy.clientId', 'normandy.request_time'],
       });
+    });
+
+    it('should not be possible to add inputs that already are set', () => {
+      const props = {
+        disabled: false,
+        bubbleUp: jest.fn(),
+        value: {
+          input: ['normandy.request_time', '"foobar"', 456],
+        },
+        onSubmit: jest.fn(),
+      };
+
+      // Create a Form wrapper to get the child contexts automatically passed.
+      const FakeForm = createForm({})(InputsWidget);
+      const { container } = render(<FakeForm {...props} />);
+      // Have to use querySelector because there's no text on the button.
+      const button = container.querySelector('button[type="button"]');
+      expect(button.disabled).toBeTruthy();
+
+      const input = container.querySelector('input');
+      // Can't use `fireEvent.change(input)` because it's a controlled component.
+      fireEvent.change(input, {
+        target: { value: 'normandy.request_time' },
+      });
+      // Current input isn't new!
+      expect(button.disabled).toBeTruthy();
+      // Even if you enter something that would be eventually reformatted it shouldn't allow it.
+      fireEvent.change(input, {
+        target: { value: 'foobar' },
+      });
+      // Current input still isn't new!
+      expect(button.disabled).toBeTruthy();
+      // As an string-to-int it should notice that that integer is already entered.
+      fireEvent.change(input, {
+        target: { value: '456' },
+      });
+      // Current input still isn't new!
+      expect(button.disabled).toBeTruthy();
     });
 
     it('should suggest good matches in autocomplete suggestions', () => {

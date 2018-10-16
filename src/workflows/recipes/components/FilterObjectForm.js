@@ -124,11 +124,23 @@ class FilterObjectForm extends React.PureComponent {
   };
 
   allChannelOptions = () => {
+    console.log('this.props.allChannels:', this.props.allChannels);
     return this.props.allChannels
       .map(channel => {
         return { label: channel.get('value'), value: channel.get('key') };
       })
-      .toArray();
+      .toArray()
+      .sort((a, b) => {
+        // The reason why we sort my *label* is because that's the only thing presented
+        // to users' eyes. What the default sort is or what the order by 'key' is not
+        // important to the user.
+        if (a.label > b.label) {
+          return 1;
+        } else if (a.label < b.label) {
+          return -1;
+        }
+        return 0;
+      });
   };
 
   rememberActiveTabKey = key => {
@@ -603,6 +615,10 @@ export function rewriteSamplingInput(input, defaultOptions) {
   ) {
     input = `"${input}"`;
   }
+  // This that are just numbers are converted to true integers.
+  if (!isNaN(parseInt(input, 10))) {
+    input = parseInt(input, 10);
+  }
   return input;
 }
 
@@ -637,9 +653,6 @@ export class InputsWidget extends React.PureComponent {
   };
 
   onSelectSamplingInput = value => {
-    if (!isNaN(parseInt(value, 10))) {
-      value = parseInt(value, 10);
-    }
     const inputs = this.props.value.input || [];
     inputs.push(value);
     inputs.sort((inputA, inputB) => {
@@ -672,7 +685,14 @@ export class InputsWidget extends React.PureComponent {
   onSearchInput = value => {
     // Reason for keeping this as local state is to be able to clear it when something
     // is chosen.
-    this.setState({ inputSearch: value, probablyValid: !!value.trim() });
+    let probablyValid = !!value.trim();
+    const existingValues = this.props.value.input;
+    if (existingValues && probablyValid) {
+      const newValue = rewriteSamplingInput(value, this.props.defaultInputOptions);
+      probablyValid &= !existingValues.includes(newValue);
+    }
+
+    this.setState({ inputSearch: value, probablyValid });
   };
 
   filterOption = (inputValue, option) => {
