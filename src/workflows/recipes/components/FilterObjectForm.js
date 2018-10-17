@@ -751,15 +751,7 @@ export class InputsWidget extends React.PureComponent {
       wrapperCol: { span: 14 },
     },
     formErrors: {},
-    // XXX THIS LIST IS BASED ON SCRAPING https://normandy.cdn.mozilla.net/api/v1/recipe/
-    // AND IT'S VERY DIFFERENT FROM THE AVAILABLE OPTIONS HERE:
-    // https://normandy.readthedocs.io/en/latest/user/filters.html#filter-context
-    defaultInputOptions: [
-      'normandy.clientId',
-      'normandy.recipe.id',
-      'normandy.request_time',
-      'normandy.userId',
-    ],
+    defaultInputOptions: ['normandy.recipe.id', 'normandy.userId'],
   };
 
   onSelectSamplingInput = value => {
