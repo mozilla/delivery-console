@@ -44,6 +44,10 @@ export function cleanRecipeData(data) {
   // When submitted it's an object like `{locales: ['sv']}` and it needs to become:
   // `[{type: 'locale': locales: ['sv']}]` for example.
   data.filter_object = deserializeFilterObjectToList(data.filter_object);
+  if (data.filter_object.size && data.extra_filter_expression === null) {
+    // Normandy gets crumpy if the extra_filter_expression is null.
+    data.extra_filter_expression = '';
+  }
   if (!data.filter_object.size && !data.extra_filter_expression) {
     // You can't submit a recipe with no extra filter expression and no filter object rules.
     // Error thrown here will be automatically turned into a notification message in the UI.
