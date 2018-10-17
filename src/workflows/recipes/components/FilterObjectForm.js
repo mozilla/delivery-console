@@ -589,7 +589,7 @@ export class SamplingInput extends React.PureComponent {
             onChange={value => {
               this.bubbleUp({ start: value });
             }}
-            value={value.start || ''}
+            value={value.start !== undefined ? value.start : ''}
           />
         </FormItem>
         <FormItem
@@ -606,7 +606,7 @@ export class SamplingInput extends React.PureComponent {
             onChange={value => {
               this.bubbleUp({ count: value });
             }}
-            value={value.count || ''}
+            value={value.count !== undefined ? value.count : ''}
           />
         </FormItem>
         <FormItem
@@ -623,7 +623,7 @@ export class SamplingInput extends React.PureComponent {
             onChange={value => {
               this.bubbleUp({ total: value });
             }}
-            value={value.total || ''}
+            value={value.total !== undefined ? value.total : ''}
           />
         </FormItem>
 
@@ -661,7 +661,7 @@ export class SamplingInput extends React.PureComponent {
             onChange={value => {
               this.bubbleUp({ rate: value / 100 });
             }}
-            value={(value.rate && Math.trunc(value.rate * 100)) || ''}
+            value={(value.rate !== undefined && Math.trunc(value.rate * 100)) || ''}
           />
         </FormItem>
         <InputsWidget
