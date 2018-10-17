@@ -45,6 +45,7 @@ describe('<FilterObjectForm>', () => {
         },
       },
       filterObject,
+      filterObjectErrors: {},
       onSubmit: jest.fn(),
     };
 

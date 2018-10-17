@@ -137,7 +137,8 @@ class RecipeForm extends React.PureComponent {
   }
 
   render() {
-    const { filters, isCreationForm, isLoading, onSubmit, recipe } = this.props;
+    const { filters, isCreationForm, isLoading, onSubmit, recipe, errors } = this.props;
+
     const { defaultIdenticonSeed } = this.state;
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
@@ -173,7 +174,9 @@ class RecipeForm extends React.PureComponent {
         <FilterObjectForm
           form={this.props.form}
           disabled={isLoading}
+          recipe={recipe}
           filterObject={filterObject}
+          filterObjectErrors={errors.filter_object}
           allLocales={filters.get('locales')}
           allCountries={filters.get('countries')}
           allChannels={filters.get('channels')}

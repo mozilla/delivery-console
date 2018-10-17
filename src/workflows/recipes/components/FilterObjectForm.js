@@ -1,5 +1,16 @@
 /* eslint-disable react/jsx-boolean-value */
-import { AutoComplete, Button, Checkbox, Col, InputNumber, Row, Select, Tabs, Tag } from 'antd';
+import {
+  AutoComplete,
+  Button,
+  Checkbox,
+  Col,
+  Icon,
+  InputNumber,
+  Row,
+  Select,
+  Tabs,
+  Tag,
+} from 'antd';
 import { fromJS, List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -45,7 +56,7 @@ export const SAMPLING_TYPES = [
       {"ages": [1,2,3]}
 
   The list of valid keys needs to be known in advance. */
-export const serializeFilterObjectToMap = list => {
+export function serializeFilterObjectToMap(list) {
   if (!list) {
     return Map();
   }
@@ -66,7 +77,7 @@ export const serializeFilterObjectToMap = list => {
       return [name, item.get(name)];
     }),
   );
-};
+}
 
 /* Return a List from a Map.
   Each item in the map is expected to be key'ed based on the reverse of the MAPPING
@@ -79,7 +90,7 @@ export const serializeFilterObjectToMap = list => {
     [{type: "locale", locales: ["sv", "en-US"]}, ...]
 
   The list of keys have to be known in advance. */
-export const deserializeFilterObjectToList = obj => {
+export function deserializeFilterObjectToList(obj) {
   if (!obj) {
     return List();
   }
@@ -106,7 +117,7 @@ export const deserializeFilterObjectToList = obj => {
         }
       }),
   );
-};
+}
 
 class FilterObjectForm extends React.PureComponent {
   static propTypes = {
@@ -115,6 +126,7 @@ class FilterObjectForm extends React.PureComponent {
     allLocales: PropTypes.instanceOf(List),
     disabled: PropTypes.bool,
     filterObject: PropTypes.instanceOf(Map),
+    filterObjectErrors: PropTypes.object,
   };
 
   static defaultProps = {
@@ -160,7 +172,7 @@ class FilterObjectForm extends React.PureComponent {
   };
 
   checkSampling = (rule, value, callback) => {
-    // XXX nothing at the moment
+    // XXX Check that all input fields are filled.
     callback();
   };
 
@@ -202,9 +214,72 @@ class FilterObjectForm extends React.PureComponent {
     return counts;
   };
 
+  getFormErrorsByTab = formErrors => {
+    // Return an object keyed by 'geo', 'browser', and 'sampling' whose values are
+    // true or false depending on their being any current form errors within.
+    // distinct settings have been made there.
+    const tabs = {
+      geo: false,
+      browser: false,
+      sampling: false,
+    };
+    if (formErrors._sampling) {
+      tabs.sampling = true;
+    }
+    if (formErrors.filter_object) {
+      if (formErrors.filter_object.channels || formErrors.filter_object.versions) {
+        tabs.browser = true;
+      }
+      if (formErrors.filter_object.countries || formErrors.filter_object.locales) {
+        tabs.geo = true;
+      }
+    }
+    return tabs;
+  };
+
   render() {
     const { disabled, filterObject } = this.props;
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldsValue } = this.props.form;
+
+    const filterObjectErrors = this.props.filterObjectErrors || {};
+    // This is where we build up a suitable object to pass to the FormItem
+    // components. It's got a very different structure than the filterObjectErrors.
+    // Basically, this object it sent to <FormItem/> components and they look up
+    // errors based on the "name". E.g. <FormItem name="foo.bar" formErrors={formErrors}>
+    // will search for errors in `formErrors.foo.bar`.
+    const formErrors = {};
+    if (Object.keys(filterObjectErrors).length) {
+      // The filter object form errors (i.e. validation errors from the server)
+      // comes in an object where each key is a the index number of the filter
+      // object *sent*. Suppose that we sent this:
+      //   [FilterObjectX, FilterObjectY, FilterObjectZ]
+      // and the server responded with:
+      //  {1: FormError}
+      // then, we know the error lies with 'FilterObjectY'.
+      // We need to turn those form errors into an object, keyed by the same
+      // way we sent it and using names that are the names we use for <FormItem/>
+      // Let's figure this out.
+      const filterObjectsAsList = deserializeFilterObjectToList(
+        getFieldsValue(['filter_object']).filter_object,
+      );
+      formErrors.filter_object = {};
+      filterObjectsAsList.forEach((filterObject, i) => {
+        if (filterObjectErrors[i]) {
+          const type = filterObject.get('type');
+          if (type === 'bucketSample' || type === 'stableSample') {
+            // Put this in the root!
+            formErrors._sampling = filterObjectErrors[i];
+          } else {
+            const name = MAPPING[type];
+            formErrors.filter_object[name] = filterObjectErrors[i][name];
+          }
+        }
+      });
+    }
+
+    // Now that we have all the active form errors, we can try to extract from these,
+    // which *tabs* then have errors in them.
+    const formErrorsByTab = this.getFormErrorsByTab(formErrors);
 
     // This is a simple object for counting how many settings have been set per tab.
     const countSettings = this.getSettingsCounts();
@@ -215,6 +290,27 @@ class FilterObjectForm extends React.PureComponent {
     const initialVersions = filterObject.get('versions', List()).toArray();
     const initialSampling = filterObject.get('_sampling', Map()).toJS();
 
+    const tabLabels = {
+      sampling: (
+        <span>
+          {formErrorsByTab.sampling && <Icon type="warning" theme="outlined" />}
+          Sampling ({countSettings.sampling})
+        </span>
+      ),
+      browser: (
+        <span>
+          {formErrorsByTab.browser && <Icon type="warning" theme="outlined" />}
+          Browser ({countSettings.browser})
+        </span>
+      ),
+      geo: (
+        <span>
+          {formErrorsByTab.geo && <Icon type="warning" theme="outlined" />}
+          Geo ({countSettings.geo})
+        </span>
+      ),
+    };
+
     return (
       <div>
         <QueryRecipeFilters />
@@ -223,25 +319,27 @@ class FilterObjectForm extends React.PureComponent {
           defaultActiveKey={this.getDefaultActiveTabKey('sampling')}
           onChange={this.rememberActiveTabKey}
         >
-          <TabsPane tab={`Sampling (${countSettings.sampling})`} key="sampling">
+          <TabsPane tab={tabLabels.sampling} key="sampling">
             <FormItem
               label=""
               name="filter_object._sampling"
               required={false}
               connectToForm={false}
+              formErrors={formErrors}
             >
               {getFieldDecorator('filter_object._sampling', {
                 initialValue: initialSampling,
                 rules: [{ validator: this.checkSampling }],
-              })(<SamplingInput disabled={disabled} />)}
+              })(<SamplingInput disabled={disabled} formErrors={formErrors} />)}
             </FormItem>
           </TabsPane>
-          <TabsPane tab={`Browser (${countSettings.browser})`} key="browser">
+          <TabsPane tab={tabLabels.browser} key="browser">
             <Row gutter={16}>
               <Col span={12}>
                 <FormItem
                   label="Channel"
                   name="filter_object.channels"
+                  formErrors={formErrors}
                   required={false}
                   rules={[{ required: false }]}
                   initialValue={initialChannels}
@@ -253,6 +351,7 @@ class FilterObjectForm extends React.PureComponent {
                 <FormItem
                   label="Version"
                   name="filter_object.versions"
+                  formErrors={formErrors}
                   required={false}
                   connectToForm={false}
                 >
@@ -264,12 +363,13 @@ class FilterObjectForm extends React.PureComponent {
               </Col>
             </Row>
           </TabsPane>
-          <TabsPane tab={`Geo (${countSettings.geo})`} key="geo">
+          <TabsPane tab={tabLabels.geo} key="geo">
             <Row gutter={16} type="flex">
               <Col span={12}>
                 <FormItem
                   label="Locale"
                   name="filter_object.locales"
+                  formErrors={formErrors}
                   required={false}
                   rules={[{ required: false }]}
                   initialValue={initialLocales}
@@ -301,6 +401,7 @@ class FilterObjectForm extends React.PureComponent {
                 <FormItem
                   label="Country"
                   name="filter_object.countries"
+                  formErrors={formErrors}
                   required={false}
                   rules={[{ required: false }]}
                   initialValue={initialCountries}
@@ -446,6 +547,10 @@ export class SamplingInput extends React.PureComponent {
     onChange: PropTypes.func,
   };
 
+  static defaultProps = {
+    formErrors: {},
+  };
+
   bubbleUp = newData => {
     this.props.onChange(Object.assign({}, this.props.value, newData));
   };
@@ -467,8 +572,7 @@ export class SamplingInput extends React.PureComponent {
   };
 
   renderBucketInputs = () => {
-    const { disabled, value } = this.props;
-
+    const { disabled, value, formErrors } = this.props;
     return (
       <div>
         <FormItem
@@ -476,6 +580,7 @@ export class SamplingInput extends React.PureComponent {
           name="_sampling.start"
           required={true}
           connectToForm={false}
+          formErrors={formErrors}
           {...this.formItemLayout}
         >
           <InputNumber
@@ -492,6 +597,7 @@ export class SamplingInput extends React.PureComponent {
           name="_sampling.count"
           required={true}
           connectToForm={false}
+          formErrors={formErrors}
           {...this.formItemLayout}
         >
           <InputNumber
@@ -508,6 +614,7 @@ export class SamplingInput extends React.PureComponent {
           name="_sampling.total"
           required={true}
           connectToForm={false}
+          formErrors={formErrors}
           {...this.formItemLayout}
         >
           <InputNumber
@@ -523,6 +630,7 @@ export class SamplingInput extends React.PureComponent {
         <InputsWidget
           disabled={disabled}
           value={value}
+          formErrors={formErrors}
           bubbleUp={this.bubbleUp}
           formItemLayout={this.formItemLayout}
         />
@@ -531,7 +639,7 @@ export class SamplingInput extends React.PureComponent {
   };
 
   renderStableInputs = () => {
-    const { disabled, value } = this.props;
+    const { disabled, value, formErrors } = this.props;
 
     return (
       <div>
@@ -540,6 +648,7 @@ export class SamplingInput extends React.PureComponent {
           name="_sampling.rate"
           required={true}
           connectToForm={false}
+          formErrors={formErrors}
           {...this.formItemLayout}
         >
           <InputNumber
@@ -558,6 +667,7 @@ export class SamplingInput extends React.PureComponent {
         <InputsWidget
           disabled={disabled}
           value={value}
+          formErrors={formErrors}
           bubbleUp={this.bubbleUp}
           formItemLayout={this.formItemLayout}
         />
@@ -640,6 +750,7 @@ export class InputsWidget extends React.PureComponent {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
     },
+    formErrors: {},
     // XXX THIS LIST IS BASED ON SCRAPING https://normandy.cdn.mozilla.net/api/v1/recipe/
     // AND IT'S VERY DIFFERENT FROM THE AVAILABLE OPTIONS HERE:
     // https://normandy.readthedocs.io/en/latest/user/filters.html#filter-context
@@ -700,7 +811,8 @@ export class InputsWidget extends React.PureComponent {
   };
 
   render() {
-    const { value, disabled } = this.props;
+    const { value, disabled, formErrors } = this.props;
+
     const inputs = value.input || [];
     const inputOptions = this.props.defaultInputOptions.filter(opt => {
       return !inputs.includes(opt);
@@ -709,6 +821,7 @@ export class InputsWidget extends React.PureComponent {
       <FormItem
         label="Input"
         name="_sampling.input"
+        formErrors={formErrors}
         required={true}
         connectToForm={false}
         {...this.props.formItemLayout}
