@@ -58,7 +58,7 @@ class HistoryItem extends React.PureComponent {
     },
     [REVISION_PENDING_APPROVAL]: {
       color: 'gold',
-      iconType: 'clock-circle-o',
+      iconType: 'clock-circle',
       label: 'Pending Approval',
     },
   };
@@ -80,11 +80,6 @@ class HistoryItem extends React.PureComponent {
       iconType = 'left-circle';
     }
 
-    // Note! There's a strange behavior when running test.
-    // When you run `yarn run test` you'll get this warning:
-    // "Warning: This icon already has a theme 'outlined'. The prop 'theme' filled will be ignored."
-    // It's because of the `theme="filled"` but we want/need that to be filled.
-    // Filed this: https://github.com/ant-design/ant-design/issues/12441
     const icon = !iconType ? null : (
       <Icon type={iconType} theme="filled" style={{ fontSize: '18px' }} />
     );

@@ -88,7 +88,7 @@ describe('<HistoryItem>', () => {
     });
 
     it('should use a "pending approval" style when the status is REVISION_PENDING_APPROVAL', () => {
-      testStatusStyle(REVISION_PENDING_APPROVAL, 'gold', 'clock-circle-o', 'Pending Approval');
+      testStatusStyle(REVISION_PENDING_APPROVAL, 'gold', 'clock-circle', 'Pending Approval');
     });
   });
 
