@@ -775,8 +775,9 @@ export class InputsWidget extends React.PureComponent {
       }
       return 0;
     });
-    this.props.bubbleUp({ input: inputs });
-    this.setState({ inputSearch: '', probablyValid: false });
+    this.setState({ inputSearch: '', probablyValid: false }, () => {
+      this.props.bubbleUp({ input: inputs });
+    });
   };
 
   onSubmitSamplingInput = () => {
@@ -829,7 +830,6 @@ export class InputsWidget extends React.PureComponent {
         <AutoComplete
           dataSource={inputOptions}
           style={{ width: 200 }}
-          onSelect={this.onSelectSamplingInput}
           onChange={this.onSearchInput}
           disabled={disabled}
           value={this.state.inputSearch}
