@@ -160,15 +160,26 @@ class FilterObjectForm extends React.PureComponent {
   checkVersions = (rule, value, callback) => {
     // Not doing anything here. The trust of validation is ultimately inside the VersionsInput
     // component *and* the server-side checking.
-    // This method is remains as a stub in case we later decide to add some last-minute
-    // validation and by leaving it we remind ourselves how this magic with
-    // getFieldDecorator stuff works.
     callback();
   };
 
   checkSampling = (rule, value, callback) => {
-    // XXX Check that all input fields are filled.
-    callback();
+    // The reason for deliberately not doing any validation here is because this
+    // validation function is called on every single onChange to any of the sub-widgets
+    // of the sampling input.
+    // We *could* check that every value is an integer. We *could* check that the
+    // input field is not empty. However, we can't specific exactly which field is the
+    // bad one. For example, if we discover that "bucketSample.start === 'junk'" the best
+    // we can do with this is something like this: `callback("'start' is not a number")`
+    // but there are many caveats with this. It will make every input field in the sub-widgets
+    // read and the error message string (e.g. "'start' is not a number") will be displayed
+    // for *all* fields. Also, it's quite annoying to validate input whilst the user isn't
+    // finished with it. For example, they might fumble on the keyboard and haven't yet
+    // typed in what they want. Ideally, that's solved by doing the validation onBlur
+    // or (traditional) onChange when the user is generally done with the input field.
+    // Lastly, the server-side does good validation and that validation is on a per-field
+    // basis.
+    return callback();
   };
 
   filterOption = (inputValue, option) => {
