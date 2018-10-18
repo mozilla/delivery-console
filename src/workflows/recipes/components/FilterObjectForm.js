@@ -18,11 +18,6 @@ import React from 'react';
 import QueryRecipeFilters from 'console/components/data/QueryRecipeFilters';
 import FormItem from 'console/components/forms/FormItem';
 
-// XXX Why is this needed?!?
-const TabsPane = Tabs.TabPane;
-const CheckboxGroup = Checkbox.Group;
-const Option = Select.Option;
-
 // Every filter object is an Map (in an List) that looks something like this:
 //  {"type": "channel", "channels": ["beta"]}
 // We need a mapping from "channel" to "channels", for each, to know what to
@@ -319,7 +314,7 @@ class FilterObjectForm extends React.PureComponent {
           defaultActiveKey={this.getDefaultActiveTabKey('sampling')}
           onChange={this.rememberActiveTabKey}
         >
-          <TabsPane tab={tabLabels.sampling} key="sampling">
+          <Tabs.TabPane tab={tabLabels.sampling} key="sampling">
             <FormItem
               label=""
               name="filter_object._sampling"
@@ -332,8 +327,8 @@ class FilterObjectForm extends React.PureComponent {
                 rules: [{ validator: this.checkSampling }],
               })(<SamplingInput disabled={disabled} formErrors={formErrors} />)}
             </FormItem>
-          </TabsPane>
-          <TabsPane tab={tabLabels.browser} key="browser">
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={tabLabels.browser} key="browser">
             <Row gutter={16}>
               <Col span={12}>
                 <FormItem
@@ -344,7 +339,7 @@ class FilterObjectForm extends React.PureComponent {
                   rules={[{ required: false }]}
                   initialValue={initialChannels}
                 >
-                  <CheckboxGroup disabled={disabled} options={this.allChannelOptions()} />
+                  <Checkbox.Group disabled={disabled} options={this.allChannelOptions()} />
                 </FormItem>
               </Col>
               <Col span={12}>
@@ -362,8 +357,8 @@ class FilterObjectForm extends React.PureComponent {
                 </FormItem>
               </Col>
             </Row>
-          </TabsPane>
-          <TabsPane tab={tabLabels.geo} key="geo">
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={tabLabels.geo} key="geo">
             <Row gutter={16} type="flex">
               <Col span={12}>
                 <FormItem
@@ -428,7 +423,7 @@ class FilterObjectForm extends React.PureComponent {
                 </FormItem>
               </Col>
             </Row>
-          </TabsPane>
+          </Tabs.TabPane>
         </Tabs>
       </div>
     );
@@ -694,9 +689,9 @@ export class SamplingInput extends React.PureComponent {
           >
             {SAMPLING_TYPES.map(samplingType => {
               return (
-                <Option value={samplingType.value} key={samplingType.value}>
+                <Select.Option value={samplingType.value} key={samplingType.value}>
                   {samplingType.label}
-                </Option>
+                </Select.Option>
               );
             })}
           </Select>
