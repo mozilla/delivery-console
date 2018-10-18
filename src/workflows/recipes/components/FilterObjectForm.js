@@ -206,7 +206,6 @@ class FilterObjectForm extends React.PureComponent {
       const value = getFieldValue(`filter_object.${key}`);
       // 'value' here is either undefined, a JS object or a JS array.
       // The task is to conclude if it's truthy.
-      // XXX Is there a better utility function for this?
       if (value) {
         return (Array.isArray(value) && !!value.length) || !!Object.keys(value).length;
       }
