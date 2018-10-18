@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { areAnyRequestsInProgress, isRequestInProgress } from 'console/state/network/selectors';
 
-export class SimpleLoadingOverlay extends React.PureComponent {
+export class SimpleLoadingOverlay extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string,
@@ -48,7 +48,7 @@ export class SimpleLoadingOverlay extends React.PureComponent {
     isLoading,
   };
 })
-class LoadingOverlay extends React.PureComponent {
+class LoadingOverlay extends React.Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     requestIds: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string])
