@@ -30,11 +30,12 @@ export function makeApiRequest(requestId, root, endpoint, options = {}) {
       return true;
     }
 
-    !stealth &&
+    if (!stealth) {
       dispatch({
         type: REQUEST_SEND,
         requestId,
       });
+    }
 
     let data;
 
