@@ -1,5 +1,4 @@
 import { Form } from 'antd';
-import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -56,7 +55,6 @@ ValidationError.prototype.name = 'ValidationError';
  */
 export function createForm({ validateFields, ...formConfig }) {
   return FormComponent => {
-    @autobind
     class WrappedForm extends React.Component {
       static propTypes = {
         // Form object injected by Form.create.
@@ -91,16 +89,16 @@ export function createForm({ validateFields, ...formConfig }) {
         };
       }
 
-      handleSubmit(event, context = {}) {
+      handleSubmit = (event, context = {}) => {
         event.preventDefault();
         this.triggerSubmit(context);
-      }
+      };
 
       /**
        * Run validation (both rule-based and custom validation) and pass the
        * results to the onSubmit prop.
        */
-      async triggerSubmit(context) {
+      triggerSubmit = async context => {
         const { onBeforeSubmit = () => {}, onSubmit } = this.props;
 
         const customValidateFields = validateFields || (values => values);
@@ -118,9 +116,9 @@ export function createForm({ validateFields, ...formConfig }) {
         }
 
         onSubmit(values, context);
-      }
+      };
 
-      async defaultValidateFields() {
+      defaultValidateFields = async () => {
         return new Promise((resolve, reject) => {
           this.props.form.validateFields((error, values) => {
             if (error) {
@@ -130,7 +128,7 @@ export function createForm({ validateFields, ...formConfig }) {
             }
           });
         });
-      }
+      };
 
       render() {
         return (
