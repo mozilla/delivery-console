@@ -18,14 +18,24 @@ export function makeApiRequest(requestId, root, endpoint, options = {}) {
     const api = new APIClient(root, accessToken);
     const request = getRequest(state, requestId);
 
+    // A "stealth API request" is one that doesn't update the state.
+    // This is useful when you generally "don't care" about the *state* of the request.
+    const stealth = options.stealth || false;
+    if (stealth) {
+      // Doing it this way because JavaScript doesn't have a `obj.pop(key, default)`
+      delete options.stealth;
+    }
+
     if (request.inProgress) {
       return true;
     }
 
-    dispatch({
-      type: REQUEST_SEND,
-      requestId,
-    });
+    if (!stealth) {
+      dispatch({
+        type: REQUEST_SEND,
+        requestId,
+      });
+    }
 
     let data;
 

@@ -1,8 +1,13 @@
-import { Card, Icon, Tag, Tooltip } from 'antd';
+import { Card, Icon, Table, Tag, Tooltip } from 'antd';
 import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+
+import {
+  serializeFilterObjectToMap,
+  SAMPLING_TYPES,
+} from 'console/workflows/recipes/components/FilterObjectForm';
 
 export default class RecipeDetails extends React.PureComponent {
   static propTypes = {
@@ -12,7 +17,8 @@ export default class RecipeDetails extends React.PureComponent {
   render() {
     const { recipe } = this.props;
     const actionName = recipe.getIn(['action', 'name']);
-
+    const filterObject = recipe.get('filter_object');
+    const extraFilterExpression = recipe.get('extra_filter_expression');
     return (
       <div className="recipe-details">
         <Card className="noHovering" key="recipe-details" title="Recipe">
@@ -20,10 +26,17 @@ export default class RecipeDetails extends React.PureComponent {
             <dt>Name</dt>
             <ArgumentsValue name="name" value={recipe.get('name')} />
 
-            <dt>Filters</dt>
+            {filterObject && filterObject.size ? <dt>Filters</dt> : null}
+            {filterObject && filterObject.size ? (
+              <ArgumentsValue name="filter_object" value={recipe.get('filter_object')} />
+            ) : null}
+
+            <dt>
+              {filterObject && filterObject.size ? 'Extra Filter Expression' : 'Filter Expression'}
+            </dt>
             <ArgumentsValue
               name="extra_filter_expression"
-              value={recipe.get('extra_filter_expression')}
+              value={extraFilterExpression ? extraFilterExpression : <em>none</em>}
             />
           </dl>
         </Card>
@@ -131,6 +144,113 @@ export class ArgumentsValue extends React.PureComponent {
     );
   }
 
+  renderFilterObject(values) {
+    if (!values) {
+      return null;
+    }
+
+    // The reason for hardcoding this ordered list of keys is so that it more resembles
+    // the order of which these inputs appear when editing.
+    const KEYS = [
+      ['locales', 'Locale'],
+      ['countries', 'Country'],
+      ['channels', 'Channel'],
+      ['versions', 'Version'],
+      ['_sampling', 'Sampling'],
+    ];
+    const samplingTypes = {};
+    for (const { value, label } of SAMPLING_TYPES) {
+      samplingTypes[value] = label;
+    }
+    const serialized = serializeFilterObjectToMap(values);
+    const dataSource = [];
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+      },
+      {
+        title: 'Value(s)',
+        dataIndex: 'value',
+      },
+    ];
+    for (const [key, label] of KEYS) {
+      const value = serialized.get(key);
+      // All others except special '_sampling' is a List instance.
+      if (value && (key === '_sampling' || value.size)) {
+        if (key === '_sampling') {
+          const samplingColumns = [
+            { title: 'Name', dataIndex: 'name' },
+            { title: 'Value', dataIndex: 'value' },
+          ];
+          const samplingType = value.get('type');
+          const samplingSource = [
+            { key: 'type', name: 'Type', value: samplingTypes[samplingType] },
+          ];
+          if (samplingType === 'stableSample') {
+            samplingSource.push({
+              key: 'rate',
+              name: 'Rate',
+              value: Math.trunc(value.get('rate') * 100) + '%',
+            });
+          } else if (samplingType === 'bucketSample') {
+            samplingSource.push({
+              key: 'start',
+              name: 'Start',
+              value: value.get('start'),
+            });
+            samplingSource.push({
+              key: 'count',
+              name: 'Count',
+              value: value.get('count'),
+            });
+            samplingSource.push({
+              key: 'total',
+              name: 'Total',
+              value: value.get('total'),
+            });
+          } else {
+            throw new Error(`Unrecognized sampling type (${samplingType})`);
+          }
+          samplingSource.push({
+            key: 'input',
+            name: 'Input',
+            value: <code>{value.get('input').join(', ')}</code>,
+          });
+          dataSource.push({
+            key: key,
+            name: label,
+            value: (
+              <Table
+                dataSource={samplingSource}
+                columns={samplingColumns}
+                pagination={false}
+                showHeader={false}
+                size="middle"
+              />
+            ),
+          });
+        } else {
+          dataSource.push({
+            key: key,
+            name: label,
+            value: <code>{value.join(', ')}</code>,
+          });
+        }
+      }
+    }
+    return (
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={false}
+        showHeader={false}
+        bordered={false}
+        size="middle"
+      />
+    );
+  }
+
   renderCode(code) {
     return (
       <pre>
@@ -147,9 +267,13 @@ export class ArgumentsValue extends React.PureComponent {
     const { name, actionName, value } = this.props;
 
     let valueRender = x => (typeof x === 'object' ? JSON.stringify(x, null, 2) : x);
+    let argumentsValueClassName = 'arguments-value';
 
     if (name === 'branches') {
       valueRender = this.renderBranchTable;
+    } else if (name === 'filter_object') {
+      valueRender = this.renderFilterObject;
+      argumentsValueClassName += ' no-padding';
     } else if (name === 'extra_filter_expression') {
       valueRender = this.renderCode;
     } else if (typeof value === 'boolean') {
@@ -164,13 +288,15 @@ export class ArgumentsValue extends React.PureComponent {
     }
 
     return (
-      <dd className="arguments-value">
+      <dd className={argumentsValueClassName}>
         <div className="value">{valueRender(value)}</div>
-        <Tooltip mouseEnterDelay={1} title="Copy to Clipboard" placement="top">
-          <CopyToClipboard className="copy-icon" text={textToCopy}>
-            <Icon type="copy" />
-          </CopyToClipboard>
-        </Tooltip>
+        {value ? (
+          <Tooltip mouseEnterDelay={1} title="Copy to Clipboard" placement="top">
+            <CopyToClipboard className="copy-icon" text={textToCopy}>
+              <Icon type="copy" />
+            </CopyToClipboard>
+          </Tooltip>
+        ) : null}
       </dd>
     );
   }

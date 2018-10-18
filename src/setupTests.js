@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, mount, shallow } from 'enzyme';
+import { cleanup } from 'react-testing-library';
 import Adapter from 'enzyme-adapter-react-16';
 import * as immutableMatchers from 'jest-immutable-matchers';
 import fetchMock from 'fetch-mock';
+import { Headers } from 'whatwg-fetch';
 
 // Configure Enzyme adapter
 configure({ adapter: new Adapter() });
@@ -40,10 +42,12 @@ global.auth0 = {
   })),
 };
 global.localStorage = mockLocalStorage();
+global.sessionStorage = mockLocalStorage();
 global.mount = mount;
 global.shallow = shallow;
 global.React = React;
 global.ReactDOM = ReactDOM;
+global.Headers = Headers;
 
 // Set up a global fetch mock, and assert that all calls to it are expected.
 beforeEach(() => {
@@ -60,4 +64,7 @@ afterEach(() => {
   } finally {
     fetchMock.restore();
   }
+
+  // Unmounts React trees that were mounted with react-testing-library's render.
+  cleanup();
 });

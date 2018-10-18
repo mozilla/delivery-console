@@ -9,6 +9,10 @@ import FormItem from 'console/components/forms/FormItem';
 import FormActions from 'console/components/forms/FormActions';
 import ActionSelect from 'console/workflows/recipes/components/ActionSelect';
 import ConsoleLogFields from 'console/workflows/recipes/components/ConsoleLogFields';
+import FilterObjectForm, {
+  serializeFilterObjectToMap,
+  deserializeFilterObjectToList,
+} from 'console/workflows/recipes/components/FilterObjectForm';
 import JSONArgumentsField from 'console/workflows/recipes/components/JSONArgumentsField';
 import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
 import PreferenceRolloutFields, {
@@ -17,6 +21,7 @@ import PreferenceRolloutFields, {
 import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
 import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
 import { getAction } from 'console/state/actions/selectors';
+import { getRecipeFilters } from 'console/state/recipes/selectors';
 import { areAnyRequestsInProgress } from 'console/state/network/selectors';
 import { createForm } from 'console/utils/forms';
 import IdenticonField from 'console/components/forms/IdenticonField';
@@ -34,6 +39,19 @@ export function cleanRecipeData(data) {
     // If the form submission has a data.arguments.preferences it's a PreferenceRolloutFields
     // field. In that case, rewrite the list of rows into an expected list of preferences.
     data.arguments.preferences = deserializePreferenceRows(data.arguments.preferences);
+  }
+  // Have to turn the filter_object object into an array.
+  // When submitted it's an object like `{locales: ['sv']}` and it needs to become:
+  // `[{type: 'locale': locales: ['sv']}]` for example.
+  data.filter_object = deserializeFilterObjectToList(data.filter_object);
+  if (data.filter_object.size && data.extra_filter_expression === null) {
+    // Normandy gets crumpy if the extra_filter_expression is null.
+    data.extra_filter_expression = '';
+  }
+  if (!data.filter_object.size && !data.extra_filter_expression) {
+    // You can't submit a recipe with no extra filter expression and no filter object rules.
+    // Error thrown here will be automatically turned into a notification message in the UI.
+    throw new Error('Have you have at least one filter object or a filter expression.');
   }
 
   // Make sure the action ID is an integer
@@ -57,11 +75,13 @@ export function cleanRecipeData(data) {
   return {
     selectedActionName: selectedAction.get('name'),
     isLoading: areAnyRequestsInProgress(state),
+    filters: getRecipeFilters(state, new Map()),
   };
 })
 @autobind
 class RecipeForm extends React.PureComponent {
   static propTypes = {
+    filters: PropTypes.object,
     form: PropTypes.object.isRequired,
     isLoading: PropTypes.bool,
     isCreationForm: PropTypes.bool,
@@ -121,12 +141,20 @@ class RecipeForm extends React.PureComponent {
   }
 
   render() {
-    const { isCreationForm, isLoading, onSubmit, recipe } = this.props;
+    const { filters, isCreationForm, isLoading, onSubmit, recipe, errors } = this.props;
+
     const { defaultIdenticonSeed } = this.state;
 
     // If creating, the 'default' seed is randomly generated. We store it in memory
     // to prevent the form from generating a new identicon on each render.
     const identiconSeed = isCreationForm ? defaultIdenticonSeed : null;
+
+    // The recipe object has an **array of objects** which we need to turn around
+    // to an object of keys and values. For example,
+    //   [{type: 'country', countries:['sv']}, ...]
+    // becomes
+    //   {countries: ['sv'], ...}
+    const filterObject = serializeFilterObjectToMap(recipe.get('filter_object'));
 
     return (
       <Form onSubmit={onSubmit} className="recipe-form">
@@ -147,9 +175,22 @@ class RecipeForm extends React.PureComponent {
           </Col>
         </Row>
 
+        <FilterObjectForm
+          form={this.props.form}
+          disabled={isLoading}
+          recipe={recipe}
+          filterObject={filterObject}
+          filterObjectErrors={errors.filter_object}
+          allLocales={filters.get('locales')}
+          allCountries={filters.get('countries')}
+          allChannels={filters.get('channels')}
+        />
+
         <FormItem
           name="extra_filter_expression"
-          label="Filter Expression"
+          label="Additional Filter Expression"
+          required={false}
+          rules={[{ required: false }]}
           initialValue={recipe.get('extra_filter_expression')}
         >
           <Input.TextArea disabled={isLoading} rows={4} />
