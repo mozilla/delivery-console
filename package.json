@@ -52,7 +52,7 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
     "css-loader": "1.0.0",
-    "cssnano": "4.1.5",
+    "cssnano": "4.1.7",
     "dotenv": "6.1.0",
     "dotenv-expand": "4.2.0",
     "enzyme": "3.7.0",
