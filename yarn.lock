@@ -3479,10 +3479,10 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
-dom-testing-library@^3.8.1:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.11.0.tgz#374fbc1f4b61405ac10a27cb3a6d3912c3ed1dd3"
-  integrity sha512-YOrbercTdYvfwkKdiSQXwrQKHbuSYz2DF4f9t9zXCTg+KThWQ15T2MOzWun8GuLx8JaToEsMsoZG3KAdapDzTA==
+dom-testing-library@^3.9.0:
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.11.1.tgz#a2a1b0fe04700f585da9f3539ca626ab17ccf050"
+  integrity sha512-qfa1l4UuQp4hQnokn/MZpnHbG3F3bbuvjDh8giFFVBESyvXJDF9FVC3NarUx2jxAULKXeq0mr/2s0kebrbSE+g==
   dependencies:
     "@sheerun/mutationobserver-shim" "^0.3.2"
     pretty-format "^23.6.0"
@@ -9550,13 +9550,12 @@ react-test-renderer@^16.0.0-0:
     prop-types "^15.6.0"
     react-is "^16.4.1"
 
-react-testing-library@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.2.0.tgz#d7af9b0e6d1b653287d8c06cd0eab9e6d5d645ba"
-  integrity sha512-H0V3uM4dpxi/4Hy8nRwrT4i38hYLlyr5oIpUyzk6U1++NOP6XVYmuG8y8xoDsvxb8olN/iTLQzg2SWphR+uvyQ==
+react-testing-library@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.2.1.tgz#31f163e900457e5c0dcff7669ae06b502f8a9a7a"
+  integrity sha512-UNOWuWWFkqKvvIfnVK9JH9hMHk9Xd7G8Bl0F5zdxJJIhdcakKX2I0w+6SSIgI+Ru3UYDDVqgQTW2Zu1fc2PH8w==
   dependencies:
-    dom-testing-library "^3.8.1"
-    wait-for-expect "^1.0.0"
+    dom-testing-library "^3.9.0"
 
 react@16.5.2:
   version "16.5.2"
