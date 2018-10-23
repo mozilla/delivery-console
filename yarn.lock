@@ -1626,17 +1626,17 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.1.tgz#ae2d5a729477f289d60dd7f96a6314a22dd6c22a"
   integrity sha1-ri1acpR38onWDdf5amMUoi3Wwio=
 
-auth0-js@9.8.0:
-  version "9.8.0"
-  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.8.0.tgz#512a79d27b48ab7535130f67b9cd797eea40468e"
-  integrity sha512-rQtsnwR+J3vitiPjy14KFIIJc/jBq7CAwA1MHghEHeoQRT7Gw1JW9/E4dFZCiSYwz/Y94bGg6v6k9XirozxfCQ==
+auth0-js@9.8.1:
+  version "9.8.1"
+  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.8.1.tgz#4968b60958a75af1478a2f5a93b8d03f66a026e4"
+  integrity sha512-8mAFlj+81pwF+zVjZlboU8bWCTCgie96N88s58v9cXL8o2pynw6UJAzkS96IEkqHw3kOnMKoKu60y8TgLsKp8g==
   dependencies:
     base64-js "^1.2.0"
     idtoken-verifier "^1.2.0"
     js-cookie "^2.2.0"
     qs "^6.4.0"
     superagent "^3.8.2"
-    url-join "^1.1.0"
+    url-join "^4.0.0"
     winchan "^0.2.1"
 
 autobind-decorator@2.1.0:
@@ -11725,6 +11725,11 @@ url-join@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-1.1.0.tgz#741c6c2f4596c4830d6718460920d0c92202dc78"
   integrity sha1-dBxsL0WWxIMNZxhGCSDQySIC3Hg=
+
+url-join@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.0.tgz#4d3340e807d3773bda9991f8305acdcc2a665d2a"
+  integrity sha1-TTNA6AfTdzvamZH4MFrNzCpmXSo=
 
 url-loader@1.1.2:
   version "1.1.2"
