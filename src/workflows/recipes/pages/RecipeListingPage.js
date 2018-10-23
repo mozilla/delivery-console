@@ -159,7 +159,7 @@ class RecipeListingPage extends React.PureComponent {
               { text: 'Enabled', value: 'enabled' },
               { text: 'Disabled', value: 'disabled' },
             ]}
-            filteredValue={status}
+            filteredValue={[status]}
             filterMultiple={false}
           />
         );
