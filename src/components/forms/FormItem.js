@@ -1,6 +1,5 @@
 import { Form } from 'antd';
 import autobind from 'autobind-decorator';
-import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -112,7 +111,9 @@ class FormItem extends React.PureComponent {
     }
 
     const defaultItemProps = {};
-    const error = get(formErrors, name);
+    const error = name
+      .split('.')
+      .reduce((obj, index) => (obj ? obj[index] : undefined), formErrors);
 
     if (error) {
       let help = error;
