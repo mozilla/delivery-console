@@ -5,7 +5,6 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 
 import { openNewWindow } from 'console/state/router/actions';
 import { getCurrentUrlAsObject as getCurrentUrlAsObjectSelector } from 'console/state/router/selectors';
@@ -73,7 +72,7 @@ class DataList extends React.PureComponent {
       }, {});
 
     let ordering;
-    if (!isEmpty(sorter)) {
+    if (Object.keys(sorter).length) {
       const prefix = sorter.order === 'ascend' ? '' : '-';
       ordering = `${prefix}${sorter.field}`;
     }
