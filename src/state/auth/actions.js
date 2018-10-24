@@ -1,5 +1,4 @@
 import { notification } from 'antd';
-import omit from 'lodash/omit';
 
 import {
   USER_AUTH_ERROR,
@@ -47,7 +46,7 @@ export function logUserIn(authResult) {
     const accessToken = authResult.accessToken;
     const expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 
-    const cleanAuthResult = omit(authResult, 'state');
+    const { state, ...cleanAuthResult } = authResult;
     localStorage.setItem('authResult', JSON.stringify(cleanAuthResult));
     localStorage.setItem('authExpiresAt', JSON.stringify(expiresAt));
 
