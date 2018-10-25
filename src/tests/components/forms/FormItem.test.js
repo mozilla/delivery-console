@@ -1,4 +1,5 @@
 import WrappedFormItem from 'console/components/forms/FormItem';
+import { render } from 'react-testing-library';
 
 const FormItem = WrappedFormItem.wrappedComponent;
 
@@ -19,9 +20,9 @@ describe('<FormItem>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () => shallow(<WrappedFormItem {...props} />);
-
-    expect(wrapper).not.toThrow();
+    const { container } = render(<FormItem {...props} />);
+    const input = container.querySelector('input[type="text"]');
+    expect(input).not.toBeNull();
   });
 
   it('should correctly trim whitespace', () => {

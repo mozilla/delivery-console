@@ -111,7 +111,7 @@ class FormItem extends React.PureComponent {
     }
 
     const defaultItemProps = {};
-    const error = name
+    const error = (name || '')
       .split('.')
       .reduce((obj, index) => (obj ? obj[index] : undefined), formErrors);
 
