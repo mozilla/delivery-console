@@ -1,3 +1,4 @@
+import { connectRouter } from 'connected-react-router/immutable';
 import { combineReducers } from 'redux-immutable';
 
 import actions from 'console/state/actions/reducers';
@@ -10,16 +11,16 @@ import revisions from 'console/state/revisions/reducers';
 import serviceInfo from 'console/state/serviceInfo/reducers';
 import users from 'console/state/users/reducers';
 
-const reducer = combineReducers({
-  actions,
-  approvalRequests,
-  auth,
-  extensions,
-  recipes,
-  network,
-  revisions,
-  serviceInfo,
-  users,
-});
-
-export default reducer;
+export default history =>
+  combineReducers({
+    router: connectRouter(history),
+    actions,
+    approvalRequests,
+    auth,
+    extensions,
+    recipes,
+    network,
+    revisions,
+    serviceInfo,
+    users,
+  });

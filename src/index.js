@@ -1,6 +1,6 @@
 import 'console/less/index.less';
 
-import { connectRouter, routerMiddleware } from 'connected-react-router/immutable';
+import { routerMiddleware } from 'connected-react-router/immutable';
 import { createBrowserHistory } from 'history';
 import Raven from 'raven-js';
 import consolePlugin from 'raven-js/dist/plugins/console';
@@ -12,7 +12,7 @@ import thunk from 'redux-thunk';
 
 import App from 'console/components/App';
 import { SENTRY_PUBLIC_DSN } from 'console/settings';
-import reducers from 'console/state/reducer';
+import createRootReducer from 'console/state/reducer';
 
 if (SENTRY_PUBLIC_DSN) {
   Raven.config(SENTRY_PUBLIC_DSN)
@@ -27,9 +27,11 @@ const history = createBrowserHistory();
 
 const middleware = [routerMiddleware(history), thunk];
 
+const rootReducer = createRootReducer(history);
+
 const store = createStore(
-  connectRouter(history)(reducers),
-  reducers(undefined, { type: 'initial' }),
+  rootReducer,
+  rootReducer(undefined, { type: 'initial' }),
   composeEnhancers(applyMiddleware(...middleware)),
 );
 
