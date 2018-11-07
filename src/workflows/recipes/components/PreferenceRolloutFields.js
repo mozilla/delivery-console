@@ -44,12 +44,14 @@ export const deserializePreferenceRows = prefsList => {
   return List(
     // The reason for the filter is to remove any form argument items that are null
     // or undefined which can happen when deleting a <FormItem> object.
-    prefsList.filter(row => !!row).map(row => {
-      return {
-        preferenceName: row.name,
-        value: row.value,
-      };
-    }),
+    prefsList
+      .filter(row => !!row)
+      .map(row => {
+        return {
+          preferenceName: row.name,
+          value: row.value,
+        };
+      }),
   );
 };
 
