@@ -338,7 +338,17 @@ class FilterObjectForm extends React.PureComponent {
               })(<SamplingInput disabled={disabled} formErrors={formErrors} />)}
             </FormItem>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={tabLabels.browser} key="browser">
+          {/*
+          Note here about the 'forceRender' prop sent to TabPane...
+          It's important and necessary because of the nature of <FormItem>. If you don't at
+          least render it once, the <FormItem>'s interal setFieldValue won't take the
+          initialValue's content which is something that happens when it's rendered.
+          Since some tabs here might never be rendered (it's DOM based, not CSS
+          display:block|none) it might never set the data into the form object based on the
+          initial data we get when loading the recipe from the server with XHR that first
+          time.
+          */}
+          <Tabs.TabPane tab={tabLabels.browser} key="browser" forceRender>
             <Row gutter={16}>
               <Col span={12}>
                 <FormItem
@@ -368,7 +378,7 @@ class FilterObjectForm extends React.PureComponent {
               </Col>
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={tabLabels.geo} key="geo">
+          <Tabs.TabPane tab={tabLabels.geo} key="geo" forceRender>
             <Row gutter={16} type="flex">
               <Col span={12}>
                 <FormItem
