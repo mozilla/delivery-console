@@ -801,6 +801,18 @@ export class InputsWidget extends React.PureComponent {
   };
 
   onSearchInput = value => {
+    // Due to a strange bug in antd the passed 'value' can sometimes be undefined.
+    // At the time of writing we do not know how to reproduce it but it has happened in
+    // production.
+    // See https://github.com/ant-design/ant-design/issues/13484 and
+    // https://github.com/mozilla/delivery-console/issues/618
+    if (value === undefined) {
+      console.warn(
+        'The value passed to onSearchInput became undefined. Forcing it to an empty string.',
+      );
+      value = '';
+    }
+
     // Reason for keeping this as local state is to be able to clear it when something
     // is chosen.
     let probablyValid = !!value.trim();
