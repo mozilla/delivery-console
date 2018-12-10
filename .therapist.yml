@@ -10,8 +10,8 @@ actions:
     include:
       - "*.css"
       - "*.less"
-  nsp:
-    run: yarn nsp check
+  yarn-audit:
+    run: yarn audit
 shortcuts:
   lint:
     flags:
