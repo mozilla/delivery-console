@@ -77,7 +77,6 @@
     "jest-immutable-matchers": "2.0.1",
     "less": "3.9.0",
     "less-loader": "4.1.0",
-    "nsp": "3.2.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
@@ -141,7 +140,12 @@
       "react-app"
     ],
     "plugins": [
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
       [
         "import",
         {
