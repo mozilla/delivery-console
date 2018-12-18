@@ -1,5 +1,4 @@
 import {
-  ACTION_RECEIVE,
   RECIPE_DELETE,
   RECIPE_LISTING_COLUMNS_CHANGE,
   RECIPE_PAGE_RECEIVE,
@@ -17,11 +16,6 @@ export function recipeReceived(recipe) {
       recipe,
     });
 
-    dispatch({
-      type: ACTION_RECEIVE,
-      action: recipe.action,
-    });
-
     dispatch(revisionReceived(recipe.latest_revision));
 
     if (recipe.approved_revision && recipe.approved_revision.id !== recipe.latest_revision.id) {
@@ -33,7 +27,7 @@ export function recipeReceived(recipe) {
 export function fetchRecipe(pk) {
   return async dispatch => {
     const requestId = `fetch-recipe-${pk}`;
-    const recipe = await dispatch(makeNormandyApiRequest(requestId, `v2/recipe/${pk}/`));
+    const recipe = await dispatch(makeNormandyApiRequest(requestId, `v3/recipe/${pk}/`));
     dispatch(recipeReceived(recipe));
   };
 }
@@ -43,7 +37,7 @@ export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
     const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
     const recipes = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/recipe/', {
+      makeNormandyApiRequest(requestId, 'v3/recipe/', {
         data: {
           ...filters,
           page: pageNumber,
@@ -63,7 +57,7 @@ export function createRecipe(recipeData) {
   return async dispatch => {
     const requestId = 'create-recipe';
     const recipe = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/recipe/', {
+      makeNormandyApiRequest(requestId, 'v3/recipe/', {
         method: 'POST',
         data: recipeData,
       }),
@@ -78,7 +72,7 @@ export function updateRecipe(pk, recipeData) {
   return async dispatch => {
     const requestId = `update-recipe-${pk}`;
     const recipe = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/`, {
+      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/`, {
         method: 'PATCH',
         data: recipeData,
       }),
@@ -92,7 +86,7 @@ export function deleteRecipe(pk) {
     const requestId = `delete-recipe-${pk}`;
 
     await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/`, {
+      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/`, {
         method: 'DELETE',
       }),
     );
@@ -108,7 +102,7 @@ export function enableRecipe(pk) {
   return async dispatch => {
     const requestId = `enable-recipe-${pk}`;
     const recipe = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/enable/`, {
+      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/enable/`, {
         method: 'POST',
       }),
     );
@@ -120,7 +114,7 @@ export function disableRecipe(pk) {
   return async dispatch => {
     const requestId = `enable-recipe-${pk}`;
     const recipe = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/disable/`, {
+      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/disable/`, {
         method: 'POST',
       }),
     );
@@ -132,7 +126,7 @@ export function fetchRecipeHistory(pk) {
   return async dispatch => {
     const requestId = `fetch-recipe-history-${pk}`;
     const revisions = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe/${pk}/history/`),
+      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/history/`),
     );
 
     dispatch({

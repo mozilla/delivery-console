@@ -1,6 +1,5 @@
 import { List, Map } from 'immutable';
 
-import { getAction } from 'console/state/actions/selectors';
 import { DEFAULT_RECIPE_LISTING_COLUMNS } from 'console/state/constants';
 import { getRevision } from 'console/state/revisions/selectors';
 
@@ -8,15 +7,12 @@ export function getRecipe(state, id, defaultsTo = null) {
   const recipe = state.getIn(['recipes', 'items', id]);
 
   if (recipe) {
-    const action = getAction(state, recipe.get('action_id'));
     const latestRevision = getRevision(state, recipe.get('latest_revision_id'));
     const approvedRevision = getRevision(state, recipe.get('approved_revision_id'));
 
     return recipe
-      .set('action', action)
       .set('latest_revision', latestRevision)
       .set('approved_revision', approvedRevision)
-      .remove('action_id')
       .remove('latest_revision_id')
       .remove('approved_revision_id');
   }
@@ -30,12 +26,15 @@ export function getRecipeListingCount(state) {
 
 export function getRecipeListing(state) {
   const recipes = state.getIn(['recipes', 'listing', 'results'], new List());
-  return recipes.map(id => getRecipe(state, id));
+  return recipes.map(id => getCurrentRevisionForRecipe(state, id));
 }
 
 export function getRecipeListingFlattenedAction(state) {
   const recipes = getRecipeListing(state);
-  return recipes.map(item => item.set('action', item.getIn(['action', 'name'])));
+  return recipes.map(item => {
+    item = item || Map();
+    return item.set('action', item.getIn(['action', 'name']));
+  });
 }
 
 export function getRecipeListingPageNumber(state) {
@@ -66,11 +65,7 @@ export function getLatestRevisionForRecipe(state, id, defaultsTo = null) {
 }
 
 export function getLatestRevisionIdForRecipe(state, id, defaultsTo = null) {
-  const revision = getLatestRevisionForRecipe(state, id, new Map());
-  if (revision) {
-    return revision.get('id', defaultsTo);
-  }
-  return defaultsTo;
+  return state.getIn(['recipes', 'items', id, 'latest_revision_id']) || defaultsTo;
 }
 
 export function getApprovedRevisionForRecipe(state, id, defaultsTo = null) {
@@ -79,11 +74,23 @@ export function getApprovedRevisionForRecipe(state, id, defaultsTo = null) {
 }
 
 export function getApprovedRevisionIdForRecipe(state, id, defaultsTo = null) {
-  const revision = getApprovedRevisionForRecipe(state, id, new Map());
-  if (revision) {
-    return revision.get('id', defaultsTo);
+  return state.getIn(['recipes', 'items', id, 'approved_revision_id']) || defaultsTo;
+}
+
+export function getCurrentRevisionForRecipe(state, id, defaultsTo = null) {
+  let revision = getApprovedRevisionForRecipe(state, id);
+  if (!revision) {
+    revision = getLatestRevisionForRecipe(state, id);
   }
-  return defaultsTo;
+  return revision || defaultsTo;
+}
+
+export function getCurrentRevisionIdForRecipe(state, id, defaultsTo = null) {
+  let revisionId = getApprovedRevisionIdForRecipe(state, id);
+  if (!revisionId) {
+    revisionId = getLatestRevisionIdForRecipe(state, id);
+  }
+  return revisionId || defaultsTo;
 }
 
 export function getRecipeApprovalHistory(state, id) {

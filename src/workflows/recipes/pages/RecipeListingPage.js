@@ -72,8 +72,8 @@ class RecipeListingPage extends React.PureComponent {
     action: null,
   };
 
-  static renderLinkedText(text, { id: recipeId }) {
-    return <Link to={reverse('recipes.details', { recipeId })}>{text}</Link>;
+  static renderLinkedText(text, record) {
+    return <Link to={reverse('recipes.details', { recipeId: record.recipe.id })}>{text}</Link>;
   }
 
   getFilters() {
@@ -182,10 +182,10 @@ class RecipeListingPage extends React.PureComponent {
             key="last_updated"
             dataIndex="last_updated"
             render={(text, record) => {
-              const lastUpdated = dateFns.parse(record.last_updated);
+              const lastUpdated = dateFns.parse(record.updated);
               return (
                 <Link
-                  to={reverse('recipes.details', { recipeId: record.id })}
+                  to={reverse('recipes.details', { recipeId: record.recipe.id })}
                   title={dateFns.format(lastUpdated, 'dddd, MMMM M, YYYY h:mm A')}
                 >
                   {dateFns.distanceInWordsToNow(lastUpdated)}

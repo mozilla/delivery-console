@@ -6,13 +6,14 @@ import {
   APPROVAL_REQUEST_DELETE,
   RECIPE_DELETE,
   RECIPE_HISTORY_RECEIVE,
+  RECIPE_PAGE_RECEIVE,
   REVISION_RECEIVE,
 } from 'console/state/action-types';
 
 const formatRevision = revision =>
   revision.withMutations(mutRevision =>
     mutRevision
-      .setIn(['recipe', 'action_id'], mutRevision.getIn(['recipe', 'action', 'id'], null))
+      .set('action_id', mutRevision.getIn(['action', 'id'], null))
       .removeIn(['recipe', 'action'])
       .set('approval_request_id', mutRevision.getIn(['approval_request', 'id'], null))
       .remove('approval_request')
@@ -37,6 +38,26 @@ function items(state = new Map(), action) {
       revision = formatRevision(revision);
 
       return state.set(action.revision.id, revision);
+    }
+
+    case RECIPE_PAGE_RECEIVE: {
+      const recipes = fromJS(action.recipes.results);
+
+      return state.withMutations(mutState => {
+        recipes.forEach(receivedRecipe => {
+          mutState.set(
+            receivedRecipe.getIn(['latest_revision', 'id']),
+            formatRevision(receivedRecipe.get('latest_revision')),
+          );
+
+          if (receivedRecipe.get('approved_revision')) {
+            mutState.set(
+              receivedRecipe.getIn(['approved_revision', 'id']),
+              formatRevision(receivedRecipe.get('approved_revision')),
+            );
+          }
+        });
+      });
     }
 
     case RECIPE_DELETE:

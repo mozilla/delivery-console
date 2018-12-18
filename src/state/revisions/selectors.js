@@ -24,13 +24,13 @@ export function getRevision(state, id, defaultsTo = null) {
   const revision = state.getIn(['revisions', 'items', id]);
 
   if (revision) {
-    const action = getAction(state, revision.getIn(['recipe', 'action_id']));
+    const action = getAction(state, revision.get('action_id'));
     const approvalRequest = getApprovalRequest(state, revision.get('approval_request_id'));
     const user = getUser(state, revision.get('user_id'));
 
     return revision
-      .setIn(['recipe', 'action'], action)
-      .removeIn(['recipe', 'action_id'])
+      .set('action', action)
+      .remove('action_id')
       .set('approval_request', approvalRequest)
       .remove('approval_request_id')
       .set('user', user)
@@ -42,7 +42,7 @@ export function getRevision(state, id, defaultsTo = null) {
 
 export function getRecipeForRevision(state, id, defaultsTo = null) {
   const revision = getRevision(state, id, new Map());
-  return revision.get('recipe', defaultsTo);
+  return revision;
 }
 
 export function getRecipeIdForRevision(state, id, defaultsTo = null) {

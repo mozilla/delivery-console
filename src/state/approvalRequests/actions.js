@@ -4,7 +4,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 
-import { makeNormandyApiRequest } from 'console/state/network/actions';
+import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {
@@ -30,7 +30,7 @@ export function approvalRequestReceived(approvalRequest) {
 export function fetchApprovalRequest(pk) {
   return async dispatch => {
     const requestId = `fetch-approval-request-${pk}`;
-    const response = dispatch(makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/`));
+    const response = dispatch(makeNormandyApiRequest(requestId, `v3/approval_request/${pk}/`));
     const approvalRequest = await response;
 
     dispatch(approvalRequestReceived(approvalRequest));
@@ -40,13 +40,21 @@ export function fetchApprovalRequest(pk) {
 export function fetchAllApprovalRequests() {
   return async dispatch => {
     const requestId = 'fetch-all-approval-requests';
-    const approvalRequests = await dispatch(
-      makeNormandyApiRequest(requestId, 'v2/approval_request/'),
-    );
+    let response = await dispatch(makeNormandyApiRequest(requestId, 'v3/approval_request/'));
+    let approvalRequests = response.results;
 
-    approvalRequests.forEach(approvalRequest => {
-      dispatch(approvalRequestReceived(approvalRequest));
-    });
+    while (approvalRequests) {
+      approvalRequests.forEach(approvalRequest => {
+        dispatch(approvalRequestReceived(approvalRequest));
+      });
+
+      if (response.next) {
+        response = await dispatch(makeApiRequest(requestId, response.next));
+        approvalRequests = response.results;
+      } else {
+        approvalRequests = null;
+      }
+    }
   };
 }
 
@@ -54,7 +62,7 @@ export function approveApprovalRequest(pk, data) {
   return async dispatch => {
     const requestId = `approve-approval-request-${pk}`;
     const approvalRequest = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/approve/`, {
+      makeNormandyApiRequest(requestId, `v3/approval_request/${pk}/approve/`, {
         method: 'POST',
         data,
       }),
@@ -68,7 +76,7 @@ export function rejectApprovalRequest(pk, data) {
   return async dispatch => {
     const requestId = `reject-approval-request-${pk}`;
     const approvalRequest = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/reject/`, {
+      makeNormandyApiRequest(requestId, `v3/approval_request/${pk}/reject/`, {
         method: 'POST',
         data,
       }),
@@ -83,7 +91,7 @@ export function closeApprovalRequest(pk) {
     const requestId = `close-approval-request-${pk}`;
 
     await dispatch(
-      makeNormandyApiRequest(requestId, `v2/approval_request/${pk}/close/`, {
+      makeNormandyApiRequest(requestId, `v3/approval_request/${pk}/close/`, {
         method: 'POST',
       }),
     );
