@@ -11,18 +11,17 @@ import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import { updateRecipe } from 'console/state/recipes/actions';
-import { getRecipe } from 'console/state/recipes/selectors';
-import { getRecipeForRevision } from 'console/state/revisions/selectors';
+import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
-    const recipe = getRecipe(state, recipeId, new Map());
+    const currentRevision = getCurrentRevisionForRecipe(state, recipeId, new Map());
 
     return {
+      currentRevision,
       recipeId,
-      recipe: getRecipeForRevision(state, recipe.getIn(['latest_revision', 'id']), new Map()),
     };
   },
   {
@@ -32,13 +31,13 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 @autobind
 class EditRecipePage extends React.PureComponent {
   static propTypes = {
-    updateRecipe: PropTypes.func.isRequired,
+    currentRevision: PropTypes.instanceOf(Map),
     recipeId: PropTypes.number.isRequired,
-    recipe: PropTypes.instanceOf(Map),
+    updateRecipe: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    recipe: null,
+    currentRevision: null,
   };
 
   onFormSuccess() {
@@ -56,7 +55,7 @@ class EditRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { recipeId, recipe } = this.props;
+    const { currentRevision, recipeId } = this.props;
 
     return (
       <div className="content-wrapper edit-page">
@@ -68,7 +67,7 @@ class EditRecipePage extends React.PureComponent {
             formAction={this.formAction}
             onSuccess={this.onFormSuccess}
             onFailure={this.onFormFailure}
-            formProps={{ recipe }}
+            formProps={{ recipe: currentRevision }}
           />
         </LoadingOverlay>
       </div>

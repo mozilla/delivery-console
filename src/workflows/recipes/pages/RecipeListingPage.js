@@ -100,8 +100,8 @@ class RecipeListingPage extends React.PureComponent {
     this.props.push(getCurrentUrlAsObject({ page }));
   }
 
-  getUrlFromRecord({ id: recipeId }) {
-    return reverse('recipes.details', { recipeId });
+  getUrlFromRecord(record) {
+    return reverse('recipes.details', { recipeId: record.recipe.id });
   }
 
   render() {

@@ -16,6 +16,7 @@ import {
   getApprovedRevisionForRecipe,
   getApprovedRevisionIdForRecipe,
   getLatestRevisionIdForRecipe,
+  getRecipe,
   isRecipeEnabled,
 } from 'console/state/recipes/selectors';
 import { getUser } from 'console/state/users/selectors';
@@ -40,14 +41,14 @@ export function getRevision(state, id, defaultsTo = null) {
   return defaultsTo;
 }
 
-export function getRecipeForRevision(state, id, defaultsTo = null) {
+export function getRecipeIdForRevision(state, id, defaultsTo = null) {
   const revision = getRevision(state, id, new Map());
-  return revision;
+  return revision.getIn(['recipe', 'id']) || defaultsTo;
 }
 
-export function getRecipeIdForRevision(state, id, defaultsTo = null) {
-  const recipe = getRecipeForRevision(state, id, new Map());
-  return recipe.get('id', defaultsTo);
+export function getRecipeForRevision(state, id, defaultsTo = null) {
+  const recipeId = getRecipeIdForRevision(state, id);
+  return getRecipe(state, recipeId, defaultsTo);
 }
 
 export function isLatestRevision(state, id) {
