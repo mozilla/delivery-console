@@ -68,7 +68,7 @@
     "eslint-plugin-react": "7.11.1",
     "extract-css-chunks-webpack-plugin": "3.2.1",
     "faker": "4.1.0",
-    "fetch-mock": "7.2.5",
+    "fetch-mock": "7.2.7",
     "file-loader": "2.0.0",
     "fs-extra": "7.0.1",
     "generate-json-webpack-plugin": "0.3.1",
