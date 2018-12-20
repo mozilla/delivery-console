@@ -66,7 +66,7 @@ class CloneRecipePage extends React.PureComponent {
     const displayedRecipe = currentRevision.remove('name').remove('identicon_seed');
 
     return {
-      recipe: displayedRecipe,
+      revision: displayedRecipe,
       isCreationForm: true,
     };
   }

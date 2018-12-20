@@ -5,6 +5,7 @@ import EditRecipePage from 'console/workflows/recipes/pages/EditRecipePage';
 import RecipeListingPage from 'console/workflows/recipes/pages/RecipeListingPage';
 import RecipeDetailPage from 'console/workflows/recipes/pages/RecipeDetailPage';
 import { getRevisionFromUrl } from 'console/state/router/selectors';
+import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
 import { Map } from 'immutable';
 
 export default {
@@ -29,8 +30,9 @@ export default {
         component: RecipeDetailPage,
         crumbText: 'Details',
         documentTitle: state => {
-          const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
-          return ['Recipe Details', recipe && `#${recipe.get('id')} ${recipe.get('name')}`];
+          const recipeId = getRevisionFromUrl(state, new Map()).getIn(['recipe', 'id']);
+          const revision = getCurrentRevisionForRecipe(state, recipeId);
+          return ['Recipe Details', revision && `#${recipeId} ${revision.get('name')}`];
         },
         routes: {
           '/edit': {
@@ -38,8 +40,9 @@ export default {
             component: EditRecipePage,
             crumbText: 'Edit',
             documentTitle: state => {
-              const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
-              return ['Edit Recipe', recipe && `#${recipe.get('id')} ${recipe.get('name')}`];
+              const recipeId = getRevisionFromUrl(state, new Map()).getIn(['recipe', 'id']);
+              const revision = getCurrentRevisionForRecipe(state, recipeId);
+              return ['Edit Recipe', revision && `#${recipeId} ${revision.get('name')}`];
             },
           },
           '/approval_history': {
@@ -47,10 +50,11 @@ export default {
             component: ApprovalHistoryPage,
             crumbText: 'Approval History',
             documentTitle: state => {
-              const recipe = getRevisionFromUrl(state, new Map()).get('recipe');
+              const recipeId = getRevisionFromUrl(state, new Map()).getIn(['recipe', 'id']);
+              const revision = getCurrentRevisionForRecipe(state, recipeId);
               return [
                 'Recipe Approval History',
-                recipe && `#${recipe.get('id')} ${recipe.get('name')}`,
+                revision && `#${recipeId} ${revision.get('name')}`,
               ];
             },
           },
@@ -65,11 +69,13 @@ export default {
             component: RecipeDetailPage,
             crumbText: 'Revision Details',
             documentTitle: state => {
-              const revision = getRevisionFromUrl(state);
+              const revision = getRevisionFromUrl(state, new Map());
+              const recipeId = revision.getIn(['recipe', 'id']);
+              const currentRevision = getCurrentRevisionForRecipe(state, recipeId);
               return [
                 'Recipe Revision',
-                revision && `#${revision.getIn(['recipe', 'id'])} rev ${revision.get('id')}`,
-                revision && `${revision.getIn(['recipe', 'name'])}`,
+                revision && `#${recipeId} rev ${revision.get('id')}`,
+                revision && `${currentRevision.get('name')}`,
               ];
             },
             routes: {
