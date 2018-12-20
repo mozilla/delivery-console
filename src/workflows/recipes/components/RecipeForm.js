@@ -115,13 +115,13 @@ class RecipeForm extends React.PureComponent {
   componentDidUpdate(prevProps) {
     // Initial values are mostly handled via props, but if the recipe
     // changes, we need to reset the values stored in the state.
-    if (!is(prevProps.recipe, this.props.recipe)) {
+    if (!is(prevProps.revision, this.props.revision)) {
       this.props.form.resetFields();
     }
   }
 
   renderArgumentsFields() {
-    const { isLoading, recipe, selectedActionName } = this.props;
+    const { isLoading, revision, selectedActionName } = this.props;
     let ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
 
     if (selectedActionName && !ArgumentsFields) {
@@ -135,7 +135,7 @@ class RecipeForm extends React.PureComponent {
     return (
       <fieldset>
         <legend>Action Arguments</legend>
-        <ArgumentsFields recipeArguments={recipe.get('arguments')} disabled={isLoading} />
+        <ArgumentsFields recipeArguments={revision.get('arguments')} disabled={isLoading} />
       </fieldset>
     );
   }
