@@ -21,7 +21,7 @@ describe('getRecipe', () => {
     fromJS({
       actions: actionsReducer(undefined, {
         type: ACTION_RECEIVE,
-        action: recipe.action,
+        action: recipe.latest_revision.action,
       }),
       recipes: recipesReducer(undefined, {
         type: RECIPE_RECEIVE,
@@ -66,7 +66,7 @@ describe('getRecipeHistory', () => {
     fromJS({
       actions: actionsReducer(undefined, {
         type: ACTION_RECEIVE,
-        action: recipe.action,
+        action: recipe.latest_revision.action,
       }),
       revisions: revisionsReducer(undefined, {
         type: REVISION_RECEIVE,

@@ -14,7 +14,7 @@ const formatRevision = revision =>
   revision.withMutations(mutRevision =>
     mutRevision
       .set('action_id', mutRevision.getIn(['action', 'id'], null))
-      .removeIn(['recipe', 'action'])
+      .remove('action')
       .set('approval_request_id', mutRevision.getIn(['approval_request', 'id'], null))
       .remove('approval_request')
       .set('user_id', mutRevision.getIn(['user', 'id'], null))

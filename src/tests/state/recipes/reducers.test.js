@@ -19,7 +19,6 @@ describe('Recipes reducer', () => {
   it('should handle RECIPE_RECEIVE', () => {
     const reducedRecipe = {
       ...recipe,
-      action_id: recipe.action.id,
       latest_revision_id: recipe.latest_revision.id,
       approved_revision_id: recipe.approved_revision ? recipe.approved_revision.id : null,
     };

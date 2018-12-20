@@ -6,10 +6,10 @@ const { WrappedComponent: CloneRecipePage } = TestComponent;
 describe('<CloneRecipePage>', () => {
   const props = {
     createRecipe: () => {},
+    currentRevision: new Map(),
     history: {},
     isLatestRevision: false,
     recipeId: 123,
-    recipe: new Map(),
     revisionId: 123,
   };
 

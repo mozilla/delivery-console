@@ -17,13 +17,13 @@ describe('Revisions reducer', () => {
       ...revision,
       recipe: {
         ...revision.recipe,
-        action_id: revision.recipe.action.id,
       },
+      action_id: revision.action.id,
       approval_request_id: null,
       user_id: revision.user.id,
     };
 
-    delete reducedRevision.recipe.action;
+    delete reducedRevision.action;
     delete reducedRevision.approval_request;
     delete reducedRevision.user;
 

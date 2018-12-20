@@ -1,8 +1,7 @@
 import faker from 'faker';
 import { Map } from 'immutable';
 
-import { AutoIncrementField, DateField, Factory, Field, SubFactory } from 'console/tests/factory';
-import { ActionFactory } from 'console/tests/state/actions';
+import { AutoIncrementField, Factory, Field } from 'console/tests/factory';
 import { RevisionFactory } from 'console/tests/state/revisions';
 
 export const INITIAL_STATE = new Map({
@@ -25,21 +24,11 @@ export const FILTERS = {
   ],
 };
 
-export class SimpleRecipeFactory extends Factory {
+export class BaseRecipeFactory extends Factory {
   getFields() {
     return {
       id: new AutoIncrementField(),
-      action: new SubFactory(ActionFactory),
-      arguments: {},
-      channels: [],
-      countries: [],
-      enabled: false,
-      extra_filter_expression: 'true',
-      filter_expression: 'true',
-      is_approved: false,
-      locales: [],
-      last_updated: new DateField(),
-      name: new Field(faker.lorem.slug),
+      signature: null,
     };
   }
 
@@ -51,7 +40,29 @@ export class SimpleRecipeFactory extends Factory {
   }
 }
 
-export class RecipeFactory extends SimpleRecipeFactory {
+export class SimpleRecipeFactory extends BaseRecipeFactory {
+  getFields() {
+    return {
+      ...super.getFields(),
+      approved_revision_id: null,
+      latest_revision_id: new Field(faker.random.number),
+    };
+  }
+
+  postGeneration() {
+    super.postGeneration();
+
+    const { isApproved, isEnabled } = this.options;
+
+    if (isEnabled || isApproved) {
+      if (this.data.approved_revision_id === null) {
+        this.data.approved_revision_id = this.data.latest_revision_id;
+      }
+    }
+  }
+}
+
+export class RecipeFactory extends BaseRecipeFactory {
   getFields() {
     return {
       ...super.getFields(),
@@ -66,9 +77,9 @@ export class RecipeFactory extends SimpleRecipeFactory {
     const { isApproved, isEnabled } = this.options;
 
     if (isEnabled || isApproved) {
-      if (this.data.approved_revision) {
+      if (this.data.approved_revision === null) {
         this.data.approved_revision = RevisionFactory.build({
-          recipe: SimpleRecipeFactory.build(this.data),
+          recipe: BaseRecipeFactory.build(this.data),
         });
       }
 
@@ -79,7 +90,7 @@ export class RecipeFactory extends SimpleRecipeFactory {
 
     if (this.data.latest_revision === null) {
       this.data.latest_revision = RevisionFactory.build({
-        recipe: SimpleRecipeFactory.build(this.data),
+        recipe: BaseRecipeFactory.build(this.data),
       });
     }
   }
