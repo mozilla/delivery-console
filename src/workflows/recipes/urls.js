@@ -75,7 +75,7 @@ export default {
               return [
                 'Recipe Revision',
                 revision && `#${recipeId} rev ${revision.get('id')}`,
-                revision && `${currentRevision.get('name')}`,
+                currentRevision && `${currentRevision.get('name')}`,
               ];
             },
             routes: {
