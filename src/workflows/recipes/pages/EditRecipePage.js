@@ -67,7 +67,7 @@ class EditRecipePage extends React.PureComponent {
             formAction={this.formAction}
             onSuccess={this.onFormSuccess}
             onFailure={this.onFormFailure}
-            formProps={{ recipe: currentRevision }}
+            formProps={{ revision: currentRevision }}
           />
         </LoadingOverlay>
       </div>
