@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Layout, notification } from 'antd';
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,6 +14,7 @@ import Routes from 'console/components/Routes';
 import CircleLogo from 'console/components/svg/CircleLogo';
 import { notifyAuthenticationError } from 'console/state/auth/actions';
 import { getError } from 'console/state/auth/selectors';
+import { getRequestsState } from 'console/state/network/selectors';
 import { getCurrentDocumentTitle } from 'console/state/router/selectors';
 import { reverse } from 'console/urls';
 
@@ -22,6 +23,7 @@ const { Header } = Layout;
 @connect(
   (state, props) => ({
     authError: getError(state),
+    requests: getRequestsState(state),
     documentTitle: getCurrentDocumentTitle(state, 'Delivery Console'),
   }),
   {
@@ -31,16 +33,38 @@ const { Header } = Layout;
 class App extends React.Component {
   static propTypes = {
     authError: PropTypes.object,
+    requests: PropTypes.object,
     history: PropTypes.object.isRequired,
     documentTitle: PropTypes.string.isRequired,
   };
 
   componentDidUpdate(prevProps) {
-    const { authError } = this.props;
+    const { authError, requests } = this.props;
 
     if (authError) {
       this.props.notifyAuthenticationError(authError);
     }
+
+    // For every request that errored, has an endpoint, and is not in progress,
+    // notify of the error.
+    // XXX THIS IS A PROTOYYPE. WE NEED TO BE SMARTER ABOUT NOT SENDING THE SAME MESSAGE
+    // IF THE LAST MESSAGE HASN'T CHANGED!
+    requests
+      .filter(x => {
+        return x.get('error') && !x.get('inProgress') && x.get('endpoint');
+      })
+      .forEach(error => {
+        let message = `Network errors trying to reach ${error.get('endpoint')}`;
+        const data = error.get('error').data;
+        if (data) {
+          message += ` ${JSON.stringify(data)}`;
+        }
+        notification.error({
+          message: 'Network Error',
+          description: message,
+          duration: 0,
+        });
+      });
   }
 
   render() {

@@ -41,6 +41,7 @@ function requests(state = defaultState.get('requests'), action) {
         new Map({
           inProgress: false,
           error: fromJS(action.error),
+          endpoint: action.endpoint,
         }),
       );
 

@@ -46,6 +46,7 @@ export function makeApiRequest(requestId, root, endpoint, options = {}) {
         type: REQUEST_FAILURE,
         requestId,
         error,
+        endpoint,
       });
 
       throw error;
