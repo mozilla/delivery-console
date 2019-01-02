@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Alert, Button, Modal } from 'antd';
 import autobind from 'autobind-decorator';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { getUserProfile } from 'console/state/auth/selectors';
 import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
 import { requestRevisionApproval } from 'console/state/revisions/actions';
 import { getLatestRevisionIdForRecipe, getRecipe } from 'console/state/recipes/selectors';
@@ -33,6 +34,7 @@ import { reverse } from 'console/urls';
       recipe,
       recipeId,
       revisionId,
+      userProfile: getUserProfile(state),
     };
   },
   {
@@ -54,6 +56,11 @@ class DetailsActionBar extends React.PureComponent {
     recipeId: PropTypes.number.isRequired,
     requestRevisionApproval: PropTypes.func.isRequired,
     revisionId: PropTypes.number.isRequired,
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    userProfile: null,
   };
 
   handleDisableClick() {
@@ -88,7 +95,20 @@ class DetailsActionBar extends React.PureComponent {
       recipe,
       recipeId,
       revisionId,
+      userProfile,
     } = this.props;
+
+    // FIXME(peterbe): Replace this with something more advanced that
+    // determines *what* you can do.
+    if (!userProfile) {
+      return (
+        <Alert
+          className="revision-notice"
+          type="warning"
+          message="Must be logged in take any action on this."
+        />
+      );
+    }
 
     const cloneUrl = isLatest
       ? reverse('recipes.clone', { recipeId })

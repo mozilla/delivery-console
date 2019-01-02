@@ -1,4 +1,4 @@
-import { Card, Col, message, Row, Tag } from 'antd';
+import { Alert, Card, Col, message, Row, Tag } from 'antd';
 import autobind from 'autobind-decorator';
 import dateFns from 'date-fns';
 import { Map } from 'immutable';
@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { getUserProfile } from 'console/state/auth/selectors';
 import handleError from 'console/utils/handleError';
 import ApprovalForm from 'console/workflows/recipes/components/ApprovalForm';
 import ApprovalDetails from 'console/workflows/recipes/components/ApprovalDetails';
@@ -24,6 +25,7 @@ import {
     approvalRequest: revision.get('approval_request', new Map()),
     recipe: getRecipeForRevision(state, revision.get('id'), new Map()),
     isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
+    userProfile: getUserProfile(state),
   }),
   {
     approveApprovalRequest,
@@ -39,6 +41,7 @@ class ApprovalRequest extends React.PureComponent {
     recipe: PropTypes.instanceOf(Map).isRequired,
     rejectApprovalRequest: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
+    userProfile: PropTypes.instanceOf(Map),
   };
 
   state = {
@@ -82,7 +85,7 @@ class ApprovalRequest extends React.PureComponent {
 
   render() {
     const { isSubmitting } = this.state;
-    const { approvalRequest, isPendingApproval, recipe } = this.props;
+    const { approvalRequest, isPendingApproval, recipe, userProfile } = this.props;
     const errors = this.state.formErrors;
 
     let extra;
@@ -95,16 +98,31 @@ class ApprovalRequest extends React.PureComponent {
       extra = <Tag color="red">Rejected</Tag>;
     }
 
-    const detailSection = isPendingApproval ? (
-      <ApprovalForm
-        approvalRequest={approvalRequest}
-        isSubmitting={isSubmitting}
-        onSubmit={this.handleSubmit}
-        errors={errors}
-      />
-    ) : (
-      <ApprovalDetails request={approvalRequest} />
-    );
+    let detailSection;
+    if (isPendingApproval) {
+      // FIXME(peterbe): Replace this with something more advanced that
+      // determines *what* you can do.
+      if (userProfile) {
+        detailSection = (
+          <ApprovalForm
+            approvalRequest={approvalRequest}
+            isSubmitting={isSubmitting}
+            onSubmit={this.handleSubmit}
+            errors={errors}
+          />
+        );
+      } else {
+        detailSection = (
+          <Alert
+            className="revision-notice"
+            type="warning"
+            message="Must be logged in take any action on this."
+          />
+        );
+      }
+    } else {
+      detailSection = <ApprovalDetails request={approvalRequest} />;
+    }
 
     const dateCreated = dateFns.parse(approvalRequest.get('created'));
 

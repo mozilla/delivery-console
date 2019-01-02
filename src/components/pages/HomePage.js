@@ -1,10 +1,28 @@
 import { Col, Row } from 'antd';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { getUserProfile } from 'console/state/auth/selectors';
 import NavigationCard from 'console/components/navigation/NavigationCard';
 import applicationRoutes from 'console/urls';
 
-export default class HomePage extends React.PureComponent {
+@connect(state => {
+  return {
+    userProfile: getUserProfile(state),
+  };
+})
+class HomePage extends React.PureComponent {
+  static propTypes = {
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    recipe: null,
+    userProfile: null,
+  };
+
   renderCards(items) {
     return items.map((item, index) => (
       <Col span={8} key={index}>
@@ -26,9 +44,10 @@ export default class HomePage extends React.PureComponent {
   }
 
   render() {
+    const { userProfile } = this.props;
     const cards = applicationRoutes
       .filter(r => r.cardOnHomepage)
-      .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path }));
+      .map(r => ({ ...r.cardOnHomepage, listingUrl: r.path, showNewActionLink: !!userProfile }));
     return (
       <div className="home-page">
         <div className="intro">
@@ -53,3 +72,5 @@ export default class HomePage extends React.PureComponent {
     );
   }
 }
+
+export default HomePage;
