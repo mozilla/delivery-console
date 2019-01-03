@@ -52,8 +52,8 @@ class RevisionNotice extends React.Component {
       message = 'This is the published version.';
       type = 'success';
     } else if (status === REVISION_APPROVED) {
-      message = 'You are viewing the approved version.';
-      type = 'info';
+      message = 'You are viewing the approved but not published version.';
+      type = 'warning';
     } else {
       return null;
     }
