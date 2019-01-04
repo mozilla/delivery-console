@@ -440,18 +440,18 @@ describe('<FilterObjectForm>', () => {
         onChange: jest.fn(),
         value: {
           type: 'stableSample',
-          rate: 0.3333,
+          rate: 0.33,
         },
         onSubmit: jest.fn(), // otherwise set by createForm()
       };
       const FakeForm = createForm({})(SamplingInput);
       const { getByValue } = render(<FakeForm {...props} />);
-      fireEvent.change(getByValue('33%'), {
-        target: { value: '75' },
+      fireEvent.change(getByValue('33'), {
+        target: { value: '0.1' },
       });
       expect(props.onChange).toHaveBeenCalledTimes(1);
       expect(props.onChange).toBeCalledWith({
-        rate: 0.75,
+        rate: 0.001,
         type: 'stableSample',
       });
     });

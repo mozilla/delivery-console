@@ -7,6 +7,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import {
   serializeFilterObjectToMap,
   SAMPLING_TYPES,
+  smartNumberFormatting,
 } from 'console/workflows/recipes/components/FilterObjectForm';
 
 export default class RecipeDetails extends React.PureComponent {
@@ -191,7 +192,7 @@ export class ArgumentsValue extends React.PureComponent {
             samplingSource.push({
               key: 'rate',
               name: 'Rate',
-              value: Math.trunc(value.get('rate') * 100) + '%',
+              value: smartNumberFormatting(value.get('rate') * 100) + '%',
             });
           } else if (samplingType === 'bucketSample') {
             samplingSource.push({
