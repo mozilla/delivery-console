@@ -3,6 +3,11 @@
     "react-app",
     "prettier"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "overrides": [{
     "files": "**/*.test.js",
     "globals": {

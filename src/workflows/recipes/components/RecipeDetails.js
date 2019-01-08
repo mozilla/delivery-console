@@ -37,7 +37,8 @@ export default class RecipeDetails extends React.PureComponent {
             </dt>
             <ArgumentsValue
               name="extra_filter_expression"
-              value={extraFilterExpression ? extraFilterExpression : <em>none</em>}
+              value={extraFilterExpression}
+              defaultValue={<em>none</em>}
             />
           </dl>
         </Card>
@@ -69,6 +70,7 @@ export default class RecipeDetails extends React.PureComponent {
 export class ArgumentsValue extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string,
+    defaultValue: PropTypes.any,
     value: PropTypes.any,
     actionName: PropTypes.string,
   };
@@ -76,6 +78,7 @@ export class ArgumentsValue extends React.PureComponent {
   static defaultProps = {
     name: null,
     actionName: null,
+    defaultValue: null,
   };
 
   static stringifyImmutable(value) {
@@ -265,7 +268,7 @@ export class ArgumentsValue extends React.PureComponent {
   }
 
   render() {
-    const { name, actionName, value } = this.props;
+    const { actionName, defaultValue, name, value } = this.props;
 
     let valueRender = x => (typeof x === 'object' ? JSON.stringify(x, null, 2) : x);
     let argumentsValueClassName = 'arguments-value';
@@ -283,15 +286,22 @@ export class ArgumentsValue extends React.PureComponent {
       valueRender = this.renderPreferencesTable;
     }
 
-    let textToCopy = value === undefined ? '' : value.toString();
-    if (this.compareInstances(value, [List, Map])) {
-      textToCopy = ArgumentsValue.stringifyImmutable(value);
+    // It's not good enough to check if the value is falsy to determine whether to show
+    // the default value instead. For example if it's "false" (type boolean) we want to
+    // display that as code. E.g. `<code>false</code>` or `<code>0</code>`.
+    let realValue = !(value === null || value === undefined);
+    let textToCopy = null;
+    if (realValue) {
+      textToCopy = value === undefined ? '' : value.toString();
+      if (this.compareInstances(value, [List, Map])) {
+        textToCopy = ArgumentsValue.stringifyImmutable(value);
+      }
     }
 
     return (
       <dd className={argumentsValueClassName}>
-        <div className="value">{valueRender(value)}</div>
-        {value ? (
+        <div className="value">{realValue ? valueRender(value) : defaultValue}</div>
+        {realValue ? (
           <Tooltip mouseEnterDelay={1} title="Copy to Clipboard" placement="top">
             <CopyToClipboard className="copy-icon" text={textToCopy}>
               <Icon type="copy" />
