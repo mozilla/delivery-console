@@ -10,6 +10,7 @@ import FilterObjectForm, {
   SamplingInput,
   VersionsInput,
   parseIntOrNull,
+  smartNumberFormatting,
 } from 'console/workflows/recipes/components/FilterObjectForm';
 import { createForm } from 'console/utils/forms';
 import { wrapMockStore } from 'console/tests/mockStore';
@@ -503,5 +504,14 @@ describe('<FilterObjectForm>', () => {
       fireEvent.click(closeIcon);
       expect(props.onChange).toBeCalledWith([68, 69]);
     });
+  });
+});
+
+describe('<smartNumberFormatting>', () => {
+  it('should display whole numbers nicely', () => {
+    expect(smartNumberFormatting(33)).toEqual('33');
+  });
+  it('should display floating point numbers nicely', () => {
+    expect(smartNumberFormatting(0.007 * 100)).toEqual('0.7');
   });
 });
