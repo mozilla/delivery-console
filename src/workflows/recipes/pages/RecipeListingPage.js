@@ -224,6 +224,7 @@ class RecipeListingPage extends React.PureComponent {
             columnRenderers={columnRenderers}
             dataSource={recipes.toJS()}
             ordering={ordering}
+            defaultOrdering={ordering === '-last_updated' ? 'last_updated' : '-last_updated'}
             getUrlFromRecord={this.getUrlFromRecord}
             status={status}
             action={action}
