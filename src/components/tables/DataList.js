@@ -29,10 +29,12 @@ class DataList extends React.PureComponent {
     ordering: PropTypes.string,
     getUrlFromRecord: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+    defaultOrdering: PropTypes.string,
   };
 
   static defaultProps = {
     ordering: null,
+    defaultOrdering: null,
   };
 
   static getSortOrder = (field, ordering) => {
@@ -75,6 +77,8 @@ class DataList extends React.PureComponent {
     if (Object.keys(sorter).length) {
       const prefix = sorter.order === 'ascend' ? '' : '-';
       ordering = `${prefix}${sorter.field}`;
+    } else if (this.props.defaultOrdering) {
+      ordering = this.props.defaultOrdering;
     }
 
     this.props.push(
