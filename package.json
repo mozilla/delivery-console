@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "antd": "3.12.1",
-    "auth0-js": "9.8.2",
+    "auth0-js": "9.9.0",
     "autobind-decorator": "2.4.0",
     "connected-react-router": "5.0.1",
     "date-fns": "1.30.1",
