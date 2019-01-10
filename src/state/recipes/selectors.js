@@ -24,15 +24,15 @@ export function getRecipeListingCount(state) {
   return state.getIn(['recipes', 'listing', 'count']);
 }
 
-export function getRecipeListing(state) {
+export function getRecipeListingAsRevisions(state) {
   const recipes = state.getIn(['recipes', 'listing', 'results'], new List());
   return recipes.map(id => getCurrentRevisionForRecipe(state, id));
 }
 
-export function getRecipeListingFlattenedAction(state) {
-  const recipes = getRecipeListing(state);
+export function getRecipeListingAsRevisionsFlattenedAction(state) {
+  const recipes = getRecipeListingAsRevisions(state);
   return recipes.map(item => {
-    item = item || Map();
+    item = item || Map(); // The fallback is to handle inconsistencies noticed at initialization
     return item.set('action', item.getIn(['action', 'name']));
   });
 }
@@ -77,20 +77,16 @@ export function getApprovedRevisionIdForRecipe(state, id, defaultsTo = null) {
   return state.getIn(['recipes', 'items', id, 'approved_revision_id']) || defaultsTo;
 }
 
-export function getCurrentRevisionForRecipe(state, id, defaultsTo = null) {
+export function getCurrentRevisionForRecipe(state, id) {
   let revision = getApprovedRevisionForRecipe(state, id);
   if (!revision) {
     revision = getLatestRevisionForRecipe(state, id);
   }
-  return revision || defaultsTo;
+  return revision;
 }
 
-export function getCurrentRevisionIdForRecipe(state, id, defaultsTo = null) {
-  let revisionId = getApprovedRevisionIdForRecipe(state, id);
-  if (!revisionId) {
-    revisionId = getLatestRevisionIdForRecipe(state, id);
-  }
-  return revisionId || defaultsTo;
+export function getCurrentRevisionIdForRecipe(state, id) {
+  return getCurrentRevisionForRecipe(state, id).get('id');
 }
 
 export function getRecipeApprovalHistory(state, id) {

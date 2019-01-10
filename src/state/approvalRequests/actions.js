@@ -4,7 +4,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 
-import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
+import { makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {
@@ -34,27 +34,6 @@ export function fetchApprovalRequest(pk) {
     const approvalRequest = await response;
 
     dispatch(approvalRequestReceived(approvalRequest));
-  };
-}
-
-export function fetchAllApprovalRequests() {
-  return async dispatch => {
-    const requestId = 'fetch-all-approval-requests';
-    let response = await dispatch(makeNormandyApiRequest(requestId, 'v3/approval_request/'));
-    let approvalRequests = response.results;
-
-    while (approvalRequests) {
-      approvalRequests.forEach(approvalRequest => {
-        dispatch(approvalRequestReceived(approvalRequest));
-      });
-
-      if (response.next) {
-        response = await dispatch(makeApiRequest(requestId, response.next));
-        approvalRequests = response.results;
-      } else {
-        approvalRequests = null;
-      }
-    }
   };
 }
 

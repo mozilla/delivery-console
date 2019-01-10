@@ -21,7 +21,7 @@ import { reverse } from 'console/urls';
 import {
   getRecipeListingColumns,
   getRecipeListingCount,
-  getRecipeListingFlattenedAction,
+  getRecipeListingAsRevisionsFlattenedAction,
 } from 'console/state/recipes/selectors';
 import {
   getCurrentUrlAsObject as getCurrentUrlAsObjectSelector,
@@ -38,7 +38,7 @@ import { getAllActions } from 'console/state/actions/selectors';
     getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
     ordering: getQueryParam(state, 'ordering', '-last_updated'),
     pageNumber: getQueryParamAsInt(state, 'page', 1),
-    recipes: getRecipeListingFlattenedAction(state),
+    recipes: getRecipeListingAsRevisionsFlattenedAction(state),
     searchText: getQueryParam(state, 'searchText'),
     status: getQueryParam(state, 'status'),
     action: getQueryParam(state, 'action'),
