@@ -37,10 +37,10 @@ class RevisionNotice extends React.Component {
     let type;
 
     if (status === REVISION_PENDING_APPROVAL) {
-      message = 'This is pending approval.';
+      message = 'You are viewing a draft that is pending approval.';
       type = 'warning';
     } else if (status === REVISION_REJECTED) {
-      message = 'You are viewing a rejected draft.';
+      message = 'You are viewing a draft that was rejected.';
       type = 'warning';
     } else if (draftStatus === REVISION_DRAFT) {
       message = 'You are viewing a draft.';
@@ -52,7 +52,7 @@ class RevisionNotice extends React.Component {
       message = 'This is the published version.';
       type = 'success';
     } else if (status === REVISION_APPROVED) {
-      message = 'You are viewing the approved but not published version.';
+      message = 'You are viewing a draft that has been approved but has not been published.';
       type = 'warning';
     } else {
       return null;
