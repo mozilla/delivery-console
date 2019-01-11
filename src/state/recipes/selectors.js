@@ -77,16 +77,16 @@ export function getApprovedRevisionIdForRecipe(state, id, defaultsTo = null) {
   return state.getIn(['recipes', 'items', id, 'approved_revision_id']) || defaultsTo;
 }
 
-export function getCurrentRevisionForRecipe(state, id) {
+export function getCurrentRevisionForRecipe(state, id, defaultTo = null) {
   let revision = getApprovedRevisionForRecipe(state, id);
   if (!revision) {
     revision = getLatestRevisionForRecipe(state, id);
   }
-  return revision;
+  return revision || defaultTo;
 }
 
-export function getCurrentRevisionIdForRecipe(state, id) {
-  return getCurrentRevisionForRecipe(state, id).get('id');
+export function getCurrentRevisionIdForRecipe(state, id, defaultsTo = null) {
+  return getCurrentRevisionForRecipe(state, id, new Map()).get('id', defaultsTo);
 }
 
 export function getRecipeApprovalHistory(state, id) {
