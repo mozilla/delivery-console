@@ -134,6 +134,12 @@ class RecipeListingPage extends React.PureComponent {
       },
 
       action: ({ action, ordering }) => {
+        // If 'action' is null, don't set the filteredValue prop to: [null]
+        // or else it will always appear highlit.
+        const filteredValue = [];
+        if (action) {
+          filteredValue.push(action);
+        }
         return (
           <Table.Column
             title="Action"
@@ -141,7 +147,7 @@ class RecipeListingPage extends React.PureComponent {
             key="action"
             render={RecipeListingPage.renderLinkedText}
             filters={actionNames.map(name => ({ text: name, value: name }))}
-            filteredValue={[action]}
+            filteredValue={filteredValue}
             filterMultiple={false}
             sortOrder={DataList.getSortOrder('action', ordering)}
             sorter
@@ -150,6 +156,12 @@ class RecipeListingPage extends React.PureComponent {
       },
 
       enabled: ({ status }) => {
+        // If 'status' is null, don't set the filteredValue prop to: [null]
+        // or else it will always appear highlit.
+        const filteredValue = [];
+        if (status) {
+          filteredValue.push(status);
+        }
         return (
           <Table.Column
             title="Enabled"
@@ -159,7 +171,7 @@ class RecipeListingPage extends React.PureComponent {
               { text: 'Enabled', value: 'enabled' },
               { text: 'Disabled', value: 'disabled' },
             ]}
-            filteredValue={[status]}
+            filteredValue={filteredValue}
             filterMultiple={false}
           />
         );
@@ -212,6 +224,7 @@ class RecipeListingPage extends React.PureComponent {
             columnRenderers={columnRenderers}
             dataSource={recipes.toJS()}
             ordering={ordering}
+            defaultOrdering={ordering === '-last_updated' ? 'last_updated' : '-last_updated'}
             getUrlFromRecord={this.getUrlFromRecord}
             status={status}
             action={action}

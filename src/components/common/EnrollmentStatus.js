@@ -14,27 +14,38 @@ export default class EnrollmentSatus extends React.Component {
   };
 
   getLabel() {
-    let label = 'Disabled';
     if (this.isRecipeEnabled()) {
-      label = this.isRecipePaused() ? 'Paused' : 'Active';
+      return this.isRecipePaused() ? 'Paused' : 'Active';
+    } else {
+      // If it's not enabled (or paused) show something about the approval status.
+      if (this.isRecipeApproved()) {
+        return 'Approved';
+      }
     }
-    return label;
+    return 'Disabled';
+  }
+
+  isRecipeApproved() {
+    const { recipe } = this.props;
+    return recipe.approval_request && recipe.approval_request.approved;
   }
 
   getIcon() {
-    let iconType = 'minus';
     if (this.isRecipeEnabled()) {
-      iconType = this.isRecipePaused() ? 'pause' : 'check';
+      return this.isRecipePaused() ? 'pause' : 'check';
+    } else if (this.isRecipeApproved()) {
+      return 'info-circle';
     }
-    return iconType;
+    return 'minus';
   }
 
   getColor() {
-    let colorClass;
     if (this.isRecipeEnabled()) {
-      colorClass = this.isRecipePaused() ? 'is-false' : 'is-true';
+      return this.isRecipePaused() ? 'is-false' : 'is-true';
+    } else if (this.isRecipeApproved()) {
+      return 'is-warning';
     }
-    return colorClass;
+    return null;
   }
 
   isRecipePaused() {
@@ -53,7 +64,10 @@ export default class EnrollmentSatus extends React.Component {
     return (
       <NavLink
         to={reverse('recipes.details', { recipeId: recipe.id })}
-        className={cx('status-link', !recipe.enabled && 'is-lowkey')}
+        className={cx(
+          'status-link',
+          !(this.isRecipeEnabled() || this.isRecipeApproved()) && 'is-lowkey',
+        )}
       >
         <Icon className={cx('status-icon', this.getColor())} type={this.getIcon()} />
         <span className="enrollment-label">{this.getLabel()}</span>

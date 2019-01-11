@@ -37,6 +37,26 @@ describe('<ArgumentsValue>', () => {
     );
   });
 
+  it('should render default value if extra_filter_expression is null', () => {
+    const wrapper = shallow(
+      <ArgumentsValue value={null} name="extra_filter_expression" defaultValue={<i>Nada!</i>} />,
+    );
+    expect(wrapper.find('.value').html()).toBe('<div class="value"><i>Nada!</i></div>');
+  });
+
+  it('should not render default value if extra_filter_expression is "false"', () => {
+    const wrapper = shallow(
+      <ArgumentsValue
+        value={'false'}
+        name="extra_filter_expression"
+        defaultValue={<i>Nada!</i>}
+      />,
+    );
+    expect(wrapper.find('.value').html()).toBe(
+      '<div class="value"><pre><code>false</code></pre></div>',
+    );
+  });
+
   it('should render branches as a table', () => {
     const value = Immutable.fromJS([
       { slug: 'one', value: 1, ratio: 1 },
@@ -73,6 +93,16 @@ describe('<ArgumentsValue>', () => {
     expect(content).toContain('<code>Peter</code>');
     expect(content).toContain('<code>2</code>');
     expect(content).toContain('<code>false</code>');
+  });
+
+  it('should display copy-to-clipboard tag for truthy values', () => {
+    let wrapper = shallow(<ArgumentsValue value={'something'} />);
+    expect(wrapper.find('.copy-icon').exists()).toBeTruthy();
+  });
+
+  it('should not display copy-to-clipboard tag for falsy values', () => {
+    let wrapper = shallow(<ArgumentsValue value={null} />);
+    expect(wrapper.find('.copy-icon').exists()).toBeFalsy();
   });
 
   describe('immutable objects', () => {

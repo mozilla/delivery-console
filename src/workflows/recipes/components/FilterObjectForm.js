@@ -114,6 +114,26 @@ export function deserializeFilterObjectToList(obj) {
   );
 }
 
+/** Return a string of a number such that it's formatted as a whole number if it is,
+ * and as a floating point number with "human readable precision".
+ * For example, if the number is `3` return `"3"`.
+ * If the number is `0.1` return `"0.1"`.
+ * Note, that that function rounds floating point errors. For example:
+ *
+ * > 100 * 0.007
+ * 0.70000000000001/0000
+ * > smartNumberFormatting(100 * 0.007)
+ * "0.7"
+ *
+ * This is useful since we store percentages in the backend as floating point numbers.
+ * The user might type in "10" to mean "10% or if they prefer more precision they can
+ * type in "0.7" to mean "0.7%" then we want too display it with the same amount
+ * of precision.
+ */
+export function smartNumberFormatting(n) {
+  return (Math.round(n * 100) / 100).toString();
+}
+
 class FilterObjectForm extends React.PureComponent {
   static propTypes = {
     allChannels: PropTypes.instanceOf(List),
@@ -656,6 +676,17 @@ export class SamplingInput extends React.PureComponent {
   renderStableInputs = () => {
     const { disabled, value, formErrors } = this.props;
 
+    let step = 1;
+    // If the current value rate has a decimal (e.g. 0.1% or 12.3%) then
+    // make the step 0.1.
+    if (value.rate !== undefined) {
+      const sf = smartNumberFormatting(100 * value.rate).match(/\.(\d+)/g);
+      if (sf) {
+        step = 1 / 10 ** (sf[0].length - 1);
+      } else if (value.rate * 100 <= 1) {
+        step = 0.1;
+      }
+    }
     return (
       <div>
         <FormItem
@@ -669,15 +700,16 @@ export class SamplingInput extends React.PureComponent {
           <InputNumber
             min={0}
             max={100}
+            step={step}
             disabled={disabled}
             title="Value between 1 and 100"
-            formatter={value => `${value}%`}
             parser={value => value.replace('%', '')}
             onChange={value => {
               this.bubbleUp({ rate: value / 100 });
             }}
-            value={(value.rate !== undefined && Math.trunc(value.rate * 100)) || ''}
+            value={(value.rate !== undefined && smartNumberFormatting(value.rate * 100)) || ''}
           />
+          %
         </FormItem>
         <InputsWidget
           disabled={disabled}
