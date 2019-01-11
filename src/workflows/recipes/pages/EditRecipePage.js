@@ -11,17 +11,18 @@ import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import { updateRecipe } from 'console/state/recipes/actions';
-import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
+import { getLatestRevisionForRecipe } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
-    const currentRevision = getCurrentRevisionForRecipe(state, recipeId, new Map());
+    const revision = getLatestRevisionForRecipe(state, recipeId, new Map());
+    console.log(revision);
 
     return {
-      currentRevision,
       recipeId,
+      revision,
     };
   },
   {
@@ -31,13 +32,9 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 @autobind
 class EditRecipePage extends React.PureComponent {
   static propTypes = {
-    currentRevision: PropTypes.instanceOf(Map),
     recipeId: PropTypes.number.isRequired,
+    revision: PropTypes.instanceOf(Map),
     updateRecipe: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    currentRevision: null,
   };
 
   onFormSuccess() {
@@ -55,7 +52,7 @@ class EditRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { currentRevision, recipeId } = this.props;
+    const { revision, recipeId } = this.props;
 
     return (
       <div className="content-wrapper edit-page">
@@ -67,7 +64,7 @@ class EditRecipePage extends React.PureComponent {
             formAction={this.formAction}
             onSuccess={this.onFormSuccess}
             onFailure={this.onFormFailure}
-            formProps={{ revision: currentRevision }}
+            formProps={{ revision }}
           />
         </LoadingOverlay>
       </div>
