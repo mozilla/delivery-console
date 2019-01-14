@@ -1,4 +1,4 @@
-import { Alert, message } from 'antd';
+import { message } from 'antd';
 import autobind from 'autobind-decorator';
 import { Map } from 'immutable';
 import { push } from 'connected-react-router';
@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import { reverse } from 'console/urls';
@@ -53,11 +54,7 @@ class CreateExtensionPage extends React.PureComponent {
     if (!userProfile) {
       return (
         <div className="content-wrapper">
-          <Alert
-            type="error"
-            message="Not logged in"
-            description="You must be logged in to create an extension."
-          />
+          <AuthenticationAlert description="You must be logged in to create an extension." />
         </div>
       );
     }

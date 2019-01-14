@@ -7,6 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import handleError from 'console/utils/handleError';
@@ -116,9 +117,8 @@ class CloneRecipePage extends React.PureComponent {
     if (!userProfile) {
       return (
         <div className="content-wrapper">
-          <Alert
+          <AuthenticationAlert
             type="error"
-            message="Not logged in"
             description="You must be logged in to clone this recipe."
           />
         </div>

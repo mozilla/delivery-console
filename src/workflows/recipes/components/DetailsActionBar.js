@@ -1,4 +1,4 @@
-import { Alert, Button, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import autobind from 'autobind-decorator';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
 import { requestRevisionApproval } from 'console/state/revisions/actions';
@@ -100,13 +101,12 @@ class DetailsActionBar extends React.PureComponent {
 
     // FIXME(peterbe): Replace this with something more advanced that
     // determines *what* you can do.
+    // For example, you might be logged in but you don't have any permissions.
+    // Or, you might have permission to edit but not approve approval requests.
+    // See https://github.com/mozilla/delivery-console/issues/703
     if (!userProfile) {
       return (
-        <Alert
-          className="revision-notice"
-          type="warning"
-          message="Must be logged in take any action on this."
-        />
+        <AuthenticationAlert type="warning" message="Must be logged in take any action on this." />
       );
     }
 

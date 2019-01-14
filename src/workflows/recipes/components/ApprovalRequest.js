@@ -1,4 +1,4 @@
-import { Alert, Card, Col, message, Row, Tag } from 'antd';
+import { Card, Col, message, Row, Tag } from 'antd';
 import autobind from 'autobind-decorator';
 import { push } from 'connected-react-router';
 import dateFns from 'date-fns';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import handleError from 'console/utils/handleError';
 import ApprovalForm from 'console/workflows/recipes/components/ApprovalForm';
@@ -128,11 +129,15 @@ class ApprovalRequest extends React.PureComponent {
         );
       } else {
         detailSection = (
-          <Alert
-            className="revision-notice"
+          <AuthenticationAlert
             type="warning"
             message="Must be logged in take any action on this."
           />
+          // <Alert
+          //   className="revision-notice"
+          //   type="warning"
+          //   message="Must be logged in take any action on this."
+          // />
         );
       }
     } else {
