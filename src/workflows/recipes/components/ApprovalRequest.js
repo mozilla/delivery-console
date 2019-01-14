@@ -1,5 +1,6 @@
 import { Alert, Card, Col, message, Row, Tag } from 'antd';
 import autobind from 'autobind-decorator';
+import { push } from 'connected-react-router';
 import dateFns from 'date-fns';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
@@ -19,6 +20,7 @@ import {
   getRecipeForRevision,
   isRevisionPendingApproval,
 } from 'console/state/revisions/selectors';
+import { reverse } from 'console/urls';
 
 @connect(
   (state, { revision }) => ({
@@ -29,6 +31,7 @@ import {
   }),
   {
     approveApprovalRequest,
+    push,
     rejectApprovalRequest,
   },
 )
@@ -50,7 +53,7 @@ class ApprovalRequest extends React.PureComponent {
   };
 
   async handleSubmit(values, context) {
-    const { approvalRequest } = this.props;
+    const { approvalRequest, push, recipe } = this.props;
 
     this.setState({
       isSubmitting: true,
@@ -77,9 +80,21 @@ class ApprovalRequest extends React.PureComponent {
         this.setState({ formErrors: error.data });
       }
     } finally {
-      this.setState({
-        isSubmitting: false,
-      });
+      this.setState(
+        {
+          isSubmitting: false,
+        },
+        () => {
+          // If you have just approved this recipe, the next natural action is (likely) to
+          // be to publish it. It's not something you can do from the Approval request page.
+          // So, redirect back to the details page which *has* a Publish button and a notification
+          // message about that being the next action.
+          if (context.approved) {
+            const recipeId = recipe.get('id');
+            push(reverse('recipes.details', { recipeId }));
+          }
+        },
+      );
     }
   }
 

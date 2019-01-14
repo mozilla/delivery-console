@@ -35,4 +35,16 @@ describe('<EnrollmentStatus>', () => {
     const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
     expect(wrapper.find('NavLink.status-link').props().className).toContain('is-lowkey');
   });
+
+  it('should say Approved for those with an approved approval request', () => {
+    const recipe = {
+      enabled: false,
+      approval_request: {
+        approved: true,
+      },
+    };
+    const wrapper = mount(wrapMockStore(<EnrollmentStatus recipe={recipe} />));
+    expect(wrapper.text()).toContain('Approved');
+    expect(wrapper.find('i.status-icon').props().className).toContain('is-warning');
+  });
 });

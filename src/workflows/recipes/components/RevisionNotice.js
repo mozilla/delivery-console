@@ -3,46 +3,57 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { REVISION_DRAFT, REVISION_OUTDATED } from 'console/state/constants';
 import {
-  isRevisionPendingApproval,
-  getRevisionDraftStatus,
-} from 'console/state/revisions/selectors';
+  REVISION_APPROVED,
+  REVISION_DRAFT,
+  REVISION_LIVE,
+  REVISION_PENDING_APPROVAL,
+  REVISION_OUTDATED,
+  REVISION_REJECTED,
+} from 'console/state/constants';
+import { getRevisionDraftStatus, getRevisionStatus } from 'console/state/revisions/selectors';
 
 @connect((state, { revision }) => ({
-  enabled: revision.getIn(['recipe', 'enabled'], false),
-  isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
-  status: getRevisionDraftStatus(state, revision.get('id')),
+  draftStatus: getRevisionDraftStatus(state, revision.get('id')),
+  status: getRevisionStatus(state, revision.get('id')),
 }))
-class RevisionNotice extends React.PureComponent {
+class RevisionNotice extends React.Component {
   static propTypes = {
-    enabled: PropTypes.bool.isRequired,
-    isPendingApproval: PropTypes.bool.isRequired,
+    draftStatus: PropTypes.string,
     status: PropTypes.string,
   };
 
-  static defaultProps = {
-    status: null,
-  };
+  // THIS SHOULDN'T BE NECESSARY
+  // https://github.com/mozilla/delivery-console/issues/680
+  shouldComponentUpdate(nextProps) {
+    const { draftStatus, status } = this.props;
+    return nextProps.draftStatus !== draftStatus || nextProps.status !== status;
+  }
 
   render() {
-    const { enabled, isPendingApproval, status } = this.props;
+    const { draftStatus, status } = this.props;
 
     let message;
     let type;
 
-    if (isPendingApproval) {
-      message = 'This is pending approval.';
+    if (status === REVISION_PENDING_APPROVAL) {
+      message = 'You are viewing a draft that is pending approval.';
       type = 'warning';
-    } else if (status === REVISION_DRAFT) {
+    } else if (status === REVISION_REJECTED) {
+      message = 'You are viewing a draft that was rejected.';
+      type = 'warning';
+    } else if (draftStatus === REVISION_DRAFT) {
       message = 'You are viewing a draft.';
       type = 'info';
-    } else if (status === REVISION_OUTDATED) {
+    } else if (draftStatus === REVISION_OUTDATED) {
       message = 'You are viewing an outdated version.';
       type = 'info';
-    } else if (enabled) {
+    } else if (status === REVISION_LIVE) {
       message = 'This is the published version.';
       type = 'success';
+    } else if (status === REVISION_APPROVED) {
+      message = 'You are viewing a draft that has been approved but has not been published.';
+      type = 'warning';
     } else {
       return null;
     }
