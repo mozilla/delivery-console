@@ -15,8 +15,9 @@ import {
   approveApprovalRequest,
   rejectApprovalRequest,
 } from 'console/state/approvalRequests/actions';
+import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
 import {
-  getRecipeForRevision,
+  getRecipeIdForRevision,
   isRevisionPendingApproval,
 } from 'console/state/revisions/selectors';
 import { reverse } from 'console/urls';
@@ -24,7 +25,11 @@ import { reverse } from 'console/urls';
 @connect(
   (state, { revision }) => ({
     approvalRequest: revision.get('approval_request', new Map()),
-    recipe: getRecipeForRevision(state, revision.get('id'), new Map()),
+    currentRevision: getCurrentRevisionForRecipe(
+      state,
+      getRecipeIdForRevision(state, revision.get('id')),
+      new Map(),
+    ),
     isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
   }),
   {
@@ -38,8 +43,8 @@ class ApprovalRequest extends React.PureComponent {
   static propTypes = {
     approvalRequest: PropTypes.instanceOf(Map).isRequired,
     approveApprovalRequest: PropTypes.func.isRequired,
+    currentRevision: PropTypes.instanceOf(Map).isRequired,
     isPendingApproval: PropTypes.bool.isRequired,
-    recipe: PropTypes.instanceOf(Map).isRequired,
     rejectApprovalRequest: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
   };
@@ -97,7 +102,7 @@ class ApprovalRequest extends React.PureComponent {
 
   render() {
     const { isSubmitting } = this.state;
-    const { approvalRequest, isPendingApproval, recipe } = this.props;
+    const { approvalRequest, currentRevision, isPendingApproval } = this.props;
     const errors = this.state.formErrors;
 
     let extra;
@@ -127,7 +132,7 @@ class ApprovalRequest extends React.PureComponent {
       <div className="approval-history-details">
         <Row gutter={24}>
           <Col span={14}>
-            <RecipeDetails recipe={recipe} />
+            <RecipeDetails revision={currentRevision} />
           </Col>
           <Col span={10}>
             <Card title="Approval Request" extra={extra}>

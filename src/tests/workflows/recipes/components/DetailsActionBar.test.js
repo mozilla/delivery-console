@@ -5,13 +5,13 @@ const { WrappedComponent: DetailsActionBar } = TestComponent;
 
 describe('<DetailsActionBar>', () => {
   const props = {
+    currentRevision: new Map(),
     disableRecipe: () => {},
     enableRecipe: () => {},
     isApprovable: false,
     isLatest: false,
     isLatestApproved: false,
     isPendingApproval: false,
-    recipe: new Map(),
     recipeId: 123,
     requestRevisionApproval: () => {},
     revisionId: 123,

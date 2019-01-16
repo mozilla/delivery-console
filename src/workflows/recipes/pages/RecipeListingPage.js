@@ -21,7 +21,7 @@ import { reverse } from 'console/urls';
 import {
   getRecipeListingColumns,
   getRecipeListingCount,
-  getRecipeListingFlattenedAction,
+  getRecipeListingAsRevisionsFlattenedAction,
 } from 'console/state/recipes/selectors';
 import {
   getCurrentUrlAsObject as getCurrentUrlAsObjectSelector,
@@ -38,7 +38,7 @@ import { getAllActions } from 'console/state/actions/selectors';
     getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
     ordering: getQueryParam(state, 'ordering', '-last_updated'),
     pageNumber: getQueryParamAsInt(state, 'page', 1),
-    recipes: getRecipeListingFlattenedAction(state),
+    recipes: getRecipeListingAsRevisionsFlattenedAction(state),
     searchText: getQueryParam(state, 'searchText'),
     status: getQueryParam(state, 'status'),
     action: getQueryParam(state, 'action'),
@@ -72,8 +72,8 @@ class RecipeListingPage extends React.PureComponent {
     action: null,
   };
 
-  static renderLinkedText(text, { id: recipeId }) {
-    return <Link to={reverse('recipes.details', { recipeId })}>{text}</Link>;
+  static renderLinkedText(text, record) {
+    return <Link to={reverse('recipes.details', { recipeId: record.recipe.id })}>{text}</Link>;
   }
 
   getFilters() {
@@ -100,8 +100,8 @@ class RecipeListingPage extends React.PureComponent {
     this.props.push(getCurrentUrlAsObject({ page }));
   }
 
-  getUrlFromRecord({ id: recipeId }) {
-    return reverse('recipes.details', { recipeId });
+  getUrlFromRecord(record) {
+    return reverse('recipes.details', { recipeId: record.recipe.id });
   }
 
   render() {
@@ -194,10 +194,10 @@ class RecipeListingPage extends React.PureComponent {
             key="last_updated"
             dataIndex="last_updated"
             render={(text, record) => {
-              const lastUpdated = dateFns.parse(record.last_updated);
+              const lastUpdated = dateFns.parse(record.updated);
               return (
                 <Link
-                  to={reverse('recipes.details', { recipeId: record.id })}
+                  to={reverse('recipes.details', { recipeId: record.recipe.id })}
                   title={dateFns.format(lastUpdated, 'dddd, MMMM M, YYYY h:mm A')}
                 >
                   {dateFns.distanceInWordsToNow(lastUpdated)}

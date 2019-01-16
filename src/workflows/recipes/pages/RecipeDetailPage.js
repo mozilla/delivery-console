@@ -54,7 +54,7 @@ class RecipeDetailPage extends React.PureComponent {
             <LoadingOverlay
               requestIds={[`fetch-recipe-${recipeId}`, `fetch-revision-${revisionId}`]}
             >
-              <RecipeDetails recipe={revision.get('recipe', new Map())} />
+              <RecipeDetails revision={revision} />
             </LoadingOverlay>
           </Col>
           <Col span={8} className="recipe-history">

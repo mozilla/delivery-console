@@ -17,7 +17,7 @@ describe('<ExtensionSelect>', () => {
   };
 
   it('should work', () => {
-    fetchMock.getOnce(`${NORMANDY_ADMIN_API_ROOT_URL}v2/extension/?page=1`, {
+    fetchMock.getOnce(`${NORMANDY_ADMIN_API_ROOT_URL}v3/extension/?page=1`, {
       count: 0,
       next: null,
       previous: null,
@@ -32,7 +32,7 @@ describe('<ExtensionSelect>', () => {
   });
 
   it('should display the placeholder element appropriately', () => {
-    fetchMock.get(`${NORMANDY_ADMIN_API_ROOT_URL}v2/extension/?page=1`, {
+    fetchMock.get(`${NORMANDY_ADMIN_API_ROOT_URL}v3/extension/?page=1`, {
       count: 0,
       next: null,
       previous: null,

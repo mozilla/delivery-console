@@ -1,9 +1,10 @@
 import { fromJS } from 'immutable';
 
-import { RECIPE_DELETE, REVISION_RECEIVE } from 'console/state/action-types';
+import { RECIPE_DELETE, RECIPE_PAGE_RECEIVE, REVISION_RECEIVE } from 'console/state/action-types';
 import revisionsReducer from 'console/state/revisions/reducers';
 
-import { INITIAL_STATE, RevisionFactory } from '.';
+import { RecipeFactory } from 'console/tests/state/recipes';
+import { INITIAL_STATE, RevisionFactory } from 'console/tests/state/revisions';
 
 describe('Revisions reducer', () => {
   const revision = RevisionFactory.build();
@@ -17,13 +18,13 @@ describe('Revisions reducer', () => {
       ...revision,
       recipe: {
         ...revision.recipe,
-        action_id: revision.recipe.action.id,
       },
+      action_id: revision.action.id,
       approval_request_id: null,
       user_id: revision.user.id,
     };
 
-    delete reducedRevision.recipe.action;
+    delete reducedRevision.action;
     delete reducedRevision.approval_request;
     delete reducedRevision.user;
 
@@ -49,5 +50,38 @@ describe('Revisions reducer', () => {
     });
 
     expect(updatedState).toEqual(INITIAL_STATE);
+  });
+
+  it('should handle RECIPE_PAGE_RECEIVE', () => {
+    const recipe = RecipeFactory.build();
+
+    const reducedRevision = {
+      ...recipe.latest_revision,
+      recipe: {
+        ...recipe.latest_revision.recipe,
+      },
+      action_id: recipe.latest_revision.action.id,
+      approval_request_id: null,
+      user_id: recipe.latest_revision.user.id,
+    };
+
+    delete reducedRevision.action;
+    delete reducedRevision.approval_request;
+    delete reducedRevision.user;
+
+    const updatedState = revisionsReducer(undefined, {
+      type: RECIPE_PAGE_RECEIVE,
+      pageNumber: 1,
+      recipes: {
+        count: 1,
+        next: null,
+        previous: null,
+        results: [{ ...recipe }],
+      },
+    });
+
+    expect(updatedState).toEqualImmutable(
+      INITIAL_STATE.setIn(['items', recipe.latest_revision.id], fromJS(reducedRevision)),
+    );
   });
 });
