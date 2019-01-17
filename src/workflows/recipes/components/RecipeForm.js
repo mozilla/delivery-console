@@ -86,14 +86,14 @@ class RecipeForm extends React.PureComponent {
     isLoading: PropTypes.bool,
     isCreationForm: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
-    recipe: PropTypes.instanceOf(Map),
+    revision: PropTypes.instanceOf(Map),
     selectedActionName: PropTypes.string,
   };
 
   static defaultProps = {
     isLoading: false,
     isCreationForm: false,
-    recipe: new Map(),
+    revision: new Map(),
   };
 
   static argumentsFields = {
@@ -115,13 +115,13 @@ class RecipeForm extends React.PureComponent {
   componentDidUpdate(prevProps) {
     // Initial values are mostly handled via props, but if the recipe
     // changes, we need to reset the values stored in the state.
-    if (!is(prevProps.recipe, this.props.recipe)) {
+    if (!is(prevProps.revision, this.props.revision)) {
       this.props.form.resetFields();
     }
   }
 
   renderArgumentsFields() {
-    const { isLoading, recipe, selectedActionName } = this.props;
+    const { isLoading, revision, selectedActionName } = this.props;
     let ArgumentsFields = RecipeForm.argumentsFields[selectedActionName];
 
     if (selectedActionName && !ArgumentsFields) {
@@ -135,13 +135,13 @@ class RecipeForm extends React.PureComponent {
     return (
       <fieldset>
         <legend>Action Arguments</legend>
-        <ArgumentsFields recipeArguments={recipe.get('arguments')} disabled={isLoading} />
+        <ArgumentsFields recipeArguments={revision.get('arguments')} disabled={isLoading} />
       </fieldset>
     );
   }
 
   render() {
-    const { filters, isCreationForm, isLoading, onSubmit, recipe, errors } = this.props;
+    const { filters, isCreationForm, isLoading, onSubmit, revision, errors } = this.props;
 
     const { defaultIdenticonSeed } = this.state;
 
@@ -154,13 +154,13 @@ class RecipeForm extends React.PureComponent {
     //   [{type: 'country', countries:['sv']}, ...]
     // becomes
     //   {countries: ['sv'], ...}
-    const filterObject = serializeFilterObjectToMap(recipe.get('filter_object'));
+    const filterObject = serializeFilterObjectToMap(revision.get('filter_object'));
 
     return (
       <Form onSubmit={onSubmit} className="recipe-form">
         <Row gutter={16}>
           <Col xs={24} sm={18}>
-            <FormItem name="name" label="Name" initialValue={recipe.get('name')}>
+            <FormItem name="name" label="Name" initialValue={revision.get('name')}>
               <Input disabled={isLoading} />
             </FormItem>
           </Col>
@@ -168,7 +168,7 @@ class RecipeForm extends React.PureComponent {
           <Col xs={24} sm={6}>
             <FormItem
               name="identicon_seed"
-              initialValue={recipe.get('identicon_seed', identiconSeed)}
+              initialValue={revision.get('identicon_seed', identiconSeed)}
             >
               <IdenticonField disabled={isLoading} />
             </FormItem>
@@ -177,7 +177,6 @@ class RecipeForm extends React.PureComponent {
         <FilterObjectForm
           form={this.props.form}
           disabled={isLoading}
-          recipe={recipe}
           filterObject={filterObject}
           filterObjectErrors={errors.filter_object}
           allLocales={filters.get('locales')}
@@ -189,11 +188,11 @@ class RecipeForm extends React.PureComponent {
           label="Additional Filter Expression"
           required={false}
           rules={[{ required: false }]}
-          initialValue={recipe.get('extra_filter_expression')}
+          initialValue={revision.get('extra_filter_expression')}
         >
           <Input.TextArea disabled={isLoading} rows={4} />
         </FormItem>
-        <FormItem name="action_id" label="Action" initialValue={recipe.getIn(['action', 'id'])}>
+        <FormItem name="action_id" label="Action" initialValue={revision.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />
         </FormItem>
         {this.renderArgumentsFields()}

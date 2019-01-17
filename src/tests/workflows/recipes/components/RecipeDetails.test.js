@@ -3,7 +3,7 @@ import RecipeDetails, { ArgumentsValue } from 'console/workflows/recipes/compone
 
 describe('<RecipeDetails>', () => {
   const props = {
-    recipe: new Map(),
+    revision: new Map(),
   };
 
   it('should work', () => {

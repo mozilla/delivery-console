@@ -17,10 +17,8 @@ import QueryRecipe from 'console/components/data/QueryRecipe';
 import QueryRevision from 'console/components/data/QueryRevision';
 import { createRecipe } from 'console/state/recipes/actions';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
-import {
-  getRecipeForRevision,
-  isLatestRevision as isLatestRevisionSelector,
-} from 'console/state/revisions/selectors';
+import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
+import { isLatestRevision as isLatestRevisionSelector } from 'console/state/revisions/selectors';
 import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
 import { reverse } from 'console/urls';
 
@@ -29,12 +27,12 @@ import { reverse } from 'console/urls';
     const recipeId = getUrlParamAsInt(state, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
     const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
-    const recipe = getRecipeForRevision(state, revisionId, new Map());
+    const currentRevision = getCurrentRevisionForRecipe(state, recipeId, new Map());
     const isLatestRevision = isLatestRevisionSelector(state, revisionId);
 
     return {
+      currentRevision,
       isLatestRevision,
-      recipe,
       recipeId,
       revisionId,
       userProfile: getUserProfile(state),
@@ -49,9 +47,9 @@ import { reverse } from 'console/urls';
 class CloneRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
+    currentRevision: PropTypes.instanceOf(Map).isRequired,
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
-    recipe: PropTypes.instanceOf(Map).isRequired,
     revisionId: PropTypes.number.isRequired,
     userProfile: PropTypes.instanceOf(Map),
   };
@@ -70,13 +68,13 @@ class CloneRecipePage extends React.PureComponent {
   }
 
   getFormProps() {
-    const { recipe } = this.props;
+    const { currentRevision } = this.props;
 
     // Remove the 'name' and 'identicon' field values.
-    const displayedRecipe = recipe.remove('name').remove('identicon_seed');
+    const displayedRecipe = currentRevision.remove('name').remove('identicon_seed');
 
     return {
-      recipe: displayedRecipe,
+      revision: displayedRecipe,
       isCreationForm: true,
     };
   }
@@ -87,13 +85,13 @@ class CloneRecipePage extends React.PureComponent {
   }
 
   renderHeader() {
-    const { isLatestRevision, recipe, recipeId, revisionId } = this.props;
+    const { currentRevision, isLatestRevision, recipeId, revisionId } = this.props;
 
     const recipeDetailsURL = isLatestRevision
       ? reverse('recipes.details', { recipeId })
       : reverse('recipes.revision', { recipeId, revisionId });
 
-    const recipeName = recipe.get('name');
+    const recipeName = currentRevision.get('name');
 
     // Only display revision hash if we're _not_ on the latest version.
     const revisionAddendum = isLatestRevision ? '' : `(Revision: ${revisionId})`;

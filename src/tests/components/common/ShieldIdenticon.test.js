@@ -21,7 +21,7 @@ describe('<ShieldIdenticon>', () => {
     const nestedImg = wrapper.find('img');
     expect(nestedImg.length).toBe(1);
     expect(nestedImg.props().src).toBe(
-      `${NORMANDY_ADMIN_API_ROOT_URL}v2/identicon/${props.seed}.svg`,
+      `${NORMANDY_ADMIN_API_ROOT_URL}v3/identicon/${props.seed}.svg`,
     );
   });
 });

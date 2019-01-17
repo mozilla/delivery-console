@@ -7,8 +7,8 @@ describe('<ApprovalRequest>', () => {
   const props = {
     approvalRequest: new Map(),
     approveApprovalRequest: () => {},
+    currentRevision: new Map(),
     isPendingApproval: false,
-    recipe: new Map(),
     rejectApprovalRequest: () => {},
     revision: new Map(),
   };

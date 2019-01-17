@@ -5,7 +5,7 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 import { approvalRequestReceived } from 'console/state/approvalRequests/actions';
-import { makeNormandyApiRequest } from 'console/state/network/actions';
+import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function revisionReceived(revision) {
   return dispatch => {
@@ -16,7 +16,7 @@ export function revisionReceived(revision) {
 
     dispatch({
       type: ACTION_RECEIVE,
-      action: revision.recipe.action,
+      action: revision.action,
     });
 
     if (revision.approval_request) {
@@ -36,7 +36,7 @@ export function fetchRevision(pk) {
   return async dispatch => {
     const requestId = `fetch-revision-${pk}`;
     const revision = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe_revision/${pk}/`),
+      makeNormandyApiRequest(requestId, `v3/recipe_revision/${pk}/`),
     );
     dispatch(revisionReceived(revision));
   };
@@ -45,11 +45,24 @@ export function fetchRevision(pk) {
 export function fetchAllRevisions() {
   return async dispatch => {
     const requestId = 'fetch-all-revisions';
-    const revisions = await dispatch(makeNormandyApiRequest(requestId, 'v2/recipe_revision/'));
+    let response = await dispatch(makeNormandyApiRequest(requestId, 'v3/recipe_revision/'));
+    let revisions = response.results;
 
-    revisions.forEach(revision => {
-      dispatch(revisionReceived(revision));
-    });
+    while (revisions) {
+      revisions.forEach(revision => {
+        dispatch({
+          type: REVISION_RECEIVE,
+          revision,
+        });
+      });
+
+      if (response.next) {
+        response = await dispatch(makeApiRequest(requestId, response.next));
+        revisions = response.results;
+      } else {
+        revisions = null;
+      }
+    }
   };
 }
 
@@ -57,7 +70,7 @@ export function requestRevisionApproval(pk) {
   return async dispatch => {
     const requestId = `request-revision-approval-${pk}`;
     const approvalRequest = await dispatch(
-      makeNormandyApiRequest(requestId, `v2/recipe_revision/${pk}/request_approval/`, {
+      makeNormandyApiRequest(requestId, `v3/recipe_revision/${pk}/request_approval/`, {
         method: 'POST',
       }),
     );

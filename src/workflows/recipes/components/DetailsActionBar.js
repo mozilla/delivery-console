@@ -10,7 +10,10 @@ import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
 import { requestRevisionApproval } from 'console/state/revisions/actions';
-import { getLatestRevisionIdForRecipe, getRecipe } from 'console/state/recipes/selectors';
+import {
+  getLatestRevisionIdForRecipe,
+  getCurrentRevisionForRecipe,
+} from 'console/state/recipes/selectors';
 import {
   isApprovableRevision,
   isLatestApprovedRevision,
@@ -24,7 +27,7 @@ import { reverse } from 'console/urls';
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
     const latestRevisionId = getLatestRevisionIdForRecipe(state, recipeId, '');
-    const recipe = getRecipe(state, recipeId, new Map());
+    const currentRevision = getCurrentRevisionForRecipe(state, recipeId, new Map());
     const revisionId = getUrlParamAsInt(state, 'revisionId', latestRevisionId);
 
     return {
@@ -32,7 +35,7 @@ import { reverse } from 'console/urls';
       isLatestApproved: isLatestApprovedRevision(state, revisionId),
       isPendingApproval: isRevisionPendingApproval(state, revisionId),
       isApprovable: isApprovableRevision(state, revisionId),
-      recipe,
+      currentRevision,
       recipeId,
       revisionId,
       userProfile: getUserProfile(state),
@@ -47,13 +50,13 @@ import { reverse } from 'console/urls';
 @autobind
 class DetailsActionBar extends React.PureComponent {
   static propTypes = {
+    currentRevision: PropTypes.instanceOf(Map).isRequired,
     disableRecipe: PropTypes.func.isRequired,
     enableRecipe: PropTypes.func.isRequired,
     isApprovable: PropTypes.bool.isRequired,
     isLatest: PropTypes.bool.isRequired,
     isLatestApproved: PropTypes.bool.isRequired,
     isPendingApproval: PropTypes.bool.isRequired,
-    recipe: PropTypes.instanceOf(Map).isRequired,
     recipeId: PropTypes.number.isRequired,
     requestRevisionApproval: PropTypes.func.isRequired,
     revisionId: PropTypes.number.isRequired,
@@ -89,11 +92,11 @@ class DetailsActionBar extends React.PureComponent {
 
   render() {
     const {
+      currentRevision,
       isApprovable,
       isLatest,
       isLatestApproved,
       isPendingApproval,
-      recipe,
       recipeId,
       revisionId,
       userProfile,
@@ -149,7 +152,7 @@ class DetailsActionBar extends React.PureComponent {
           </Link>
         )}
 
-        {isLatestApproved && recipe.get('enabled') && (
+        {isLatestApproved && currentRevision.get('enabled') && (
           <Button
             icon="close-circle"
             type="danger"
@@ -160,7 +163,7 @@ class DetailsActionBar extends React.PureComponent {
           </Button>
         )}
 
-        {isLatestApproved && !recipe.get('enabled') && (
+        {isLatestApproved && !currentRevision.get('enabled') && (
           <Button
             icon="check-circle"
             type="primary"

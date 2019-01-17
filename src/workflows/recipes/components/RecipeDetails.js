@@ -12,24 +12,24 @@ import {
 
 export default class RecipeDetails extends React.PureComponent {
   static propTypes = {
-    recipe: PropTypes.instanceOf(Map).isRequired,
+    revision: PropTypes.instanceOf(Map).isRequired,
   };
 
   render() {
-    const { recipe } = this.props;
-    const actionName = recipe.getIn(['action', 'name']);
-    const filterObject = recipe.get('filter_object');
-    const extraFilterExpression = recipe.get('extra_filter_expression');
+    const { revision } = this.props;
+    const actionName = revision.getIn(['action', 'name']);
+    const filterObject = revision.get('filter_object');
+    const extraFilterExpression = revision.get('extra_filter_expression');
     return (
       <div className="recipe-details">
         <Card className="noHovering" key="recipe-details" title="Recipe">
           <dl className="details">
             <dt>Name</dt>
-            <ArgumentsValue name="name" value={recipe.get('name')} />
+            <ArgumentsValue name="name" value={revision.get('name')} />
 
             {filterObject && filterObject.size ? <dt>Filters</dt> : null}
             {filterObject && filterObject.size ? (
-              <ArgumentsValue name="filter_object" value={recipe.get('filter_object')} />
+              <ArgumentsValue name="filter_object" value={revision.get('filter_object')} />
             ) : null}
 
             <dt>
@@ -48,7 +48,7 @@ export default class RecipeDetails extends React.PureComponent {
             <dt>Name</dt>
             <ArgumentsValue name="name" value={actionName} />
 
-            {recipe
+            {revision
               .get('arguments', new Map())
               .map((value, key) => [
                 <dt key={`dt-${key}`}>{key.replace(/([A-Z]+)/g, ' $1')}</dt>,

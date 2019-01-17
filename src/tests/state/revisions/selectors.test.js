@@ -15,7 +15,7 @@ describe('getRevision', () => {
     fromJS({
       actions: actionsReducer(undefined, {
         type: ACTION_RECEIVE,
-        action: revision.recipe.action,
+        action: revision.action,
       }),
       revisions: revisionsReducer(undefined, {
         type: REVISION_RECEIVE,

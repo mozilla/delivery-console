@@ -13,18 +13,18 @@ import LoadingOverlay from 'console/components/common/LoadingOverlay';
 import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
 import QueryRecipe from 'console/components/data/QueryRecipe';
 import { updateRecipe } from 'console/state/recipes/actions';
-import { getRecipe } from 'console/state/recipes/selectors';
-import { getRecipeForRevision } from 'console/state/revisions/selectors';
+import { getLatestRevisionForRecipe } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
-    const recipe = getRecipe(state, recipeId, new Map());
+    const revision = getLatestRevisionForRecipe(state, recipeId, new Map());
+    console.log(revision);
 
     return {
       recipeId,
-      recipe: getRecipeForRevision(state, recipe.getIn(['latest_revision', 'id']), new Map()),
+      revision,
       userProfile: getUserProfile(state),
     };
   },
@@ -35,15 +35,10 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
 @autobind
 class EditRecipePage extends React.PureComponent {
   static propTypes = {
-    updateRecipe: PropTypes.func.isRequired,
     recipeId: PropTypes.number.isRequired,
-    recipe: PropTypes.instanceOf(Map),
+    revision: PropTypes.instanceOf(Map),
+    updateRecipe: PropTypes.func.isRequired,
     userProfile: PropTypes.instanceOf(Map),
-  };
-
-  static defaultProps = {
-    recipe: null,
-    userProfile: null,
   };
 
   onFormSuccess() {
@@ -61,8 +56,7 @@ class EditRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { recipeId, recipe, userProfile } = this.props;
-
+    const { revision, recipeId, userProfile } = this.props;
     if (!userProfile) {
       return (
         <div className="content-wrapper">
@@ -73,7 +67,6 @@ class EditRecipePage extends React.PureComponent {
         </div>
       );
     }
-
     return (
       <div className="content-wrapper edit-page">
         <QueryRecipe pk={recipeId} />
@@ -84,7 +77,7 @@ class EditRecipePage extends React.PureComponent {
             formAction={this.formAction}
             onSuccess={this.onFormSuccess}
             onFailure={this.onFormFailure}
-            formProps={{ recipe }}
+            formProps={{ revision }}
           />
         </LoadingOverlay>
       </div>

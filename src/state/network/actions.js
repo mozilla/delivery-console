@@ -11,7 +11,7 @@ import APIClient from 'console/utils/api';
 
 const SECONDS = 1000;
 
-export function makeApiRequest(requestId, root, endpoint, options = {}) {
+export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
   return async (dispatch, getState) => {
     const state = getState();
     const accessToken = getAccessToken(state);
@@ -67,7 +67,7 @@ export function makeNormandyApiRequest(requestId, endpoint, options = {}) {
 export function detectNormandyAdmin() {
   return async (dispatch, getState) => {
     const state = getState();
-    let url = NORMANDY_ADMIN_API_ROOT_URL + 'v2/';
+    let url = NORMANDY_ADMIN_API_ROOT_URL + 'v3/';
     const requestId = 'detect-normandy-admin';
     const ADMIN_TIMEOUT = 3 * SECONDS;
 
