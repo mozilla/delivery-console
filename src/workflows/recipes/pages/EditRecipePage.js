@@ -18,7 +18,6 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
   (state, props) => {
     const recipeId = getUrlParamAsInt(state, 'recipeId');
     const revision = getLatestRevisionForRecipe(state, recipeId, new Map());
-    console.log(revision);
 
     return {
       recipeId,
