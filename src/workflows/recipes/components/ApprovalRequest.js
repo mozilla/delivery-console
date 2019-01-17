@@ -138,11 +138,6 @@ class ApprovalRequest extends React.PureComponent {
             type="warning"
             message="Must be logged in take any action on this."
           />
-          // <Alert
-          //   className="revision-notice"
-          //   type="warning"
-          //   message="Must be logged in take any action on this."
-          // />
         );
       }
     } else {
