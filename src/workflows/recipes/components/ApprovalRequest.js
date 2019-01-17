@@ -121,8 +121,9 @@ class ApprovalRequest extends React.PureComponent {
 
     let detailSection;
     if (isPendingApproval) {
-      // FIXME(peterbe): Replace this with something more advanced that
-      // determines *what* you can do.
+      // Here we could do more with the userProfile to more specifically fine-tune what
+      // the user can do.
+      // See https://github.com/mozilla/delivery-console/issues/703
       if (userProfile) {
         detailSection = (
           <ApprovalForm
