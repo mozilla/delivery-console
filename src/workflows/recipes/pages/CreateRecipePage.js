@@ -1,10 +1,13 @@
 import { message } from 'antd';
 import autobind from 'autobind-decorator';
+import { Map } from 'immutable';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import { getUserProfile } from 'console/state/auth/selectors';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
@@ -12,7 +15,9 @@ import { createRecipe } from 'console/state/recipes/actions';
 import { reverse } from 'console/urls';
 
 @connect(
-  null,
+  state => {
+    return { userProfile: getUserProfile(state) };
+  },
   {
     createRecipe,
     push,
@@ -23,6 +28,11 @@ class CreateRecipePage extends React.PureComponent {
   static propTypes = {
     createRecipe: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    userProfile: null,
   };
 
   onFormFailure(err) {
@@ -40,6 +50,18 @@ class CreateRecipePage extends React.PureComponent {
   }
 
   render() {
+    const { userProfile } = this.props;
+
+    if (!userProfile) {
+      return (
+        <div className="content-wrapper">
+          <AuthenticationAlert
+            type="error"
+            description="You must be logged in to create a recipe."
+          />
+        </div>
+      );
+    }
     return (
       <div className="content-wrapper">
         <h2>Create New Recipe</h2>

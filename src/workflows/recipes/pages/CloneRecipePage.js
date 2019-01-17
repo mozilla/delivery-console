@@ -7,6 +7,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import { getUserProfile } from 'console/state/auth/selectors';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
@@ -33,6 +35,7 @@ import { reverse } from 'console/urls';
       isLatestRevision,
       recipeId,
       revisionId,
+      userProfile: getUserProfile(state),
     };
   },
   {
@@ -48,6 +51,11 @@ class CloneRecipePage extends React.PureComponent {
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
     revisionId: PropTypes.number.isRequired,
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    userProfile: null,
   };
 
   onFormSuccess(recipeId) {
@@ -102,7 +110,18 @@ class CloneRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { recipeId, revisionId } = this.props;
+    const { recipeId, revisionId, userProfile } = this.props;
+
+    if (!userProfile) {
+      return (
+        <div className="content-wrapper">
+          <AuthenticationAlert
+            type="error"
+            description="You must be logged in to clone this recipe."
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="content-wrapper clone-page">

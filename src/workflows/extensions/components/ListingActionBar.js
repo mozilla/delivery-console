@@ -1,12 +1,13 @@
 import { Button, Col, Row } from 'antd';
 import autobind from 'autobind-decorator';
 import { push } from 'connected-react-router';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { getUserProfile } from 'console/state/auth/selectors';
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveExtensionListingColumns } from 'console/state/extensions/actions';
 import { getExtensionListingColumns } from 'console/state/extensions/selectors';
@@ -17,6 +18,7 @@ import { reverse } from 'console/urls';
   state => ({
     columns: getExtensionListingColumns(state),
     getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
+    userProfile: getUserProfile(state),
   }),
   {
     push,
@@ -29,6 +31,11 @@ class ListingActionBar extends React.PureComponent {
     columns: PropTypes.instanceOf(List).isRequired,
     getCurrentUrlAsObject: PropTypes.func.isRequired,
     saveExtensionListingColumns: PropTypes.func.isRequired,
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    userProfile: null,
   };
 
   handleChangeSearch(value) {
@@ -37,7 +44,7 @@ class ListingActionBar extends React.PureComponent {
   }
 
   render() {
-    const { columns } = this.props;
+    const { columns, userProfile } = this.props;
     return (
       <Row gutter={16} className="list-action-bar">
         <Col span={16}>
@@ -49,11 +56,13 @@ class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <Link to={reverse('extensions.new')}>
-            <Button type="primary" icon="plus">
-              New Extension
-            </Button>
-          </Link>
+          {userProfile && (
+            <Link to={reverse('extensions.new')}>
+              <Button type="primary" icon="plus">
+                New Extension
+              </Button>
+            </Link>
+          )}
         </Col>
       </Row>
     );

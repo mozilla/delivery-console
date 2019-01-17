@@ -1,12 +1,13 @@
 import { Button, Col, Input, Row } from 'antd';
 import autobind from 'autobind-decorator';
 import { push } from 'connected-react-router';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { getUserProfile } from 'console/state/auth/selectors';
 import CheckboxMenu from 'console/components/common/CheckboxMenu';
 import { saveRecipeListingColumns } from 'console/state/recipes/actions';
 import { getRecipeListingColumns } from 'console/state/recipes/selectors';
@@ -21,6 +22,7 @@ import { reverse } from 'console/urls';
     columns: getRecipeListingColumns(state),
     getCurrentUrlAsObject: queryParams => getCurrentUrlAsObjectSelector(state, queryParams),
     searchText: getQueryParam(state, 'searchText'),
+    userProfile: getUserProfile(state),
   }),
   {
     push,
@@ -35,10 +37,12 @@ class ListingActionBar extends React.PureComponent {
     push: PropTypes.func.isRequired,
     saveRecipeListingColumns: PropTypes.func.isRequired,
     searchText: PropTypes.string,
+    userProfile: PropTypes.instanceOf(Map),
   };
 
   static defaultProps = {
     searchText: null,
+    userProfile: null,
   };
 
   handleChangeSearch(value) {
@@ -47,7 +51,7 @@ class ListingActionBar extends React.PureComponent {
   }
 
   render() {
-    const { columns, searchText } = this.props;
+    const { columns, searchText, userProfile } = this.props;
     return (
       <Row gutter={16} className="list-action-bar">
         <Col span={14}>
@@ -73,11 +77,13 @@ class ListingActionBar extends React.PureComponent {
           />
         </Col>
         <Col span={8} className="righted">
-          <Link to={reverse('recipes.new')} id="lab-recipe-link">
-            <Button type="primary" icon="plus" id="lab-recipe-button">
-              New Recipe
-            </Button>
-          </Link>
+          {userProfile && (
+            <Link to={reverse('recipes.new')} id="lab-recipe-link">
+              <Button type="primary" icon="plus" id="lab-recipe-button">
+                New Recipe
+              </Button>
+            </Link>
+          )}
         </Col>
       </Row>
     );

@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import { getUserProfile } from 'console/state/auth/selectors';
 import handleError from 'console/utils/handleError';
 import ApprovalForm from 'console/workflows/recipes/components/ApprovalForm';
 import ApprovalDetails from 'console/workflows/recipes/components/ApprovalDetails';
@@ -31,6 +33,7 @@ import { reverse } from 'console/urls';
       new Map(),
     ),
     isPendingApproval: isRevisionPendingApproval(state, revision.get('id')),
+    userProfile: getUserProfile(state),
   }),
   {
     approveApprovalRequest,
@@ -47,6 +50,7 @@ class ApprovalRequest extends React.PureComponent {
     isPendingApproval: PropTypes.bool.isRequired,
     rejectApprovalRequest: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map).isRequired,
+    userProfile: PropTypes.instanceOf(Map),
   };
 
   state = {
@@ -102,7 +106,7 @@ class ApprovalRequest extends React.PureComponent {
 
   render() {
     const { isSubmitting } = this.state;
-    const { approvalRequest, currentRevision, isPendingApproval } = this.props;
+    const { approvalRequest, currentRevision, isPendingApproval, userProfile } = this.props;
     const errors = this.state.formErrors;
 
     let extra;
@@ -115,16 +119,31 @@ class ApprovalRequest extends React.PureComponent {
       extra = <Tag color="red">Rejected</Tag>;
     }
 
-    const detailSection = isPendingApproval ? (
-      <ApprovalForm
-        approvalRequest={approvalRequest}
-        isSubmitting={isSubmitting}
-        onSubmit={this.handleSubmit}
-        errors={errors}
-      />
-    ) : (
-      <ApprovalDetails request={approvalRequest} />
-    );
+    let detailSection;
+    if (isPendingApproval) {
+      // Here we could do more with the userProfile to more specifically fine-tune what
+      // the user can do.
+      // See https://github.com/mozilla/delivery-console/issues/703
+      if (userProfile) {
+        detailSection = (
+          <ApprovalForm
+            approvalRequest={approvalRequest}
+            isSubmitting={isSubmitting}
+            onSubmit={this.handleSubmit}
+            errors={errors}
+          />
+        );
+      } else {
+        detailSection = (
+          <AuthenticationAlert
+            type="warning"
+            message="Must be logged in take any action on this."
+          />
+        );
+      }
+    } else {
+      detailSection = <ApprovalDetails request={approvalRequest} />;
+    }
 
     const dateCreated = dateFns.parse(approvalRequest.get('created'));
 

@@ -10,19 +10,29 @@ export default class NavigationCard extends React.PureComponent {
     listingUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    showNewActionLink: PropTypes.bool.isRequired,
+  };
+
+  static defaultProps = {
+    showNewActionLink: false,
   };
 
   actions() {
-    const { listingUrl } = this.props;
+    const { listingUrl, showNewActionLink } = this.props;
 
-    return [
+    const links = [
       <Link to={listingUrl}>
         <Icon type="bars" />
       </Link>,
-      <Link to={`${listingUrl}new/`}>
-        <Icon type="plus" />
-      </Link>,
     ];
+    if (showNewActionLink) {
+      links.push(
+        <Link to={`${listingUrl}new/`}>
+          <Icon type="plus" />
+        </Link>,
+      );
+    }
+    return links;
   }
 
   render() {

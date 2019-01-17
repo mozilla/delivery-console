@@ -174,7 +174,6 @@ class RecipeForm extends React.PureComponent {
             </FormItem>
           </Col>
         </Row>
-
         <FilterObjectForm
           form={this.props.form}
           disabled={isLoading}
@@ -184,7 +183,6 @@ class RecipeForm extends React.PureComponent {
           allCountries={filters.get('countries')}
           allChannels={filters.get('channels')}
         />
-
         <FormItem
           name="extra_filter_expression"
           label="Additional Filter Expression"
@@ -197,9 +195,7 @@ class RecipeForm extends React.PureComponent {
         <FormItem name="action_id" label="Action" initialValue={revision.getIn(['action', 'id'])}>
           <ActionSelect disabled={isLoading} />
         </FormItem>
-
         {this.renderArgumentsFields()}
-
         <FormActions>
           <FormActions.Primary>
             <Button type="primary" htmlType="submit" disabled={isLoading} id="rf-save-button">

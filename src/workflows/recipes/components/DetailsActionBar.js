@@ -6,6 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import { getUserProfile } from 'console/state/auth/selectors';
 import { disableRecipe, enableRecipe } from 'console/state/recipes/actions';
 import { requestRevisionApproval } from 'console/state/revisions/actions';
 import {
@@ -36,6 +38,7 @@ import { reverse } from 'console/urls';
       currentRevision,
       recipeId,
       revisionId,
+      userProfile: getUserProfile(state),
     };
   },
   {
@@ -57,6 +60,11 @@ class DetailsActionBar extends React.PureComponent {
     recipeId: PropTypes.number.isRequired,
     requestRevisionApproval: PropTypes.func.isRequired,
     revisionId: PropTypes.number.isRequired,
+    userProfile: PropTypes.instanceOf(Map),
+  };
+
+  static defaultProps = {
+    userProfile: null,
   };
 
   handleDisableClick() {
@@ -91,7 +99,19 @@ class DetailsActionBar extends React.PureComponent {
       isPendingApproval,
       recipeId,
       revisionId,
+      userProfile,
     } = this.props;
+
+    // FIXME(peterbe): Replace this with something more advanced that
+    // determines *what* you can do.
+    // For example, you might be logged in but you don't have any permissions.
+    // Or, you might have permission to edit but not approve approval requests.
+    // See https://github.com/mozilla/delivery-console/issues/703
+    if (!userProfile) {
+      return (
+        <AuthenticationAlert type="warning" message="Must be logged in take any action on this." />
+      );
+    }
 
     const cloneUrl = isLatest
       ? reverse('recipes.clone', { recipeId })
