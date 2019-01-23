@@ -133,9 +133,11 @@ jobs:
       # Download and cache node dependencies
       - restore_cache:
           keys:
-          - v2-dependencies-prod-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v2-dependencies-prod-
+            # Include package.json in the keys, since moving between
+            # dependencies and devDependncies doesn't change yarn.lock.
+            - v2-dependencies-prod-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v2-dependencies-prod-{{ checksum "package.json" }}-
 
       - run:
           name: Install node dependencies in production mode
@@ -144,7 +146,7 @@ jobs:
       - save_cache:
           paths:
             - "node_modules"
-          key: v2-dependencies-prod-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-prod-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
 
       - run:
           name: Build
