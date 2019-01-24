@@ -84,23 +84,18 @@ class ApprovalRequest extends React.PureComponent {
 
       if (error.data) {
         this.setState({ formErrors: error.data });
+      } else {
+        // If you have just approved this recipe, the next natural action is (likely) to
+        // be to publish it. It's not something you can do from the Approval request page.
+        // So, redirect back to the details page which *has* a Publish button and a notification
+        // message about that being the next action.
+        if (context.approved) {
+          const recipeId = recipe.get('id');
+          push(reverse('recipes.details', { recipeId }));
+        }
       }
     } finally {
-      this.setState(
-        {
-          isSubmitting: false,
-        },
-        () => {
-          // If you have just approved this recipe, the next natural action is (likely) to
-          // be to publish it. It's not something you can do from the Approval request page.
-          // So, redirect back to the details page which *has* a Publish button and a notification
-          // message about that being the next action.
-          if (context.approved) {
-            const recipeId = recipe.get('id');
-            push(reverse('recipes.details', { recipeId }));
-          }
-        },
-      );
+      this.setState({ isSubmitting: false });
     }
   }
 
