@@ -1,5 +1,4 @@
 const autoprefixer = require('autoprefixer');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const path = require('path');
@@ -46,22 +45,6 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
-      {
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall

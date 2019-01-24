@@ -1,6 +1,8 @@
 status = [
   "ci/circleci: build",
   "ci/circleci: docs",
+  "ci/circleci: test",
+  "ci/circleci: lint",
 ]
 block_labels = ["bors-dont-merge"]
 required_approvals = 1

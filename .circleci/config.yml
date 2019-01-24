@@ -4,16 +4,41 @@
 #
 version: 2
 jobs:
-  build:
+  test:
 
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache node dependencies
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run:
+          name: Install node dependencies
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - "node_modules"
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
+
+      # Run tests!
+      - run:
+          name: Test
+          command: yarn run test:ci
+
+  lint:
     docker:
       # Image with python 3.6 and node 8
       - image: circleci/python:3.6-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
@@ -60,16 +85,6 @@ jobs:
           name: Lint
           command: therapist run --use-tracked-files
 
-      # Run tests!
-      - run:
-          name: Test
-          command: yarn run test:ci
-
-      # Build all the things!
-      - run:
-          name: Build
-          command: yarn run build
-
   docs:
     docker:
       - image: circleci/python:3.6
@@ -105,10 +120,44 @@ jobs:
             cd docs
             make html
 
+  build:
+    # Test that a production-build of the project works
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache node dependencies
+      - restore_cache:
+          keys:
+            # Include package.json in the keys, since moving between
+            # dependencies and devDependncies doesn't change yarn.lock.
+            - v2-dependencies-prod-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v2-dependencies-prod-{{ checksum "package.json" }}-
+
+      - run:
+          name: Install node dependencies in production mode
+          command: yarn install --prod
+
+      - save_cache:
+          paths:
+            - "node_modules"
+          key: v2-dependencies-prod-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Build
+          command: yarn run build
+
 
 workflows:
   version: 2
   build_and_docs:
     jobs:
-      - build
       - docs
+      - lint
+      - build
+      - test
