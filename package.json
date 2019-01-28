@@ -22,7 +22,7 @@
     "@babel/polyfill": "7.2.5",
     "@babel/runtime": "7.3.1",
     "antd": "3.12.4",
-    "auth0-js": "9.9.1",
+    "auth0-js": "9.10.0",
     "autobind-decorator": "2.4.0",
     "autoprefixer": "9.4.6",
     "babel-core": "7.0.0-bridge.0",
