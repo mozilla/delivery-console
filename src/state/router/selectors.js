@@ -76,17 +76,13 @@ export function getAllQueryParams(state, defaultsTo = null) {
     return defaultsTo;
   }
 
+  const searchParams = new URLSearchParams(search.slice(1));
+  const params = {};
+  for (const [key, value] of searchParams) {
+    params[key] = value;
+  }
   // `search` is a string which we convert to an object so we need `fromJS` to make it immutable
-  return fromJS(
-    search
-      .slice(1)
-      .split('&')
-      .map(item => item.split('='))
-      .reduce((obj, [key, value]) => {
-        obj[key] = value === undefined ? true : value;
-        return obj;
-      }, {}),
-  );
+  return fromJS(params);
 }
 
 export function getQueryParam(state, key, defaultsTo = null) {
