@@ -17,7 +17,6 @@ import {
   getApprovedRevisionIdForRecipe,
   getLatestRevisionIdForRecipe,
   getRecipe,
-  isRecipeEnabled,
 } from 'console/state/recipes/selectors';
 import { getUser } from 'console/state/users/selectors';
 
@@ -59,8 +58,7 @@ export function isLatestRevision(state, id) {
 
 export function isLiveRevision(state, id) {
   const revision = getRevision(state, id, new Map());
-  const isEnabled = isRecipeEnabled(state, revision.getIn(['recipe', 'id']));
-  return isEnabled && isLatestApprovedRevision(state, id);
+  return isLatestApprovedRevision(state, id) && revision.get('enabled', false);
 }
 
 export function isApprovedRevision(state, id) {

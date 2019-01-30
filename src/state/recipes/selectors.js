@@ -54,11 +54,6 @@ export function getRecipeFilters(state) {
   return state.getIn(['recipes', 'filters']);
 }
 
-export function isRecipeEnabled(state, id, defaultsTo = false) {
-  const recipe = getRecipe(state, id, new Map());
-  return recipe.get('enabled', defaultsTo);
-}
-
 export function getLatestRevisionForRecipe(state, id, defaultsTo = null) {
   const recipe = getRecipe(state, id, new Map());
   return recipe.get('latest_revision') || defaultsTo;
