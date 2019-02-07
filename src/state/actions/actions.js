@@ -1,4 +1,4 @@
-import { ACTION_RECEIVE } from 'console/state/action-types';
+import { ACTIONS_RECEIVE, ACTION_RECEIVE } from 'console/state/action-types';
 import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
 
 export function fetchAction(pk) {
@@ -20,11 +20,9 @@ export function fetchAllActions() {
     let actions = response.results;
 
     while (actions) {
-      actions.forEach(action => {
-        dispatch({
-          type: ACTION_RECEIVE,
-          action,
-        });
+      dispatch({
+        type: ACTIONS_RECEIVE,
+        actions,
       });
 
       if (response.next) {
