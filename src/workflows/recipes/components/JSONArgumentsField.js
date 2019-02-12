@@ -5,6 +5,10 @@ import React from 'react';
 
 import FormItem from 'console/components/forms/FormItem';
 
+// NOTE! As of Feb 2019, no other component depends on or uses this component.
+// We needed this for actions which we had no dedicated UI component and that
+// is no longer the case.
+
 export default class JSONArgumentsField extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,

@@ -6,7 +6,7 @@ import {
   RECIPE_FILTERS_RECEIVE,
   RECIPE_HISTORY_RECEIVE,
 } from 'console/state/action-types';
-import { makeNormandyApiRequest } from 'console/state/network/actions';
+import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
 import { revisionReceived } from 'console/state/revisions/actions';
 
 export function recipeReceived(recipe) {
@@ -36,14 +36,19 @@ export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
   return async dispatch => {
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
     const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
-    const recipes = await dispatch(
-      makeNormandyApiRequest(requestId, 'v3/recipe/', {
-        data: {
-          ...filters,
-          page: pageNumber,
-        },
-      }),
-    );
+
+    const options = {
+      data: { ...filters },
+    };
+    if (pageNumber !== Infinity) {
+      options.page = pageNumber;
+    }
+    const recipes = await dispatch(makeNormandyApiRequest(requestId, 'v3/recipe/', options));
+    while (pageNumber === Infinity && recipes.next) {
+      const nextRecipes = await dispatch(makeApiRequest(requestId, recipes.next));
+      recipes.next = nextRecipes.next;
+      recipes.results.push(...nextRecipes.results);
+    }
 
     dispatch({
       type: RECIPE_PAGE_RECEIVE,
