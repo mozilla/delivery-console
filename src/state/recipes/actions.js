@@ -41,7 +41,7 @@ export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
       data: { ...filters },
     };
     if (pageNumber !== Infinity) {
-      options.page = pageNumber;
+      options.data.page = pageNumber;
     }
     const recipes = await dispatch(makeNormandyApiRequest(requestId, 'v3/recipe/', options));
     while (pageNumber === Infinity && recipes.next) {
