@@ -17,7 +17,7 @@
     "lint:fix": "therapist use fix:all"
   },
   "dependencies": {
-    "@babel/core": "7.2.2",
+    "@babel/core": "7.3.3",
     "@babel/plugin-proposal-decorators": "7.3.0",
     "@babel/polyfill": "7.2.5",
     "@babel/runtime": "7.3.1",
