@@ -74,7 +74,7 @@
     "babel-jest": "24.1.0",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
-    "enzyme": "3.8.0",
+    "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.9.1",
     "eslint": "5.14.0",
     "eslint-config-prettier": "4.0.0",
