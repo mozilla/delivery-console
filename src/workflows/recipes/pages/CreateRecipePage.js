@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import { AuthenticationAlert, VPNAlert } from 'console/components/common/AuthenticationAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import RecipeForm, { cleanRecipeData } from 'console/workflows/recipes/components/RecipeForm';
@@ -16,7 +17,7 @@ import { reverse } from 'console/urls';
 
 @connect(
   state => {
-    return { userProfile: getUserProfile(state) };
+    return { userProfile: getUserProfile(state), vpnAvailable: isNormandyAdminAvailable(state) };
   },
   {
     createRecipe,
@@ -29,6 +30,7 @@ class CreateRecipePage extends React.PureComponent {
     createRecipe: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     userProfile: PropTypes.instanceOf(Map),
+    vpnAvailable: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -50,7 +52,7 @@ class CreateRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { userProfile } = this.props;
+    const { userProfile, vpnAvailable } = this.props;
 
     if (!userProfile) {
       return (
@@ -59,6 +61,13 @@ class CreateRecipePage extends React.PureComponent {
             type="error"
             description="You must be logged in to create a recipe."
           />
+        </div>
+      );
+    }
+    if (vpnAvailable === false) {
+      return (
+        <div className="content-wrapper">
+          <VPNAlert type="error" description="You must be on the VPN to create a recipe." />
         </div>
       );
     }

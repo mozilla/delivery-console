@@ -87,7 +87,8 @@ export function detectNormandyAdmin() {
       // if this succeeds, then the normandy admin is available
       await Promise.race([adminPromise, timeoutPromise]);
       dispatch({ type: REQUEST_SUCCESS, requestId });
-      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: true });
+      // dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: true });
+      dispatch({ type: NETWORK_NORMANDY_ADMIN_AVAILABLE, available: false });
     } catch (error) {
       // If it fails, it could be a network failure, or the timeout. Either way,
       // the admin is not available
