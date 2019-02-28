@@ -20,7 +20,7 @@ import PreferenceRolloutFields, {
 } from 'console/workflows/recipes/components/PreferenceRolloutFields';
 import PreferenceRollbackFields from 'console/workflows/recipes/components/PreferenceRollbackFields';
 import ShowHeartbeatFields from 'console/workflows/recipes/components/ShowHeartbeatFields';
-import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
+import AddonStudyFields from 'console/workflows/recipes/components/AddonStudyFields';
 import { getAction } from 'console/state/actions/selectors';
 import { getRecipeFilters } from 'console/state/recipes/selectors';
 import { areAnyRequestsInProgress } from 'console/state/network/selectors';
@@ -103,7 +103,7 @@ class RecipeForm extends React.PureComponent {
     'preference-experiment': PreferenceExperimentFields,
     'preference-rollout': PreferenceRolloutFields,
     'preference-rollback': PreferenceRollbackFields,
-    'opt-out-study': OptOutStudyFields,
+    'opt-out-study': AddonStudyFields,
   };
 
   constructor(props) {

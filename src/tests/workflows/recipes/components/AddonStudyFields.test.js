@@ -1,7 +1,7 @@
 import { List, Map } from 'immutable';
-import OptOutStudyFields from 'console/workflows/recipes/components/OptOutStudyFields';
+import AddonStudyFields from 'console/workflows/recipes/components/AddonStudyFields';
 
-describe('<OptOutStudyFields>', () => {
+describe('<AddonStudyFields>', () => {
   const props = {
     disabled: false,
     extensions: new List(),
@@ -9,7 +9,7 @@ describe('<OptOutStudyFields>', () => {
   };
 
   it('should work', () => {
-    const wrapper = () => shallow(<OptOutStudyFields {...props} />);
+    const wrapper = () => shallow(<AddonStudyFields {...props} />);
 
     expect(wrapper).not.toThrow();
   });
