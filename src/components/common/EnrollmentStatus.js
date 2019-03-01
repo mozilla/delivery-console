@@ -8,9 +8,9 @@ import { reverse } from 'console/urls';
 
 // Ideally the prop.recipe would be an Immutable Map, but Ant's Table works with
 // plain JS objects, which means this component can not be Pure.
-export default class EnrollmentSatus extends React.Component {
+export default class EnrollmentStatus extends React.Component {
   static propTypes = {
-    recipe: PropTypes.object.isRequired,
+    currentRevision: PropTypes.object.isRequired,
   };
 
   getLabel() {
@@ -26,8 +26,8 @@ export default class EnrollmentSatus extends React.Component {
   }
 
   isRecipeApproved() {
-    const { recipe } = this.props;
-    return recipe.approval_request && recipe.approval_request.approved;
+    const { currentRevision } = this.props;
+    return currentRevision.approval_request && currentRevision.approval_request.approved;
   }
 
   getIcon() {
@@ -49,21 +49,21 @@ export default class EnrollmentSatus extends React.Component {
   }
 
   isRecipePaused() {
-    const { recipe } = this.props;
-    return !recipe.enabled || !!recipe.arguments.isEnrollmentPaused;
+    const { currentRevision } = this.props;
+    return !currentRevision.enabled || !!currentRevision.arguments.isEnrollmentPaused;
   }
 
   isRecipeEnabled() {
-    const { recipe } = this.props;
-    return recipe.enabled;
+    const { currentRevision } = this.props;
+    return currentRevision.enabled;
   }
 
   render() {
-    const { recipe } = this.props;
+    const { currentRevision } = this.props;
 
     return (
       <NavLink
-        to={reverse('recipes.details', { recipeId: recipe.id })}
+        to={reverse('recipes.details', { recipeId: currentRevision.recipe.id })}
         className={cx(
           'status-link',
           !(this.isRecipeEnabled() || this.isRecipeApproved()) && 'is-lowkey',

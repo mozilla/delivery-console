@@ -5,6 +5,7 @@ import {
   APPROVAL_REQUEST_DELETE,
   APPROVAL_REQUEST_RECEIVE,
   RECIPE_HISTORY_RECEIVE,
+  RECIPE_PAGE_RECEIVE,
 } from 'console/state/action-types';
 
 function formatApprovalRequest(approvalRequest) {
@@ -33,6 +34,22 @@ function items(state = new Map(), action) {
           const approvalId = revision.getIn(['approval_request', 'id'], null);
           if (approvalId) {
             mutableState.set(approvalId, formatApprovalRequest(revision.get('approval_request')));
+          }
+        });
+      });
+    }
+
+    case RECIPE_PAGE_RECEIVE: {
+      const recipes = fromJS(action.recipes.results);
+
+      return state.withMutations(mutableState => {
+        recipes.forEach(recipe => {
+          const approvalId = recipe.getIn(['approved_revision', 'approval_request', 'id']);
+          if (approvalId) {
+            mutableState.set(
+              approvalId,
+              formatApprovalRequest(recipe.getIn(['approved_revision', 'approval_request'])),
+            );
           }
         });
       });
