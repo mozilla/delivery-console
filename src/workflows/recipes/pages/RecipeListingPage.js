@@ -182,7 +182,7 @@ class RecipeListingPage extends React.PureComponent {
           <Table.Column
             title="Enrollment Active"
             key="paused"
-            render={(text, record) => <EnrollmentStatus recipe={record} />}
+            render={(text, record) => <EnrollmentStatus currentRevision={record} />}
           />
         );
       },
