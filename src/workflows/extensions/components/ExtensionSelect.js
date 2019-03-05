@@ -90,11 +90,12 @@ class ExtensionSelect extends React.Component {
         >
           <OptGroup label={optGroupLabel}>
             {displayedList.map(item => {
-              const xpi = item.get('xpi');
+              const id = item.get('id');
               const name = item.get('name');
+              const xpi = item.get('xpi');
 
               return (
-                <Option key={xpi} value={xpi} title={name}>
+                <Option key={id} value={id} title={name} url={xpi}>
                   {name}
                 </Option>
               );

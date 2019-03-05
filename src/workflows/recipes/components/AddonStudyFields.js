@@ -10,7 +10,7 @@ import ExtensionSelect from 'console/workflows/extensions/components/ExtensionSe
 import { connectFormProps } from 'console/utils/forms';
 
 @connectFormProps
-class OptOutStudyFields extends React.Component {
+class AddonStudyFields extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     recipeArguments: PropTypes.instanceOf(Map).isRequired,
@@ -49,10 +49,22 @@ class OptOutStudyFields extends React.Component {
           <Col xs={24} md={12}>
             <FormItem
               label="Extension"
-              name="arguments.addonUrl"
-              initialValue={recipeArguments.get('addonUrl', '')}
+              name="arguments.extensionApiId"
+              initialValue={recipeArguments.get('extensionApiId', '')}
             >
-              <ExtensionSelect disabled={disabled} />
+              <ExtensionSelect
+                disabled={disabled}
+                onChange={(value, option) => {
+                  const { form } = this.props;
+                  form.setFieldsValue({
+                    'arguments.addonUrl': option.props.url,
+                  });
+                }}
+              />
+            </FormItem>
+
+            <FormItem name="arguments.addonUrl" style={{ display: 'none' }}>
+              <Input />
             </FormItem>
 
             <FormItem
@@ -72,4 +84,4 @@ class OptOutStudyFields extends React.Component {
   }
 }
 
-export default OptOutStudyFields;
+export default AddonStudyFields;
