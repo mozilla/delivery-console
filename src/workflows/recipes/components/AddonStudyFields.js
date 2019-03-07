@@ -63,7 +63,11 @@ class AddonStudyFields extends React.Component {
               />
             </FormItem>
 
-            <FormItem name="arguments.addonUrl" style={{ display: 'none' }}>
+            <FormItem
+              name="arguments.addonUrl"
+              style={{ display: 'none' }}
+              initialValue={recipeArguments.get('addonUrl', '')}
+            >
               <Input />
             </FormItem>
 
