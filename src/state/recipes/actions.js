@@ -6,7 +6,11 @@ import {
   RECIPE_FILTERS_RECEIVE,
   RECIPE_HISTORY_RECEIVE,
 } from 'console/state/action-types';
-import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeNormandyApiRequest,
+  makeNormandyReadonlyApiRequest,
+} from 'console/state/network/actions';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 import { revisionReceived } from 'console/state/revisions/actions';
 
 export function recipeReceived(recipe) {
@@ -25,15 +29,23 @@ export function recipeReceived(recipe) {
 }
 
 export function fetchRecipe(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-recipe-${pk}`;
-    const recipe = await dispatch(makeNormandyApiRequest(requestId, `v3/recipe/${pk}/`));
+    const recipe = await dispatch(fetcher(requestId, `v3/recipe/${pk}/`));
     dispatch(recipeReceived(recipe));
   };
 }
 
 export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const filterIds = Object.keys(filters).map(key => `${key}-${filters[key]}`);
     const requestId = `fetch-filtered-recipes-page-${pageNumber}-${filterIds.join('-')}`;
 
@@ -43,9 +55,9 @@ export function fetchFilteredRecipesPage(pageNumber = 1, filters = {}) {
     if (pageNumber !== Infinity) {
       options.data.page = pageNumber;
     }
-    const recipes = await dispatch(makeNormandyApiRequest(requestId, 'v3/recipe/', options));
+    const recipes = await dispatch(fetcher(requestId, 'v3/recipe/', options));
     while (pageNumber === Infinity && recipes.next) {
-      const nextRecipes = await dispatch(makeApiRequest(requestId, recipes.next));
+      const nextRecipes = await dispatch(fetcher(requestId, recipes.next));
       recipes.next = nextRecipes.next;
       recipes.results.push(...nextRecipes.results);
     }
@@ -128,11 +140,13 @@ export function disableRecipe(pk) {
 }
 
 export function fetchRecipeHistory(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-recipe-history-${pk}`;
-    const revisions = await dispatch(
-      makeNormandyApiRequest(requestId, `v3/recipe/${pk}/history/`),
-    );
+    const revisions = await dispatch(fetcher(requestId, `v3/recipe/${pk}/history/`));
 
     dispatch({
       type: RECIPE_HISTORY_RECEIVE,
@@ -143,7 +157,7 @@ export function fetchRecipeHistory(pk) {
 }
 
 export function fetchRecipeFilters() {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     const localStorageKey = 'recipe_filters';
     const localFilters = window.localStorage.getItem(localStorageKey);
     if (localFilters) {
@@ -161,8 +175,12 @@ export function fetchRecipeFilters() {
     if (localFilters) {
       options.stealth = true;
     }
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = 'fetch-recipe-filters';
-    const filters = await dispatch(makeNormandyApiRequest(requestId, 'v3/filters/', options));
+    const filters = await dispatch(fetcher(requestId, 'v3/filters/', options));
     // After it has been retrieved remotely, it's very possible that the lists
     // haven't changed. If it hasn't changed compared to what we had in local Storage, then
     // don't bother dispatching again.

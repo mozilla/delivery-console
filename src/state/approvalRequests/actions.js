@@ -4,7 +4,11 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 
-import { makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeNormandyApiRequest,
+  makeNormandyReadonlyApiRequest,
+} from 'console/state/network/actions';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 
 export function approvalRequestReceived(approvalRequest) {
   return dispatch => {
@@ -28,9 +32,13 @@ export function approvalRequestReceived(approvalRequest) {
 }
 
 export function fetchApprovalRequest(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-approval-request-${pk}`;
-    const response = dispatch(makeNormandyApiRequest(requestId, `v3/approval_request/${pk}/`));
+    const response = dispatch(fetcher(requestId, `v3/approval_request/${pk}/`));
     const approvalRequest = await response;
 
     dispatch(approvalRequestReceived(approvalRequest));

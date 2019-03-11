@@ -3,12 +3,20 @@ import {
   EXTENSION_PAGE_RECEIVE,
   EXTENSION_RECEIVE,
 } from 'console/state/action-types';
-import { makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeNormandyApiRequest,
+  makeNormandyReadonlyApiRequest,
+} from 'console/state/network/actions';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 
 export function fetchExtension(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-extension-${pk}`;
-    const extension = await dispatch(makeNormandyApiRequest(requestId, `v3/extension/${pk}/`));
+    const extension = await dispatch(fetcher(requestId, `v3/extension/${pk}/`));
 
     dispatch({
       type: EXTENSION_RECEIVE,
@@ -18,10 +26,14 @@ export function fetchExtension(pk) {
 }
 
 export function fetchExtensionsPage(pageNumber = 1, filters = {}) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-extensions-page-${pageNumber}`;
     const extensions = await dispatch(
-      makeNormandyApiRequest(requestId, 'v3/extension/', {
+      fetcher(requestId, 'v3/extension/', {
         data: {
           page: pageNumber,
           ...filters,

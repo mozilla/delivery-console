@@ -19,13 +19,12 @@ An environment variable like ``REACT_APP_FOO`` controls the setting ``FOO``.
    The root url for the Normandy API that should be used for users with
    access to the Normandy admin.
 
-.. envvar:: REACT_APP_NORMANDY_READ_ONLY_API_ROOT_URL
+.. envvar:: REACT_APP_NORMANDY_READONLY_API_ROOT_URL
 
    :default: ``null``
 
-   The root url for the Normandy API that should be used for users without
-   access to the Normandy admin. It will be used as a fallback in case the
-   admin server is inaccesible.
+   If not set, becomes the same as ``REACT_APP_NORMANDY_ADMIN_API_ROOT_URL`` and
+   gets used when the VPN connection test hasn't yet passed true.
 
 .. envvar:: REACT_APP_OIDC_CLIENT_ID
 

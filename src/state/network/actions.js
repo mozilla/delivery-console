@@ -1,4 +1,4 @@
-import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
+import { NORMANDY_ADMIN_API_ROOT_URL, NORMANDY_READONLY_API_ROOT_URL } from 'console/settings';
 import {
   NETWORK_NORMANDY_ADMIN_AVAILABLE,
   REQUEST_FAILURE,
@@ -17,6 +17,7 @@ export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
     const accessToken = getAccessToken(state);
     const api = new APIClient(root, accessToken);
     const request = getRequest(state, requestId);
+    console.log('ROOT', root, requestId);
 
     // A "stealth API request" is one that doesn't update the state.
     // This is useful when you generally "don't care" about the *state* of the request.
@@ -62,6 +63,10 @@ export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
 
 export function makeNormandyApiRequest(requestId, endpoint, options = {}) {
   return makeApiRequest(requestId, NORMANDY_ADMIN_API_ROOT_URL, endpoint, options);
+}
+
+export function makeNormandyReadonlyApiRequest(requestId, endpoint, options = {}) {
+  return makeApiRequest(requestId, NORMANDY_READONLY_API_ROOT_URL, endpoint, options);
 }
 
 export function detectNormandyAdmin() {

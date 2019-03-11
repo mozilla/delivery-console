@@ -5,7 +5,12 @@ import {
   USER_RECEIVE,
 } from 'console/state/action-types';
 import { approvalRequestReceived } from 'console/state/approvalRequests/actions';
-import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeApiRequest,
+  makeNormandyApiRequest,
+  makeNormandyReadonlyApiRequest,
+} from 'console/state/network/actions';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 
 export function revisionReceived(revision) {
   return dispatch => {
@@ -33,19 +38,25 @@ export function revisionReceived(revision) {
 }
 
 export function fetchRevision(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = `fetch-revision-${pk}`;
-    const revision = await dispatch(
-      makeNormandyApiRequest(requestId, `v3/recipe_revision/${pk}/`),
-    );
+    const revision = await dispatch(fetcher(requestId, `v3/recipe_revision/${pk}/`));
     dispatch(revisionReceived(revision));
   };
 }
 
 export function fetchAllRevisions() {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = 'fetch-all-revisions';
-    let response = await dispatch(makeNormandyApiRequest(requestId, 'v3/recipe_revision/'));
+    let response = await dispatch(fetcher(requestId, 'v3/recipe_revision/'));
     let revisions = response.results;
 
     while (revisions) {

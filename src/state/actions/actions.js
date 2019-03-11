@@ -1,10 +1,21 @@
 import { ACTIONS_RECEIVE, ACTION_RECEIVE } from 'console/state/action-types';
-import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeApiRequest,
+  makeNormandyApiRequest,
+  makeNormandyReadonlyApiRequest,
+} from 'console/state/network/actions';
+import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 
 export function fetchAction(pk) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    console.log('fetchAction', isNormandyAdminAvailable(state));
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
+
     const requestId = `fetch-action-${pk}`;
-    const action = await dispatch(makeNormandyApiRequest(requestId, `v3/action/${pk}/`));
+    const action = await dispatch(fetcher(requestId, `v3/action/${pk}/`));
 
     dispatch({
       type: ACTION_RECEIVE,
@@ -14,9 +25,14 @@ export function fetchAction(pk) {
 }
 
 export function fetchAllActions() {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    console.log('fetchAllActions', isNormandyAdminAvailable(state));
+    const fetcher = isNormandyAdminAvailable(state)
+      ? makeNormandyApiRequest
+      : makeNormandyReadonlyApiRequest;
     const requestId = 'fetch-all-actions';
-    let response = await dispatch(makeNormandyApiRequest(requestId, 'v3/action/'));
+    let response = await dispatch(fetcher(requestId, 'v3/action/'));
     let actions = response.results;
 
     while (actions) {
