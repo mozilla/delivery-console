@@ -72,7 +72,7 @@
   "devDependencies": {
     "babel-eslint": "10.0.1",
     "babel-jest": "24.5.0",
-    "dotenv": "6.2.0",
+    "dotenv": "7.0.0",
     "dotenv-expand": "4.2.0",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.10.0",
