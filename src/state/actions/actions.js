@@ -9,7 +9,6 @@ import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 export function fetchAction(pk) {
   return async (dispatch, getState) => {
     const state = getState();
-    console.log('fetchAction', isNormandyAdminAvailable(state));
     const fetcher = isNormandyAdminAvailable(state)
       ? makeNormandyApiRequest
       : makeNormandyReadonlyApiRequest;
@@ -27,7 +26,6 @@ export function fetchAction(pk) {
 export function fetchAllActions() {
   return async (dispatch, getState) => {
     const state = getState();
-    console.log('fetchAllActions', isNormandyAdminAvailable(state));
     const fetcher = isNormandyAdminAvailable(state)
       ? makeNormandyApiRequest
       : makeNormandyReadonlyApiRequest;

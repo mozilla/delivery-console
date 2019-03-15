@@ -17,7 +17,6 @@ export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
     const accessToken = getAccessToken(state);
     const api = new APIClient(root, accessToken);
     const request = getRequest(state, requestId);
-    console.log('ROOT', root, requestId);
 
     // A "stealth API request" is one that doesn't update the state.
     // This is useful when you generally "don't care" about the *state* of the request.
