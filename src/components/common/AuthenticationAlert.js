@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'antd';
 import PropTypes from 'prop-types';
 
-export class AuthenticationAlert extends React.PureComponent {
+class AuthenticationAlert extends React.PureComponent {
   static propTypes = {
     description: PropTypes.string,
     message: PropTypes.string,
@@ -20,9 +20,4 @@ export class AuthenticationAlert extends React.PureComponent {
   }
 }
 
-export class VPNAlert extends AuthenticationAlert {
-  static defaultProps = {
-    type: 'error',
-    message: 'VPN Alert',
-  };
-}
+export default AuthenticationAlert;
