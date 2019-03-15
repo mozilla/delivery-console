@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthenticationAlert, VPNAlert } from 'console/components/common/AuthenticationAlert';
+import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
+import VPNAlert from 'console/components/common/VPNAlert';
 import { getUserProfile } from 'console/state/auth/selectors';
 import { isNormandyAdminAvailable } from 'console/state/network/selectors';
 import handleError from 'console/utils/handleError';
