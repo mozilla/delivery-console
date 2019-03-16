@@ -9268,10 +9268,12 @@ react-redux@5.1.1:
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
 
-react-router-config@1.0.0-beta.4:
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-1.0.0-beta.4.tgz#d202496dd0eabdf06cf24eb0793031f6891eef01"
-  integrity sha512-4jWfQK+PNAYeMU7dZ5h/dNDTReVjm41p761+XP+II360Jz5TfzHiuP27tAasIQ+JcGWwX2l2dCWG8jEmcS5SBA==
+react-router-config@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-4.4.0.tgz#4e26b0b010451084cb20181e94a9f4bb198b7613"
+  integrity sha512-so68idK2P9k6w1abnoz6JaSK5VcDmMQ9W0R5JdWaKEYQCSoTOGIIF3aV+CsumSU9YG0ln9GaZjCaGEC4Ddo+kg==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
 
 react-router-dom@4.3.1:
   version "4.3.1"
