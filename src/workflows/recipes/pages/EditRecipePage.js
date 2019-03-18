@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
-import { getUserProfile } from 'console/state/auth/selectors';
 import handleError from 'console/utils/handleError';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
@@ -15,6 +13,7 @@ import QueryRecipe from 'console/components/data/QueryRecipe';
 import { updateRecipe } from 'console/state/recipes/actions';
 import { getLatestRevisionForRecipe } from 'console/state/recipes/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
+import AccessBlocker from 'console/components/common/AccessBlocker';
 
 @connect(
   (state, props) => {
@@ -24,7 +23,6 @@ import { getUrlParamAsInt } from 'console/state/router/selectors';
     return {
       recipeId,
       revision,
-      userProfile: getUserProfile(state),
     };
   },
   {
@@ -37,7 +35,6 @@ class EditRecipePage extends React.PureComponent {
     recipeId: PropTypes.number.isRequired,
     revision: PropTypes.instanceOf(Map),
     updateRecipe: PropTypes.func.isRequired,
-    userProfile: PropTypes.instanceOf(Map),
   };
 
   onFormSuccess() {
@@ -55,17 +52,7 @@ class EditRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { revision, recipeId, userProfile } = this.props;
-    if (!userProfile) {
-      return (
-        <div className="content-wrapper">
-          <AuthenticationAlert
-            type="error"
-            description="You must be logged in to edit this recipe."
-          />
-        </div>
-      );
-    }
+    const { revision, recipeId } = this.props;
     return (
       <div className="content-wrapper edit-page">
         <QueryRecipe pk={recipeId} />
@@ -84,4 +71,4 @@ class EditRecipePage extends React.PureComponent {
   }
 }
 
-export default EditRecipePage;
+export default AccessBlocker(EditRecipePage);

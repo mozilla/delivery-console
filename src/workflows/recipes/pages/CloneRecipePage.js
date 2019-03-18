@@ -7,8 +7,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import AuthenticationAlert from 'console/components/common/AuthenticationAlert';
-import { getUserProfile } from 'console/state/auth/selectors';
 import GenericFormContainer from 'console/workflows/recipes/components/GenericFormContainer';
 import handleError from 'console/utils/handleError';
 import LoadingOverlay from 'console/components/common/LoadingOverlay';
@@ -21,6 +19,7 @@ import { getCurrentRevisionForRecipe } from 'console/state/recipes/selectors';
 import { isLatestRevision as isLatestRevisionSelector } from 'console/state/revisions/selectors';
 import { getLatestRevisionIdForRecipe } from 'console/state/recipes/selectors';
 import { reverse } from 'console/urls';
+import AccessBlocker from 'console/components/common/AccessBlocker';
 
 @connect(
   (state, props) => {
@@ -35,7 +34,6 @@ import { reverse } from 'console/urls';
       isLatestRevision,
       recipeId,
       revisionId,
-      userProfile: getUserProfile(state),
     };
   },
   {
@@ -51,11 +49,6 @@ class CloneRecipePage extends React.PureComponent {
     isLatestRevision: PropTypes.bool.isRequired,
     recipeId: PropTypes.number.isRequired,
     revisionId: PropTypes.number.isRequired,
-    userProfile: PropTypes.instanceOf(Map),
-  };
-
-  static defaultProps = {
-    userProfile: null,
   };
 
   onFormSuccess(recipeId) {
@@ -110,18 +103,7 @@ class CloneRecipePage extends React.PureComponent {
   }
 
   render() {
-    const { recipeId, revisionId, userProfile } = this.props;
-
-    if (!userProfile) {
-      return (
-        <div className="content-wrapper">
-          <AuthenticationAlert
-            type="error"
-            description="You must be logged in to clone this recipe."
-          />
-        </div>
-      );
-    }
+    const { recipeId, revisionId } = this.props;
 
     return (
       <div className="content-wrapper clone-page">
@@ -144,4 +126,4 @@ class CloneRecipePage extends React.PureComponent {
   }
 }
 
-export default CloneRecipePage;
+export default AccessBlocker(CloneRecipePage);
