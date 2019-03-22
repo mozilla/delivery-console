@@ -15,7 +15,6 @@ import CircleLogo from 'console/components/svg/CircleLogo';
 import { notifyAuthenticationError } from 'console/state/auth/actions';
 import { getError } from 'console/state/auth/selectors';
 import { getCurrentDocumentTitle } from 'console/state/router/selectors';
-import { isNormandyAdminMaybeAvailable } from 'console/state/network/selectors';
 import { reverse } from 'console/urls';
 
 const { Header } = Layout;
@@ -24,7 +23,6 @@ const { Header } = Layout;
   (state, props) => ({
     authError: getError(state),
     documentTitle: getCurrentDocumentTitle(state, 'Delivery Console'),
-    vpnMaybe: isNormandyAdminMaybeAvailable(state), // XXX needs new name!
   }),
   {
     notifyAuthenticationError,
@@ -35,7 +33,6 @@ class App extends React.Component {
     authError: PropTypes.object,
     documentTitle: PropTypes.string.isRequired,
     history: PropTypes.object.isRequired,
-    vpnMaybe: PropTypes.bool,
   };
 
   componentDidUpdate(prevProps) {
@@ -55,6 +52,7 @@ class App extends React.Component {
       <ConnectedRouter history={history}>
         <Layout>
           <QueryAuth0 />
+          <QueryActions />
 
           <Header className="app-header">
             <div className="content-wrapper">
@@ -74,14 +72,7 @@ class App extends React.Component {
           </Header>
 
           <NavBar />
-          {this.props.vpnMaybe ? (
-            <>
-              <Routes />
-              <QueryActions />
-            </>
-          ) : (
-            <p>Waiting to see if VPN works</p>
-          )}
+          <Routes />
         </Layout>
       </ConnectedRouter>
     );

@@ -40,8 +40,3 @@ export function areAnyRequestsInProgress(state) {
 export function isNormandyAdminAvailable(state) {
   return getAvailabilityState(state).getIn(['normandyAdmin']);
 }
-
-export function isNormandyAdminMaybeAvailable(state) {
-  // XXX needs code comment
-  return getAvailabilityState(state).getIn(['normandyAdmin']) !== null;
-}
