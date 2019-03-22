@@ -13,6 +13,7 @@ import ExtensionForm from 'console/workflows/extensions/components/ExtensionForm
 import { updateExtension } from 'console/state/extensions/actions';
 import { getExtension } from 'console/state/extensions/selectors';
 import { getUrlParamAsInt } from 'console/state/router/selectors';
+import AccessBlocker from 'console/components/common/AccessBlocker';
 
 @connect(
   (state, props) => {
@@ -69,4 +70,4 @@ class EditExtensionPage extends React.PureComponent {
   }
 }
 
-export default EditExtensionPage;
+export default AccessBlocker(EditExtensionPage);
