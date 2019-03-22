@@ -23,7 +23,6 @@ function AccessBlocker(ProtectedComponent) {
 
     render() {
       const { userProfile, vpnAvailable, ...passThroughProps } = this.props;
-      // console.log(JSON.stringify(userProfile));
       if (!userProfile) {
         return (
           <div className="content-wrapper">
