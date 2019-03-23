@@ -47,7 +47,7 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
-    "promise": "8.0.2",
+    "promise": "8.0.3",
     "raven-js": "3.27.0",
     "react": "16.8.4",
     "react-copy-to-clipboard": "5.0.1",
