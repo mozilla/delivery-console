@@ -5,7 +5,7 @@ import {
   REQUEST_SEND,
   REQUEST_SUCCESS,
 } from 'console/state/action-types';
-import { getAccessToken } from 'console/state/auth/selectors';
+import { getAccessToken, isInsecureAuth } from 'console/state/auth/selectors';
 import { getRequest } from 'console/state/network/selectors';
 import APIClient from 'console/utils/api';
 
@@ -15,7 +15,8 @@ export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
   return async (dispatch, getState) => {
     const state = getState();
     const accessToken = getAccessToken(state);
-    const api = new APIClient(root, accessToken);
+    const insecure = isInsecureAuth(state);
+    const api = new APIClient(root, accessToken, insecure);
     const request = getRequest(state, requestId);
 
     // A "stealth API request" is one that doesn't update the state.

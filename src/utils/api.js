@@ -1,3 +1,5 @@
+import { INSECURE_AUTH_ALLOWED } from 'console/settings';
+
 export function APIError(message, data = {}) {
   this.data = data;
   this.message = message;
@@ -7,9 +9,10 @@ APIError.prototype = Object.create(Error.prototype);
 APIError.prototype.name = 'APIError';
 
 export default class APIClient {
-  constructor(root, accessToken) {
+  constructor(root, accessToken, insecure = false) {
     this.root = root;
     this.accessToken = accessToken;
+    this.insecure = insecure;
   }
 
   async fetch(url, options) {
@@ -22,7 +25,11 @@ export default class APIClient {
     }
 
     if (this.accessToken) {
-      headers.append('Authorization', `Bearer ${this.accessToken}`);
+      if (INSECURE_AUTH_ALLOWED && this.insecure) {
+        headers.append('Authorization', `Insecure ${this.accessToken}`);
+      } else {
+        headers.append('Authorization', `Bearer ${this.accessToken}`);
+      }
     }
 
     const settings = {
