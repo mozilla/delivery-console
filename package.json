@@ -24,7 +24,7 @@
     "antd": "3.16.1",
     "auth0-js": "9.10.1",
     "autobind-decorator": "2.4.0",
-    "autoprefixer": "9.5.0",
+    "autoprefixer": "9.5.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "8.0.5",
     "babel-plugin-import": "1.11.0",
