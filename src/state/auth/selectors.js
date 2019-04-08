@@ -6,6 +6,10 @@ export function getAccessToken(state, defaultsTo = null) {
   return state.getIn(['auth', 'session', 'accessToken'], defaultsTo);
 }
 
+export function isInsecureAuth(state) {
+  return state.getIn(['auth', 'session', 'insecure'], false);
+}
+
 /**
  * Gets the authentication error from the state
  *

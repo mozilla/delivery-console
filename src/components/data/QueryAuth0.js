@@ -7,22 +7,25 @@ import { connect } from 'react-redux';
 import {
   authenticationFailed,
   logUserIn,
+  logUserInInsecure,
   logUserOut,
   userProfileReceived,
 } from 'console/state/auth/actions';
-import { getAccessToken } from 'console/state/auth/selectors';
-import { CHECK_AUTH_EXPIRY_INTERVAL_MS } from 'console/settings';
+import { getAccessToken, isInsecureAuth } from 'console/state/auth/selectors';
+import { CHECK_AUTH_EXPIRY_INTERVAL_MS, INSECURE_AUTH_ALLOWED } from 'console/settings';
 import { parseHash, checkSession } from 'console/utils/auth0';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => ({
     accessToken: getAccessToken(state),
+    isInsecure: isInsecureAuth(state),
     pathname: getCurrentPathname(state),
   }),
   {
     authenticationFailed,
     logUserIn,
+    logUserInInsecure,
     logUserOut,
     userProfileReceived,
     push,
@@ -33,11 +36,17 @@ class QueryAuth0 extends React.PureComponent {
   static propTypes = {
     accessToken: PropTypes.string,
     authenticationFailed: PropTypes.func.isRequired,
+    isInsecureAuth: PropTypes.bool.isRequired,
     logUserIn: PropTypes.func.isRequired,
+    logUserInInsecure: PropTypes.func.isRequired,
     logUserOut: PropTypes.func.isRequired,
     pathname: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
     userProfileReceived: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    isInsecureAuth: false,
   };
 
   async componentDidMount() {
@@ -47,9 +56,9 @@ class QueryAuth0 extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { accessToken } = this.props;
+    const { accessToken, isInsecure } = this.props;
 
-    if (accessToken && accessToken !== prevProps.accessToken) {
+    if (accessToken && accessToken !== prevProps.accessToken && !isInsecure) {
       // Check the access token now
       this.validateAccessToken();
 
@@ -71,9 +80,10 @@ class QueryAuth0 extends React.PureComponent {
   }
 
   async checkForAuthentication() {
-    const { accessToken, authenticationFailed } = this.props;
+    const { accessToken, authenticationFailed, isInsecureAuth } = this.props;
     let authResult;
     let expiresAt;
+    let email;
 
     // Check whether we are currently in an auth flow
     try {
@@ -88,6 +98,9 @@ class QueryAuth0 extends React.PureComponent {
       if (expiresAt && expiresAt - new Date().getTime() > 0) {
         authResult = JSON.parse(localStorage.getItem('authResult'));
       }
+      if (!authResult) {
+        email = localStorage.getItem('authEmail');
+      }
     }
 
     if (authResult) {
@@ -96,7 +109,9 @@ class QueryAuth0 extends React.PureComponent {
     } else if (expiresAt && expiresAt - new Date().getTime() < 0) {
       // If we do not have an expired authResult attempt to refresh it
       this.refreshAccessToken();
-    } else if (!authResult && accessToken) {
+    } else if (email && INSECURE_AUTH_ALLOWED) {
+      this.props.logUserInInsecure(email);
+    } else if (!authResult && accessToken && !isInsecureAuth) {
       this.props.logUserOut();
     }
   }
@@ -114,8 +129,8 @@ class QueryAuth0 extends React.PureComponent {
   }
 
   validateAccessToken() {
-    const { accessToken } = this.props;
-    if (accessToken) {
+    const { accessToken, isInsecure } = this.props;
+    if (accessToken && !isInsecure) {
       const expiresAt = JSON.parse(localStorage.getItem('authExpiresAt'));
       const expiresIn = expiresAt - new Date().getTime();
 

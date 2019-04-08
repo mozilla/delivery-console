@@ -6,6 +6,7 @@ import {
   USER_AUTH_FINISH,
   USER_AUTH_START,
   USER_LOGIN,
+  USER_LOGIN_INSECURE,
   USER_LOGOUT,
   USER_PROFILE_RECEIVE,
 } from 'console/state/action-types';
@@ -58,10 +59,22 @@ export function logUserIn(authResult) {
   };
 }
 
+export function logUserInInsecure(email) {
+  return dispatch => {
+    localStorage.setItem('authEmail', email);
+
+    return dispatch({
+      type: USER_LOGIN_INSECURE,
+      email,
+    });
+  };
+}
+
 export function logUserOut() {
   return dispatch => {
     localStorage.removeItem('authResult');
     localStorage.removeItem('authExpiresAt');
+    localStorage.removeItem('authEmail');
 
     return dispatch({
       type: USER_LOGOUT,

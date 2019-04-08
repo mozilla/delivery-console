@@ -10,6 +10,9 @@ export const NORMANDY_ADMIN_API_ROOT_URL =
 export const NORMANDY_READONLY_API_ROOT_URL =
   process.env.REACT_APP_NORMANDY_READ_ONLY_API_ROOT_URL || null;
 
+// Insecure authentication
+export const INSECURE_AUTH_ALLOWED = process.env.REACT_APP_INSECURE_AUTH_ALLOWED || false;
+
 // Auth0 / OIDC
 export const OIDC_CLIENT_ID =
   process.env.REACT_APP_OIDC_CLIENT_ID || 'hU1YpGcL82wL04vTPsaPAQmkilrSE7wr';

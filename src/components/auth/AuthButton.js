@@ -1,11 +1,13 @@
-import { Avatar, Button, Icon, Popover } from 'antd';
+import { Avatar, Button, Icon, Input, Modal, Popover } from 'antd';
 import autobind from 'autobind-decorator';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { INSECURE_AUTH_ALLOWED } from 'console/settings';
 import {
   finishAuthenticationFlow,
+  logUserInInsecure,
   logUserOut,
   startAuthenticationFlow,
 } from 'console/state/auth/actions';
@@ -20,6 +22,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
   }),
   {
     finishAuthenticationFlow,
+    logUserInInsecure,
     logUserOut,
     startAuthenticationFlow,
   },
@@ -29,11 +32,21 @@ class AuthButton extends React.Component {
   static propTypes = {
     authInProgress: PropTypes.bool.isRequired,
     finishAuthenticationFlow: PropTypes.func.isRequired,
+    logUserInInsecure: PropTypes.func.isRequired,
     logUserOut: PropTypes.func.isRequired,
     pathname: PropTypes.string.isRequired,
     startAuthenticationFlow: PropTypes.func.isRequired,
     userProfile: PropTypes.object,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      modalVisible: false,
+    };
+  }
 
   popoverTitle(userProfile) {
     const nickname = userProfile.get('nickname');
@@ -46,7 +59,26 @@ class AuthButton extends React.Component {
     );
   }
 
-  menu() {
+  logInMenu() {
+    return (
+      <div>
+        <div className="text-colored-links">
+          <div>
+            <a href="#login-email" onClick={this.handleEmailLoginClick}>
+              Log in with email
+            </a>
+          </div>
+          <div>
+            <a href="#login-auth0" onClick={this.handleAuth0LoginClick}>
+              Log in with Auth0
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  logOutMenu() {
     return (
       <div>
         <div className="text-colored-links">
@@ -62,7 +94,7 @@ class AuthButton extends React.Component {
     this.props.finishAuthenticationFlow();
   }
 
-  handleLoginClick() {
+  handleAuth0LoginClick() {
     this.props.startAuthenticationFlow(this.props.pathname);
 
     // In case you have terrible network, the going to the auth0 page might be slow.
@@ -70,12 +102,24 @@ class AuthButton extends React.Component {
     window.setTimeout(this.handleLoginTimeout, 3000);
   }
 
+  handleEmailLoginClick() {
+    this.setState({ modalVisible: true });
+  }
+
+  handleEmailLogin() {
+    this.props.logUserInInsecure(this.state.email);
+  }
+
+  hideModal() {
+    this.setState({ modalVisible: false });
+  }
+
   render() {
     if (this.props.userProfile) {
       const picture = this.props.userProfile.get('picture');
       return (
         <Popover
-          content={this.menu()}
+          content={this.logOutMenu()}
           title={this.popoverTitle(this.props.userProfile)}
           trigger="click"
           placement="bottomRight"
@@ -87,8 +131,42 @@ class AuthButton extends React.Component {
         </Popover>
       );
     }
+    if (INSECURE_AUTH_ALLOWED) {
+      return (
+        <React.Fragment>
+          <Popover
+            content={this.logInMenu()}
+            title="Log In Options"
+            trigger="click"
+            placement="bottomRight"
+          >
+            <Button type="primary" loading={this.props.authInProgress}>
+              Log In
+            </Button>
+          </Popover>
+          <Modal
+            title="Log in with email"
+            visible={this.state.modalVisible}
+            onOk={this.handleEmailLogin}
+            onCancel={this.hideModal}
+          >
+            <Input
+              placeholder="E-mail Address"
+              type="email"
+              onChange={e => {
+                this.setState({ email: e.target.value });
+              }}
+            />
+          </Modal>
+        </React.Fragment>
+      );
+    }
     return (
-      <Button type="primary" loading={this.props.authInProgress} onClick={this.handleLoginClick}>
+      <Button
+        type="primary"
+        loading={this.props.authInProgress}
+        onClick={this.handleAuth0LoginClick}
+      >
         Log In
       </Button>
     );
