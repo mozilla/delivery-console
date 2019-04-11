@@ -96,7 +96,7 @@
     "stylelint": "9.10.1",
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "2.2.1",
-    "webpack-dev-server": "3.3.0",
+    "webpack-dev-server": "3.3.1",
     "whatwg-fetch": "3.0.0"
   },
   "resolutions": {
