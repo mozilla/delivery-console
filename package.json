@@ -100,8 +100,8 @@
     "whatwg-fetch": "3.0.0"
   },
   "resolutions": {
-    "handlebars": "^4.0.13",
-    "js-yaml": "^3.13.0"
+    "handlebars": "^4.1.2",
+    "js-yaml": "^3.13.1"
   },
   "jest": {
     "collectCoverageFrom": [
