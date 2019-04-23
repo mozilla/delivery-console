@@ -154,7 +154,7 @@ jobs:
 
   integration_tests:
     docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/python3.7-browsers
     
         environment:
           REACT_APP_INSECURE_AUTH_ALLOWED: true
@@ -168,15 +168,6 @@ jobs:
           - v2-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v2-dependencies-
-
-      - run:
-          name: Install node dependencies
-          command: yarn install
-
-      - save_cache:
-          paths:
-            - "node_modules"
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
       
       - run:
           name: Install Docker Compose
@@ -189,8 +180,40 @@ jobs:
             docker-compose --version
       
       - run:
+          name: Install Node
+          command: |
+            set -x
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo bash
+            sudo apt update
+            sudo apt -y install gcc g++ make
+            sudo apt -y install nodejs
+            node -v
+
+      - run:
+          name: Install Yarn
+          command: |
+            set -x
+            curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get update && sudo apt-get install yarn
+            yarn -v
+
+      - run:
+          name: Install node dependencies
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - "node_modules"
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
+
+      - run:
           name: Install Tox
           command: pip install tox
+      
+      -run:
+          name: Firefox Version Check
+          command: firefox --version
 
       - run:
           name: Setup Server for tests
