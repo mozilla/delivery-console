@@ -154,7 +154,7 @@ jobs:
 
   integration_tests:
     docker:
-      - image: circleci/python3.7.3-node-browsers
+      - image: circleci/python:3.7.3-node-browsers
     
         environment:
           REACT_APP_INSECURE_AUTH_ALLOWED: true
