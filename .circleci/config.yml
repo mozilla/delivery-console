@@ -152,6 +152,56 @@ jobs:
           name: Build
           command: yarn run build
 
+  integration_tests:
+    docker:
+      - image: circleci/node:10-browsers
+    
+      - environment:
+          REACT_APP_INSECURE_AUTH_ALLOWED: true
+          MOZ_HEADLESS: 1
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v2-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v2-dependencies-
+
+      - run:
+          name: Install node dependencies
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - "node_modules"
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
+      
+      - run:
+          name: Install Docker Compose
+          command: |
+            # using curl to install for better ci -> local compatibility
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            docker-compose --version
+      
+      - run:
+          name: Install Tox
+          command: pip install tox
+
+      - run:
+          name: Setup Server for tests
+          command: ./scripts/setup_uitests.sh
+
+      - run: 
+          name: Run integration test
+          command: tox -e ui-tests
+      
+      - store_artifacts:
+          path: delivery-console-ui-test.html
 
 workflows:
   version: 2
@@ -161,3 +211,4 @@ workflows:
       - lint
       - build
       - test
+      - integration_tests
