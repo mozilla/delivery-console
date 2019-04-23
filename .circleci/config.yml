@@ -168,16 +168,6 @@ jobs:
           - v2-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v2-dependencies-
-      
-      - run:
-          name: Install Docker Compose
-          command: |
-            # using curl to install for better ci -> local compatibility
-            set -x
-            curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-            docker-compose --version
 
       - run:
           name: Install node dependencies
@@ -190,7 +180,7 @@ jobs:
 
       - run:
           name: Install Tox
-          command: pip install --user tox
+          command: sudo pip install tox
       
       - run:
           name: Firefox Version Check
