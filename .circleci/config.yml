@@ -211,7 +211,7 @@ jobs:
           name: Install Tox
           command: pip install tox
       
-      -run:
+      - run:
           name: Firefox Version Check
           command: firefox --version
 
