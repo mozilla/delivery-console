@@ -10,4 +10,3 @@ docker-compose -f normandy/ci/docker-compose.yml exec web python manage.py creat
 docker-compose -f normandy/ci/docker-compose.yml exec web python manage.py migrate
 docker-compose -f normandy/ci/docker-compose.yml exec web python manage.py update_product_details
 docker-compose -f normandy/ci/docker-compose.yml exec web python manage.py initial_data
-yarn start &

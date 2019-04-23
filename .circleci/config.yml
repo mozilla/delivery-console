@@ -170,6 +170,7 @@ jobs:
           - v2-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v2-dependencies-
+          - integration-test-dependencies-{{ checksum "tests/integration/requirements.txt" }}
 
       - run:
           name: Install node dependencies
@@ -189,6 +190,10 @@ jobs:
           command: firefox --version
 
       - run:
+          name: Integration test lint
+          command: tox -e formatting
+
+      - run:
           name: Setup Server for tests
           command: ./scripts/setup_uitests.sh
 
@@ -199,6 +204,11 @@ jobs:
             yarn start &
             tox -e ui-tests
       
+      - save_cache:
+          key: integration-test-dependencies-{{ checksum "tests/integration/requirements.txt" }}
+          paths:
+            - .tox
+
       - store_artifacts:
           path: delivery-console-ui-test.html
 
