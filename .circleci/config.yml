@@ -154,7 +154,7 @@ jobs:
 
   integration_tests:
     docker:
-      - image: circleci/python3.7-browsers
+      - image: circleci/python3.7.3-node-browsers
     
         environment:
           REACT_APP_INSECURE_AUTH_ALLOWED: true
@@ -178,25 +178,6 @@ jobs:
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
             docker-compose --version
-      
-      - run:
-          name: Install Node
-          command: |
-            set -x
-            curl -sL https://deb.nodesource.com/setup_10.x | sudo bash
-            sudo apt update
-            sudo apt -y install gcc g++ make
-            sudo apt -y install nodejs
-            node -v
-
-      - run:
-          name: Install Yarn
-          command: |
-            set -x
-            curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt-get update && sudo apt-get install yarn
-            yarn -v
 
       - run:
           name: Install node dependencies
