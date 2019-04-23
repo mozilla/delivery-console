@@ -194,7 +194,10 @@ jobs:
 
       - run: 
           name: Run integration test
-          command: tox -e ui-tests
+          command: |
+            set -x
+            yarn start &
+            tox -e ui-tests
       
       - store_artifacts:
           path: delivery-console-ui-test.html
