@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  test:
+  test_unit:
 
     docker:
       - image: circleci/node:10
@@ -152,9 +152,9 @@ jobs:
           name: Build
           command: yarn run build
 
-  integration_tests:
+  test_integration:
     docker:
-      - image: circleci/python:3.7.3-node-browsers
+      - image: circleci/python:3.7-node-browsers
     
         environment:
           REACT_APP_INSECURE_AUTH_ALLOWED: true
@@ -170,7 +170,7 @@ jobs:
           - v2-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v2-dependencies-
-          - integration-test-dependencies-{{ checksum "tests/integration/requirements.txt" }}
+          - test-integration-dependencies-{{ checksum "tests/integration/requirements.txt" }}
 
       - run:
           name: Install node dependencies
@@ -182,16 +182,18 @@ jobs:
           key: v2-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
-          name: Install Tox
-          command: sudo pip install tox
+          name: Create virtualenv
+          command: |
+            python3 -m venv ~/venv
+            echo "source ~/venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: Install Dependencies
+          command: pip install -r tests/integration/requirements.txt
       
       - run:
           name: Firefox Version Check
           command: firefox --version
-
-      - run:
-          name: Integration test lint
-          command: tox -e formatting
 
       - run:
           name: Setup Server for tests
@@ -202,10 +204,10 @@ jobs:
           command: |
             set -x
             yarn start &
-            tox -e ui-tests
+            pytest --driver Firefox tests/integration/
       
       - save_cache:
-          key: integration-test-dependencies-{{ checksum "tests/integration/requirements.txt" }}
+          key: test-integration-dependencies-{{ checksum "tests/integration/requirements.txt" }}
           paths:
             - .tox
 
@@ -219,5 +221,5 @@ workflows:
       - docs
       - lint
       - build
-      - test
-      - integration_tests
+      - test_unit
+      - test_integration

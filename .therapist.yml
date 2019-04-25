@@ -12,6 +12,10 @@ actions:
       - "*.less"
   yarn-audit:
     run: yarn audit
+  black:
+    run: black --check --diff --line-length 99 {files}
+    fix: black --line-length 99 {files}
+    include: "*.py"
 shortcuts:
   lint:
     flags:
@@ -26,3 +30,4 @@ shortcuts:
   "fix:all":
     extends: fix
     flags: use-tracked-files
+
