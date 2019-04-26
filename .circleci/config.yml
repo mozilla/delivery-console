@@ -159,11 +159,11 @@ jobs:
   test_integration:
     working_directory: ~/delivery-console
 
-    machine:
+    machine: true
       image: ubuntu-1604:201903-01
-        environment:
-          REACT_APP_INSECURE_AUTH_ALLOWED: true
-          MOZ_HEADLESS: 1
+      environment:
+        REACT_APP_INSECURE_AUTH_ALLOWED: true
+        MOZ_HEADLESS: 1
 
     steps:
       - checkout
