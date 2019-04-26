@@ -173,6 +173,14 @@ jobs:
           - test-integration-dependencies-{{ checksum "tests/integration/requirements.txt" }}
 
       - run:
+          name: Install Yarn
+          command: |
+            set -x
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get update && sudo apt-get install yarn
+
+      - run:
           name: Install node dependencies
           command: yarn install
 
