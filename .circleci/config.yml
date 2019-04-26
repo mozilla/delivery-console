@@ -159,11 +159,8 @@ jobs:
   test_integration:
     working_directory: ~/delivery-console
 
-    machine: true
+    machine:
       image: ubuntu-1604:201903-01
-      environment:
-        REACT_APP_INSECURE_AUTH_ALLOWED: true
-        MOZ_HEADLESS: 1
 
     steps:
       - checkout
@@ -208,6 +205,9 @@ jobs:
 
       - run: 
           name: Run integration test
+          environment:
+            REACT_APP_INSECURE_AUTH_ALLOWED: true
+            MOZ_HEADLESS: 1
           command: |
             set -x
             yarn start &
