@@ -173,6 +173,13 @@ jobs:
           - test-integration-dependencies-{{ checksum "tests/integration/requirements.txt" }}
 
       - run:
+          name: Install Node
+          command: |
+            set -x
+            curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
           name: Install Yarn
           command: |
             set -x
