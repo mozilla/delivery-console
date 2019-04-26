@@ -59,6 +59,10 @@ jobs:
           name: Install therapist
           command: pip install -U therapist
 
+      - run:
+          name:
+          command: pip install black
+
       - save_cache:
           paths:
             - "~/venv"
