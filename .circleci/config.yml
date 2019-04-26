@@ -157,17 +157,16 @@ jobs:
           command: yarn run build
 
   test_integration:
-    docker:
-      - image: circleci/python:3.7-node-browsers
-    
+    working_directory: ~/delivery-console
+
+    machine:
+      image: ubuntu-1604:201903-01
         environment:
           REACT_APP_INSECURE_AUTH_ALLOWED: true
           MOZ_HEADLESS: 1
 
     steps:
       - checkout
-
-      - setup_remote_docker
 
       - restore_cache:
           keys:
@@ -196,8 +195,12 @@ jobs:
           command: pip install -r tests/integration/requirements.txt
       
       - run:
-          name: Firefox Version Check
-          command: firefox --version
+          name: Install Firefox
+          command: |
+            set -x
+            sudo apt -y update
+            sudo apt -y install firefox
+            firefox --version
 
       - run:
           name: Setup Server for tests
