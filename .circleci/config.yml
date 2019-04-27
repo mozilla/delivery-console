@@ -190,8 +190,7 @@ jobs:
           name: Install Yarn
           command: |
             set +x
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 10.0.0
             curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
             echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
             sudo apt-get update && sudo apt-get install yarn
@@ -200,8 +199,7 @@ jobs:
           name: Install node dependencies
           command: |
             set +x
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 10.0.0
             yarn install
 
       - save_cache:
@@ -222,7 +220,7 @@ jobs:
       - run:
           name: Install Firefox
           command: |
-            set xx
+            set +x
             sudo apt -y update
             sudo apt -y install firefox
             firefox --version
@@ -237,9 +235,8 @@ jobs:
             REACT_APP_INSECURE_AUTH_ALLOWED: true
             MOZ_HEADLESS: 1
           command: |
-            set xx
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            set +x
+            nvm use 10.0.0
             yarn start &
             pytest --driver Firefox tests/integration/
       
