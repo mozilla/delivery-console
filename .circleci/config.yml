@@ -237,7 +237,6 @@ jobs:
           environment:
             REACT_APP_INSECURE_AUTH_ALLOWED: true
             MOZ_HEADLESS: 1
-            PATH: ~/delivery-console/firefox:$PATH
           command: |
             set +x
             GECKODRIVER_URL=$(
@@ -249,6 +248,7 @@ jobs:
             chmod +x geckodriver
             sudo mv geckodriver /bin
             geckodriver --version
+            export PATH=~/delivery-console/firefox:$PATH
             nvm use 10.0.0
             yarn start &
             sudo pip install tox mozdownload mozinstall==1.15
