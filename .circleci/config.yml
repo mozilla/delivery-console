@@ -222,9 +222,19 @@ jobs:
           name: Install Firefox
           command: |
             set +x
-            sudo apt -y update
-            sudo apt -y install firefox
+            sudo apt-get update -qqy
+            sudo apt-get -qqy install firefox
             firefox --version
+
+      - run:
+          name: Install Docker Compose
+          command: |
+            # using curl to install for better ci -> local compatibility
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            docker-compose --version
 
       - run:
           name: Setup Server for tests
