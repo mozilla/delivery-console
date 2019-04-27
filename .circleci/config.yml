@@ -240,6 +240,20 @@ jobs:
           name: Setup Server for tests
           command: ./scripts/setup_uitests.sh
 
+      - run:
+          name: Install geckodriver
+          command: |
+            set +x
+            GECKODRIVER_URL=$(
+              curl -s 'https://api.github.com/repos/mozilla/geckodriver/releases/latest' |
+              python -c "import sys, json; r = json.load(sys.stdin); print([a for a in r['assets'] if 'linux64' in a['name']][0]['browser_download_url']);"
+            );
+            curl -L -o geckodriver.tar.gz $GECKODRIVER_URL
+            gunzip -c geckodriver.tar.gz | tar xopf -
+            chmod +x geckodriver
+            sudo mv geckodriver /bin
+            geckodriver --version
+
       - run: 
           name: Run integration test
           environment:
