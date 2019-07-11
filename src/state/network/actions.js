@@ -8,8 +8,56 @@ import {
 import { getAccessToken, isInsecureAuth } from 'console/state/auth/selectors';
 import { getRequest } from 'console/state/network/selectors';
 import APIClient from 'console/utils/api';
+import { request } from 'console/utils/request';
 
 const SECONDS = 1000;
+
+export function makeRequest(requestId, url, options = {}) {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const prevRequest = getRequest(state, requestId);
+
+    // A "stealth API request" is one that doesn't update the state.
+    // This is useful when you generally "don't care" about the *state* of the request.
+    const stealth = options.stealth || false;
+    if (stealth) {
+      // Doing it this way because JavaScript doesn't have a `obj.pop(key, default)`
+      delete options.stealth;
+    }
+
+    if (prevRequest.inProgress) {
+      return true;
+    }
+
+    if (!stealth) {
+      dispatch({
+        type: REQUEST_SEND,
+        requestId,
+      });
+    }
+
+    let data;
+
+    try {
+      data = await request(url, options);
+    } catch (error) {
+      dispatch({
+        type: REQUEST_FAILURE,
+        requestId,
+        error,
+      });
+
+      throw error;
+    }
+
+    dispatch({
+      type: REQUEST_SUCCESS,
+      requestId,
+    });
+
+    return data;
+  };
+}
 
 export function makeApiRequest(requestId, root, endpoint = '', options = {}) {
   return async (dispatch, getState) => {

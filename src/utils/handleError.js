@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 
-import { APIError } from 'console/utils/api';
+import { RequestError } from 'console/utils/request';
 import { ValidationError } from 'console/utils/forms';
 
 export const ERR_MESSAGES = {
@@ -17,7 +17,7 @@ const checkFetchFailure = ({ message = '' }) =>
 
 const checkLoginFailure = ({ message = '' }) =>
   message.indexOf('credentials were not provided') > -1;
-export const checkAPIFailure = error => error instanceof APIError;
+export const checkAPIFailure = error => error instanceof RequestError;
 export const checkValidationFailure = error => error instanceof ValidationError;
 
 const msgDisplayTime = 8; // seconds

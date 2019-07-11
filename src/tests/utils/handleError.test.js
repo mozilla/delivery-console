@@ -1,7 +1,7 @@
-import { APIError } from 'console/utils/api';
 import { ValidationError } from 'console/utils/forms';
 import handleError, { ERR_MESSAGES } from 'console/utils/handleError';
 import { checkAPIFailure, checkValidationFailure } from 'console/utils/handleError';
+import { RequestError } from 'console/utils/request';
 
 describe('handleError util', () => {
   it('should work', () => {
@@ -32,9 +32,9 @@ describe('handleError util', () => {
     expect(reason).toBe(ERR_MESSAGES.FORM_VALIDATION);
   });
 
-  describe('API Errors', () => {
-    it('should detect APIErrors', () => {
-      const err = new APIError('Something from the server.', {
+  describe('Request Errors', () => {
+    it('should detect RequestErrors', () => {
+      const err = new RequestError('Something from the server.', {
         status: 400,
       });
 
@@ -48,7 +48,7 @@ describe('handleError util', () => {
     });
 
     it('should handle 400 errors', () => {
-      const err = new APIError('Something from the server.', {
+      const err = new RequestError('Something from the server.', {
         status: 400,
       });
 
@@ -60,7 +60,7 @@ describe('handleError util', () => {
 
     describe('should handle 403 errors', () => {
       it('should handle a "not logged in" 403 error', () => {
-        const err = new APIError('Authentication credentials were not provided', {
+        const err = new RequestError('Authentication credentials were not provided', {
           status: 403,
         });
 
@@ -71,7 +71,7 @@ describe('handleError util', () => {
       });
 
       it('should handle a "no permission" 403 error', () => {
-        const err = new APIError('User does not have permission to perform that action.', {
+        const err = new RequestError('User does not have permission to perform that action.', {
           status: 403,
         });
 
@@ -83,7 +83,7 @@ describe('handleError util', () => {
     });
 
     it('should handle 500 errors', () => {
-      const err = new APIError('Something from the server.', {
+      const err = new RequestError('Something from the server.', {
         status: 500,
       });
 
@@ -94,7 +94,7 @@ describe('handleError util', () => {
     });
 
     it('should fall back to server messages if the response status is unrecognized', () => {
-      const err = new APIError('Something from the server.', {
+      const err = new RequestError('Something from the server.', {
         status: 123,
       });
 

@@ -36,7 +36,7 @@ class CreateRecipePage extends React.PureComponent {
   };
 
   onFormFailure(err) {
-    handleError('Recipe cannot be created.', err);
+    handleError(`Recipe cannot be created.`, err);
   }
 
   onFormSuccess(recipeId) {
