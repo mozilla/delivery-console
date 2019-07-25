@@ -1,5 +1,5 @@
 import WrappedFormItem from 'console/components/forms/FormItem';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 
 const FormItem = WrappedFormItem.wrappedComponent;
 

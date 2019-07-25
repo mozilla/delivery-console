@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, mount, shallow } from 'enzyme';
-import { cleanup } from 'react-testing-library';
+import { cleanup } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
 import * as immutableMatchers from 'jest-immutable-matchers';
 import fetchMock from 'fetch-mock';
