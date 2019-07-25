@@ -51,7 +51,7 @@
     "raven-js": "3.27.0",
     "react": "16.8.6",
     "react-copy-to-clipboard": "5.0.1",
-    "react-dev-utils": "7.0.5",
+    "react-dev-utils": "9.0.1",
     "react-dom": "16.8.6",
     "react-redux": "5.1.1",
     "react-router": "5.0.0",
