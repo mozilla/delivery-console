@@ -1,5 +1,5 @@
 import { Map, List, fromJS } from 'immutable';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import { NORMANDY_ADMIN_API_ROOT_URL } from 'console/settings';
 import FilterObjectForm, {
@@ -422,8 +422,8 @@ describe('<FilterObjectForm>', () => {
         onSubmit: jest.fn(), // otherwise set by createForm()
       };
       const FakeForm = createForm({})(SamplingInput);
-      const { getByValue } = render(<FakeForm {...props} />);
-      fireEvent.change(getByValue('50'), {
+      const { getByDisplayValue } = render(<FakeForm {...props} />);
+      fireEvent.change(getByDisplayValue('50'), {
         target: { value: '55' },
       });
       expect(props.onChange).toHaveBeenCalledTimes(1);
@@ -446,8 +446,8 @@ describe('<FilterObjectForm>', () => {
         onSubmit: jest.fn(), // otherwise set by createForm()
       };
       const FakeForm = createForm({})(SamplingInput);
-      const { getByValue } = render(<FakeForm {...props} />);
-      fireEvent.change(getByValue('33'), {
+      const { getByDisplayValue } = render(<FakeForm {...props} />);
+      fireEvent.change(getByDisplayValue('33'), {
         target: { value: '0.1' },
       });
       expect(props.onChange).toHaveBeenCalledTimes(1);
@@ -468,10 +468,10 @@ describe('<FilterObjectForm>', () => {
       };
 
       const FakeForm = createForm({})(VersionsInput);
-      const { getByValue, container } = render(<FakeForm {...props} />);
+      const { getByDisplayValue, container } = render(<FakeForm {...props} />);
 
       // If you enter some junk the submit button will be disabled.
-      const firstInput = getByValue('');
+      const firstInput = getByDisplayValue('');
       fireEvent.change(firstInput, {
         target: { value: 'junk' },
       });
