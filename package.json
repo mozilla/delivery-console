@@ -48,7 +48,7 @@
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "promise": "8.0.3",
-    "raven-js": "3.27.0",
+    "raven-js": "3.27.2",
     "react": "16.8.6",
     "react-copy-to-clipboard": "5.0.1",
     "react-dev-utils": "9.0.1",
