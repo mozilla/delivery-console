@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
-    "babel-jest": "24.7.1",
+    "babel-jest": "24.8.0",
     "dotenv": "8.0.0",
     "dotenv-expand": "5.1.0",
     "enzyme": "3.10.0",
@@ -87,7 +87,7 @@
     "eslint-plugin-react": "7.14.3",
     "faker": "4.1.0",
     "fetch-mock": "7.3.3",
-    "jest": "24.7.1",
+    "jest": "24.8.0",
     "jest-immutable-matchers": "2.0.1",
     "prettier": "1.18.2",
     "raf": "3.4.1",
