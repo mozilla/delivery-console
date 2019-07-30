@@ -10,6 +10,11 @@ export const NORMANDY_ADMIN_API_ROOT_URL =
 export const NORMANDY_READONLY_API_ROOT_URL =
   process.env.REACT_APP_NORMANDY_READ_ONLY_API_ROOT_URL || null;
 
+// Experimenter API
+export const EXPERIMENTER_API_ROOT_URL =
+  process.env.REACT_APP_EXPERIMENTER_API_ROOT_URL ||
+  'https://experimenter.services.mozilla.com/api/';
+
 // Insecure authentication
 export const INSECURE_AUTH_ALLOWED = process.env.REACT_APP_INSECURE_AUTH_ALLOWED || false;
 

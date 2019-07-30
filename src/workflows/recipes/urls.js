@@ -25,6 +25,12 @@ export default {
         crumbText: 'New',
         documentTitle: 'New Recipe',
       },
+      '/import/:experimentSlug': {
+        name: 'recipes.new',
+        component: CreateRecipePage,
+        crumbText: 'Import',
+        documentTitle: 'Import Recipe',
+      },
       '/:recipeId': {
         name: 'recipes.details',
         component: RecipeDetailPage,

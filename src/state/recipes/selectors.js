@@ -1,5 +1,6 @@
 import { List, Map } from 'immutable';
 
+import { getActionByName } from 'console/state/actions/selectors';
 import { DEFAULT_RECIPE_LISTING_COLUMNS } from 'console/state/constants';
 import { getRevision } from 'console/state/revisions/selectors';
 
@@ -87,4 +88,13 @@ export function getCurrentRevisionIdForRecipe(state, id, defaultsTo = null) {
 export function getRecipeApprovalHistory(state, id) {
   const history = getRecipeHistory(state, id);
   return history.filter(revision => revision.get('approval_request'));
+}
+
+export function getExperimentRecipeData(state, slug) {
+  const data = state.getIn(['recipes', 'experiments', slug]);
+
+  if (data) {
+    const action = getActionByName(state, data.get('action_name'));
+    return data.set('action', action).remove('action_name');
+  }
 }
