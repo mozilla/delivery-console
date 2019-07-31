@@ -8,6 +8,10 @@ export function getAction(state, id, defaultsTo = null) {
   return state.getIn(['actions', 'items', intId], defaultsTo);
 }
 
+export function getActionByName(state, name, defaultsTo = null) {
+  return state.getIn(['actions', 'items']).find(action => action.get('name') === name);
+}
+
 export function getAllActions(state) {
   return state.getIn(['actions', 'items']);
 }

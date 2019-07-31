@@ -86,6 +86,7 @@ class RecipeForm extends React.PureComponent {
     form: PropTypes.object.isRequired,
     isLoading: PropTypes.bool,
     isCreationForm: PropTypes.bool,
+    isImportForm: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     revision: PropTypes.instanceOf(Map),
     selectedActionName: PropTypes.string,
@@ -142,6 +143,26 @@ class RecipeForm extends React.PureComponent {
     );
   }
 
+  renderCommentField() {
+    const { isImportForm, isLoading, revision } = this.props;
+
+    if (!isImportForm) {
+      return null;
+    }
+
+    return (
+      <FormItem
+        name="comment"
+        label="Import Instructions (Clear before saving)"
+        required={false}
+        rules={[{ required: false }]}
+        initialValue={revision.get('comment')}
+      >
+        <Input.TextArea disabled={isLoading} rows={4} />
+      </FormItem>
+    );
+  }
+
   render() {
     const { filters, isCreationForm, isLoading, onSubmit, revision, errors } = this.props;
 
@@ -176,6 +197,7 @@ class RecipeForm extends React.PureComponent {
             </FormItem>
           </Col>
         </Row>
+        {this.renderCommentField()}
         <FilterObjectForm
           form={this.props.form}
           disabled={isLoading}

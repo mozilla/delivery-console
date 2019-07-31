@@ -2,6 +2,7 @@ import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
 import {
+  EXPERIMENT_RECIPE_DATA_RECEIVE,
   RECIPE_DELETE,
   RECIPE_LISTING_COLUMNS_CHANGE,
   RECIPE_PAGE_RECEIVE,
@@ -87,7 +88,18 @@ function listing(state = new Map(), action) {
   }
 }
 
+function experiments(state = new Map(), action) {
+  switch (action.type) {
+    case EXPERIMENT_RECIPE_DATA_RECEIVE:
+      return state.set(action.slug, fromJS(action.data));
+
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
+  experiments,
   filters,
   history,
   items,

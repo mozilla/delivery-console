@@ -1,4 +1,5 @@
 import {
+  EXPERIMENT_RECIPE_DATA_RECEIVE,
   RECIPE_DELETE,
   RECIPE_LISTING_COLUMNS_CHANGE,
   RECIPE_PAGE_RECEIVE,
@@ -6,8 +7,13 @@ import {
   RECIPE_FILTERS_RECEIVE,
   RECIPE_HISTORY_RECEIVE,
 } from 'console/state/action-types';
-import { makeApiRequest, makeNormandyApiRequest } from 'console/state/network/actions';
+import {
+  makeApiRequest,
+  makeNormandyApiRequest,
+  makeRequest,
+} from 'console/state/network/actions';
 import { revisionReceived } from 'console/state/revisions/actions';
+import { EXPERIMENTER_API_ROOT_URL } from 'console/settings';
 
 export function recipeReceived(recipe) {
   return dispatch => {
@@ -196,6 +202,20 @@ export function saveRecipeListingColumns(columns) {
     dispatch({
       type: RECIPE_LISTING_COLUMNS_CHANGE,
       columns,
+    });
+  };
+}
+
+export function fetchExperimentRecipeData(slug) {
+  return async dispatch => {
+    const requestId = `fetch-experiment-recipe-data-${slug}`;
+    const data = await dispatch(
+      makeRequest(requestId, `${EXPERIMENTER_API_ROOT_URL}v1/experiments/${slug}/recipe/`),
+    );
+    dispatch({
+      type: EXPERIMENT_RECIPE_DATA_RECEIVE,
+      slug,
+      data,
     });
   };
 }

@@ -5,6 +5,7 @@ import { AutoIncrementField, Factory, Field } from 'console/tests/factory';
 import { RevisionFactory } from 'console/tests/state/revisions';
 
 export const INITIAL_STATE = new Map({
+  experiments: new Map(),
   filters: new Map(),
   history: new Map(),
   items: new Map(),
