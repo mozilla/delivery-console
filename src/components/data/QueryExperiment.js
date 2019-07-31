@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -16,15 +17,32 @@ class QueryActions extends React.PureComponent {
     slug: PropTypes.string.isRequired,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { slug } = this.props;
-    this.props.fetchExperimentRecipeData(slug);
+    try {
+      await this.props.fetchExperimentRecipeData(slug);
+    } catch (error) {
+      console.log(error);
+      notification.error({
+        message: 'Import Error',
+        description: error.message,
+        duration: 0,
+      });
+    }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     const { slug } = this.props;
     if (slug !== prevProps.slug) {
-      this.props.fetchExperimentRecipeData(slug);
+      try {
+        await this.props.fetchExperimentRecipeData(slug);
+      } catch (error) {
+        notification.error({
+          message: 'Import Error',
+          description: error.message,
+          duration: 0,
+        });
+      }
     }
   }
 
