@@ -22,7 +22,6 @@ class QueryActions extends React.PureComponent {
     try {
       await this.props.fetchExperimentRecipeData(slug);
     } catch (error) {
-      console.log(error);
       notification.error({
         message: 'Import Error',
         description: error.message,
