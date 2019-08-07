@@ -1808,18 +1808,18 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auth0-js@9.11.2:
-  version "9.11.2"
-  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.2.tgz#8fa0324318ce3b427cfc1732a255c3049337092a"
-  integrity sha512-DP70OnHWapQ5gCwA1kgLpj9henNhwBZUKIR4Bi1pZcSD+1z5oosHvqNkRIreHaq4SGvZd9Mgus5WYsw8vTTMXg==
+auth0-js@9.11.3:
+  version "9.11.3"
+  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.3.tgz#a19add9f5c47d155b7a6f87a6dd2b197a9a43860"
+  integrity sha512-86EGbaXPHBuyYPPPpvkckH7rCnEgS14DHsK64v2tb4ph4NsZ+peW6pjwBHkOdz4Ytd/ibhGTYCEbA9xdHWSqiA==
   dependencies:
-    base64-js "^1.2.0"
+    base64-js "^1.3.0"
     idtoken-verifier "^1.4.1"
     js-cookie "^2.2.0"
-    qs "^6.4.0"
+    qs "^6.7.0"
     superagent "^3.8.3"
-    url-join "^4.0.0"
-    winchan "^0.2.1"
+    url-join "^4.0.1"
+    winchan "^0.2.2"
 
 autobind-decorator@2.4.0:
   version "2.4.0"
@@ -2054,7 +2054,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base64-js@^1.0.2, base64-js@^1.2.0:
+base64-js@^1.0.2, base64-js@^1.2.0, base64-js@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
   integrity sha512-ccav/yGvoa80BQDljCxsmmQ3Xvx60/UpBIij5QN21W3wBi/hhIC9OoO+KLpu9IJTS9j4DRVJ3aDDF9cMSoa2lw==
@@ -3055,10 +3055,10 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-loader@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-3.1.0.tgz#6f008b993b8ce812e6bab57f3cbfdc7a7cf28685"
-  integrity sha512-MuL8WsF/KSrHCBCYaozBKlx+r7vIfUaDTEreo7wR7Vv3J6N0z6fqWjRk3e/6wjneitXN1r/Y9FTK1psYNOBdJQ==
+css-loader@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-3.2.0.tgz#bb570d89c194f763627fcf1f80059c6832d009b2"
+  integrity sha512-QTF3Ud5H7DaZotgdcJjGMvyDj5F3Pn1j/sC6VBEOVp94cbwqyIBdcs/quzj4MC1BKQSrTpQznegH/5giYbhnCQ==
   dependencies:
     camelcase "^5.3.1"
     cssesc "^3.0.0"
@@ -8629,7 +8629,7 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qs@6.7.0, qs@^6.4.0, qs@^6.5.1:
+qs@6.7.0, qs@^6.5.1, qs@^6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
@@ -9917,7 +9917,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.0.0:
+schema-utils@^2.0.0, schema-utils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.0.1.tgz#1eec2e059556af841b7f3a83b61af13d7a3f9196"
   integrity sha512-HJFKJ4JixDpRur06QHwi8uu2kZbng318ahWEKgBjc0ZklcE4FDvmm2wghb448q0IRaABxIESt8vqPFvwgMB80A==
@@ -10529,13 +10529,13 @@ strip-json-comments@^2.0.1, strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-style-loader@0.23.1:
-  version "0.23.1"
-  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.23.1.tgz#cb9154606f3e771ab6c4ab637026a1049174d925"
-  integrity sha512-XK+uv9kWwhZMZ1y7mysB+zoihsEj4wneFWAS5qoiLwzW0WzSqMrrsIy+a3zkQJq0ipFtBpX5W3MqyRIBF/WFGg==
+style-loader@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-1.0.0.tgz#1d5296f9165e8e2c85d24eee0b7caf9ec8ca1f82"
+  integrity sha512-B0dOCFwv7/eY31a5PCieNwMgMhVGFe9w+rh7s/Bx8kfFkrth9zfTZquoYvdw8URgiqxObQKcpW51Ugz1HjfdZw==
   dependencies:
-    loader-utils "^1.1.0"
-    schema-utils "^1.0.0"
+    loader-utils "^1.2.3"
+    schema-utils "^2.0.1"
 
 style-search@^0.1.0:
   version "0.1.0"
@@ -11278,7 +11278,7 @@ url-join@^1.1.0:
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-1.1.0.tgz#741c6c2f4596c4830d6718460920d0c92202dc78"
   integrity sha1-dBxsL0WWxIMNZxhGCSDQySIC3Hg=
 
-url-join@^4.0.0:
+url-join@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
   integrity sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
@@ -11668,7 +11668,7 @@ widest-line@^2.0.0:
   dependencies:
     string-width "^2.1.1"
 
-winchan@^0.2.1:
+winchan@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/winchan/-/winchan-0.2.2.tgz#6766917b88e5e1cb75f455ffc7cc13f51e5c834e"
   integrity sha512-pvN+IFAbRP74n/6mc6phNyCH8oVkzXsto4KCHPJ2AScniAnA1AmeLI03I2BzjePpaClGSI4GUMowzsD3qz5PRQ==
