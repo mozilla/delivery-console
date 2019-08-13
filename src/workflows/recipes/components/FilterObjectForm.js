@@ -155,7 +155,7 @@ class FilterObjectForm extends React.PureComponent {
       .map(channel => {
         return { label: channel.get('value'), value: channel.get('key') };
       })
-      .toArray()
+      .reduce((reduction, value) => [...reduction, value], [])
       .sort((a, b) => {
         // The reason why we sort my *label* is because that's the only thing presented
         // to users' eyes. What the default sort is or what the order by 'key' is not
@@ -309,10 +309,18 @@ class FilterObjectForm extends React.PureComponent {
     // This is a simple object for counting how many settings have been set per tab.
     const countSettings = this.getSettingsCounts();
 
-    const initialLocales = filterObject.get('locales', List()).toArray();
-    const initialCountries = filterObject.get('countries', List()).toArray();
-    const initialChannels = filterObject.get('channels', List()).toArray();
-    const initialVersions = filterObject.get('versions', List()).toArray();
+    const initialLocales = filterObject
+      .get('locales', List())
+      .reduce((reduction, value) => [...reduction, value], []);
+    const initialCountries = filterObject
+      .get('countries', List())
+      .reduce((reduction, value) => [...reduction, value], []);
+    const initialChannels = filterObject
+      .get('channels', List())
+      .reduce((reduction, value) => [...reduction, value], []);
+    const initialVersions = filterObject
+      .get('versions', List())
+      .reduce((reduction, value) => [...reduction, value], []);
     const initialSampling = filterObject.get('_sampling', Map()).toJS();
 
     const tabLabels = {

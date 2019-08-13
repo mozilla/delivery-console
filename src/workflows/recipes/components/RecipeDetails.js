@@ -59,7 +59,7 @@ export default class RecipeDetails extends React.PureComponent {
                   actionName={actionName}
                 />,
               ])
-              .toArray()}
+              .reduce((reduction, value) => [...reduction, value], [])}
           </dl>
         </Card>
       </div>
