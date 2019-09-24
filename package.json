@@ -21,7 +21,7 @@
     "@babel/plugin-proposal-decorators": "7.6.0",
     "@babel/polyfill": "7.6.0",
     "@babel/runtime": "7.6.2",
-    "antd": "3.23.3",
+    "antd": "3.23.4",
     "auth0-js": "9.11.3",
     "autobind-decorator": "2.4.0",
     "autoprefixer": "9.6.1",
