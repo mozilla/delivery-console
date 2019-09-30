@@ -88,7 +88,7 @@
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-react-hooks": "2.0.1",
     "faker": "4.1.0",
-    "fetch-mock": "7.3.9",
+    "fetch-mock": "7.4.0",
     "jest": "24.9.0",
     "jest-immutable-matchers": "2.0.1",
     "prettier": "1.18.2",
