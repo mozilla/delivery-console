@@ -27,6 +27,9 @@ export default class RecipeDetails extends React.PureComponent {
             <dt>Name</dt>
             <ArgumentsValue name="name" value={revision.get('name')} />
 
+            <dt>Experimenter Slug</dt>
+            <ArgumentsValue name="experimenter_slug" value={revision.get('experimenter_slug')} />
+
             {filterObject && filterObject.size ? <dt>Filters</dt> : null}
             {filterObject && filterObject.size ? (
               <ArgumentsValue name="filter_object" value={revision.get('filter_object')} />

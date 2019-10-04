@@ -55,6 +55,10 @@ export function cleanRecipeData(data) {
     throw new Error('Have you have at least one filter object or a filter expression.');
   }
 
+  if (data.experimenter_slug === '') {
+    data.experimenter_slug = null;
+  }
+
   // Make sure the action ID is an integer
   try {
     data.action_id = parseInt(data.action_id, 10);
@@ -197,6 +201,14 @@ class RecipeForm extends React.PureComponent {
             </FormItem>
           </Col>
         </Row>
+        <FormItem
+          name="experimenter_slug"
+          label="Experimenter Slug"
+          rules={[{ required: false }]}
+          initialValue={revision.get('experimenter_slug')}
+        >
+          <Input disabled={isLoading} />
+        </FormItem>
         {this.renderCommentField()}
         <FilterObjectForm
           form={this.props.form}
