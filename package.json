@@ -76,7 +76,7 @@
     "dotenv": "8.1.0",
     "dotenv-expand": "5.1.0",
     "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
+    "enzyme-adapter-react-16": "1.15.1",
     "eslint": "5.16.0",
     "eslint-config-prettier": "6.3.0",
     "eslint-config-react-app": "5.0.2",
