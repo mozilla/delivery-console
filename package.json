@@ -21,7 +21,7 @@
     "@babel/plugin-proposal-decorators": "7.6.0",
     "@babel/polyfill": "7.6.0",
     "@babel/runtime": "7.6.3",
-    "antd": "3.23.5",
+    "antd": "3.24.3",
     "auth0-js": "9.11.3",
     "autobind-decorator": "2.4.0",
     "autoprefixer": "9.7.0",
@@ -70,7 +70,7 @@
     "webpack-merge": "4.2.2"
   },
   "devDependencies": {
-    "@testing-library/react": "9.3.0",
+    "@testing-library/react": "9.3.1",
     "babel-eslint": "10.0.3",
     "babel-jest": "24.9.0",
     "dotenv": "8.2.0",
