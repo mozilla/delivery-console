@@ -39,7 +39,7 @@
     "file-loader": "4.2.0",
     "fs-extra": "8.1.0",
     "generate-json-webpack-plugin": "0.3.1",
-    "html-webpack-plugin": "4.0.0-beta.5",
+    "html-webpack-plugin": "4.0.0-beta.11",
     "immutable": "4.0.0-rc.12",
     "less": "3.10.3",
     "less-loader": "5.0.0",
