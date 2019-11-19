@@ -62,7 +62,9 @@ describe('<ArgumentsValue>', () => {
       { slug: 'one', value: 1, ratio: 1 },
       { slug: 'two', value: 2, ratio: 3 },
     ]);
-    const wrapper = shallow(<ArgumentsValue actionName="preference-experiment" name="branches" value={value} />);
+    const wrapper = shallow(
+      <ArgumentsValue actionName="preference-experiment" name="branches" value={value} />,
+    );
     const children = wrapper.find('.value').children();
     expect(children.length).toBe(1);
     expect(children.type()).toBe('table');
