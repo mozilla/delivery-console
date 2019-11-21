@@ -3,6 +3,7 @@ import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom';
 import autobind from 'autobind-decorator';
 
 import {
@@ -10,6 +11,7 @@ import {
   SAMPLING_TYPES,
   smartNumberFormatting,
 } from 'console/workflows/recipes/components/FilterObjectForm';
+import { reverse } from 'console/urls';
 
 export default class RecipeDetails extends React.PureComponent {
   static propTypes = {
@@ -163,6 +165,38 @@ export class ArgumentsValue extends React.PureComponent {
           );
         })}
       </ul>
+    );
+  }
+
+  renderAddonBranchTable(branches) {
+    const sumRatios = branches.map(branch => branch.get('ratio')).reduce((a, b) => a + b) || 1;
+
+    return (
+      <table className="pref-experiment-branches">
+        <thead>
+          <tr>
+            <th>Slug</th>
+            <th>Extension ID</th>
+            <th className="right">Ratio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {branches.map(branch => (
+            <tr key={branch.get('slug')}>
+              <td>{branch.get('slug')}</td>
+              <td>
+                <Link
+                  to={reverse('extensions.edit', { extensionId: branch.get('extensionApiId') })}
+                  target="_blank"
+                >
+                  {branch.get('extensionApiId')}
+                </Link>
+              </td>
+              <td className="right">{Math.round((branch.get('ratio') / sumRatios) * 100)}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   }
 
@@ -327,6 +361,8 @@ export class ArgumentsValue extends React.PureComponent {
         valueRender = this.renderPreferenceExperimentBranchTable;
       } else if (actionName === 'multi-preference-experiment') {
         valueRender = this.renderMultiPreferenceExperimentBranchTable;
+      } else if (actionName === 'branched-addon-study') {
+        valueRender = this.renderAddonBranchTable;
       }
     } else if (name === 'filter_object') {
       valueRender = this.renderFilterObject;
