@@ -69,7 +69,16 @@ class DetailsActionBar extends React.PureComponent {
 
   handleDisableClick() {
     const { recipeId } = this.props;
-    const onOk = () => this.props.disableRecipe(recipeId);
+    const onOk = async () => {
+      try {
+        await this.props.disableRecipe(recipeId);
+      } catch (err) {
+        Modal.error({
+          title: 'An error occured',
+          content: `[${err.data.status}] ${err.data.error}`,
+        });
+      }
+    };
     Modal.confirm({
       title: 'Are you sure you want to disable this recipe?',
       onOk: onOk.bind(this),
@@ -78,7 +87,16 @@ class DetailsActionBar extends React.PureComponent {
 
   handlePublishClick() {
     const { recipeId } = this.props;
-    const onOk = () => this.props.enableRecipe(recipeId);
+    const onOk = async () => {
+      try {
+        await this.props.enableRecipe(recipeId);
+      } catch (err) {
+        Modal.error({
+          title: 'An error occured',
+          content: `[${err.data.status}] ${err.data.error}`,
+        });
+      }
+    };
     Modal.confirm({
       title: 'Are you sure you want to publish this recipe?',
       onOk: onOk.bind(this),
