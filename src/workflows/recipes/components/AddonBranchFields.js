@@ -62,12 +62,11 @@ class AddonBranchFields extends React.PureComponent {
     return (
       <React.Fragment>
         <div className="branch-fields">
-          <FormItem label="Branch Name" name={`${fieldName}.slug`} connectToForm={false}>
+          <FormItem label="Branch Slug" name={`${fieldName}.slug`} connectToForm={false}>
             <Input
               disabled={disabled}
               value={branch.get('slug', '')}
               onChange={this.handleChangeSlug}
-              id="pef-branch-name"
             />
           </FormItem>
           <FormItem label="Ratio" name={`${fieldName}.ratio`} connectToForm={false}>
