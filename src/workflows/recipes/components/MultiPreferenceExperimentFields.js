@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-boolean-value */
-import { Row, Col, Alert, Input, Select } from 'antd';
+import { Row, Col, Input } from 'antd';
 import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,12 +7,11 @@ import React from 'react';
 import DocumentUrlInput from 'console/components/forms/DocumentUrlInput';
 import FormItem from 'console/components/forms/FormItem';
 import SwitchBox from 'console/components/forms/SwitchBox';
-import PreferenceExperimentBranches from 'console/workflows/recipes/components/PreferenceExperimentBranches';
-import PreferenceBranchSelect from 'console/workflows/recipes/components/PreferenceBranchSelect';
+import MultiPreferenceExperimentBranches from 'console/workflows/recipes/components/MultiPreferenceExperimentBranches';
 import { connectFormProps } from 'console/utils/forms';
 
 @connectFormProps
-class PreferenceExperimentFields extends React.Component {
+class MultiPreferenceExperimentFields extends React.Component {
   static propTypes = {
     disabled: PropTypes.bool,
     form: PropTypes.object.isRequired,
@@ -31,7 +30,7 @@ class PreferenceExperimentFields extends React.Component {
 
     return (
       <Row>
-        <p className="action-info">Run a feature experiment activated by a preference.</p>
+        <p className="action-info">Run a feature experiment activated by multiple preference.</p>
         <Col sm={24} md={11}>
           <FormItem
             label="Experiment Name"
@@ -42,11 +41,11 @@ class PreferenceExperimentFields extends React.Component {
           </FormItem>
 
           <FormItem
-            label="Experiment Document URL"
-            name="arguments.experimentDocumentUrl"
-            initialValue={recipeArguments.get('experimentDocumentUrl', '')}
+            label="User Facing Name"
+            name="arguments.userFacingName"
+            initialValue={recipeArguments.get('userFacingName', '')}
           >
-            <DocumentUrlInput disabled={disabled} />
+            <Input disabled={disabled} />
           </FormItem>
 
           <FormItem
@@ -64,54 +63,20 @@ class PreferenceExperimentFields extends React.Component {
 
         <Col sm={24} md={{ span: 12, offset: 1 }}>
           <FormItem
-            label="Preference Name"
-            name="arguments.preferenceName"
-            initialValue={recipeArguments.get('preferenceName', '')}
-            trimWhitespace
+            label="Experiment Document URL"
+            name="arguments.experimentDocumentUrl"
+            initialValue={recipeArguments.get('experimentDocumentUrl', '')}
+          >
+            <DocumentUrlInput disabled={disabled} />
+          </FormItem>
+
+          <FormItem
+            label="User Facing Description"
+            name="arguments.userFacingDescription"
+            initialValue={recipeArguments.get('userFacingDescription', '')}
           >
             <Input disabled={disabled} />
           </FormItem>
-
-          <Col sm={24}>
-            <Col xs={24} sm={11}>
-              <FormItem
-                label="Preference Type"
-                name="arguments.preferenceType"
-                initialValue={recipeArguments.get('preferenceType', 'boolean')}
-              >
-                <Select disabled={disabled}>
-                  <Select.Option value="boolean">Boolean</Select.Option>
-                  <Select.Option value="integer">Integer</Select.Option>
-                  <Select.Option value="string">String</Select.Option>
-                </Select>
-              </FormItem>
-            </Col>
-            <Col xs={24} sm={{ span: 12, offset: 1 }}>
-              <FormItem
-                label="Preference Branch Type"
-                name="arguments.preferenceBranchType"
-                initialValue={recipeArguments.get('preferenceBranchType', 'default')}
-              >
-                <PreferenceBranchSelect disabled={disabled} />
-              </FormItem>
-            </Col>
-            {isUserBranchSelected && (
-              <Col xs={24}>
-                <Alert
-                  message="User Preference Branch"
-                  description={
-                    <span>
-                      Setting user preferences instead of default ones is not recommended.
-                      <br />
-                      Do not choose this unless you know what you are doing.
-                    </span>
-                  }
-                  type="warning"
-                  showIcon
-                />
-              </Col>
-            )}
-          </Col>
         </Col>
 
         <Col
@@ -140,7 +105,7 @@ class PreferenceExperimentFields extends React.Component {
             initialValue={recipeArguments.get('branches', new List())}
             config={{ valuePropName: 'branches' }}
           >
-            <PreferenceExperimentBranches disabled={disabled} />
+            <MultiPreferenceExperimentBranches disabled={disabled} />
           </FormItem>
         </Col>
       </Row>
@@ -148,4 +113,4 @@ class PreferenceExperimentFields extends React.Component {
   }
 }
 
-export default PreferenceExperimentFields;
+export default MultiPreferenceExperimentFields;

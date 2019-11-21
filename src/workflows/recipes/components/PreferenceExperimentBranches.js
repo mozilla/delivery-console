@@ -4,7 +4,7 @@ import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ExperimentBranchFields from 'console/workflows/recipes/components/ExperimentBranchFields';
+import PreferenceExperimentBranchFields from 'console/workflows/recipes/components/PreferenceExperimentBranchFields';
 import { connectFormProps } from 'console/utils/forms';
 
 /**
@@ -20,7 +20,7 @@ import { connectFormProps } from 'console/utils/forms';
  */
 @connectFormProps
 @autobind
-class ExperimentBranches extends React.PureComponent {
+class PreferenceExperimentBranches extends React.PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
@@ -58,7 +58,7 @@ class ExperimentBranches extends React.PureComponent {
         <ul className="branch-list">
           {branches.map((branch, index) => (
             <li key={index} className="branch">
-              <ExperimentBranchFields
+              <PreferenceExperimentBranchFields
                 disabled={disabled}
                 branch={branch}
                 fieldName={`arguments.branches[${index}]`}
@@ -83,4 +83,4 @@ class ExperimentBranches extends React.PureComponent {
   }
 }
 
-export default ExperimentBranches;
+export default PreferenceExperimentBranches;

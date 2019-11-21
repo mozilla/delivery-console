@@ -64,6 +64,22 @@
     }
   }
 
+  .multi-pref-fields {
+    border-bottom: 1px solid @border-color-base;
+    margin-bottom: @form-item-margin-bottom;
+    padding-bottom: @form-item-margin-bottom;
+
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .ant-form-item-label {
+      font-weight: bold;
+    }
+  }
+
   // Force form fields in the branch listing to be displayed inline.
   .ant-form-inline();
 }
