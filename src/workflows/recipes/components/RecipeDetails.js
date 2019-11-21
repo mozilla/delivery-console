@@ -3,6 +3,7 @@ import { List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import autobind from 'autobind-decorator';
 
 import {
   serializeFilterObjectToMap,
@@ -93,7 +94,7 @@ export class ArgumentsValue extends React.PureComponent {
     return types.some(type => obj instanceof type);
   }
 
-  renderBranchTable(branches) {
+  renderPreferenceExperimentBranchTable(branches) {
     const sumRatios = branches.map(branch => branch.get('ratio')).reduce((a, b) => a + b) || 1;
 
     return (
@@ -117,6 +118,51 @@ export class ArgumentsValue extends React.PureComponent {
           ))}
         </tbody>
       </table>
+    );
+  }
+
+  @autobind
+  renderMultiPreferenceExperimentBranchTable(branches) {
+    const sumRatios = branches.map(branch => branch.get('ratio')).reduce((a, b) => a + b) || 1;
+
+    return (
+      <ul>
+        {branches.map(branch => {
+          const columns = [
+            {
+              title: 'Preference',
+              dataIndex: 'preferenceName',
+              render: value => (
+                <code style={{ display: 'inline-block', maxWidth: 200 }}>{value}</code>
+              ),
+            },
+            {
+              title: 'Value',
+              dataIndex: 'preferenceValue',
+              render: (value, record, index) => (
+                <code title={`Type: ${record.preferenceType}`}>{JSON.stringify(value)}</code>
+              ),
+            },
+            {
+              title: 'Pref Branch',
+              dataIndex: 'preferenceBranchType',
+            },
+          ];
+          const data = branch
+            .get('preferences')
+            .entrySeq()
+            .map(([preferenceName, spec]) => spec.set('preferenceName', preferenceName))
+            .toJS();
+          return (
+            <div data-table-data={JSON.stringify(data)}>
+              <h2>
+                {branch.get('slug')} - {Math.round((branch.get('ratio') / sumRatios) * 100)}%
+              </h2>
+              <Table columns={columns} dataSource={data} pagination={false} size="small" />
+            </div>
+          );
+        })}
+      </ul>
     );
   }
 
@@ -277,7 +323,11 @@ export class ArgumentsValue extends React.PureComponent {
     let argumentsValueClassName = 'arguments-value';
 
     if (name === 'branches') {
-      valueRender = this.renderBranchTable;
+      if (actionName === 'preference-experiment') {
+        valueRender = this.renderPreferenceExperimentBranchTable;
+      } else if (actionName === 'multi-preference-experiment') {
+        valueRender = this.renderMultiPreferenceExperimentBranchTable;
+      }
     } else if (name === 'filter_object') {
       valueRender = this.renderFilterObject;
       argumentsValueClassName += ' no-padding';
