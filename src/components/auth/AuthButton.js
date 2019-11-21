@@ -11,11 +11,16 @@ import {
   logUserOut,
   startAuthenticationFlow,
 } from 'console/state/auth/actions';
-import { isAuthenticationInProgress, getUserProfile } from 'console/state/auth/selectors';
+import {
+  isAuthenticationInProgress,
+  getAccessToken,
+  getUserProfile,
+} from 'console/state/auth/selectors';
 import { getCurrentPathname } from 'console/state/router/selectors';
 
 @connect(
   (state, props) => ({
+    accessToken: getAccessToken(state),
     authInProgress: isAuthenticationInProgress(state),
     pathname: getCurrentPathname(state),
     userProfile: getUserProfile(state),
@@ -30,6 +35,7 @@ import { getCurrentPathname } from 'console/state/router/selectors';
 @autobind
 class AuthButton extends React.Component {
   static propTypes = {
+    accessToken: PropTypes.string,
     authInProgress: PropTypes.bool.isRequired,
     finishAuthenticationFlow: PropTypes.func.isRequired,
     logUserInInsecure: PropTypes.func.isRequired,
@@ -82,12 +88,27 @@ class AuthButton extends React.Component {
     return (
       <div>
         <div className="text-colored-links">
+          <a href="#copy" onClick={this.handleCopyAuthTokenClick}>
+            Copy Auth Token
+          </a>
+        </div>
+        <div className="text-colored-links">
           <a href="#logout" onClick={this.props.logUserOut}>
             Log Out
           </a>
         </div>
       </div>
     );
+  }
+
+  handleCopyAuthTokenClick(ev) {
+    ev.preventDefault();
+    const tokenSpan = document.querySelector('#copyable-auth-token');
+    tokenSpan.select();
+    document.execCommand('copy');
+    Modal.success({
+      title: 'Access token was copied to clipboard.',
+    });
   }
 
   handleLoginTimeout() {
@@ -115,20 +136,27 @@ class AuthButton extends React.Component {
   }
 
   render() {
+    const { accessToken } = this.props;
+
     if (this.props.userProfile) {
       const picture = this.props.userProfile.get('picture');
       return (
-        <Popover
-          content={this.logOutMenu()}
-          title={this.popoverTitle(this.props.userProfile)}
-          trigger="click"
-          placement="bottomRight"
-        >
-          <span className="user-button">
-            <Avatar src={picture} icon="user" />
-            <Icon type="caret-down" />
-          </span>
-        </Popover>
+        <React.Fragment>
+          <Popover
+            content={this.logOutMenu()}
+            title={this.popoverTitle(this.props.userProfile)}
+            trigger="click"
+            placement="bottomRight"
+          >
+            <span className="user-button">
+              <Avatar src={picture} icon="user" />
+              <Icon type="caret-down" />
+            </span>
+          </Popover>
+          <div className="hide-offscreen">
+            <input id="copyable-auth-token" value={accessToken} />
+          </div>
+        </React.Fragment>
       );
     }
     if (INSECURE_AUTH_ALLOWED) {
