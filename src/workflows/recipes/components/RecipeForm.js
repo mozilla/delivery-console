@@ -13,6 +13,7 @@ import FilterObjectForm, {
   serializeFilterObjectToMap,
   deserializeFilterObjectToList,
 } from 'console/workflows/recipes/components/FilterObjectForm';
+import BranchedAddonStudyFields from 'console/workflows/recipes/components/BranchedAddonStudyFields';
 import JSONArgumentsField from 'console/workflows/recipes/components/JSONArgumentsField';
 import MultiPreferenceExperimentFields from 'console/workflows/recipes/components/MultiPreferenceExperimentFields';
 import PreferenceExperimentFields from 'console/workflows/recipes/components/PreferenceExperimentFields';
@@ -111,6 +112,7 @@ class RecipeForm extends React.PureComponent {
     'preference-rollback': PreferenceRollbackFields,
     'opt-out-study': AddonStudyFields,
     'multi-preference-experiment': MultiPreferenceExperimentFields,
+    'branched-addon-study': BranchedAddonStudyFields,
   };
 
   constructor(props) {

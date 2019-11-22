@@ -123,7 +123,7 @@ export function enableRecipe(pk) {
 
 export function disableRecipe(pk) {
   return async dispatch => {
-    const requestId = `enable-recipe-${pk}`;
+    const requestId = `disable-recipe-${pk}`;
     const recipe = await dispatch(
       makeNormandyApiRequest(requestId, `v3/recipe/${pk}/disable/`, {
         method: 'POST',
