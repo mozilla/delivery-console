@@ -156,12 +156,12 @@ export class ArgumentsValue extends React.PureComponent {
             .map(([preferenceName, spec]) => spec.set('preferenceName', preferenceName))
             .toJS();
           return (
-            <div data-table-data={JSON.stringify(data)}>
-              <h2>
+            <React.Fragment key={branch.get('slug')}>
+              <h3 style={{ marginBottom: 0, fontWeight: 'bold' }}>
                 {branch.get('slug')} - {Math.round((branch.get('ratio') / sumRatios) * 100)}%
-              </h2>
+              </h3>
               <Table columns={columns} dataSource={data} pagination={false} size="small" />
-            </div>
+            </React.Fragment>
           );
         })}
       </ul>

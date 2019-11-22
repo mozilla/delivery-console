@@ -12,7 +12,7 @@ import { connectFormProps } from 'console/utils/forms';
 
 @connectFormProps
 @autobind
-class ExperimentBranchFields extends React.PureComponent {
+class PreferenceExperimentBranchFields extends React.PureComponent {
   static propTypes = {
     branch: PropTypes.instanceOf(Map).isRequired,
     disabled: PropTypes.bool,
@@ -68,7 +68,7 @@ class ExperimentBranchFields extends React.PureComponent {
   render() {
     const { branch, disabled, fieldName, form } = this.props;
     const preferenceType = form.getFieldValue('arguments.preferenceType');
-    const ValueField = ExperimentBranchFields.VALUE_FIELDS[preferenceType];
+    const ValueField = PreferenceExperimentBranchFields.VALUE_FIELDS[preferenceType];
     return (
       <div className="branch-fields">
         <FormItem label="Branch Name" name={`${fieldName}.slug`} connectToForm={false}>
@@ -107,4 +107,4 @@ class ExperimentBranchFields extends React.PureComponent {
   }
 }
 
-export default ExperimentBranchFields;
+export default PreferenceExperimentBranchFields;
