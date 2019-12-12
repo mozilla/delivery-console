@@ -102,7 +102,8 @@
   },
   "resolutions": {
     "handlebars": "^4.5.3",
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^3.13.1",
+    "serialize-javascript": ">=2.1.1"
   },
   "jest": {
     "collectCoverageFrom": [
