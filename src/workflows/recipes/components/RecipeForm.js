@@ -54,7 +54,7 @@ export function cleanRecipeData(data) {
   if (!data.filter_object.size && !data.extra_filter_expression) {
     // You can't submit a recipe with no extra filter expression and no filter object rules.
     // Error thrown here will be automatically turned into a notification message in the UI.
-    throw new Error('Have you have at least one filter object or a filter expression.');
+    throw new Error('You must have at least one filter object or a filter expression.');
   }
 
   if (data.experimenter_slug === '') {
