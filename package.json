@@ -22,7 +22,7 @@
     "@babel/polyfill": "7.6.0",
     "@babel/runtime": "7.6.3",
     "antd": "3.23.5",
-    "auth0-js": "9.11.3",
+    "auth0-js": "9.13.2",
     "autobind-decorator": "2.4.0",
     "autoprefixer": "9.7.0",
     "babel-core": "7.0.0-bridge.0",
@@ -103,7 +103,10 @@
   "resolutions": {
     "handlebars": "^4.5.3",
     "js-yaml": "^3.13.1",
-    "serialize-javascript": ">=2.1.1"
+    "serialize-javascript": ">=2.1.1",
+    "minimist": ">=0.2.1 <1.0.0 || >=1.2.3",
+    "acorn": ">=5.7.4 <6.0.0 || >=6.4.1 <7.0.0 || >=7.1.1",
+    "kind-of": ">=6.0.3"
   },
   "jest": {
     "collectCoverageFrom": [
